@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:id="@+id/familydialog_layout">
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+        android:orientation="horizontal"
+		android:layout_weight="1">
+		<TextView
+		    android:id="@+id/familydialog_label_relation"
+		    android:layout_width="100dp"
+		    android:layout_height="36dp"
+		    android:layout_alignParentLeft="true"
+		    android:layout_centerVertical="true"
+		    android:layout_marginLeft="0dp"
+		    android:gravity="center_vertical"
+		    android:paddingLeft="20dp"
+		    android:text="@string/familydialog_label_relation"
+		    android:textColor="@color/grey"
+		    android:textSize="20sp" />
+		<EditText
+		    android:id="@+id/familydialog_text_relation"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_marginLeft="0dp"
+		    android:layout_toRightOf="@id/familydialog_label_relation"
+		    android:background="@null"
+		    android:ems="10"
+		    android:imeOptions="actionDone"
+		    android:inputType="text"
+		    android:paddingLeft="20dp"
+		    android:singleLine="true"
+		    android:textColor="@color/white"
+		    android:textSize="18sp" />
+	</RelativeLayout>
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+        android:orientation="horizontal"
+		android:layout_weight="1">
+		<TextView
+		    android:id="@+id/familydialog_label_phone"
+		    android:layout_width="100dp"
+		    android:layout_height="36dp"
+		    android:layout_alignParentLeft="true"
+		    android:layout_centerVertical="true"
+		    android:layout_marginLeft="0dp"
+		    android:gravity="center_vertical"
+		    android:paddingLeft="20dp"
+		    android:text="@string/familydialog_label_phone"
+		    android:textColor="@color/grey"
+		    android:textSize="20sp" />
+
+		<EditText
+		    android:id="@+id/familydialog_text_phone"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_marginLeft="0dp"
+		    android:layout_toRightOf="@id/familydialog_label_phone"
+		    android:background="@null"
+		    android:ems="10"
+		    android:imeOptions="actionDone"
+		    android:inputType="number"
+		    android:paddingLeft="20dp"
+		    android:singleLine="true"
+		    android:textColor="@color/white"
+		    android:textSize="18sp" />
+
+	</RelativeLayout>
+</LinearLayout>

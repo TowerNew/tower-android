@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content" 
+	android:layout_below ="@+id/div_home_head"
+	android:orientation="vertical"
+	android:background="@color/white">
+
+	<Gallery
+	    android:id="@+id/home_gallery_ad"
+	    android:layout_width="fill_parent"
+	    android:layout_height="160dp"
+	    android:layout_alignParentTop="true"
+	    android:background="@color/white" />
+
+	<EditText
+		android:id="@+id/home_text_search"
+		android:layout_width="400dp"
+		android:layout_height="36dp"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@+id/home_gallery_ad"
+		android:layout_centerVertical="true"
+		android:layout_marginLeft="3dp"
+		android:layout_marginRight="3dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginBottom="8dp"
+		android:background="@drawable/home_search"
+		android:gravity="center_vertical"
+		android:paddingLeft="46dp"
+		android:singleLine="true"
+		android:cursorVisible="true"
+		android:imeOptions="actionSearch"
+		android:text="@string/search_tip"
+		android:textColor="@color/grey"
+		android:textSize="15sp" />
+	<LinearLayout
+		android:id="@+id/home_layout_entry"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" 
+		android:layout_below ="@+id/home_text_search"
+		android:orientation="horizontal">
+		<ImageButton
+			android:id="@+id/home_button_famous"
+			android:layout_width="80dp"
+			android:layout_height="80dp"
+			android:layout_marginBottom="10dp"
+			android:layout_marginTop="4dp"
+			android:layout_weight="1"
+			android:background="@color/white"
+			android:src="@drawable/home_entry_famous" />
+		<ImageButton
+			android:id="@+id/home_button_inquiry"
+			android:layout_width="80dp"
+			android:layout_height="80dp"
+			android:layout_marginBottom="10dp"
+			android:layout_marginTop="4dp"
+			android:layout_weight="1"
+			android:background="@color/white"
+			android:src="@drawable/home_entry_inquiry" />
+		<ImageButton
+			android:id="@+id/home_button_reserve"
+			android:layout_width="80dp"
+			android:layout_height="80dp"
+			android:layout_marginBottom="10dp"
+			android:layout_marginTop="4dp"
+			android:layout_weight="1"
+			android:background="@color/white"
+			android:src="@drawable/home_entry_reserve" />
+	</LinearLayout>
+	<TextView
+		android:id="@+id/home_lable_news"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_below ="@+id/home_layout_entry"
+		android:layout_centerVertical="true"
+		android:paddingLeft="6dp"
+		android:paddingTop="2dp"
+		android:paddingBottom="2dp"
+		android:text="@string/news_caption"
+		android:background="@color/lightgrey"
+		android:textColor="@color/black"
+		android:textSize="15sp" />
+</RelativeLayout>

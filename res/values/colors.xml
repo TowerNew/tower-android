@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_tab_normal">#fff6f6f6</color>
+    <color name="main_tab_selected">#ffffffff</color>
+    <color name="hot_bg">#ffffffff</color>
+    <color name="loadmore_bg">#fff7f7f7</color>
+    <color name="loadmore_text">#ff000000</color>
+    <color name="listview_on">#ffffffff</color>
+    <color name="listview_down">#fff7f7f7</color>
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="grey">#ffcccccc</color>
+    <color name="midgrey">#ff999999</color>
+    <color name="lightgrey">#fff3f3f3</color>
+</resources>

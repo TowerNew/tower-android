@@ -1,0 +1,79 @@
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_tabhost"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <FrameLayout
+			android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1" >
+            <fragment android:name="com.qcast.tower.form.HomeActivity"
+                android:id="@+id/main_fragment_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <fragment android:name="com.qcast.tower.form.InquiryActivity"
+                android:id="@+id/main_fragment_inquiry"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <fragment android:name="com.qcast.tower.form.ReserveActivity"
+                android:id="@+id/main_fragment_reserve"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <fragment android:name="com.qcast.tower.form.UserActivity"
+                android:id="@+id/main_fragment_user"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+		</FrameLayout>
+		<TabWidget
+		    android:id="@android:id/tabs"
+		    android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_weight="0.0"
+    		android:visibility="gone" />
+		<RadioGroup
+    		android:id="@+id/main_tab"
+    		android:orientation="horizontal"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:gravity="center_vertical"
+    		android:layout_gravity="bottom">
+    		<RadioButton 
+    			android:id="@+id/main_tab_home"
+    			android:text="@string/main_tab_home"
+				android:textColor="@color/black"
+    			android:layout_marginTop="0dip"
+    			android:background="@drawable/button_main_tab"
+    			android:drawableTop="@drawable/main_tab_home"
+    			style="@style/main_tab" />
+    		<RadioButton
+    			android:id="@+id/main_tab_inquiry"
+				android:text="@string/main_tab_inquiry"
+				android:textColor="@color/black"
+    			android:layout_marginTop="0dip"
+    			android:background="@drawable/button_main_tab"
+    			android:drawableTop="@drawable/main_tab_inquiry"
+    			style="@style/main_tab" />
+    		<RadioButton
+    			android:id="@+id/main_tab_reserve"
+				android:text="@string/main_tab_reserve"
+				android:textColor="@color/black"
+    			android:layout_marginTop="0dip"
+    			android:background="@drawable/button_main_tab"
+    			android:drawableTop="@drawable/main_tab_reserve"
+    			style="@style/main_tab" />
+    		<RadioButton
+    			android:id="@+id/main_tab_user"
+				android:text="@string/main_tab_user"
+				android:textColor="@color/black"
+    			android:layout_marginTop="0dip"
+    			android:background="@drawable/button_main_tab"
+    			android:drawableTop="@drawable/main_tab_user"
+    			style="@style/main_tab" />
+    	</RadioGroup>
+    </LinearLayout>
+</TabHost>

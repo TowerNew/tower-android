@@ -1,4 +1,4 @@
-﻿package com.qcast.tower.form;
+package com.qcast.tower.form;
 
 import java.util.Timer;
 import java.util.TimerTask;

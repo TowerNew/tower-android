@@ -1,4 +1,4 @@
-﻿package com.qcast.tower;
+package com.qcast.tower;
 
 import com.qcast.tower.logic.Host;
 import com.qcast.tower.logic.Logic;

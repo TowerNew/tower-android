@@ -1,4 +1,4 @@
-﻿package com.qcast.tower.form;
+package com.qcast.tower.form;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

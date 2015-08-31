@@ -1,5 +1,0 @@
-﻿<local city="1" phone="15021819287">
-	<coupons>
-		<coupon id="1001" caption="优惠券标题" description="优惠券描述" popularity="299" icon="优惠券图标.png" content="优惠券内容" indate="2013年1月1日-2013年2月1日" />
-	</coupons>
-</local>

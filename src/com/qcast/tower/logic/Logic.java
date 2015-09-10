@@ -48,4 +48,16 @@ public class Logic {
 	 * 家庭成员
 	 */
 	public static Table<String, FamilyMember> familys = new Table<String, FamilyMember>();
+
+	
+	/**
+	 * 初始化
+	 */
+	public static boolean initialize() {
+		phone = Storage.user("phone", String.class);
+		token = Storage.user("token", String.class);
+		userId = Storage.user("userId", String.class);
+		name = Storage.user("name", String.class);
+		return true;
+	}
 }

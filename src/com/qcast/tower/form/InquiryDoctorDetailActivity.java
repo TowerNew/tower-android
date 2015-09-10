@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -104,6 +105,13 @@ public class InquiryDoctorDetailActivity extends Activity{
                 },Logic.token,true);
             }
         });*/
+        Button button = (Button) this.findViewById(R.id.doctordetail_return_btn);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				InquiryDoctorDetailActivity.this.finish();
+			}
+		});
         bad_vote_btn = (Button) this.findViewById(R.id.bad_vote_btn);
         /*bad_vote_btn.setOnClickListener(new View.OnClickListener() {
             @Override

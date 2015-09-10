@@ -62,6 +62,7 @@
 		    android:layout_alignParentRight="true"
 	        android:adjustViewBounds="true"
 	        android:padding="0dip"
+			android:textColor="@color/white"
             android:background="@drawable/button_common" />
     </RelativeLayout>
     <ImageView 
@@ -112,6 +113,7 @@
 		    android:layout_marginRight="10dp"
 		    android:adjustViewBounds="true"
 		    android:padding="0dip"
+			android:textColor="@color/white"
             android:background="@drawable/button_common" />
     </RelativeLayout>
 </RelativeLayout>

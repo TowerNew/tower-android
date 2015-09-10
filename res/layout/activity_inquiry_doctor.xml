@@ -22,7 +22,6 @@
             android:layout_marginLeft="6dp"
             android:background="@color/transprant"
             android:drawableLeft="@drawable/left_arrow"
-            android:text="返回"
             android:textColor="#ffffffff"
             android:textSize="15sp" />
 

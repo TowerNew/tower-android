@@ -70,6 +70,9 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
                 if (IResponse.CODE_SUCCESS != code()) {
                     Toast.makeText(InquiryDoctorChatActivity.this, "网络错误", Toast.LENGTH_LONG).show();
                 }
+                if(null == content) {
+                	return;
+                }
                 JSONObject resultObject = JSONObject.convert(content);
                 if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
                     Toast.makeText(InquiryDoctorChatActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();

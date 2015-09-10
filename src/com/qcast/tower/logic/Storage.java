@@ -7,6 +7,8 @@ import java.io.OutputStreamWriter;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.slfuture.carrie.base.character.Encoding;
@@ -55,6 +57,19 @@ public class Storage {
 		return IMAGE_ROOT + code;
 	}
 	
+	/**
+	 * 获取指定名称的图片
+	 * 
+	 * @param imageName 图片名称
+	 * @return 位图
+	 */
+	public static Bitmap getImage(String imageName) {
+		if(null == imageName) {
+			return null;
+		}
+		return BitmapFactory.decodeFile(IMAGE_ROOT + imageName);
+	}
+
 	/**
 	 * 获取指定URL中的图片名称
 	 * 

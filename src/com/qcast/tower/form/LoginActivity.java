@@ -5,6 +5,7 @@ import java.util.Date;
 import com.qcast.tower.R;
 import com.qcast.tower.logic.Host;
 import com.qcast.tower.logic.Logic;
+import com.qcast.tower.logic.Storage;
 import com.qcast.tower.logic.response.CommonResponse;
 import com.qcast.tower.logic.response.core.IResponse;
 import com.slfuture.carrie.base.json.JSONNumber;
@@ -126,6 +127,10 @@ public class LoginActivity extends Activity {
 						Logic.token = ((JSONString) ((JSONObject) object.get("data")).get("token")).getValue();
 						Logic.userId = ((JSONString) ((JSONObject) object.get("data")).get("userGlobalId")).getValue();
 						Logic.name = ((JSONString) ((JSONObject) object.get("data")).get("name")).getValue();
+						Storage.setUser("token", Logic.token);
+						Storage.setUser("userId", Logic.userId);
+						Storage.setUser("phone", phone);
+						Storage.setUser("name", Logic.name);
 						// 返回
 						Intent intent = new Intent();
 						intent.putExtra("RESULT", "SUCCESS");

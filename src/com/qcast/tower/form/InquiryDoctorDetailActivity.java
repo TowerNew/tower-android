@@ -133,6 +133,10 @@ public class InquiryDoctorDetailActivity extends Activity{
         inquiry_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            	if(null == Logic.token) {
+            		Toast.makeText(InquiryDoctorDetailActivity.this, "请先登录", Toast.LENGTH_LONG).show();
+                    return;
+            	}
                 Intent intent = new Intent(InquiryDoctorDetailActivity.this,InquiryDoctorChatActivity.class);
                 intent.putExtra("docId",doctorModel.doctorId);
                 InquiryDoctorDetailActivity.this.startActivity(intent);
@@ -156,8 +160,8 @@ public class InquiryDoctorDetailActivity extends Activity{
         if(!TextUtils.isEmpty(doctorModel.description)){
             doctor_des_tv.setText(doctorModel.description);
         }
-        if(doctorModel.docImage instanceof Bitmap){
-            doctor_photo_image.setImageBitmap(doctorModel.docImage);
+        if(doctorModel.getPhoto() instanceof Bitmap){
+            doctor_photo_image.setImageBitmap(doctorModel.getPhoto());
         }
         if(!TextUtils.isEmpty(doctorModel.resume)){
             doctor_skill_tv.setText(doctorModel.resume);
@@ -181,7 +185,7 @@ public class InquiryDoctorDetailActivity extends Activity{
                 }
                 JSONObject result = (JSONObject) resultObject.get("data");
 
-                String commentsNum = ((JSONNumber)result.get("count")).intValue()+"";
+                String commentsNum = ((JSONNumber)result.get("recordCount")).intValue()+"";
                 if(!TextUtils.isEmpty(commentsNum)){
                     user_comments_num_tv.setText("用户评价（"+commentsNum+"）");
                 }
@@ -197,21 +201,21 @@ public class InquiryDoctorDetailActivity extends Activity{
                         good_result_tv.setText(goodNum);
                     }
                 }
-                JSONArray listResult = (JSONArray)result.get("list");
-                for (IJSON item : listResult) {
-                    JSONObject newJSONObject = (JSONObject) item;
-                    DoctorCommentsModel doctorCommentsModel = new DoctorCommentsModel();
+                JSONArray listResult = (JSONArray)result.get("records");
+                if(null != listResult) {
+                    for (IJSON item : listResult) {
+                        JSONObject newJSONObject = (JSONObject) item;
+                        DoctorCommentsModel doctorCommentsModel = new DoctorCommentsModel();
 
-                    doctorCommentsModel.userName = ((JSONString) newJSONObject.get("username")).getValue();
-                    doctorCommentsModel.commentDate = ((JSONString) newJSONObject.get("date")).getValue();
-                    doctorCommentsModel.userComment = ((JSONString) newJSONObject.get("content")).getValue();
-                    doctorCommentsModel.attitude = ((JSONBoolean) newJSONObject.get("attitude")).getValue();
-                    dataList.add(doctorCommentsModel);
-
+                        doctorCommentsModel.userName = ((JSONString) newJSONObject.get("username")).getValue();
+                        doctorCommentsModel.commentDate = ((JSONString) newJSONObject.get("date")).getValue();
+                        doctorCommentsModel.userComment = ((JSONString) newJSONObject.get("content")).getValue();
+                        doctorCommentsModel.attitude = ((JSONBoolean) newJSONObject.get("attitude")).getValue();
+                        dataList.add(doctorCommentsModel);
+                    }
                 }
                 adapter.notifyDataSetChanged();
                 page = page + 1;
-
             }
         }, doctorModel.doctorId ,page);
     }

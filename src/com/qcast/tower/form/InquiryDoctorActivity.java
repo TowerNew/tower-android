@@ -136,6 +136,7 @@ public class InquiryDoctorActivity extends Activity {
                     doctorModel.level =((JSONNumber) newJSONObject.get("level")).intValue();
                     doctorModel.doctorId = ((JSONString) newJSONObject.get("userGlobalId")).getValue();
                     doctorModel.resume = ((JSONString) newJSONObject.get("resume")).getValue();
+                    doctorModel.photoName = photoName;
                     JSONArray servicesArray = (JSONArray) newJSONObject.get("services");
                     doctorModel.services = new ArrayList<String>();
                     for(int i=0;i<servicesArray.size();i++){
@@ -168,8 +169,8 @@ public class InquiryDoctorActivity extends Activity {
                         Host.doImage("image", new ImageResponse(photoName, dataList.size() - 1) {
                             @Override
                             public void onFinished(Bitmap content) {
-                                DoctorModel doctorModel = dataList.get((Integer) tag);
-                                doctorModel.docImage = content;
+                                // DoctorModel doctorModel = dataList.get((Integer) tag);
+                                // doctorModel.docImage = content;
                                 adapter.notifyDataSetChanged();
                             }
                         }, imageUrl);
@@ -253,10 +254,9 @@ public class InquiryDoctorActivity extends Activity {
             }else{
                 viewHolder.ispre_tv.setVisibility(View.GONE);
             }
-            if(model.docImage instanceof Bitmap){
-                viewHolder.doctor_photo_image.setImageBitmap(model.docImage);
+            if(model.getPhoto() instanceof Bitmap){
+                viewHolder.doctor_photo_image.setImageBitmap(model.getPhoto());
             }
-
             return convertView;
         }
 

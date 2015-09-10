@@ -70,7 +70,7 @@ public class UserActivity extends Fragment {
 		btnPhoto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(null == Logic.token) {
+				if(null != Logic.token) {
 					return;
 				}
 				Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);

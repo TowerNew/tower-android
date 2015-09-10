@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.qcast.tower.logic.Storage;
+
 /**
  * Created by zhengningchuan on 15/9/1.
  */
@@ -21,5 +23,9 @@ public class DoctorModel implements Serializable {
     public boolean isPre;
     public String description;
     public String resume;
-    public Bitmap docImage;
+    public String photoName = null;
+    
+    public Bitmap getPhoto() {
+    	return Storage.getImage(photoName);
+    }
 }

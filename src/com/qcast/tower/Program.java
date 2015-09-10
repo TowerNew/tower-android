@@ -25,6 +25,7 @@ public class Program extends Application {
 		Configuration.initialize(Logic.application);
 		// 初始化网络
 		Host.initialize();
+		Logic.initialize();
     }
 
 	/**

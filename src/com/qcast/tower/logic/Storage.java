@@ -119,7 +119,7 @@ public class Storage {
 							user.put(link.origin(), number.doubleValue());
 						}
 						else if(link.destination() instanceof JSONString) {
-							JSONString string = (JSONString) object.get(key);
+							JSONString string = (JSONString) link.destination();
 							if(null == string) {
 								return null;
 							}

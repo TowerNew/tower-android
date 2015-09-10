@@ -107,10 +107,12 @@ public class FamilyActivity extends Activity {
 											if(null == result) {
 												return;
 											}
-											if(200 == ((JSONNumber)(result.get("code"))).intValue()) {
+											if(((JSONNumber)(result.get("code"))).intValue() > 0) {
 												Toast.makeText(FamilyActivity.this, "操作成功，等待审核...", Toast.LENGTH_LONG).show();
-												String userId = ((JSONString)(((JSONObject) result.get("data")).get("userGlobalId"))).getValue();
-												Logic.familys.put(userId, new FamilyMember(userId, phone, relation));
+												if(null != result.get("data")) {
+													String userId = ((JSONString)(((JSONObject) result.get("data")).get("userGlobalId"))).getValue();
+													Logic.familys.put(userId, new FamilyMember(userId, phone, relation));
+												}
 											}
 											else {
 												Toast.makeText(FamilyActivity.this, ((JSONString) result.get("msg")).getValue(), Toast.LENGTH_LONG).show();

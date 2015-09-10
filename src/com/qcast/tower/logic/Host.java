@@ -144,6 +144,10 @@ public class Host {
 			if(STATUS_COMPLETED == status) {
 				HostBundle fileBundle = hostBundles.get(key);
 				fileBundle.response.setCode(IResponse.CODE_SUCCESS);
+				String path = this.file.getAbsolutePath();
+				path = path.substring(0, path.lastIndexOf("."));
+				this.file.renameTo(new File(path));
+				this.file = new File(path);
 				if(fileBundle.clazz.equals(Bitmap.class)) {
 					fileBundle.content = BitmapFactory.decodeFile(this.file.getAbsolutePath());
 				}
@@ -308,6 +312,17 @@ public class Host {
 		}
 		return material;
 	}
+	
+	/**
+	 * 获取协议URL
+	 * 
+	 * @param protocol 协议名称
+	 * @param parameters 参数列表
+	 * @return URL
+	 */
+	public static String fetchURL(String protocol, Object... parameters) {
+		return protocols.get(protocol).buildURL(parameters);
+	}
 
 	/**
 	 * 执行网络命令
@@ -353,6 +368,7 @@ public class Host {
 			hostHandler = new HostHandler();
 			hostHandlers.set(hostHandler);
 		}
-		protocols.get(protocol).invoke(material(), new HostFileFuture(imageResponse, hostHandler, imageResponse.file(), Bitmap.class), parameters);
+		String path = imageResponse.file().getAbsolutePath() + "." + Serial.makeSerialString() + Serial.makeLoopInteger();
+		protocols.get(protocol).invoke(material(), new HostFileFuture(imageResponse, hostHandler, new File(path), Bitmap.class), parameters);
 	}
 }

@@ -19,7 +19,7 @@ public class FamilyMember {
 	/**
 	 * 属性
 	 */
-	public int userId;
+	public String userId;
 	public int category;
 	public int status;
 	public String phone;
@@ -41,7 +41,7 @@ public class FamilyMember {
 	 * @param phone 手机号码
 	 * @param relation 关系类型
 	 */
-	public FamilyMember(int userId, String phone, String relation) {
+	public FamilyMember(String userId, String phone, String relation) {
 		this.userId = userId;
 		this.phone = phone;
 		this.relation = relation;

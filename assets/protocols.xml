@@ -10,4 +10,8 @@
 	<protocol name="fetchCode" path="user-platform-web-1.0.0/rest/fetchCode?phone=[0]" mock="{&quot;code&quot;:200, &quot;msg&quot;:&quot;&quot;}" />
 	<protocol name="login" path="user-platform-web-1.0.0/rest/login#phone=[0]&amp;code=[1]" mock="{&quot;code&quot;:200, &quot;data&quot;:{&quot;token&quot;:&quot;ABCD9527&quot;, &quot;name&quot;:&quot;王思聪&quot;, &quot;photo&quot;:&quot;&quot;}}" />
 	<protocol name="logout" path="user-platform-web-1.0.0/rest/logout#token=[0]" mock="{&quot;code&quot;:200, &quot;msg&quot;:&quot;&quot;}" />
+	<protocol name="loadBody" path="user-platform-web-1.0.0/rest/loadBody" mock="{&quot;code&quot;:1,&quot;data&quot;:[&quot;头部&quot;,&quot;四肢&quot;,&quot;颈椎&quot;]}" />
+	<protocol name="loadSymptom" path="user-platform-web-1.0.0/rest/loadSymptom?body=[0]" mock="{&quot;code&quot;:1,&quot;data&quot;:[&quot;头晕&quot;,&quot;心慌&quot;,&quot;嗜睡&quot;,&quot;头疼&quot;]}" />
+	<protocol name="loadDisease" path="user-platform-web-1.0.0/rest/loadDisease?symptom=[0]" mock="{&quot;code&quot;:1,&quot;data&quot;:[{&quot;caption&quot;:&quot;感冒&quot;,&quot;description&quot;:&quot;伴有头晕，发烧等症状&quot;},{&quot;caption&quot;:&quot;颈椎病&quot;,&quot;description&quot;:&quot;伴有头晕，走路漂浮等症状&quot;}]}" />
+	<protocol name="searchDisease" path="user-platform-web-1.0.0/page/search?disease=[0]" mock="" />
 </protocols>

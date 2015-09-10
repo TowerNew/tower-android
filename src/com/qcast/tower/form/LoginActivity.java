@@ -124,8 +124,8 @@ public class LoginActivity extends Activity {
 						}
 						Logic.phone = phone;
 						Logic.token = ((JSONString) ((JSONObject) object.get("data")).get("token")).getValue();
+						Logic.userId = ((JSONString) ((JSONObject) object.get("data")).get("userGlobalId")).getValue();
 						Logic.name = ((JSONString) ((JSONObject) object.get("data")).get("name")).getValue();
-						Logic.photo = ((JSONString) ((JSONObject) object.get("data")).get("photo")).getValue();
 						// 返回
 						Intent intent = new Intent();
 						intent.putExtra("RESULT", "SUCCESS");

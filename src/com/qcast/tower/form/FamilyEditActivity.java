@@ -26,7 +26,7 @@ public class FamilyEditActivity extends Activity {
 	/**
 	 * 成员标志
 	 */
-	public int userId = 0;
+	public String userId = null;
 	/**
 	 * 家庭成员数据
 	 */
@@ -65,7 +65,7 @@ public class FamilyEditActivity extends Activity {
 				member.category = FamilyMember.CATEGORY_OWNER;
 				member.status = FamilyMember.STATUS_UNCONFIRM;
 				int mode = 1;
-				if(0 == userId) {
+				if(null == userId) {
 					mode = 0;
 				}
 				Host.doCommand("editowner", new CommonResponse<String>() {
@@ -81,7 +81,7 @@ public class FamilyEditActivity extends Activity {
 						}
 						if(200 == ((JSONNumber)(result.get("code"))).intValue()) {
 							Toast.makeText(FamilyEditActivity.this, "操作成功，等待审核...", Toast.LENGTH_LONG).show();
-							userId = ((JSONNumber)(((JSONObject) result.get("data")).get("userId"))).intValue();
+							userId = ((JSONString)(((JSONObject) result.get("data")).get("userGlobalId"))).getValue();
 							member.userId = userId;
 							Logic.familys.put(member.userId, member);
 							FamilyEditActivity.this.finish();
@@ -94,8 +94,8 @@ public class FamilyEditActivity extends Activity {
 			}
     	});
 		// 数据处理
-		userId = this.getIntent().getIntExtra("userId", 0);
-		if(0 == userId) {
+		userId = this.getIntent().getStringExtra("userId");
+		if(null == userId) {
 			// 添加
 			return;
 		}

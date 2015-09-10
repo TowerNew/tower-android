@@ -9,7 +9,12 @@ import com.slfuture.carrie.base.text.Text;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +26,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.TextView;
@@ -64,14 +70,24 @@ public class UserActivity extends Fragment {
 		btnPhoto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				// Intent intent = new Intent(UserActivity.this.getActivity(), SelfDiagnosticActivity.class);
+				// UserActivity.this.startActivity(intent);
+				// return;
 				Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);
 				UserActivity.this.startActivity(intent);
 			}
 		});
 		//
 		dealList();
+		dealUser();
 	}
 	
+	/**
+	 * 处理用户信息
+	 */
+	public void dealUser() {
+	}
+
 	/**
 	 * 处理咨询
 	 */
@@ -125,9 +141,43 @@ public class UserActivity extends Fragment {
 				if(2 != index) {
 					return;
 				}
+				if(null == Logic.token) {
+					Toast.makeText(UserActivity.this.getActivity(), "尚未登录", Toast.LENGTH_LONG).show();
+					return;
+				}
 				Intent intent = new Intent(UserActivity.this.getActivity(), FamilyActivity.class);
 				UserActivity.this.startActivity(intent);
             }
 		});
+	}
+	
+	/**
+	 * 根据原图和变长绘制圆形图片
+	 * 
+	 * @param source
+	 * @param min
+	 * @return
+	 */
+	private Bitmap transferCircleImage(Bitmap source, int min) {
+		final Paint paint = new Paint();
+		paint.setAntiAlias(true);
+		Bitmap target = Bitmap.createBitmap(min, min, Config.ARGB_8888);
+		/**
+		 * 产生一个同样大小的画布
+		 */
+		Canvas canvas = new Canvas(target);
+		/**
+		 * 首先绘制圆形
+		 */
+		canvas.drawCircle(min / 2, min / 2, min / 2, paint);
+		/**
+		 * 使用SRC_IN
+		 */
+		paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+		/**
+		 * 绘制图片
+		 */
+		canvas.drawBitmap(source, 0, 0, paint);
+		return target;
 	}
 }

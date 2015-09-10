@@ -33,6 +33,26 @@ public class Protocol {
 		result.mock = mock;
 		return result;
 	}
+	
+	/**
+	 * 构建URL
+	 * 
+	 * @param parameters 参数列表
+	 */
+	public String buildURL(Object... parameters) {
+		// 梳理URL
+		String url = urlTemplate;
+		for(int i = parameters.length - 1; i >= 0; i--) {
+			Object parameter = parameters[i];
+			if(null == parameter) {
+				url = url.replace("[" + i + "]", "");
+			}
+			else {
+				url = url.replace("[" + i + "]", parameter.toString());
+			}
+		}
+		return url;
+	}
 
 	/**
 	 * 调用

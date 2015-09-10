@@ -109,7 +109,7 @@ public class FamilyActivity extends Activity {
 											}
 											if(200 == ((JSONNumber)(result.get("code"))).intValue()) {
 												Toast.makeText(FamilyActivity.this, "操作成功，等待审核...", Toast.LENGTH_LONG).show();
-												int userId = ((JSONNumber)(((JSONObject) result.get("data")).get("userId"))).intValue();
+												String userId = ((JSONString)(((JSONObject) result.get("data")).get("userGlobalId"))).getValue();
 												Logic.familys.put(userId, new FamilyMember(userId, phone, relation));
 											}
 											else {
@@ -189,14 +189,24 @@ public class FamilyActivity extends Activity {
 				for(IJSON item : result) {
 					JSONObject newJSONObject = (JSONObject) item;
 					FamilyMember member = new FamilyMember();
-					member.userId = ((JSONNumber) newJSONObject.get("userId")).intValue();
+					if(null != newJSONObject.get("userGlobalId")) {
+						member.userId = ((JSONString) newJSONObject.get("userGlobalId")).getValue();
+					}
 					member.category = ((JSONNumber) newJSONObject.get("category")).intValue();
 					member.status = ((JSONNumber) newJSONObject.get("status")).intValue();
-					member.phone = ((JSONString) newJSONObject.get("phone")).getValue();
-					member.relation = ((JSONString) newJSONObject.get("relation")).getValue();
+					if(null != newJSONObject.get("phone")) {
+						member.phone = ((JSONString) newJSONObject.get("phone")).getValue();
+					}
+					if(null != newJSONObject.get("relation")) {
+						member.relation = ((JSONString) newJSONObject.get("relation")).getValue();
+					}
 					member.name = ((JSONString) newJSONObject.get("name")).getValue();
-					member.idNumber = ((JSONString) newJSONObject.get("idnumber")).getValue();
-					member.birthday = ((JSONString) newJSONObject.get("birthday")).getValue();
+					if(null != newJSONObject.get("idnumber")) {
+						member.idNumber = ((JSONString) newJSONObject.get("idnumber")).getValue();
+					}
+					if(null != newJSONObject.get("birthday")) {
+						member.birthday = ((JSONString) newJSONObject.get("birthday")).getValue();
+					}
 					Logic.familys.put(member.userId, member);
 					//
 					HashMap<String, Object> memberMap = new HashMap<String, Object>();

@@ -9,6 +9,8 @@ import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 /**
  * 浏览器页
@@ -42,6 +44,19 @@ public class WebActivity extends Activity {
 				if(100 == newProgress) {
 					view.setVisibility(View.VISIBLE);
 				}
+			} 
+            @Override  
+            public void onReceivedTitle(WebView view, String title) {  
+                super.onReceivedTitle(view, title);  
+                TextView textView = (TextView) WebActivity.this.findViewById(R.id.web_text_caption);
+				textView.setText(title);
+            }
+		});
+		ImageButton button = (ImageButton) this.findViewById(R.id.web_button_return);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				WebActivity.this.finish();
 			}
 		});
 		String url = this.getIntent().getStringExtra("url");

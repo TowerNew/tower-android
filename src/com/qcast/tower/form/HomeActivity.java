@@ -116,7 +116,9 @@ public class HomeActivity extends Fragment {
 				imageCache.put(index, imageView);
 			}
 			else {
-				imageView.setImageBitmap((Bitmap)(adList.get(index).get("image")));
+				if(adList.get(index).get("image") instanceof Bitmap) {
+					imageView.setImageBitmap((Bitmap)(adList.get(index).get("image")));
+				}
 			}
 			return imageView;
 		}
@@ -136,6 +138,18 @@ public class HomeActivity extends Fragment {
             	if(null == gallery) {
             		gallery = ((Gallery) HomeActivity.this.getActivity().findViewById(R.id.home_gallery_ad));
             		gallery.setAdapter(new BannerAdapter());
+            		gallery.setOnItemClickListener(new OnItemClickListener() {
+						@Override
+						public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+							String url = (String) adList.get(position).get("url");
+							if(null == url) {
+								return;
+							}
+							Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
+							intent.putExtra("url", url);
+							HomeActivity.this.startActivity(intent);
+						}
+					});
             	}
             	if(0 == adList.size()) {
             		return;
@@ -269,7 +283,7 @@ public class HomeActivity extends Fragment {
 					String imageURL = ((JSONString)(jsonObject.get("image"))).getValue();
 					String imageName = Storage.getImageName(imageURL);
 					newsMap.put("image", imageName);
-					newsMap.put("titile", ((JSONString)(jsonObject.get("url"))).getValue());
+					newsMap.put("url", ((JSONString)(jsonObject.get("url"))).getValue());
 					adList.add(newsMap);
 		            if(Text.isBlank(imageName)) {
 		            	continue;

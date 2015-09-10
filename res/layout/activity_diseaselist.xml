@@ -2,10 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WebActivity"
-    android:background="@color/white" >
+    android:background="@color/lightgrey">
     <RelativeLayout
-		android:id="@+id/web_layout_head"
+		android:id="@+id/diseaselist_layout_head"
 		android:layout_width="match_parent"
 		android:layout_height="48dp"
 		android:layout_alignParentTop="true" 
@@ -13,7 +12,7 @@
 		android:focusable="true"
 		android:focusableInTouchMode="true">
 		<ImageButton
-            android:id="@+id/web_button_return"
+            android:id="@+id/diseaselist_button_return"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
@@ -21,23 +20,22 @@
             android:layout_marginLeft="6dp"
             android:background="@drawable/button_return" />
         <TextView
-            android:id="@+id/web_text_caption"
+            android:id="@+id/diseaselist_text_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:text="正在加载..."
+            android:text="疾病列表"
             android:textColor="#ffffffff"
             android:textSize="18sp" />
-
 	</RelativeLayout>
-
-    <WebView
-        android:id="@+id/web_browser"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/web_layout_head"
-        android:visibility="invisible" />
-
+	
+    <ListView
+        android:id="@+id/diseaselist_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/diseaselist_layout_head"
+        android:background="@color/white"
+        android:divider="@drawable/divider" />
 </RelativeLayout>

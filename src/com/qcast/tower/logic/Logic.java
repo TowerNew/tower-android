@@ -25,6 +25,10 @@ public class Logic {
 	 */
 	public static String token = null;
 	/**
+	 * 用户ID
+	 */
+	public static String userId = null;
+	/**
 	 * 用户名称
 	 */
 	public static String name = null;
@@ -43,5 +47,5 @@ public class Logic {
 	/**
 	 * 家庭成员
 	 */
-	public static Table<Integer, FamilyMember> familys = new Table<Integer, FamilyMember>();
+	public static Table<String, FamilyMember> familys = new Table<String, FamilyMember>();
 }

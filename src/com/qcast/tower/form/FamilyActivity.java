@@ -116,7 +116,7 @@ public class FamilyActivity extends Activity {
 												Toast.makeText(FamilyActivity.this, ((JSONString) result.get("msg")).getValue(), Toast.LENGTH_LONG).show();
 											}
 										}
-									}, Logic.token, 0, phone);
+									}, Logic.token, "", relation, phone);
                                 }
 							}).setNegativeButton("取消", null).create();
 						inputDialog.show();

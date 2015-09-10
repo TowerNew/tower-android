@@ -39,7 +39,7 @@ public class Logic {
 	/**
 	 * 当前区域ID
 	 */
-	public static int regionId;
+	public static int regionId = 1;
 	/**
 	 * 当前区域名称
 	 */

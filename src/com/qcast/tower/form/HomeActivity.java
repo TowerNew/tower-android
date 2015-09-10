@@ -41,6 +41,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.HeaderViewListAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -240,6 +241,7 @@ public class HomeActivity extends Fragment {
 		dealNews();
 		dealRegion();
 		dealSearch();
+		dealEntry();
 		//
 		loadAd();
 		loadNews();
@@ -400,6 +402,8 @@ public class HomeActivity extends Fragment {
 									}
 									Logic.regionId = regionIds[currentRegionIndex];
 									Logic.regionName = regionNames[currentRegionIndex];
+									Storage.setUser("regionId", Logic.regionId);
+									Storage.setUser("regionName", Logic.regionName);
 									regionButton.setText(Logic.regionName);
 								}
 							}).setNegativeButton("取消", new OnClickListener() {
@@ -415,6 +419,37 @@ public class HomeActivity extends Fragment {
 						}
 					}
 				});
+			}
+		});
+		Logic.regionName = Storage.user("regionName", String.class);
+		if(null != Storage.user("regionId", Integer.class)) {
+			Logic.regionId = (int) (double) (Double) Storage.user("regionId", Double.class);
+		}
+		if(null != Logic.regionName) {
+			regionButton.setText(Logic.regionName);
+		}
+	}
+
+	/**
+	 * 处理入口按钮
+	 */
+	public void dealEntry() {
+		ImageButton button = (ImageButton) this.getActivity().findViewById(R.id.home_button_famous);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
+				intent.putExtra("docLevel", "1");
+				HomeActivity.this.startActivity(intent);
+			}
+		});
+		button = (ImageButton) this.getActivity().findViewById(R.id.home_button_inquiry);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
+				intent.putExtra("docLevel", "2");
+				HomeActivity.this.startActivity(intent);
 			}
 		});
 	}

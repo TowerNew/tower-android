@@ -75,8 +75,8 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void goSelf(View view){
-        //Intent intent = new Intent(MainActivity.this,InquiryDoctorActivity.class);
-        //MainActivity.this.startActivity(intent);
+		 Intent intent = new Intent(this, SelfDiagnosticActivity.class);
+		 this.startActivity(intent);
     }
 
     public void goFamous(View view){

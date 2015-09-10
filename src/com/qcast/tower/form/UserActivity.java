@@ -70,9 +70,9 @@ public class UserActivity extends Fragment {
 		btnPhoto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// Intent intent = new Intent(UserActivity.this.getActivity(), SelfDiagnosticActivity.class);
-				// UserActivity.this.startActivity(intent);
-				// return;
+				if(null == Logic.token) {
+					return;
+				}
 				Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);
 				UserActivity.this.startActivity(intent);
 			}

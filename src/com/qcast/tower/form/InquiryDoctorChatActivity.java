@@ -66,7 +66,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
     private void requestChannel() {
         Host.doCommand("talk", new CommonResponse<String>() {
             @Override
-            public void onFinished(String content) throws JSONException {
+            public void onFinished(String content) {
                 if (IResponse.CODE_SUCCESS != code()) {
                     Toast.makeText(InquiryDoctorChatActivity.this, "网络错误", Toast.LENGTH_LONG).show();
                 }
@@ -119,7 +119,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
                 if (!breakFlag && !TextUtils.isEmpty(channel)) {
                     Host.doCommand("pull", new CommonResponse<String>() {
                         @Override
-                        public void onFinished(String content) throws JSONException {
+                        public void onFinished(String content) {
                             if (IResponse.CODE_SUCCESS != code()) {
                                 Toast.makeText(InquiryDoctorChatActivity.this, "网络错误", Toast.LENGTH_LONG).show();
                             }
@@ -172,7 +172,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
         if (contString.length() > 0) {
             Host.doCommand("push", new CommonResponse<String>() {
                 @Override
-                public void onFinished(String content) throws JSONException {
+                public void onFinished(String content) {
                     if (IResponse.CODE_SUCCESS != code()) {
                         Toast.makeText(InquiryDoctorChatActivity.this, "网络错误", Toast.LENGTH_LONG).show();
                     }

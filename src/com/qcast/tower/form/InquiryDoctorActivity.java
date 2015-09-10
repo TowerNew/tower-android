@@ -56,7 +56,7 @@ public class InquiryDoctorActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        doctorLevel=this.getIntent().getIntExtra("docLevel",2);
+        doctorLevel=this.getIntent().getIntExtra("docLevel", 1);
         this.setContentView(R.layout.activity_inquiry_doctor);
         doctorList = (ListView)findViewById(R.id.doctor_list);
         inquiry_return_btn = (Button)findViewById(R.id.inquiry_return_btn);
@@ -109,9 +109,15 @@ public class InquiryDoctorActivity extends Activity {
                     return;
                 }
                 JSONArray result = (JSONArray) resultObject.get("data");
+                if(null == result) {
+                	return;
+                }
                 int thisPage = (Integer) this.tag;
                 if(page != thisPage) {
                     return;
+                }
+                if(null == result) {
+                	return;
                 }
                 for (IJSON item : result) {
                     JSONObject newJSONObject = (JSONObject) item;
@@ -147,7 +153,6 @@ public class InquiryDoctorActivity extends Activity {
                             break;
                         }
                     }
-
                     if(doctorModel.level==1) {
                         doctorModel.isFamous = true;
                     }else{

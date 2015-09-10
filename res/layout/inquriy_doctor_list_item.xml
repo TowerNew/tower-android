@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_backgroud"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/isfamous_tv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="6dp"
+        android:layout_gravity="top"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@drawable/inquriy_famous_tag" />
+
+    <ImageView
+        android:id="@+id/doctor_photo_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="-12dp"
+        android:layout_marginTop="-5dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/askdoctor_chat_other" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/doctor_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="李三三"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/doctor_type_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="普外"
+                android:textColor="@color/white"
+                android:background="@drawable/inquriy_department_tag" />
+
+            <TextView
+                android:id="@+id/doctor_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="8dp"
+                android:maxWidth="80dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="主治医生" />
+
+            <TextView
+                android:id="@+id/isask_tv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="6dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/inquriy_ask_tag" />
+
+            <TextView
+                android:id="@+id/ispre_tv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="6dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/inquriy_reserve_tag" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/doctor_des_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="agasgasgagagagasgagasgasgagagagasgagasgasgagagagasgagasgasgagagagasgagasgasgagagagasg" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

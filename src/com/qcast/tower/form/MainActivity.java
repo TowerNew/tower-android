@@ -1,9 +1,11 @@
 package com.qcast.tower.form;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.view.Window;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -65,4 +67,22 @@ public class MainActivity extends FragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
     }
+
+    public void goOnline(View view){
+        Intent intent = new Intent(MainActivity.this,InquiryDoctorActivity.class);
+        intent.putExtra("docLevel",2);
+        MainActivity.this.startActivity(intent);
+    }
+
+    public void goSelf(View view){
+        //Intent intent = new Intent(MainActivity.this,InquiryDoctorActivity.class);
+        //MainActivity.this.startActivity(intent);
+    }
+
+    public void goFamous(View view){
+        Intent intent = new Intent(MainActivity.this,InquiryDoctorActivity.class);
+        intent.putExtra("docLevel",1);
+        MainActivity.this.startActivity(intent);
+    }
+
 }

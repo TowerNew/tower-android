@@ -78,10 +78,12 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
                     Toast.makeText(InquiryDoctorChatActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
                     return;
                 }
-                channel =((JSONString)(resultObject.get("data"))).getValue();
+                IJSON obj=resultObject.get("data");
+
+                channel =obj.toString().substring(0,obj.toString().lastIndexOf("."));
 
             }
-        }, docId, Logic.token);
+        },"头疼怎么办", docId, Logic.token);
     }
 
     @Override
@@ -136,33 +138,36 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
                             }
                             mDataArrays.clear();
                             com.slfuture.carrie.base.json.JSONArray result = (com.slfuture.carrie.base.json.JSONArray) resultObject.get("data");
-                            for (IJSON item : result) {
-                                JSONObject newJSONObject = (JSONObject) item;
-                                ChatMsgEntity entity = new ChatMsgEntity();
-                                entity.setMessage(((JSONString) newJSONObject.get("content")).getValue());
-                                String userID = ((JSONString) newJSONObject.get("speaker")).getValue();
-                                entity.setSpeakeId(userID);
-                                String time = ((JSONString) newJSONObject.get("time")).getValue();
-                                entity.setTime(time);
-                                if (userID.equals("docId")) {
-                                    entity.setMsgType(true);
-                                } else {
-                                    entity.setMsgType(false);
-                                }
-                                mDataArrays.add(entity);
+                            if (result != null) {
+                                for (IJSON item : result) {
+                                    JSONObject newJSONObject = (JSONObject) item;
+                                    ChatMsgEntity entity = new ChatMsgEntity();
+                                    IJSON obj =newJSONObject.get("content");
+                                    entity.setMessage(((JSONString) newJSONObject.get("content")).getValue());
+                                    String userID = ((JSONString) newJSONObject.get("speaker")).getValue();
+                                    entity.setSpeakeId(userID);
+                                    long time = ((JSONNumber) newJSONObject.get("time")).longValue();
+                                    entity.setTime(time);
+                                    if (userID.equals("docId")) {
+                                        entity.setMsgType(true);
+                                    } else {
+                                        entity.setMsgType(false);
+                                    }
+                                    mDataArrays.add(entity);
 
+                                }
+                                if (refreshFlag) {
+                                    mAdapter.notifyDataSetChanged();
+                                    mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
+                                }
+                                InquiryDoctorChatActivity.this.refreshMessage();
                             }
-                            if (refreshFlag) {
-                                mAdapter.notifyDataSetChanged();
-                                mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
-                            }
-                            InquiryDoctorChatActivity.this.refreshMessage();
                         }
 
                     }, channel, Logic.token);
                 }
             }
-        }, 20000);
+        }, 5000);
 
     }
 
@@ -198,6 +203,10 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
                         mEditTextContent.setText("");// 清空编辑框数据
                         mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
                     }
+                    if (!breakFlag && !TextUtils.isEmpty(channel)){
+                        chatHandler.removeCallbacksAndMessages(null);
+                        refreshMessage();
+                    }
                 }
 
             }, channel, contString, Logic.token);
@@ -215,6 +224,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
     protected void onDestroy() {
         super.onDestroy();
         breakFlag = true;
+        chatHandler.removeCallbacksAndMessages(null);
         chatHandler=null;
     }
 }

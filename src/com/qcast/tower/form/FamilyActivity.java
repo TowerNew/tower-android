@@ -8,7 +8,6 @@ import com.qcast.tower.logic.Host;
 import com.qcast.tower.logic.Logic;
 import com.qcast.tower.logic.response.CommonResponse;
 import com.qcast.tower.logic.response.Response;
-import com.qcast.tower.logic.response.core.IResponse;
 import com.qcast.tower.logic.structure.FamilyMember;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
@@ -17,23 +16,16 @@ import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -82,61 +74,9 @@ public class FamilyActivity extends Activity {
 		btnAdd.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Dialog dialog = new AlertDialog.Builder(FamilyActivity.this).setTitle("添加").setMessage("请选择家庭成员的添加方式").setNeutralButton("手机号码", new OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						LayoutInflater inflater = getLayoutInflater();
-						final View layout = inflater.inflate(R.layout.dialog_family, (ViewGroup) findViewById(R.id.familydialog_layout));
-						Dialog inputDialog = new AlertDialog.Builder(FamilyActivity.this)
-							.setTitle("请输入手机号码")
-							.setView(layout)
-							.setPositiveButton("确定", new DialogInterface.OnClickListener() {  
-								public void onClick(DialogInterface dialog, int which) {
-									EditText txtRelation = (EditText) layout.findViewById(R.id.familydialog_text_relation);
-									final String relation = txtRelation.getText().toString();
-									EditText txtPhone = (EditText) layout.findViewById(R.id.familydialog_text_phone);
-									final String phone = txtPhone.getText().toString();
-									Host.doCommand("editrelation", new CommonResponse<String>() {
-										@Override
-										public void onFinished(String content) {
-											if(IResponse.CODE_SUCCESS != code()) {
-												Toast.makeText(FamilyActivity.this, "网络错误", Toast.LENGTH_LONG).show();
-												return;
-											}
-											JSONObject result = JSONObject.convert(content);
-											if(null == result) {
-												return;
-											}
-											if(((JSONNumber)(result.get("code"))).intValue() > 0) {
-												Toast.makeText(FamilyActivity.this, "操作成功，等待审核...", Toast.LENGTH_LONG).show();
-												if(null != result.get("data")) {
-													String userId = ((JSONString)(((JSONObject) result.get("data")).get("userGlobalId"))).getValue();
-													Logic.familys.put(userId, new FamilyMember(userId, phone, relation));
-												}
-											}
-											else {
-												Toast.makeText(FamilyActivity.this, ((JSONString) result.get("msg")).getValue(), Toast.LENGTH_LONG).show();
-											}
-										}
-									}, Logic.token, "", relation, phone);
-                                }
-							}).setNegativeButton("取消", null).create();
-						inputDialog.show();
-					}
-				}).setNegativeButton("身份证号", new OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						Intent intent = new Intent(FamilyActivity.this, FamilyEditActivity.class);
-						intent.putExtra("userId", 0);
-						FamilyActivity.this.startActivity(intent);
-					}
-				}).setPositiveButton("取消", new OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						return;
-					}
-				}).create();
-				dialog.show();
+				Intent intent = new Intent(FamilyActivity.this, FamilyEditActivity.class);
+				intent.putExtra("userId", 0);
+				FamilyActivity.this.startActivity(intent);
 			}
 		});
 	}

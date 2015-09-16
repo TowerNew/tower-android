@@ -1,5 +1,7 @@
 package com.qcast.tower.form;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -180,6 +182,11 @@ public class SelfDiagnosticActivity extends Activity {
 	 * @param bodyName 部位名称
 	 */
 	public void loadSymptom(String bodyName) {
+		String body = null;
+		try {
+			body = URLEncoder.encode(bodyName, "UTF-8");
+		}
+		catch (UnsupportedEncodingException e) { }
 		Host.doCommand("loadSymptom", new CommonResponse<String>() {
 			@Override
 			public void onFinished(String content) {
@@ -205,6 +212,6 @@ public class SelfDiagnosticActivity extends Activity {
 				SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
 				adapter.notifyDataSetChanged();
 			}
-		}, bodyName);
+		}, body);
 	}
 }

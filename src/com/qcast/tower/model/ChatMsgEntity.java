@@ -10,7 +10,9 @@ public class ChatMsgEntity {
 	private String message;//消息内容
 	private boolean isComMeg = true;// 是否为收到的消息
 	private String speakeId;
-	private String time;
+	private long time;
+	
+	
 	public String getMessage() {
 		return message;
 	}
@@ -44,7 +46,7 @@ public class ChatMsgEntity {
 		return isComMeg;
 	}
 
-	public String getTime() {
+	public long getTime() {
 		return time;
 	}
 
@@ -56,7 +58,7 @@ public class ChatMsgEntity {
 		this.speakeId = speakeId;
 	}
 
-	public void setTime(String time) {
+	public void setTime(long time) {
 		this.time = time;
 	}
 }

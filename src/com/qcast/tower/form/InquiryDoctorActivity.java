@@ -257,6 +257,9 @@ public class InquiryDoctorActivity extends Activity {
             if(model.getPhoto() instanceof Bitmap){
                 viewHolder.doctor_photo_image.setImageBitmap(model.getPhoto());
             }
+            else {
+                viewHolder.doctor_photo_image.setVisibility(View.INVISIBLE);
+            }
             return convertView;
         }
 

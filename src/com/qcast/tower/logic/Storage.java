@@ -2,7 +2,6 @@ package com.qcast.tower.logic;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -142,7 +141,12 @@ public class Storage {
 		if(null == user) {
 			user = new ConcurrentHashMap<String, Object>();
 		}
-		user.put(key, value);
+		if(null == value) {
+			user.remove(key);
+		}
+		else {
+			user.put(key, value);
+		}
 		save();
 	}
 
@@ -159,6 +163,9 @@ public class Storage {
 		}
 		JSONObject object = new JSONObject();
 		for(Entry<String, Object> link : user.entrySet()) {
+			if(null == link.getValue()) {
+				continue;
+			}
 			if(link.getValue() instanceof Integer) {
 				object.put(link.getKey(), new JSONNumber((Integer) link.getValue()));
 			}

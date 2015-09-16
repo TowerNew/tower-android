@@ -31,6 +31,10 @@ public class FamilyEditActivity extends Activity {
 	 * 家庭成员数据
 	 */
 	public FamilyMember member = new FamilyMember();
+	/**
+	 * 当前Tab
+	 */
+	public int tab = 0;
 
 
 	/**
@@ -50,10 +54,58 @@ public class FamilyEditActivity extends Activity {
 	 * 界面预处理
 	 */
 	public void prepare() {
+		//
+		Button btnTab = (Button) findViewById(R.id.familyedit_button_relation);
+		btnTab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectTab(0);
+			}
+		});
+		btnTab = (Button) findViewById(R.id.familyedit_button_owner);
+		btnTab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectTab(1);
+			}
+		});
+		selectTab(0);
+		//
 		Button btnConfirm = (Button) findViewById(R.id.familyedit_button_confirm);
 		btnConfirm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if(0 == tab) {
+					EditText txtRelation = (EditText) findViewById(R.id.familyedit_text_relation);
+					member.relation = txtRelation.getText().toString();
+					EditText txtPhone = (EditText) findViewById(R.id.familyedit_text_phone);
+					member.phone = txtPhone.getText().toString();
+					Host.doCommand("editrelation", new CommonResponse<String>() {
+						@Override
+						public void onFinished(String content) {
+							if(IResponse.CODE_SUCCESS != code()) {
+								Toast.makeText(FamilyEditActivity.this, "网络错误", Toast.LENGTH_LONG).show();
+								return;
+							}
+							JSONObject result = JSONObject.convert(content);
+							if(null == result) {
+								return;
+							}
+							if(((JSONNumber)(result.get("code"))).intValue() > 0) {
+								Toast.makeText(FamilyEditActivity.this, "操作成功，等待审核...", Toast.LENGTH_LONG).show();
+								if(null != result.get("data")) {
+									String userId = ((JSONString)(((JSONObject) result.get("data")).get("userGlobalId"))).getValue();
+									Logic.familys.put(userId, new FamilyMember(userId, member.phone, member.relation));
+								}
+							}
+							else {
+								Toast.makeText(FamilyEditActivity.this, ((JSONString) result.get("msg")).getValue(), Toast.LENGTH_LONG).show();
+							}
+						}
+					}, Logic.token, "", txtRelation.getText().toString(), txtPhone.getText().toString());
+					
+					return;
+				}
 				EditText txtRelation = (EditText) findViewById(R.id.familyedit_text_relation);
 				EditText txtName = (EditText) findViewById(R.id.familyedit_text_name);
 				EditText txtIdNumber = (EditText) findViewById(R.id.familyedit_text_idnumber);
@@ -113,5 +165,38 @@ public class FamilyEditActivity extends Activity {
 		txtIdNumber.setText(member.idNumber);
 		EditText txtAge = (EditText) findViewById(R.id.familyedit_text_birthday);
 		txtAge.setText(member.birthday);
+	}
+	
+	/**
+	 * 选择指定的选项卡
+	 * 
+	 * @param which 0/1
+	 */
+	public void selectTab(int which) {
+		tab = which;
+		if(0 == which) {
+			findViewById(R.id.familyedit_button_relation).setBackgroundResource(R.color.white);
+			findViewById(R.id.familyedit_button_owner).setBackgroundResource(R.color.lightgrey);
+			
+			findViewById(R.id.familyedit_item_name).setVisibility(View.GONE);
+			findViewById(R.id.familyedit_divide2).setVisibility(View.GONE);
+			findViewById(R.id.familyedit_item_idnumber).setVisibility(View.GONE);
+			findViewById(R.id.familyedit_divide3).setVisibility(View.GONE);
+			findViewById(R.id.familyedit_item_birthday).setVisibility(View.GONE);
+			findViewById(R.id.familyedit_divide4).setVisibility(View.GONE);
+			findViewById(R.id.familyedit_item_phone).setVisibility(View.VISIBLE);
+		}
+		else {
+			findViewById(R.id.familyedit_button_relation).setBackgroundResource(R.color.lightgrey);
+			findViewById(R.id.familyedit_button_owner).setBackgroundResource(R.color.white);
+			
+			findViewById(R.id.familyedit_item_name).setVisibility(View.VISIBLE);
+			findViewById(R.id.familyedit_divide2).setVisibility(View.VISIBLE);
+			findViewById(R.id.familyedit_item_idnumber).setVisibility(View.VISIBLE);
+			findViewById(R.id.familyedit_divide3).setVisibility(View.VISIBLE);
+			findViewById(R.id.familyedit_item_birthday).setVisibility(View.VISIBLE);
+			findViewById(R.id.familyedit_divide4).setVisibility(View.GONE);
+			findViewById(R.id.familyedit_item_phone).setVisibility(View.GONE);
+		}
 	}
 }

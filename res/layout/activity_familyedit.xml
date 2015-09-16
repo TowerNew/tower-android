@@ -20,27 +20,43 @@
             android:textColor="#ffffffff"
             android:textSize="18sp" />
 	</RelativeLayout>
-	<TextView
-	    android:id="@+id/familyedit_label_title"
+	<LinearLayout
+	    android:id="@+id/familyedit_layout_tab"
 	    android:layout_width="match_parent"
-	    android:layout_height="36dp"
-	    android:layout_alignParentLeft="true"
+	    android:layout_height="wrap_content"
 	    android:layout_below="@id/familyedit_layout_head"
-	    android:gravity="center_vertical"
-	    android:paddingLeft="10dp"
-	    android:text="@string/familyedit_label_title"
-		android:background="@color/lightgrey"
-	    android:textColor="@color/black"
-	    android:textSize="16sp" />
+	    android:background="@color/white"
+	    android:gravity="center"
+	    android:orientation="horizontal" >
+		<Button
+			android:id="@+id/familyedit_button_relation"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:background="@color/white"
+            android:text="手机添加"
+            android:layout_weight="1" />
+		<Button
+			android:id="@+id/familyedit_button_owner"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/lightgrey"
+            android:text="证件添加"
+            android:layout_weight="1" />
+	</LinearLayout>
 	<LinearLayout
 	    android:id="@+id/familyedit_list"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@id/familyedit_label_title"
+	    android:layout_below="@id/familyedit_layout_tab"
 	    android:gravity="center"
 		android:background="@color/white"
 	    android:orientation="vertical">
 		<RelativeLayout
+	    	android:id="@+id/familyedit_item_relation"
 		    android:layout_width="match_parent"
 			android:layout_height="50dp"
 	        android:orientation="horizontal"
@@ -80,6 +96,7 @@
 			android:background="@drawable/divider">
 		</ImageView>
 		<RelativeLayout
+	    	android:id="@+id/familyedit_item_name"
 		    android:layout_width="match_parent"
 			android:layout_height="50dp"
 	        android:orientation="horizontal"
@@ -119,6 +136,7 @@
 			android:background="@drawable/divider">
 		</ImageView>
 		<RelativeLayout
+	    	android:id="@+id/familyedit_item_idnumber"
 		    android:layout_width="match_parent"
 			android:layout_height="50dp"
 	        android:orientation="horizontal"
@@ -159,6 +177,7 @@
 			android:background="@drawable/divider">
 		</ImageView>
 		<RelativeLayout
+	    	android:id="@+id/familyedit_item_birthday"
 		    android:layout_width="match_parent"
 			android:layout_height="50dp"
 	        android:orientation="horizontal"
@@ -184,7 +203,47 @@
 			    android:layout_marginRight="20dp"
 			    android:layout_toRightOf="@id/familyedit_label_birthday"
             	android:cursorVisible="true"
+			    android:paddingLeft="20dp"
+			    android:singleLine="true"
 			    android:inputType="date"
+			    android:textColor="@color/black"
+			    android:textSize="18sp" />
+		</RelativeLayout>
+		<ImageView 
+	        android:id="@+id/familyedit_divide4"
+			android:layout_height="wrap_content"
+	        android:layout_width="match_parent"
+	        android:layout_centerHorizontal="true"
+			android:background="@drawable/divider">
+		</ImageView>
+		<RelativeLayout
+	    	android:id="@+id/familyedit_item_phone"
+		    android:layout_width="match_parent"
+			android:layout_height="50dp"
+	        android:orientation="horizontal"
+			android:layout_weight="1">
+			<TextView
+			    android:id="@+id/familyedit_label_phone"
+			    android:layout_width="100dp"
+			    android:layout_height="36dp"
+			    android:layout_alignParentLeft="true"
+			    android:layout_centerVertical="true"
+			    android:layout_marginLeft="0dp"
+			    android:gravity="center_vertical"
+			    android:paddingLeft="20dp"
+			    android:text="@string/family_input_phone"
+			    android:textColor="@color/midgrey"
+			    android:textSize="20sp" />
+			<EditText
+			    android:id="@+id/familyedit_text_phone"
+			    android:layout_width="fill_parent"
+			    android:layout_height="36dp"
+			    android:layout_centerVertical="true"
+			    android:layout_marginLeft="10dp"
+			    android:layout_marginRight="20dp"
+			    android:layout_toRightOf="@id/familyedit_label_phone"
+            	android:cursorVisible="true"
+			    android:inputType="text"
 			    android:paddingLeft="20dp"
 			    android:singleLine="true"
 			    android:textColor="@color/black"

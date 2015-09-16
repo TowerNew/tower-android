@@ -1,5 +1,165 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+	<RelativeLayout
+		android:id="@+id/reserve_layout_head"
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:layout_alignParentTop="true" 
+		android:background="@drawable/topbar" 
+		android:focusable="true"
+		android:focusableInTouchMode="true">
+		<ImageButton
+            android:id="@+id/reserve_button_return"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/button_return" />
+        <TextView
+            android:id="@+id/reserve_text_caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="预约"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
+	</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/online_reserve_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/reserve_layout_head"
+        android:background="@drawable/list_item_backgroud"
+        android:clickable="true"
+        android:onClick="goOnline" >
+        <ImageView
+            android:id="@+id/online_reserve_icon"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/askdoctor_online" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="45dp"
+            android:layout_toRightOf="@id/online_reserve_icon"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/online_reserve_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:text="预约体检"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/online_reserve_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:paddingLeft="4dp"
+                android:singleLine="true"
+                android:text="可选择多种体检套餐"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/arrow" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/online_reserve_layout"
+        android:background="@color/grey" />
+
+    <RelativeLayout
+        android:id="@+id/self_reserve_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/online_reserve_layout"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/list_item_backgroud"
+        android:clickable="true"
+        android:onClick="goSelf" >
+
+        <ImageView
+            android:id="@+id/self_reserve_icon"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/askdoctor_self" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="45dp"
+            android:layout_toRightOf="@id/self_reserve_icon"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/self_reserve_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:text="预约就诊"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+            <TextView
+                android:id="@+id/self_reserve_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:paddingLeft="4dp"
+                android:singleLine="true"
+                android:text="在线选择医生预约就诊"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/arrow" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/self_reserve_layout"
+        android:background="@color/grey" />
 </RelativeLayout>

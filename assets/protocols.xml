@@ -26,4 +26,10 @@
     <protocol name="push"
         path="user-platform-web-1.0.0/rest/user/push#pipe=[0]&amp;content=[1]&amp;token=[2]"
         mock="{&quot;code&quot;: 1,&quot;msg&quot;: null}" />
+    <protocol name="examinationlist"
+        path="user-platform-web-1.0.0/rest/user/examinationList?token=[0]"
+        mock="{&quot;code&quot;: 1,&quot;data&quot;: [{&quot;id&quot;: 1,&quot;name&quot;: &quot;基础套餐&quot;,&quot;detail&quot;: &quot;各种基础检查等等等等&quot;,&quot;times&quot;: [{&quot;date&quot;: &quot;2015-09-09&quot;,&quot;span&quot;: &quot;AM&quot;},{&quot;date&quot;: &quot;2015-09-09&quot;,&quot;span&quot;: &quot;PM&quot;},{&quot;date&quot;: &quot;2015-09-10&quot;,&quot;span&quot;: &quot;AM&quot;}]},{&quot;id&quot;: 2,&quot;name&quot;: &quot;白领套餐&quot;,&quot;detail&quot;: &quot;适合白领人士的体检套餐&quot;,&quot;times&quot;: [{&quot;date&quot;: &quot;2015-11-09&quot;,&quot;span&quot;: &quot;AM&quot;},{&quot;date&quot;: &quot;2015-11-09&quot;,&quot;span&quot;: &quot;PM&quot;},{&quot;date&quot;: &quot;2015-11-10&quot;,&quot;span&quot;: &quot;AM&quot;}]}]}" />
+	<protocol name="reserveExamination"
+        path="user-platform-web-1.0.0/rest/user/reserveExamination?examinationId=[0]&date=[1]&span=[2]&token=[3]"
+        mock="{&quot;code&quot;:1,&quot;msg&quot;:&quot;预约成功&quot;}" />
 </protocols>

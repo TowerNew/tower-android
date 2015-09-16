@@ -438,9 +438,19 @@ public class HomeActivity extends Fragment {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
-				intent.putExtra("docLevel", "1");
+				Intent intent = new Intent(HomeActivity.this.getActivity(), RadioActivity.class);
+				intent.putExtra("title", "title");
+				intent.putExtra("items", new String[] {"1", "2", "2"});
+				intent.putExtra("index", 1);
 				HomeActivity.this.startActivity(intent);
+				
+//				Intent intent = new Intent(HomeActivity.this.getActivity(), ExaminationActivity.class);
+//				intent.putExtra("docLevel", 1);
+//				HomeActivity.this.startActivity(intent);
+				
+//				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
+//				intent.putExtra("docLevel", 1);
+//				HomeActivity.this.startActivity(intent);
 			}
 		});
 		button = (ImageButton) this.getActivity().findViewById(R.id.home_button_inquiry);
@@ -448,7 +458,7 @@ public class HomeActivity extends Fragment {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
-				intent.putExtra("docLevel", "2");
+				intent.putExtra("docLevel", 2);
 				HomeActivity.this.startActivity(intent);
 			}
 		});

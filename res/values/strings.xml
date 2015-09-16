@@ -15,6 +15,7 @@
     <string name="family_input_name">姓  名</string>
     <string name="family_input_idnumber">身份证</string>
     <string name="family_input_birthday">出生年月</string>
+    <string name="family_input_phone">手机号码</string>
     <string name="family_confirm">确认</string>
     <string name="familydialog_label_relation">关系类型</string>
     <string name="familydialog_label_phone">手机号码</string>

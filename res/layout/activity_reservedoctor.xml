@@ -1,0 +1,87 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+	<RelativeLayout
+		android:id="@+id/reservedoctor_layout_head"
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:layout_alignParentTop="true" 
+		android:background="@drawable/topbar" 
+		android:focusable="true"
+		android:focusableInTouchMode="true">
+		<ImageButton
+            android:id="@+id/reservedoctor_button_return"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/button_return" />
+        <TextView
+            android:id="@+id/reservedoctor_text_caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="预约"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
+	</RelativeLayout>
+	<TextView
+        android:id="@+id/reservedoctor_label_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reservedoctor_layout_head"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="选择预约时间:"
+        android:textColor="@color/blue"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/reservedoctor_button_time"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/reservedoctor_label_time"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:background="@drawable/button_common"
+        android:padding="0dip"
+        android:text="预约时间" />
+    
+	<TextView
+        android:id="@+id/reservedoctor_label_memo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reservedoctor_button_time"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="选择预约时间:"
+        android:textColor="@color/blue"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/reservedoctor_text_memo"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/reservedoctor_label_memo"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:padding="0dip"
+        android:text="预约时间" />
+    
+	<Button
+        android:id="@+id/reservedoctor_button_confirm"
+        android:layout_width="240dp"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_common"
+        android:text="申请"
+        android:textColor="#ffffffff"
+        android:textSize="15sp" />
+</RelativeLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/doctor_photo_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="15dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/askdoctor_chat_me" />
+
+    <TextView
+        android:id="@+id/doctor_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/doctor_photo_image"
+        android:textColor="@color/black"
+        android:singleLine="true"
+        android:maxWidth="120dp"
+        android:textSize="16sp"
+        android:text="张三张三张三张三张三张三张三"/>
+
+    <ImageView
+        android:id="@+id/arrow_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/arrow" />
+
+    <TextView
+        android:id="@+id/myinquiry_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/arrow_iv"
+        android:layout_marginRight="8dp"
+        android:text="2016-09-17"/>
+
+</RelativeLayout>

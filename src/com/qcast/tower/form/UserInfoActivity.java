@@ -54,7 +54,7 @@ public class UserInfoActivity extends Activity {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				UserInfoActivity.this.finish();
+				saveUserInfo();
 			}
 		});
 		button = (Button) this.findViewById(R.id.userinfo_button_exit);
@@ -62,6 +62,7 @@ public class UserInfoActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Logic.token = null;
+				Logic.name = null;
 				Storage.setUser("token", null);
 				Storage.setUser("userId", null);
 				Storage.save();
@@ -85,47 +86,7 @@ public class UserInfoActivity extends Activity {
 	}
 
 	/**
-	 * 保存用户信息
-	 */
-	public void setUserInfo() {
-		EditText txtPhone = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_photo);
-		String phone = txtPhone.getText().toString();
-		EditText txtName = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_name);
-		String name = txtName.getText().toString();
-		EditText txtIdNumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_idnumber);
-		String idnumber = txtIdNumber.getText().toString();
-		EditText txtGender= (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_gender);
-		String gender = txtGender.getText().toString();
-		EditText txtBirthday = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_birthday);
-		String birthday = txtBirthday.getText().toString();
-		EditText txtBanknumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_banknumber);
-		String banknumber = txtBanknumber.getText().toString();
-		Host.doCommand("loadUserInfo", new CommonResponse<String>() {
-			@Override
-			public void onFinished(String content) {
-				if(Response.CODE_SUCCESS != code()) {
-					Toast.makeText(UserInfoActivity.this, "获取我的信息失败", Toast.LENGTH_LONG).show();
-					return;
-				}
-				JSONObject resultObject = JSONObject.convert(content);
-				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-					JSONString msg = (JSONString) resultObject.get("msg");
-					if(null == msg) {
-						Toast.makeText(UserInfoActivity.this, "服务器异常", Toast.LENGTH_LONG).show();
-					}
-					else {
-						Toast.makeText(UserInfoActivity.this, msg.getValue(), Toast.LENGTH_LONG).show();
-					}
-					return;
-				}
-				UserInfoActivity.this.finish();
-				return;
-			}
-		}, Logic.token, name, idnumber, gender, birthday, banknumber);
-	}
-
-	/**
-	 * 加载疾病列表
+	 * 加载用户信息
 	 */
 	public void loadUserInfo() {
 		Host.doCommand("loadUserInfo", new CommonResponse<String>() {
@@ -178,7 +139,15 @@ public class UserInfoActivity extends Activity {
 				EditText txtIdNumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_idnumber);
 				txtIdNumber.setText(idnumber);
 				EditText txtGender= (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_gender);
-				txtGender.setText(gender);
+				if(1 == gender) {
+					txtGender.setText("男");
+				}
+				else if(2 == gender) {
+					txtGender.setText("女");
+				}
+				else {
+					txtGender.setText("未填写");
+				}
 				EditText txtBirthday = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_birthday);
 				txtBirthday.setText(birthday);
 				EditText txtBanknumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_banknumber);
@@ -204,6 +173,59 @@ public class UserInfoActivity extends Activity {
 				}
 			}
 		}, Logic.token);
+	}
+	
+	/**
+	 * 保存用户信息
+	 */
+	public void saveUserInfo() {
+		EditText txtPhone = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_photo);
+		final String phone = txtPhone.getText().toString();
+		EditText txtName = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_name);
+		final String name = txtName.getText().toString();
+		EditText txtIdNumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_idnumber);
+		final String idnumber = txtIdNumber.getText().toString();
+		EditText txtGender= (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_gender);
+		final String gender = txtGender.getText().toString();
+		EditText txtBirthday = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_birthday);
+		final String birthday = txtBirthday.getText().toString();
+		EditText txtBanknumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_banknumber);
+		final String banknumber = txtBanknumber.getText().toString();
+		Host.doCommand("saveUserInfo", new CommonResponse<String>() {
+			@Override
+			public void onFinished(String content) {
+				if(Response.CODE_SUCCESS != code()) {
+					Toast.makeText(UserInfoActivity.this, "获取我的信息失败", Toast.LENGTH_LONG).show();
+					return;
+				}
+				JSONObject resultObject = JSONObject.convert(content);
+				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+					JSONString msg = (JSONString) resultObject.get("msg");
+					if(null == msg) {
+						Toast.makeText(UserInfoActivity.this, "服务器异常", Toast.LENGTH_LONG).show();
+					}
+					else {
+						Toast.makeText(UserInfoActivity.this, msg.getValue(), Toast.LENGTH_LONG).show();
+					}
+					return;
+				}
+				Logic.name = name;
+				Logic.idNumber = idnumber;
+				if("男".equals(gender)) {
+					Logic.gender = 1;
+				}
+				else if("女".equals(gender)) {
+					Logic.gender = 2;
+				}
+				else {
+					Logic.gender = 0;
+				}
+				Logic.birthday = birthday;
+				Logic.bankNumber = banknumber;
+				UserInfoActivity.this.finish();
+				return;
+			}
+		}, Logic.token, name, idnumber, gender, birthday, banknumber);
 	}
 	
 	private void showFileChooser(int rId) {

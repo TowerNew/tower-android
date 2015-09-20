@@ -79,9 +79,9 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
                     return;
                 }
                 IJSON obj=resultObject.get("data");
-
-                channel =obj.toString().substring(0,obj.toString().lastIndexOf("."));
-
+                if(obj.toString().lastIndexOf(".") > 0) {
+                    channel = obj.toString().substring(0, obj.toString().lastIndexOf("."));
+                }
             }
         },"头疼怎么办", docId, Logic.token);
     }

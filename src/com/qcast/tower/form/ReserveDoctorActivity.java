@@ -31,7 +31,7 @@ public class ReserveDoctorActivity extends Activity {
 	/**
 	 * 医生ID
 	 */
-	private int doctorId = 0;
+	private String doctorId = null;
 	/**
 	 * 时间段
 	 */
@@ -53,6 +53,8 @@ public class ReserveDoctorActivity extends Activity {
 		setContentView(R.layout.activity_reservedoctor);
 		// 界面处理
 		prepare();
+		//
+		load();
 	}
 	
 	/**
@@ -82,6 +84,17 @@ public class ReserveDoctorActivity extends Activity {
 		dealConfirm();
 		//
 		loadTimes();
+	}
+	
+	/**
+	 * 加载数据
+	 */
+	public void load() {
+		doctorId = this.getIntent().getStringExtra("doctorId");
+		if(null == doctorId) {
+			this.finish();
+			return;
+		}
 	}
 
 	/**
@@ -123,7 +136,7 @@ public class ReserveDoctorActivity extends Activity {
 	 * 处理确认按钮
 	 */
 	public void dealConfirm() {
-		ImageButton button = (ImageButton) this.findViewById(R.id.reservedoctor_button_confirm);
+		Button button = (Button) this.findViewById(R.id.reservedoctor_button_confirm);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -37,7 +36,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 /**
- * Created by zhengningchuan on 15/9/2.
+ * 
  */
 public class InquiryDoctorDetailActivity extends Activity{
 
@@ -152,6 +151,18 @@ public class InquiryDoctorDetailActivity extends Activity{
             }
         });
         reserve_layout = (LinearLayout) this.findViewById(R.id.reserve_layout);
+        reserve_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	if(null == Logic.token) {
+            		Toast.makeText(InquiryDoctorDetailActivity.this, "请先登录", Toast.LENGTH_LONG).show();
+                    return;
+            	}
+                Intent intent = new Intent(InquiryDoctorDetailActivity.this, ReserveDoctorActivity.class);
+                intent.putExtra("doctorId",doctorModel.doctorId);
+                InquiryDoctorDetailActivity.this.startActivity(intent);
+            }
+        });
         comments_layout = (LinearLayout) this.findViewById(R.id.comments_layout);
         dataList = new ArrayList<DoctorCommentsModel>();
         adapter = new CommentsAdapter(this,dataList);
@@ -192,8 +203,10 @@ public class InquiryDoctorDetailActivity extends Activity{
                     return;
                 }
                 JSONObject result = (JSONObject) resultObject.get("data");
-
-                String commentsNum = ((JSONNumber)result.get("recordCount")).intValue()+"";
+                String commentsNum = "0";
+                if(null != result.get("recordCount")) {
+                	commentsNum = ((JSONNumber)result.get("recordCount")).intValue()+"";
+                }
                 if(!TextUtils.isEmpty(commentsNum)){
                     user_comments_num_tv.setText("用户评价（"+commentsNum+"）");
                 }

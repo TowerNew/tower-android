@@ -71,6 +71,8 @@ public class UserActivity extends Fragment {
 			@Override
 			public void onClick(View v) {
 				if(null != Logic.token) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), UserInfoActivity.class);
+					UserActivity.this.startActivity(intent);
 					return;
 				}
 				Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);

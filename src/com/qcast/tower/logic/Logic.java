@@ -33,6 +33,18 @@ public class Logic {
 	 */
 	public static String name = null;
 	/**
+	 * 身份证号码
+	 */
+	public static String idNumber = null;
+	/**
+	 * 性别
+	 */
+	public static int gender = 0;
+	/**
+	 * 出生年月
+	 */
+	public static String birthday = null;
+	/**
 	 * 用户头像
 	 */
 	public static String photo = null;

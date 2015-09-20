@@ -64,11 +64,19 @@
 			android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
+	<ImageView 
+        android:id="@+id/userinfo_divide7"
+		android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/userinfo_layout_phone"
+		android:background="@drawable/divider">
+	</ImageView>
 	<RelativeLayout
         android:id="@+id/userinfo_layout_name"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@id/userinfo_layout_phone"
+        android:layout_below="@id/userinfo_divide7"
         android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true">
@@ -98,11 +106,19 @@
 			android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
+	<ImageView 
+        android:id="@+id/userinfo_divide6"
+		android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/userinfo_layout_name"
+		android:background="@drawable/divider">
+	</ImageView>
 	<RelativeLayout
         android:id="@+id/userinfo_layout_idnumber"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@id/userinfo_layout_name"
+        android:layout_below="@id/userinfo_divide6"
         android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true">
@@ -132,11 +148,19 @@
 			android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
+	<ImageView 
+        android:id="@+id/userinfo_divide5"
+		android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/userinfo_layout_idnumber"
+		android:background="@drawable/divider">
+	</ImageView>
 	<RelativeLayout
         android:id="@+id/userinfo_layout_gender"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@id/userinfo_layout_idnumber"
+        android:layout_below="@id/userinfo_divide5"
         android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true">
@@ -166,11 +190,19 @@
 			android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
+	<ImageView 
+        android:id="@+id/userinfo_divide4"
+		android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/userinfo_layout_gender"
+		android:background="@drawable/divider">
+	</ImageView>
 	<RelativeLayout
         android:id="@+id/userinfo_layout_birthday"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@id/userinfo_layout_gender"
+        android:layout_below="@id/userinfo_divide4"
         android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true">
@@ -200,11 +232,19 @@
 			android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
+	<ImageView 
+        android:id="@+id/userinfo_divide3"
+		android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/userinfo_layout_birthday"
+		android:background="@drawable/divider">
+	</ImageView>
 	<RelativeLayout
         android:id="@+id/userinfo_layout_banknumber"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@id/userinfo_layout_birthday"
+        android:layout_below="@id/userinfo_divide3"
         android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true">
@@ -234,11 +274,19 @@
 			android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
+	<ImageView 
+        android:id="@+id/userinfo_divide2"
+		android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/userinfo_layout_banknumber"
+		android:background="@drawable/divider">
+	</ImageView>
 	<RelativeLayout
         android:id="@+id/userinfo_layout_idcardfront"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/userinfo_layout_banknumber"
+        android:layout_below="@id/userinfo_divide2"
         android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true">
@@ -255,8 +303,8 @@
             android:textSize="18sp" />
 		<ImageButton
             android:id="@+id/userinfo_image_idcardfront"
-			android:layout_width="100dp"
-		    android:layout_height="100dp"
+			android:layout_width="150dp"
+		    android:layout_height="60dp"
             android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
 		    android:layout_marginTop="10dp"
@@ -264,11 +312,19 @@
 		    android:layout_marginRight="10dp"
             android:background="@drawable/photo_default" />
 	</RelativeLayout>
+	<ImageView 
+        android:id="@+id/userinfo_divide1"
+		android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/userinfo_layout_idcardfront"
+		android:background="@drawable/divider">
+	</ImageView>
 	<RelativeLayout
         android:id="@+id/userinfo_layout_idcardback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/userinfo_layout_idcardfront"
+        android:layout_below="@id/userinfo_divide1"
         android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true">
@@ -285,8 +341,8 @@
             android:textSize="18sp" />
 		<ImageButton
             android:id="@+id/userinfo_image_idcardback"
-			android:layout_width="100dp"
-		    android:layout_height="100dp"
+			android:layout_width="150dp"
+		    android:layout_height="60dp"
             android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
 		    android:layout_marginTop="10dp"
@@ -294,26 +350,40 @@
 		    android:layout_marginRight="10dp"
             android:background="@drawable/photo_default" />
 	</RelativeLayout>
-	<Button
-	    android:id="@+id/userinfo_button_confirm"
-	    android:layout_width="240dp"
-	    android:layout_height="46dp"
-	    android:layout_below="@id/userinfo_layout_idcardback"
-	    android:layout_centerHorizontal="true"
-		android:layout_marginTop="20dp"
-	    android:background="@drawable/button_common"
-	    android:text="@string/family_confirm"
-	    android:textColor="#ffffffff"
-	    android:textSize="15sp" />
-	<Button
-	    android:id="@+id/userinfo_button_exit"
-	    android:layout_width="240dp"
-	    android:layout_height="46dp"
-	    android:layout_below="@id/userinfo_button_confirm"
-	    android:layout_centerHorizontal="true"
-		android:layout_marginTop="20dp"
-	    android:background="@drawable/button_common"
-	    android:text="退出"
-	    android:textColor="#ffffffff"
-	    android:textSize="15sp" />
+	<LinearLayout
+		android:id="@+id/userinfo_layout_operation"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" 
+		android:layout_below ="@+id/userinfo_layout_idcardback"
+		android:orientation="horizontal">
+		<Button
+		    android:id="@+id/userinfo_button_confirm"
+		    android:layout_width="80dp"
+		    android:layout_height="50dp"
+		    android:layout_below="@id/userinfo_layout_idcardback"
+		    android:layout_centerHorizontal="true"
+			android:layout_marginTop="20dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+		    android:background="@drawable/button_common"
+		    android:text="@string/family_confirm"
+		    android:textColor="#ffffffff"
+			android:layout_weight="1"
+		    android:textSize="15sp" />
+		<Button
+		    android:id="@+id/userinfo_button_exit"
+		    android:layout_width="80dp"
+		    android:layout_height="50dp"
+		    android:layout_below="@id/userinfo_button_confirm"
+		    android:layout_centerHorizontal="true"
+			android:layout_marginTop="20dp"
+			android:layout_marginBottom="20dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+		    android:background="@drawable/button_common"
+		    android:text="退出"
+		    android:textColor="#ffffffff"
+			android:layout_weight="1"
+		    android:textSize="15sp" />
+	</LinearLayout>
 </RelativeLayout>

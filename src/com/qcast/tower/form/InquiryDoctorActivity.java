@@ -9,15 +9,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +35,7 @@ import com.slfuture.carrie.base.text.Text;
 import java.util.ArrayList;
 
 /**
- * Created by zhengningchuan on 15/9/1.
+ * 
  */
 public class InquiryDoctorActivity extends Activity {
     private ArrayList<DoctorModel> dataList;
@@ -49,6 +45,10 @@ public class InquiryDoctorActivity extends Activity {
     private Button inquiry_bell_btn;
     private int doctorLevel;
     /**
+     * 医生服务种类
+     */
+    private String services = null;
+    /**
      * 当前页面索引
      */
     protected int page = 1;
@@ -57,6 +57,10 @@ public class InquiryDoctorActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         doctorLevel=this.getIntent().getIntExtra("docLevel", 1);
+        services = this.getIntent().getStringExtra("docLevel");
+        if(null == services) {
+        	services = "inquiry";
+        }
         this.setContentView(R.layout.activity_inquiry_doctor);
         doctorList = (ListView)findViewById(R.id.doctor_list);
         inquiry_return_btn = (Button)findViewById(R.id.inquiry_return_btn);
@@ -115,9 +119,6 @@ public class InquiryDoctorActivity extends Activity {
                 int thisPage = (Integer) this.tag;
                 if(page != thisPage) {
                     return;
-                }
-                if(null == result) {
-                	return;
                 }
                 for (IJSON item : result) {
                     JSONObject newJSONObject = (JSONObject) item;
@@ -179,10 +180,10 @@ public class InquiryDoctorActivity extends Activity {
                 adapter.notifyDataSetChanged();
                 page = thisPage + 1;
             }
-        }, page,doctorLevel,"inquiry",Logic.regionId);
+        }, page, doctorLevel, services, Logic.regionId);
     }
 
-    public class DoctorAdapter extends BaseAdapter{
+    public class DoctorAdapter extends BaseAdapter {
         Context context;
         ArrayList<DoctorModel> data;
 
@@ -219,7 +220,7 @@ public class InquiryDoctorActivity extends Activity {
             DoctorModel model = data.get(position);
             ViewHolder viewHolder;
             if(convertView==null){
-                convertView = LayoutInflater.from(context).inflate(R.layout.inquriy_doctor_list_item,null);
+                convertView = LayoutInflater.from(context).inflate(R.layout.inquriy_doctor_list_item, null);
                 viewHolder = new ViewHolder();
                 viewHolder.doctor_des_tv = (TextView)convertView.findViewById(R.id.doctor_des_tv);
                 viewHolder.doctor_name_tv = (TextView)convertView.findViewById(R.id.doctor_name_tv);
@@ -230,7 +231,8 @@ public class InquiryDoctorActivity extends Activity {
                 viewHolder.ispre_tv = (TextView)convertView.findViewById(R.id.ispre_tv);
                 viewHolder.doctor_photo_image = (ImageView)convertView.findViewById(R.id.doctor_photo_image);
                 convertView.setTag(viewHolder);
-            }else{
+            }
+            else {
                 viewHolder = (ViewHolder)convertView.getTag();
             }
             viewHolder.doctor_des_tv.setText(model.description);
@@ -274,5 +276,4 @@ public class InquiryDoctorActivity extends Activity {
             public ImageView doctor_photo_image;
         }
     }
-
 }

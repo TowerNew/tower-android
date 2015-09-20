@@ -4,14 +4,28 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.qcast.tower.R;
+import com.qcast.tower.logic.Host;
+import com.qcast.tower.logic.Logic;
+import com.qcast.tower.logic.Storage;
+import com.qcast.tower.logic.response.CommonResponse;
+import com.qcast.tower.logic.response.Response;
+import com.slfuture.carrie.base.json.JSONArray;
+import com.slfuture.carrie.base.json.JSONNumber;
+import com.slfuture.carrie.base.json.JSONObject;
+import com.slfuture.carrie.base.json.JSONString;
+import com.slfuture.carrie.base.json.core.IJSON;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Window;
+import android.widget.Toast;
 
 /**
  * 引导界面
@@ -37,7 +51,15 @@ public class LoadActivity extends Activity {
             case MESSAGE_LOADFINISHED:
             	Log.i("TOWER", "LoadActivity load finished, start alter to main form");
             	// 页面切换
-            	startActivity(new Intent(LoadActivity.this, MainActivity.class));
+            	if(0 == Logic.regionId) {
+    				
+            		
+            		
+            		startActivity(new Intent(LoadActivity.this, MainActivity.class));
+                }
+            	else {
+            		startActivity(new Intent(LoadActivity.this, MainActivity.class));
+            	}
             	LoadActivity.this.finish();
                 break;
             }
@@ -62,7 +84,6 @@ public class LoadActivity extends Activity {
 			Message message = new Message();
 			message.what = MESSAGE_LOADFINISHED;
 			handler.sendMessage(message);
-			// handler = null;
 		}
 	}
 

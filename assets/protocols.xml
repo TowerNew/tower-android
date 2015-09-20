@@ -30,6 +30,14 @@
         path="user-platform-web-1.0.0/rest/user/examinationList?token=[0]"
         mock="{&quot;code&quot;: 1,&quot;data&quot;: [{&quot;id&quot;: 1,&quot;name&quot;: &quot;基础套餐&quot;,&quot;detail&quot;: &quot;各种基础检查等等等等&quot;,&quot;times&quot;: [{&quot;date&quot;: &quot;2015-09-09&quot;,&quot;span&quot;: &quot;AM&quot;},{&quot;date&quot;: &quot;2015-09-09&quot;,&quot;span&quot;: &quot;PM&quot;},{&quot;date&quot;: &quot;2015-09-10&quot;,&quot;span&quot;: &quot;AM&quot;}]},{&quot;id&quot;: 2,&quot;name&quot;: &quot;白领套餐&quot;,&quot;detail&quot;: &quot;适合白领人士的体检套餐&quot;,&quot;times&quot;: [{&quot;date&quot;: &quot;2015-11-09&quot;,&quot;span&quot;: &quot;AM&quot;},{&quot;date&quot;: &quot;2015-11-09&quot;,&quot;span&quot;: &quot;PM&quot;},{&quot;date&quot;: &quot;2015-11-10&quot;,&quot;span&quot;: &quot;AM&quot;}]}]}" />
 	<protocol name="reserveExamination"
-        path="user-platform-web-1.0.0/rest/user/reserveExamination?examinationId=[0]&date=[1]&span=[2]&token=[3]"
+        path="user-platform-web-1.0.0/rest/user/reserveExamination?examinationId=[0]&amp;date=[1]&amp;span=[2]&amp;token=[3]"
         mock="{&quot;code&quot;:1,&quot;msg&quot;:&quot;预约成功&quot;}" />
+	<protocol name="doctortimelist"
+        path="user-platform-web-1.0.0/rest/user/doctorTimeList?doctorId=[0]"
+        mock="{&quot;code&quot;:1,&quot;data&quot;:[{&quot;date&quot;:&quot;2015-09-09&quot;,&quot;span&quot;:&quot;AM&quot;},{&quot;date&quot;:&quot;2015-09-09&quot;,&quot;span&quot;:&quot;PM&quot;},{&quot;date&quot;:&quot;2015-09-10&quot;,&quot;span&quot;:&quot;AM&quot;}]}" />
+	<protocol name="reserveExamination"
+        path="user-platform-web-1.0.0/rest/user/reserveDoctor?date=[0]&amp;span=[1]&amp;memo=[2]&amp;doctorId=[3]&amp;token=[4]"
+        mock="{&quot;code&quot;:1,&quot;msg&quot;:&quot;预约成功&quot;}" />
+	<protocol name="idcardfront" path="user-platform-web-1.0.0/rest/user/idcardfront#token=[0]&amp;image=[1]" mock="{&quot;code&quot;:200, &quot;msg&quot;:&quot;&quot;, &quot;data&quot;:&quot;https://www.baidu.com/img/bd_logo1.png&quot;}" />
+	<protocol name="idcardback" path="user-platform-web-1.0.0/rest/user/idcardback#token=[0]&amp;image=[1]" mock="{&quot;code&quot;:200, &quot;msg&quot;:&quot;&quot;, &quot;data&quot;:&quot;https://www.baidu.com/img/bd_logo1.png&quot;}" />
 </protocols>

@@ -1,17 +1,23 @@
 package com.qcast.tower.form;
 
+import java.io.File;
 
 import com.qcast.tower.R;
 import com.qcast.tower.logic.Host;
 import com.qcast.tower.logic.Logic;
 import com.qcast.tower.logic.Storage;
 import com.qcast.tower.logic.response.CommonResponse;
+import com.qcast.tower.logic.response.ImageResponse;
 import com.qcast.tower.logic.response.Response;
+import com.qcast.tower.logic.util.FileUtils;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -62,6 +68,20 @@ public class UserInfoActivity extends Activity {
 				UserInfoActivity.this.finish();
 			}
 		});
+		ImageButton buttonIdCardFront = (ImageButton) UserInfoActivity.this.findViewById(R.id.userinfo_image_idcardfront);
+		buttonIdCardFront.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showFileChooser(5);
+			}
+		});
+		ImageButton buttonIdCardBack = (ImageButton) UserInfoActivity.this.findViewById(R.id.userinfo_image_idcardback);
+		buttonIdCardBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showFileChooser(6);
+			}
+		});
 	}
 
 	/**
@@ -78,6 +98,8 @@ public class UserInfoActivity extends Activity {
 		String gender = txtGender.getText().toString();
 		EditText txtBirthday = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_birthday);
 		String birthday = txtBirthday.getText().toString();
+		EditText txtBanknumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_banknumber);
+		String banknumber = txtBanknumber.getText().toString();
 		Host.doCommand("loadUserInfo", new CommonResponse<String>() {
 			@Override
 			public void onFinished(String content) {
@@ -99,7 +121,7 @@ public class UserInfoActivity extends Activity {
 				UserInfoActivity.this.finish();
 				return;
 			}
-		}, Logic.token, name, idnumber, gender, birthday);
+		}, Logic.token, name, idnumber, gender, birthday, banknumber);
 	}
 
 	/**
@@ -142,6 +164,12 @@ public class UserInfoActivity extends Activity {
 				if(null == birthday) {
 					birthday = "";
 				}
+				String bankNumber = ((JSONString) dataObject.get("bankNumber")).getValue();
+				if(null == bankNumber) {
+					bankNumber = "";
+				}
+				String idCardFrontImage = ((JSONString) dataObject.get("idcardfront")).getValue();
+				String idCardBackImage = ((JSONString) dataObject.get("idcardback")).getValue();
 				//
 				EditText txtPhone = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_photo);
 				txtPhone.setText(phone);
@@ -153,7 +181,119 @@ public class UserInfoActivity extends Activity {
 				txtGender.setText(gender);
 				EditText txtBirthday = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_birthday);
 				txtBirthday.setText(birthday);
+				EditText txtBanknumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_banknumber);
+				txtBanknumber.setText(bankNumber);
+	            // 加载图片
+				if(null != idCardFrontImage) {
+		            Host.doImage("image", new ImageResponse(idCardFrontImage, null) {
+						@Override
+						public void onFinished(Bitmap content) {
+							ImageButton buttonIdCardFront = (ImageButton) UserInfoActivity.this.findViewById(R.id.userinfo_image_idcardfront);
+							buttonIdCardFront.setImageBitmap(content);
+						}
+		            }, idCardFrontImage);
+				}
+				if(null != idCardBackImage) {
+		            Host.doImage("image", new ImageResponse(idCardBackImage, null) {
+						@Override
+						public void onFinished(Bitmap content) {
+							ImageButton buttonIdCardBack = (ImageButton) UserInfoActivity.this.findViewById(R.id.userinfo_image_idcardback);
+							buttonIdCardBack.setImageBitmap(content);
+						}
+		            }, idCardBackImage);
+				}
 			}
 		}, Logic.token);
+	}
+	
+	private void showFileChooser(int rId) {
+	    Intent intent = new Intent(Intent.ACTION_GET_CONTENT); 
+	    intent.setType("*/*"); 
+	    intent.addCategory(Intent.CATEGORY_OPENABLE);
+	    try {
+	        startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), rId);
+	    }
+	    catch (android.content.ActivityNotFoundException ex) {
+	        Toast.makeText(this, "Please install a File Manager.",  Toast.LENGTH_SHORT).show();
+	    }
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Uri uri = null;
+		String path = null;
+		switch (requestCode) {
+	        case 5:
+		        if (resultCode != RESULT_OK) {
+		        	return;
+		        }
+	            uri = data.getData();
+	            path = FileUtils.getPath(this, uri);
+	            Host.doCommand("idcardfront", new CommonResponse<String>() {
+					@Override
+					public void onFinished(String content) {
+						if(Response.CODE_SUCCESS != code()) {
+							Toast.makeText(UserInfoActivity.this, "网络异常", Toast.LENGTH_LONG).show();
+							return;
+						}
+						JSONObject resultObject = JSONObject.convert(content);
+						if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+							JSONString msg = (JSONString) resultObject.get("msg");
+							if(null == msg) {
+								Toast.makeText(UserInfoActivity.this, "服务器异常", Toast.LENGTH_LONG).show();
+							}
+							else {
+								Toast.makeText(UserInfoActivity.this, msg.getValue(), Toast.LENGTH_LONG).show();
+							}
+							return;
+						}
+						String url = ((JSONString) resultObject.get("data")).getValue();
+			            Host.doImage("image", new ImageResponse(url, null) {
+							@Override
+							public void onFinished(Bitmap content) {
+								ImageButton buttonIdCardFront = (ImageButton) UserInfoActivity.this.findViewById(R.id.userinfo_image_idcardfront);
+								buttonIdCardFront.setImageBitmap(content);
+							}
+			            }, url);
+					}
+	            }, Logic.token, new File(path));
+		        break;
+	        case 6:
+	        	if (resultCode != RESULT_OK) {
+		        	return;
+		        }
+	            uri = data.getData();
+	            path = FileUtils.getPath(this, uri);
+	            Host.doCommand("idcardback", new CommonResponse<String>() {
+					@Override
+					public void onFinished(String content) {
+						if(Response.CODE_SUCCESS != code()) {
+							Toast.makeText(UserInfoActivity.this, "网络异常", Toast.LENGTH_LONG).show();
+							return;
+						}
+						JSONObject resultObject = JSONObject.convert(content);
+						if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+							JSONString msg = (JSONString) resultObject.get("msg");
+							if(null == msg) {
+								Toast.makeText(UserInfoActivity.this, "服务器异常", Toast.LENGTH_LONG).show();
+							}
+							else {
+								Toast.makeText(UserInfoActivity.this, msg.getValue(), Toast.LENGTH_LONG).show();
+							}
+							return;
+						}
+						String url = ((JSONString) resultObject.get("data")).getValue();
+			            Host.doImage("image", new ImageResponse(url, null) {
+							@Override
+							public void onFinished(Bitmap content) {
+								ImageButton buttonIdCardBack = (ImageButton) UserInfoActivity.this.findViewById(R.id.userinfo_image_idcardback);
+								buttonIdCardBack.setImageBitmap(content);
+							}
+			            }, url);
+					}
+	            }, Logic.token, new File(path));
+		        break;
+	    }
+	    super.onActivityResult(requestCode, resultCode, data);
 	}
 }

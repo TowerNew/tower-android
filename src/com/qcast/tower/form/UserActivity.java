@@ -94,11 +94,11 @@ public class UserActivity extends Fragment {
 	private void dealList() {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> map = null;
-		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_info));
-		map.put("caption", "我的信息");
-		map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
-		list.add(map);
+//		map = new HashMap<String, Object>();
+//		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_info));
+//		map.put("caption", "我的信息");
+//		map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
+//		list.add(map);
 		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_profile));
 		map.put("caption", "健康档案");
@@ -138,7 +138,7 @@ public class UserActivity extends Fragment {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
-				if(2 != index) {
+				if(1 != index) {
 					return;
 				}
 				if(null == Logic.token) {

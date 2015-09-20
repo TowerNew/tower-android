@@ -37,6 +37,10 @@ public class Logic {
 	 */
 	public static String photo = null;
 	/**
+	 * 区域
+	 */
+	public static Table<Integer, String> regions = null;
+	/**
 	 * 当前区域ID
 	 */
 	public static int regionId = 1;
@@ -48,8 +52,20 @@ public class Logic {
 	 * 家庭成员
 	 */
 	public static Table<String, FamilyMember> familys = new Table<String, FamilyMember>();
+	/**
+	 * 银行卡号
+	 */
+	public static String bankNumber;
+	/**
+	 * 正面照片
+	 */
+	public static String frontImage;
+	/**
+	 * 背面照片
+	 */
+	public static String backImage;
 
-	
+
 	/**
 	 * 初始化
 	 */
@@ -58,6 +74,10 @@ public class Logic {
 		token = Storage.user("token", String.class);
 		userId = Storage.user("userId", String.class);
 		name = Storage.user("name", String.class);
+		if(null != Storage.user("regionId", Integer.class)) {
+			regionId = (int) (double) (Double) Storage.user("regionId", Double.class);
+		}
+		regionName = Storage.user("regionName", String.class);
 		return true;
 	}
 }

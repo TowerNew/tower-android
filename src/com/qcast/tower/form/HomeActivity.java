@@ -19,11 +19,10 @@ import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.type.Table;
+import com.slfuture.carrie.base.type.core.ILink;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.content.Intent;
-import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -212,9 +211,9 @@ public class HomeActivity extends Fragment {
 	 */
 	protected Gallery gallery = null;
 	/**
-	 * 当前选中区域
+	 * 区域ID列表
 	 */
-	protected int currentRegionIndex = 0;
+	protected int[] regionIds = null;
 	/**
 	 * 当前页面索引
 	 */
@@ -245,6 +244,15 @@ public class HomeActivity extends Fragment {
 		//
 		loadAd();
 		loadNews();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
+		if(null != Logic.regionName) {
+			regionButton.setText(Logic.regionName);
+		}
 	}
 
 	@Override
@@ -366,67 +374,11 @@ public class HomeActivity extends Fragment {
 		regionButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Host.doCommand("regionlist", new CommonResponse<String>() {
-					@Override
-					public void onFinished(String content) {
-						if(Response.CODE_SUCCESS == code()) {
-							JSONObject resultObject = JSONObject.convert(content);
-							if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-								Toast.makeText(HomeActivity.this.getActivity(), ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
-								return;
-							}
-							JSONArray array = (JSONArray) resultObject.get("data");
-							//
-							final String[] regionNames = new String[array.size()];
-							final int[] regionIds = new int[array.size()];
-							int i = 0;
-							for(IJSON item : array) {
-								if(regionIds[i] == Logic.regionId) {
-									currentRegionIndex = i;
-								}
-								regionIds[i] = ((JSONNumber)((JSONObject)item).get("id")).intValue();
-								regionNames[i] = ((JSONString)((JSONObject)item).get("name")).getValue();
-								i++;
-							}
-							new AlertDialog.Builder(HomeActivity.this.getActivity()).setTitle("选择小区").setSingleChoiceItems(regionNames, currentRegionIndex, new OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int index) {
-									currentRegionIndex = index;
-								}
-							}).setPositiveButton("确定", new OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									// 确认选择区域
-									if(0 == regionIds.length || currentRegionIndex >= regionIds.length) {
-										return;
-									}
-									Logic.regionId = regionIds[currentRegionIndex];
-									Logic.regionName = regionNames[currentRegionIndex];
-									Storage.setUser("regionId", Logic.regionId);
-									Storage.setUser("regionName", Logic.regionName);
-									regionButton.setText(Logic.regionName);
-								}
-							}).setNegativeButton("取消", new OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									// 取消选择区域
-									currentRegionIndex = 0;
-								}
-							}).show();
-						}
-						else {
-							Toast.makeText(HomeActivity.this.getActivity(), "网络错误", Toast.LENGTH_LONG).show();
-						}
-					}
-				});
+				selectRegion();
 			}
 		});
-		Logic.regionName = Storage.user("regionName", String.class);
-		if(null != Storage.user("regionId", Integer.class)) {
-			Logic.regionId = (int) (double) (Double) Storage.user("regionId", Double.class);
-		}
-		if(null != Logic.regionName) {
-			regionButton.setText(Logic.regionName);
+		if(null == Logic.regionName) {
+			selectRegion();
 		}
 	}
 
@@ -533,5 +485,81 @@ public class HomeActivity extends Fragment {
 				HomeActivity.this.startActivity(intent);
             }
 		});
+	}
+	
+	/**
+	 * 选择小区
+	 */
+	public void selectRegion() {
+		if(null != Logic.regions) {
+			final String[] regionNames = new String[Logic.regions.size()];
+			regionIds = new int[Logic.regions.size()];
+			int current = -1;
+			int i = 0;
+			for(ILink<Integer, String> entry : Logic.regions) {
+				regionIds[i] = entry.origin();
+				regionNames[i] = entry.destination();
+				if(regionIds[i] == Logic.regionId) {
+					current = i;
+				}
+				i++;
+			}
+			Intent intent = new Intent(HomeActivity.this.getActivity(), RadioActivity.class);
+			intent.putExtra("title", "选择小区");
+			intent.putExtra("items", regionNames);
+			intent.putExtra("index", current);
+			HomeActivity.this.startActivityForResult(intent, 1);
+			return;
+		}
+		Host.doCommand("regionlist", new CommonResponse<String>() {
+			@Override
+			public void onFinished(String content) {
+				if(Response.CODE_SUCCESS != code()) {
+					Toast.makeText(HomeActivity.this.getActivity(), "网络错误", Toast.LENGTH_LONG).show();
+					return;
+				}
+				JSONObject resultObject = JSONObject.convert(content);
+				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+					Toast.makeText(HomeActivity.this.getActivity(), ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
+					return;
+				}
+				JSONArray array = (JSONArray) resultObject.get("data");
+				Logic.regions = new com.slfuture.carrie.base.type.safe.Table<Integer, String>();
+				for(int i = 0; i < array.size(); i++) {
+					IJSON item = array.get(i);
+					int regionId = ((JSONNumber)((JSONObject)item).get("id")).intValue();
+					String regionName = ((JSONString)((JSONObject)item).get("name")).getValue();
+					Logic.regions.put(regionId, regionName);
+				}
+				selectRegion();
+			}
+		});
+	}
+
+	/**
+	 * 回调
+	 */
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		//
+		if(resultCode == RadioActivity.RESULT_CANCEL) {
+			return;
+		}
+		if(1 == requestCode) {
+			int current = -1;
+			current = data.getIntExtra("index", current);
+			if(-1 == current) {
+				return;
+			}
+			Logic.regionId = regionIds[current];
+			Logic.regionName = Logic.regions.get(Logic.regionId);
+			if(null != Logic.regionName) {
+				final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
+				regionButton.setText(Logic.regionName);
+			}
+			Storage.setUser("regionId", Logic.regionId);
+			Storage.setUser("regionName", Logic.regionName);
+		}
 	}
 }

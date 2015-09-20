@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
     }
-
+    
     public void goOnline(View view){
         Intent intent = new Intent(MainActivity.this,InquiryDoctorActivity.class);
         intent.putExtra("docLevel",2);
@@ -84,5 +84,4 @@ public class MainActivity extends FragmentActivity {
         intent.putExtra("docLevel",1);
         MainActivity.this.startActivity(intent);
     }
-
 }

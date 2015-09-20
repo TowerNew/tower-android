@@ -137,7 +137,7 @@ public class ReserveDoctorActivity extends Activity {
 	 * 加载体检列表
 	 */
 	public void loadTimes() {
-		Host.doCommand("examinationlist", new CommonResponse<String>() {
+		Host.doCommand("doctortimelist", new CommonResponse<String>() {
 			@Override
 			public void onFinished(String content) {
 				if(Response.CODE_SUCCESS != code()) {
@@ -182,7 +182,7 @@ public class ReserveDoctorActivity extends Activity {
 			return;
 		}
 		EditText memo = (EditText) this.findViewById(R.id.reservedoctor_text_memo); 
-		Host.doCommand("reserveExamination", new CommonResponse<String>() {
+		Host.doCommand("reserveDoctor", new CommonResponse<String>() {
 			@Override
 			public void onFinished(String content) {
 				if(Response.CODE_SUCCESS != code()) {

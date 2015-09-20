@@ -3,7 +3,6 @@ package com.qcast.tower;
 import com.qcast.tower.logic.Host;
 import com.qcast.tower.logic.Logic;
 import com.slfuture.pluto.config.Configuration;
-import com.slfuture.pluto.net.HttpUtil;
 
 import android.app.Application;
 import android.util.Log;

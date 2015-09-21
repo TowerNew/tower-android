@@ -3,16 +3,14 @@ package com.qcast.tower.model;
 /**
  * 一个消息的JavaBean
  * 
- * @author way
+ * @author Jose
  * 
  */
 public class ChatMsgEntity {
 	private String message;//消息内容
 	private boolean isComMeg = true;// 是否为收到的消息
 	private String speakeId;
-	private long time;
-	
-	
+	private String time;
 	public String getMessage() {
 		return message;
 	}
@@ -46,7 +44,7 @@ public class ChatMsgEntity {
 		return isComMeg;
 	}
 
-	public long getTime() {
+	public String getTime() {
 		return time;
 	}
 
@@ -58,7 +56,7 @@ public class ChatMsgEntity {
 		this.speakeId = speakeId;
 	}
 
-	public void setTime(long time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 }

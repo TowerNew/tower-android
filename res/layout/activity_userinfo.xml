@@ -59,7 +59,7 @@
 		    android:layout_marginRight="10dp"
 			android:ems="10"
 			android:inputType="phone"
-		    android:background="@color/white"
+		    android:singleLine="true"
 		    android:text=""
 			android:textColor="@color/midgrey" >
 		</EditText>
@@ -100,8 +100,8 @@
 			android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
 			android:ems="10"
-			android:inputType="phone"
-		    android:background="@color/white"
+		    android:inputType="number"
+		    android:singleLine="true"
 		    android:text=""
 			android:textColor="@color/midgrey" >
 		</EditText>
@@ -142,8 +142,8 @@
 			android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
 			android:ems="10"
-			android:inputType="phone"
-		    android:background="@color/white"
+		    android:inputType="number"
+		    android:singleLine="true"
 		    android:text=""
 			android:textColor="@color/midgrey" >
 		</EditText>
@@ -177,17 +177,17 @@
             android:textColor="@color/black"
             android:textSize="18sp" />
 		<EditText
-			android:id="@+id/userinfo_text_gender"
-			android:layout_width="150dp"
+		    android:id="@+id/userinfo_text_gender"
+		    android:layout_width="150dp"
 		    android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
+		    android:layout_alignParentRight="true"
+		    android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
-			android:ems="10"
-			android:inputType="phone"
-		    android:background="@color/white"
+		    android:ems="10"
+		    android:inputType="text"
+		    android:singleLine="true"
 		    android:text=""
-			android:textColor="@color/midgrey" >
+		    android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
 	<ImageView 
@@ -226,8 +226,8 @@
 			android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
 			android:ems="10"
-			android:inputType="phone"
-		    android:background="@color/white"
+		    android:inputType="number"
+		    android:singleLine="true"
 		    android:text=""
 			android:textColor="@color/midgrey" >
 		</EditText>
@@ -260,18 +260,20 @@
             android:text="银行卡号"
             android:textColor="@color/black"
             android:textSize="18sp" />
+
 		<EditText
-			android:id="@+id/userinfo_text_banknumber"
-			android:layout_width="150dp"
+		    android:id="@+id/userinfo_text_banknumber"
+		    android:layout_width="150dp"
 		    android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
+		    android:layout_alignParentRight="true"
+		    android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
-			android:ems="10"
-			android:inputType="phone"
-		    android:background="@color/white"
+		    android:cursorVisible="true"
+		    android:ems="10"
+		    android:inputType="number"
+		    android:singleLine="true"
 		    android:text=""
-			android:textColor="@color/midgrey" >
+		    android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
 	<ImageView 
@@ -350,11 +352,19 @@
 		    android:layout_marginRight="10dp"
             android:background="@drawable/photo_default" />
 	</RelativeLayout>
+	<ImageView
+        android:id="@+id/userinfo_divide0"
+		android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/userinfo_layout_idcardback"
+		android:background="@drawable/divider">
+	</ImageView>
 	<LinearLayout
 		android:id="@+id/userinfo_layout_operation"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content" 
-		android:layout_below ="@+id/userinfo_layout_idcardback"
+		android:layout_below ="@+id/userinfo_divide0"
 		android:orientation="horizontal">
 		<Button
 		    android:id="@+id/userinfo_button_confirm"

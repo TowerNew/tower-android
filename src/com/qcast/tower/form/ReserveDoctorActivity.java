@@ -51,10 +51,10 @@ public class ReserveDoctorActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_reservedoctor);
-		// 界面处理
-		prepare();
 		//
 		load();
+		// 界面处理
+		prepare();
 	}
 	
 	/**

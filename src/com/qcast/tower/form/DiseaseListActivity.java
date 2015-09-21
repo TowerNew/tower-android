@@ -1,5 +1,6 @@
 package com.qcast.tower.form;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -39,6 +40,10 @@ public class DiseaseListActivity extends Activity {
 	 * 当前部位列表
 	 */
 	protected ArrayList<HashMap<String, Object>> diseaseList = new ArrayList<HashMap<String, Object>>();
+	/**
+	 * 症状名称
+	 */
+	protected String symptom = null;
 	
 	
 	/**
@@ -50,6 +55,15 @@ public class DiseaseListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_diseaselist);
+		//
+		symptom = this.getIntent().getStringExtra("symptom");
+		try {
+			symptom = URLEncoder.encode(symptom, "UTF-8");
+		}
+		catch(Exception ex) {}
+		if(null == symptom) {
+			symptom = "";
+		}
 		// 界面处理
 		prepare();
 		//
@@ -95,7 +109,12 @@ public class DiseaseListActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
 				Intent intent = new Intent(DiseaseListActivity.this, WebActivity.class);
-				intent.putExtra("url", Host.fetchURL("searchDisease", (String) diseaseList.get(index).get("caption")));
+				String caption = (String) diseaseList.get(index).get("caption");
+				try {
+					caption = URLEncoder.encode(caption, "UTF-8");
+				}
+				catch(Exception ex) { }
+				intent.putExtra("url", Host.fetchURL("searchDisease", caption));
 				DiseaseListActivity.this.startActivity(intent);
             }
 		});
@@ -132,6 +151,6 @@ public class DiseaseListActivity extends Activity {
 				SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
 				adapter.notifyDataSetChanged();
 			}
-		}, Logic.token);
+		}, symptom);
 	}
 }

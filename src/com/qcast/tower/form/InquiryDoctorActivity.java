@@ -100,7 +100,7 @@ public class InquiryDoctorActivity extends Activity {
     }
 
     private void loadData() {
-        Host.doCommand("doctorlis", new CommonResponse<String>(page) {
+        Host.doCommand("doctorlist", new CommonResponse<String>(page) {
             @Override
             public void onFinished(String content) {
                 if (Response.CODE_SUCCESS != code()) {

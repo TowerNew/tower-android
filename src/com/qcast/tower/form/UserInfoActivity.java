@@ -50,6 +50,13 @@ public class UserInfoActivity extends Activity {
 	 * 界面预处理
 	 */
 	public void prepare() {
+		ImageButton imageButton = (ImageButton) this.findViewById(R.id.userinfo_button_return);
+		imageButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				UserInfoActivity.this.finish();
+			}
+		});
 		Button button = (Button) this.findViewById(R.id.userinfo_button_confirm);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override

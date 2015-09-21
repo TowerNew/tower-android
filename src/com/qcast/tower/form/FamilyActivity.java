@@ -149,7 +149,9 @@ public class FamilyActivity extends Activity {
 					if(null != newJSONObject.get("birthday")) {
 						member.birthday = ((JSONString) newJSONObject.get("birthday")).getValue();
 					}
-					Logic.familys.put(member.userId, member);
+					if(null != member.userId) {
+						Logic.familys.put(member.userId, member);
+					}
 					//
 					HashMap<String, Object> memberMap = new HashMap<String, Object>();
 					memberMap.put("caption", member.relation);

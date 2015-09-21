@@ -88,7 +88,7 @@
         android:background="@color/grey" />
 
     <RelativeLayout
-        android:id="@+id/self_reserve_layout"
+        android:id="@+id/reserve_layout_seedoctor"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@id/reserve_layout_examination"
@@ -97,7 +97,7 @@
         android:clickable="true">
 
         <ImageView
-            android:id="@+id/self_reserve_icon"
+            android:id="@+id/reserve_image_seedoctor_icon"
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:layout_alignParentLeft="true"
@@ -114,12 +114,12 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="45dp"
-            android:layout_toRightOf="@id/self_reserve_icon"
+            android:layout_toRightOf="@id/reserve_image_seedoctor_icon"
             android:gravity="center_vertical"
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/self_reserve_title"
+                android:id="@+id/reserve_label_seedoctor_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="4dp"
@@ -127,7 +127,7 @@
                 android:textColor="@color/black"
                 android:textSize="22sp" />
             <TextView
-                android:id="@+id/self_reserve_subtitle"
+                android:id="@+id/reserve_label_seedoctor_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
@@ -150,6 +150,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/self_reserve_layout"
+        android:layout_below="@id/reserve_layout_seedoctor"
         android:background="@color/grey" />
 </RelativeLayout>

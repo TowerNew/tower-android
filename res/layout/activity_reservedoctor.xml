@@ -43,12 +43,15 @@
 
     <Button
         android:id="@+id/reservedoctor_button_time"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
         android:layout_below="@+id/reservedoctor_label_time"
         android:layout_centerHorizontal="true"
         android:adjustViewBounds="true"
-        android:background="@drawable/button_common"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext1"
         android:padding="0dip"
         android:text="预约时间" />
     
@@ -59,19 +62,24 @@
         android:layout_below="@id/reservedoctor_button_time"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:text="选择预约时间:"
+        android:text="填写预约附属信息："
         android:textColor="@color/blue"
         android:textSize="18sp" />
 
     <EditText
         android:id="@+id/reservedoctor_text_memo"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
         android:layout_below="@id/reservedoctor_label_memo"
-        android:layout_centerHorizontal="true"
-        android:adjustViewBounds="true"
-        android:padding="0dip"
-        android:text="预约时间" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:background="@drawable/edittext1"
+        android:inputType="textMultiLine"
+    	android:gravity="top"
+        android:textColor="@color/grey"
+        android:text="" />
     
 	<Button
         android:id="@+id/reservedoctor_button_confirm"
@@ -79,7 +87,8 @@
         android:layout_height="46dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/button_common"
         android:text="申请"
         android:textColor="#ffffffff"

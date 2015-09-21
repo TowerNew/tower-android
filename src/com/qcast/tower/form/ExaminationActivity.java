@@ -85,6 +85,10 @@ public class ExaminationActivity extends Activity {
 		dealPackage();
 		//
 		dealTime();
+		//
+		dealConfirm();
+		//
+		loadExaminationList();
 	}
 
 	/**
@@ -114,14 +118,14 @@ public class ExaminationActivity extends Activity {
 					captions[i++] = examinationPackage.name;
 				}
 				Intent intent = new Intent(ExaminationActivity.this, RadioActivity.class);
-				intent.putExtra("title", "请选择体检时间");
+				intent.putExtra("title", "请选择体检套餐");
 				intent.putExtra("items", captions);
-				intent.putExtra("index", period);
-				ExaminationActivity.this.startActivityForResult(intent, 2);
+				intent.putExtra("index", current);
+				ExaminationActivity.this.startActivityForResult(intent, 1);
 			}
 		});
 	}
-	
+
 	/**
 	 * 处理选择时间段
 	 */
@@ -140,10 +144,10 @@ public class ExaminationActivity extends Activity {
 					captions[i++] = timePeriod.toString();
 				}
 				Intent intent = new Intent(ExaminationActivity.this, RadioActivity.class);
-				intent.putExtra("title", "请选择体检套餐");
+				intent.putExtra("title", "请选择体检时间");
 				intent.putExtra("items", captions);
-				intent.putExtra("index", current);
-				ExaminationActivity.this.startActivityForResult(intent, 1);
+				intent.putExtra("index", period);
+				ExaminationActivity.this.startActivityForResult(intent, 2);
 			}
 		});
 	}
@@ -152,7 +156,7 @@ public class ExaminationActivity extends Activity {
 	 * 处理确认按钮
 	 */
 	public void dealConfirm() {
-		ImageButton button = (ImageButton) this.findViewById(R.id.examination_button_confirm);
+		Button button = (Button) this.findViewById(R.id.examination_button_confirm);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

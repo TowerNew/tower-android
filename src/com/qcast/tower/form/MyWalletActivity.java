@@ -148,7 +148,7 @@ public class MyWalletActivity extends Activity {
             viewHolder.my_wallet_amount_tv.setText(model.amount+"");
             viewHolder.my_wallet_title_tv.setText(model.title);
             viewHolder.my_wallet_bankcard_tv.setText(model.bindBankCard);
-            viewHolder.my_wallet_sendtime_tv.setText(model.sendTime);
+            viewHolder.my_wallet_sendtime_tv.setText("发送时间："+model.sendTime);
             return convertView;
 
         }

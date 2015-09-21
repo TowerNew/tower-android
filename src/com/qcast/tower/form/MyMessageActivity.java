@@ -2,10 +2,12 @@ package com.qcast.tower.form;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,7 +21,6 @@ import com.qcast.tower.logic.Logic;
 import com.qcast.tower.logic.response.CommonResponse;
 import com.qcast.tower.logic.response.Response;
 import com.qcast.tower.model.MyMessageModel;
-import com.qcast.tower.model.MyWalletModel;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONBoolean;
 import com.slfuture.carrie.base.json.JSONNumber;
@@ -45,7 +46,7 @@ public class MyMessageActivity extends Activity {
         messageListView = (ListView) this.findViewById(R.id.my_message_list);
         return_btn = (Button) this.findViewById(R.id.mymessage_return_btn);
         dataList = new ArrayList<MyMessageModel>();
-        adapter = new MyMessageAdapter(this,dataList);
+        adapter = new MyMessageAdapter(this, dataList);
         messageListView.setAdapter(adapter);
         loadData();
         return_btn.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +54,19 @@ public class MyMessageActivity extends Activity {
             @Override
             public void onClick(View v) {
                 MyMessageActivity.this.finish();
+            }
+        });
+        messageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MyMessageModel myMessageModel=dataList.get(position);
+                if(myMessageModel.type==1){
+                    Intent intent = new Intent(MyMessageActivity.this,MyFriendMessageActivity.class);
+                    Bundle bundle =new Bundle();
+                    bundle.putSerializable("myFriendMessage",myMessageModel);
+                    intent.putExtras(bundle);
+                    MyMessageActivity.this.startActivity(intent);
+                }
             }
         });
     }
@@ -82,7 +96,15 @@ public class MyMessageActivity extends Activity {
                     myMessageModel.title = ((JSONString) newJSONObject.get("title")).getValue();
                     myMessageModel.id = ((JSONNumber) newJSONObject.get("id")).intValue();
                     myMessageModel.time = ((JSONString) newJSONObject.get("time")).getValue();
-                    myMessageModel.hasRead =((JSONBoolean) newJSONObject.get("hasread")).getValue();
+                    myMessageModel.type =((JSONNumber) newJSONObject.get("type")).intValue();
+                    myMessageModel.hasRead = ((JSONBoolean) newJSONObject.get("hasRead")).getValue();
+                    if(myMessageModel.type==1){
+                        JSONObject infoJSObj = (JSONObject) newJSONObject.get("info");
+                        myMessageModel.name=((JSONString) infoJSObj.get("name")).getValue();
+                        myMessageModel.phone=((JSONString) infoJSObj.get("phone")).getValue();
+                        myMessageModel.relation=((JSONString) infoJSObj.get("relation")).getValue();
+                        myMessageModel.requestId=((JSONNumber) infoJSObj.get("requestId")).intValue();
+                    }
                     dataList.add(myMessageModel);
 
                 }
@@ -91,29 +113,29 @@ public class MyMessageActivity extends Activity {
         }, Logic.token);
     }
 
-    class MyMessageAdapter extends BaseAdapter{
+    class MyMessageAdapter extends BaseAdapter {
         private Context context;
         private ArrayList<MyMessageModel> data;
 
-        public MyMessageAdapter(Context context,ArrayList<MyMessageModel> data){
-            this.context=context;
-            this.data=data;
+        public MyMessageAdapter(Context context, ArrayList<MyMessageModel> data) {
+            this.context = context;
+            this.data = data;
         }
 
         @Override
         public int getCount() {
-            if(data!= null && data.size()>0){
+            if (data != null && data.size() > 0) {
                 return data.size();
-            }else {
+            } else {
                 return 0;
             }
         }
 
         @Override
         public Object getItem(int position) {
-            if(data!= null && data.size()>position) {
+            if (data != null && data.size() > position) {
                 return data.get(position);
-            }else{
+            } else {
                 return null;
             }
         }
@@ -127,28 +149,28 @@ public class MyMessageActivity extends Activity {
         public View getView(int position, View convertView, ViewGroup parent) {
             MyMessageModel model = data.get(position);
             ViewHolder viewHolder;
-            if(convertView==null){
-                convertView = LayoutInflater.from(context).inflate(R.layout.my_message_list_item,null);
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.my_message_list_item, null);
                 viewHolder = new ViewHolder();
-                viewHolder.message_tv = (TextView)convertView.findViewById(R.id.message_tv);
-                viewHolder.mymessage_date_tv = (TextView)convertView.findViewById(R.id.mymessage_date_tv);
+                viewHolder.message_tv = (TextView) convertView.findViewById(R.id.message_tv);
+                viewHolder.mymessage_date_tv = (TextView) convertView.findViewById(R.id.mymessage_date_tv);
                 viewHolder.message_mark_iv = (ImageView) convertView.findViewById(R.id.message_mark_iv);
                 convertView.setTag(viewHolder);
-            }else{
-                viewHolder = (ViewHolder)convertView.getTag();
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
             }
             viewHolder.message_tv.setText(model.title);
             viewHolder.mymessage_date_tv.setText(model.time);
-            if(model.hasRead){
-                viewHolder.message_mark_iv.setVisibility(View.GONE);
-            }else{
+            if (model.hasRead) {
+                viewHolder.message_mark_iv.setVisibility(View.INVISIBLE);
+            } else {
                 viewHolder.message_mark_iv.setVisibility(View.VISIBLE);
             }
             return convertView;
 
         }
 
-        class ViewHolder{
+        class ViewHolder {
             public ImageView message_mark_iv;
             public TextView message_tv;
             public TextView mymessage_date_tv;

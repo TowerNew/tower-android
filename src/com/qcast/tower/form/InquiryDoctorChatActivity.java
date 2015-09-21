@@ -79,9 +79,9 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
                     return;
                 }
                 IJSON obj=resultObject.get("data");
-                if(obj.toString().lastIndexOf(".") > 0) {
-                    channel = obj.toString().substring(0, obj.toString().lastIndexOf("."));
-                }
+
+                channel =obj.toString().substring(0,obj.toString().lastIndexOf("."));
+
             }
         },"头疼怎么办", docId, Logic.token);
     }
@@ -146,7 +146,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
                                     entity.setMessage(((JSONString) newJSONObject.get("content")).getValue());
                                     String userID = ((JSONString) newJSONObject.get("speaker")).getValue();
                                     entity.setSpeakeId(userID);
-                                    long time = ((JSONNumber) newJSONObject.get("time")).longValue();
+                                    String time = ((JSONString) newJSONObject.get("time")).getValue();
                                     entity.setTime(time);
                                     if (userID.equals("docId")) {
                                         entity.setMsgType(true);

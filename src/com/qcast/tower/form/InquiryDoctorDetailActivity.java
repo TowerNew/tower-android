@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -33,10 +34,11 @@ import com.slfuture.carrie.base.json.core.IJSON;
 
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * 
+ * Created by zhengningchuan on 15/9/2.
  */
 public class InquiryDoctorDetailActivity extends Activity{
 
@@ -58,6 +60,7 @@ public class InquiryDoctorDetailActivity extends Activity{
     private ArrayList<DoctorCommentsModel> dataList;
     private CommentsAdapter adapter;
     private DoctorModel doctorModel;
+    private int nextStart;
     /**
      * 当前页面索引
      */
@@ -151,18 +154,6 @@ public class InquiryDoctorDetailActivity extends Activity{
             }
         });
         reserve_layout = (LinearLayout) this.findViewById(R.id.reserve_layout);
-        reserve_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	if(null == Logic.token) {
-            		Toast.makeText(InquiryDoctorDetailActivity.this, "请先登录", Toast.LENGTH_LONG).show();
-                    return;
-            	}
-                Intent intent = new Intent(InquiryDoctorDetailActivity.this, ReserveDoctorActivity.class);
-                intent.putExtra("doctorId",doctorModel.doctorId);
-                InquiryDoctorDetailActivity.this.startActivity(intent);
-            }
-        });
         comments_layout = (LinearLayout) this.findViewById(R.id.comments_layout);
         dataList = new ArrayList<DoctorCommentsModel>();
         adapter = new CommentsAdapter(this,dataList);
@@ -190,7 +181,7 @@ public class InquiryDoctorDetailActivity extends Activity{
     }
 
     private void loadData() {
-        Host.doCommand("commentlist", new CommonResponse<String>() {
+        Host.doCommand("commentList", new CommonResponse<String>() {
             @Override
             public void onFinished(String content) {
                 if (Response.CODE_SUCCESS != code()) {
@@ -203,21 +194,20 @@ public class InquiryDoctorDetailActivity extends Activity{
                     return;
                 }
                 JSONObject result = (JSONObject) resultObject.get("data");
-                String commentsNum = "0";
-                if(null != result.get("recordCount")) {
-                	commentsNum = ((JSONNumber)result.get("recordCount")).intValue()+"";
-                }
+
+                String commentsNum = ((JSONNumber)result.get("recordCount")).intValue()+"";
+                nextStart = ((JSONNumber)result.get("nextStart")).intValue();
                 if(!TextUtils.isEmpty(commentsNum)){
                     user_comments_num_tv.setText("用户评价（"+commentsNum+"）");
                 }
-                if(result.get("badNum")!=null) {
-                    String badNum = ((JSONString) result.get("badNum")).getValue();
+                if(result.get("bad")!=null) {
+                    String badNum = ((JSONString) result.get("bad")).getValue();
                     if (TextUtils.isEmpty(commentsNum)) {
                         bad_result_tv.setText(badNum);
                     }
                 }
-                if(result.get("goodNum")!=null) {
-                    String goodNum = ((JSONString) result.get("goodNum")).getValue();
+                if(result.get("good")!=null) {
+                    String goodNum = ((JSONString) result.get("good")).getValue();
                     if (TextUtils.isEmpty(commentsNum)) {
                         good_result_tv.setText(goodNum);
                     }
@@ -229,14 +219,19 @@ public class InquiryDoctorDetailActivity extends Activity{
                         DoctorCommentsModel doctorCommentsModel = new DoctorCommentsModel();
 
                         doctorCommentsModel.userName = ((JSONString) newJSONObject.get("username")).getValue();
-                        doctorCommentsModel.commentDate = ((JSONString) newJSONObject.get("date")).getValue();
+                        SimpleDateFormat sdf= new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                        long time = ((JSONNumber) newJSONObject.get("date")).longValue();
+                        doctorCommentsModel.commentDate = sdf.format(time); ;
+
                         doctorCommentsModel.userComment = ((JSONString) newJSONObject.get("content")).getValue();
                         doctorCommentsModel.attitude = ((JSONBoolean) newJSONObject.get("attitude")).getValue();
                         dataList.add(doctorCommentsModel);
                     }
                 }
                 adapter.notifyDataSetChanged();
-                page = page + 1;
+                if(page<nextStart) {
+                    page = page + 1;
+                }
             }
         }, doctorModel.doctorId ,page);
     }

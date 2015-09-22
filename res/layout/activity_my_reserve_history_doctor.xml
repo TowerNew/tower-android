@@ -5,7 +5,7 @@
     android:background="@color/white">
 
     <RelativeLayout
-        android:id="@+id/myinquiry_doctor_layout_bar"
+        android:id="@+id/my_reserve_history_layout_bar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentTop="true"
@@ -14,7 +14,7 @@
         android:focusableInTouchMode="true">
 
         <Button
-            android:id="@+id/myinquiry_return_btn"
+            android:id="@+id/my_reserve_history_return_btn"
             android:layout_width="72dp"
             android:layout_height="36dp"
             android:layout_centerVertical="true"
@@ -26,7 +26,7 @@
             android:textSize="15sp" />
 
         <Button
-            android:id="@+id/myinquiry_bell_btn"
+            android:id="@+id/my_reserve_history_bell_btn"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_alignParentRight="true"
@@ -35,29 +35,29 @@
             android:background="@drawable/button_home_notify" />
 
         <TextView
-            android:id="@+id/myinquiry_text_caption"
+            android:id="@+id/my_reserve_history_text_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:text="我的问诊"
+            android:text="我的预约"
             android:textColor="#ffffffff"
             android:textSize="18sp" />
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/my_doctor_list"
+        android:id="@+id/my_reserve_history_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        android:layout_below="@+id/myinquiry_doctor_layout_bar"
+        android:layout_below="@+id/my_reserve_history_layout_bar"
         android:background="@color/white"
         android:divider="@drawable/divider" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/my_doctor_list"
+        android:layout_below="@id/my_reserve_history_list"
         android:background="@drawable/divider"/>
 </RelativeLayout>

@@ -169,8 +169,19 @@ public class UserActivity extends Fragment {
 		userBoardList.add(map);
 		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_product));
+<<<<<<< HEAD
 		map.put("caption", "产品包");
 		userBoardList.add(map);		
+=======
+		map.put("caption", "我的预约");
+		map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
+		list.add(map);
+        map = new HashMap<String, Object>();
+        map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_ask));
+        map.put("caption", "我的问诊");
+        map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
+        list.add(map);
+>>>>>>> 8e14264698ad8fcc995d6973b7d3b4f6995d8425
 		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_packet));
 		map.put("caption", "我的钱包");
@@ -206,12 +217,25 @@ public class UserActivity extends Fragment {
 					return;
 				}
 				if(1 != index) {
-					return;
+					//return;
 				}
 				if(null == Logic.token) {
 					Toast.makeText(UserActivity.this.getActivity(), "尚未登录", Toast.LENGTH_LONG).show();
 					return;
 				}
+                if(2==index){
+                    Intent intent = new Intent(UserActivity.this.getActivity(), MyReserveHistoryActivity.class);
+                    UserActivity.this.startActivity(intent);
+                    return;
+                }else if(3== index){
+                    Intent intent = new Intent(UserActivity.this.getActivity(), MyInquiryDoctorActivity.class);
+                    UserActivity.this.startActivity(intent);
+                    return;
+                }else if(4==index){
+                    Intent intent = new Intent(UserActivity.this.getActivity(), MyWalletActivity.class);
+                    UserActivity.this.startActivity(intent);
+                    return;
+                }
 				Intent intent = new Intent(UserActivity.this.getActivity(), FamilyActivity.class);
 				UserActivity.this.startActivity(intent);
             }

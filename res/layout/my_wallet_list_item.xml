@@ -11,11 +11,18 @@
         android:gravity="center_vertical"
         android:layout_weight="1">
 
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/mine_mymoney_leftgap"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:textSize="10sp"
+            android:layout_marginTop="5dp"
+            android:textColor="#fabe1b"
             android:text="￥"/>
 
         <TextView
@@ -24,21 +31,31 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="10"
+            android:textColor="#fabe1b"
             android:textSize="30sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="5dp"
             android:text="元"
+            android:textColor="@color/black"
             android:textSize="13sp"/>
 
     </LinearLayout>
 
+    <View
+        android:layout_width="1dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/mine_mymoney_midgap"/>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:orientation="vertical">
 
         <TextView

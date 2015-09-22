@@ -74,12 +74,10 @@ public class MyWalletActivity extends Activity {
                 }
                 JSONArray result = (JSONArray) resultObject.get("data");
                 if (null == result) {
+                    Toast.makeText(MyWalletActivity.this, "您暂时没有红包~~~", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                if (null == result) {
-                    return;
-                }
                 for (IJSON item : result) {
                     JSONObject newJSONObject = (JSONObject) item;
                     MyWalletModel myWalletModel = new MyWalletModel();
@@ -148,7 +146,7 @@ public class MyWalletActivity extends Activity {
             viewHolder.my_wallet_amount_tv.setText(model.amount+"");
             viewHolder.my_wallet_title_tv.setText(model.title);
             viewHolder.my_wallet_bankcard_tv.setText(model.bindBankCard);
-            viewHolder.my_wallet_sendtime_tv.setText(model.sendTime);
+            viewHolder.my_wallet_sendtime_tv.setText("发送时间："+model.sendTime);
             return convertView;
 
         }

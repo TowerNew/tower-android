@@ -24,6 +24,7 @@ import com.slfuture.carrie.base.json.core.IJSON;
 
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -45,11 +46,16 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
     private String contString;
     private String docId;
     private String channel;
+    private String topic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         docId = this.getIntent().getStringExtra("docId");
+        topic = this.getIntent().getStringExtra("topic");
+        if(TextUtils.isEmpty(docId)){
+            topic="头疼怎么办";
+        }
         if(TextUtils.isEmpty(docId)){
             this.finish();
         }
@@ -79,11 +85,11 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
                     return;
                 }
                 IJSON obj=resultObject.get("data");
-                if(obj.toString().lastIndexOf(".") > 0) {
-                    channel = obj.toString().substring(0, obj.toString().lastIndexOf("."));
-                }
+
+                channel =obj.toString().substring(0,obj.toString().lastIndexOf("."));
+
             }
-        },"头疼怎么办", docId, Logic.token);
+        },topic, docId, Logic.token);
     }
 
     @Override
@@ -147,7 +153,8 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
                                     String userID = ((JSONString) newJSONObject.get("speaker")).getValue();
                                     entity.setSpeakeId(userID);
                                     long time = ((JSONNumber) newJSONObject.get("time")).longValue();
-                                    entity.setTime(time);
+                                    SimpleDateFormat sdf= new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                                    entity.setTime(sdf.format(time));
                                     if (userID.equals("docId")) {
                                         entity.setMsgType(true);
                                     } else {
@@ -161,6 +168,8 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
                                     mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
                                 }
                                 InquiryDoctorChatActivity.this.refreshMessage();
+                            }else {
+                                refreshMessage();
                             }
                         }
 

@@ -181,7 +181,7 @@ public class InquiryDoctorDetailActivity extends Activity{
     }
 
     private void loadData() {
-        Host.doCommand("commentList", new CommonResponse<String>() {
+        Host.doCommand("commentlist", new CommonResponse<String>() {
             @Override
             public void onFinished(String content) {
                 if (Response.CODE_SUCCESS != code()) {
@@ -219,9 +219,9 @@ public class InquiryDoctorDetailActivity extends Activity{
                         DoctorCommentsModel doctorCommentsModel = new DoctorCommentsModel();
 
                         doctorCommentsModel.userName = ((JSONString) newJSONObject.get("username")).getValue();
-                        SimpleDateFormat sdf= new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                        SimpleDateFormat sdf= new SimpleDateFormat("MM/dd/yyyy HH:mm");
                         long time = ((JSONNumber) newJSONObject.get("date")).longValue();
-                        doctorCommentsModel.commentDate = sdf.format(time); ;
+                        doctorCommentsModel.commentDate = sdf.format(time);
 
                         doctorCommentsModel.userComment = ((JSONString) newJSONObject.get("content")).getValue();
                         doctorCommentsModel.attitude = ((JSONBoolean) newJSONObject.get("attitude")).getValue();

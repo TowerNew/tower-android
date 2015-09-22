@@ -116,7 +116,7 @@ public class MyFriendMessageActivity extends Activity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             final MyFriendMessageModel model = data.get(position);
-            ViewHolder viewHolder;
+            final ViewHolder viewHolder;
             if (convertView == null) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.my_friend_message_list_item, null);
                 viewHolder = new ViewHolder();
@@ -146,7 +146,8 @@ public class MyFriendMessageActivity extends Activity {
                                 return;
                             }else{
                                 Toast.makeText(MyFriendMessageActivity.this, "操作成功", Toast.LENGTH_LONG).show();
-
+                                viewHolder.my_friend_message_refuse.setVisibility(View.GONE);
+                                viewHolder.my_friend_message_accept.setVisibility(View.GONE);
                             }
                         }
                     }, Logic.token,0,model.requestId);
@@ -168,6 +169,8 @@ public class MyFriendMessageActivity extends Activity {
                                 return;
                             }else{
                                 Toast.makeText(MyFriendMessageActivity.this, "操作成功", Toast.LENGTH_LONG).show();
+                                viewHolder.my_friend_message_refuse.setVisibility(View.GONE);
+                                viewHolder.my_friend_message_accept.setVisibility(View.GONE);
                             }
                         }
                     }, Logic.token,1,model.requestId);

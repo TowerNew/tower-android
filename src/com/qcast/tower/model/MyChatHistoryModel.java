@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 public class MyChatHistoryModel implements Serializable {
     public String userId;
+    public int id;
     public String docName;
     public String docId;
     public String topic;

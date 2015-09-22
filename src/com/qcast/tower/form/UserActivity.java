@@ -113,9 +113,15 @@ public class UserActivity extends Fragment {
 		list.add(map);
 		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_product));
-		map.put("caption", "产品包");
+		map.put("caption", "我的预约");
 		map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
-		list.add(map);		map = new HashMap<String, Object>();
+		list.add(map);
+        map = new HashMap<String, Object>();
+        map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_ask));
+        map.put("caption", "我的问诊");
+        map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
+        list.add(map);
+		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_packet));
 		map.put("caption", "我的钱包");
 		map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
@@ -141,12 +147,25 @@ public class UserActivity extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
 				if(1 != index) {
-					return;
+					//return;
 				}
 				if(null == Logic.token) {
 					Toast.makeText(UserActivity.this.getActivity(), "尚未登录", Toast.LENGTH_LONG).show();
 					return;
 				}
+                if(2==index){
+                    Intent intent = new Intent(UserActivity.this.getActivity(), MyReserveHistoryActivity.class);
+                    UserActivity.this.startActivity(intent);
+                    return;
+                }else if(3== index){
+                    Intent intent = new Intent(UserActivity.this.getActivity(), MyInquiryDoctorActivity.class);
+                    UserActivity.this.startActivity(intent);
+                    return;
+                }else if(4==index){
+                    Intent intent = new Intent(UserActivity.this.getActivity(), MyWalletActivity.class);
+                    UserActivity.this.startActivity(intent);
+                    return;
+                }
 				Intent intent = new Intent(UserActivity.this.getActivity(), FamilyActivity.class);
 				UserActivity.this.startActivity(intent);
             }

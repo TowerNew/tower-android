@@ -12,7 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:text="拒绝"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:background="#f16a59"
         android:layout_marginRight="5dp"/>
 
     <Button
@@ -21,6 +25,10 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/my_friend_message_refuse"
         android:text="接受"
+        android:padding="10dp"
+        android:layout_centerVertical="true"
+        android:textColor="@color/white"
+        android:background="#2ab77c"
         android:layout_marginRight="5dp"/>
 
     <LinearLayout

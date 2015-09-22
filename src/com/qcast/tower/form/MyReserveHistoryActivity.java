@@ -197,10 +197,12 @@ public class MyReserveHistoryActivity extends Activity{
                 viewHolder.cancel_btn.setVisibility(View.GONE);
                 viewHolder.status_tv.setVisibility(View.VISIBLE);
                 viewHolder.status_tv.setTextColor(Color.RED);
+                viewHolder.status_tv.setText("已赴约");
             }else if(model.status==3){
                 viewHolder.cancel_btn.setVisibility(View.GONE);
                 viewHolder.status_tv.setVisibility(View.VISIBLE);
                 viewHolder.status_tv.setTextColor(Color.GRAY);
+                viewHolder.status_tv.setText("已取消");
             }
             return convertView;
         }

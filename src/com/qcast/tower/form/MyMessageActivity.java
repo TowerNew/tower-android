@@ -61,11 +61,11 @@ public class MyMessageActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MyMessageModel myMessageModel=dataList.get(position);
                 if(myMessageModel.type==1){
-                    Intent intent = new Intent(MyMessageActivity.this,MyFriendMessageActivity.class);
-                    Bundle bundle =new Bundle();
-                    bundle.putSerializable("myFriendMessage",myMessageModel);
-                    intent.putExtras(bundle);
-                    MyMessageActivity.this.startActivity(intent);
+//                    Intent intent = new Intent(MyMessageActivity.this, MyFriendMessageActivity.class);
+//                    Bundle bundle =new Bundle();
+//                    bundle.putSerializable("myFriendMessage",myMessageModel);
+//                    intent.putExtras(bundle);
+//                    MyMessageActivity.this.startActivity(intent);
                 }
             }
         });

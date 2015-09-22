@@ -46,6 +46,11 @@ import android.widget.TextView;
  */
 public class UserActivity extends Fragment {
 	/**
+	 * 用户面板静态功能个数
+	 */
+	public final static int USER_BOARD_COUNT = 5;
+	
+	/**
 	 * 用户面板列表
 	 */
 	private LinkedList<HashMap<String, Object>> userBoardList = new LinkedList<HashMap<String, Object>>();
@@ -104,7 +109,7 @@ public class UserActivity extends Fragment {
 		//
 		dealList();
 	}
-	
+
 	/**
 	 * 加载用户信息
 	 */
@@ -160,7 +165,7 @@ public class UserActivity extends Fragment {
 		HashMap<String, Object> map = null;
 		//
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_profile));
+		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_healthmanage));
 		map.put("caption", "健康管理");
 		userBoardList.add(map);
 		map = new HashMap<String, Object>();
@@ -168,23 +173,16 @@ public class UserActivity extends Fragment {
 		map.put("caption", "我的家庭");
 		userBoardList.add(map);
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_product));
-<<<<<<< HEAD
-		map.put("caption", "产品包");
-		userBoardList.add(map);		
-=======
-		map.put("caption", "我的预约");
-		map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
-		list.add(map);
-        map = new HashMap<String, Object>();
-        map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_ask));
-        map.put("caption", "我的问诊");
-        map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
-        list.add(map);
->>>>>>> 8e14264698ad8fcc995d6973b7d3b4f6995d8425
-		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_packet));
 		map.put("caption", "我的钱包");
+		userBoardList.add(map);
+        map = new HashMap<String, Object>();
+        map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_inquiry));
+        map.put("caption", "我的问诊");
+        userBoardList.add(map);
+		map = new HashMap<String, Object>();
+		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_reserve));
+		map.put("caption", "我的预约");
 		userBoardList.add(map);
 		//
 		ListView listview = (ListView) this.getActivity().findViewById(R.id.user_list);
@@ -192,6 +190,7 @@ public class UserActivity extends Fragment {
 			new String[]{"icon", "caption"}, 
 	        new int[]{R.id.user_listview_icon, R.id.user_listview_caption});
 		listItemAdapter.setViewBinder(new ViewBinder() {
+			@SuppressWarnings("deprecation")
 			public boolean setViewValue(View view, Object data, String textRepresentation) {
                 if(view instanceof ImageView && data instanceof Bitmap) {
                     ImageView imageView = (ImageView)view;
@@ -206,38 +205,40 @@ public class UserActivity extends Fragment {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
+				if(null == Logic.token) {
+					Toast.makeText(UserActivity.this.getActivity(), "尚未登录", Toast.LENGTH_LONG).show();
+					return;
+				}
 				if(0 == index) {
 					Intent intent = new Intent(UserActivity.this.getActivity(), HealthManageActivity.class);
 					UserActivity.this.startActivity(intent);
 					return;
 				}
-				else if(index >= 4) {
-					String url = (String) (userBoardList.get(index).get("url"));
-					openWeb(url);
+				else if(1 == index) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), FamilyActivity.class);
+					UserActivity.this.startActivity(intent);
 					return;
 				}
-				if(1 != index) {
-					//return;
-				}
-				if(null == Logic.token) {
-					Toast.makeText(UserActivity.this.getActivity(), "尚未登录", Toast.LENGTH_LONG).show();
-					return;
-				}
-                if(2==index){
-                    Intent intent = new Intent(UserActivity.this.getActivity(), MyReserveHistoryActivity.class);
-                    UserActivity.this.startActivity(intent);
-                    return;
-                }else if(3== index){
-                    Intent intent = new Intent(UserActivity.this.getActivity(), MyInquiryDoctorActivity.class);
-                    UserActivity.this.startActivity(intent);
-                    return;
-                }else if(4==index){
+				else if(2 == index) {
                     Intent intent = new Intent(UserActivity.this.getActivity(), MyWalletActivity.class);
                     UserActivity.this.startActivity(intent);
                     return;
                 }
-				Intent intent = new Intent(UserActivity.this.getActivity(), FamilyActivity.class);
-				UserActivity.this.startActivity(intent);
+				else if(3 == index) {
+                    Intent intent = new Intent(UserActivity.this.getActivity(), MyInquiryDoctorActivity.class);
+                    UserActivity.this.startActivity(intent);
+                    return;
+                }
+				else if(4 == index) {
+                    // Intent intent = new Intent(UserActivity.this.getActivity(), MyReserveHistoryActivity.class);
+                    // UserActivity.this.startActivity(intent);
+                    return;
+                }
+				else if(index >= USER_BOARD_COUNT) {
+					String url = (String) (userBoardList.get(index).get("url"));
+					openWeb(url);
+					return;
+				}
             }
 		});
 	}
@@ -249,7 +250,7 @@ public class UserActivity extends Fragment {
 	 * @param min
 	 * @return
 	 */
-	private Bitmap transferCircleImage(Bitmap source, int min) {
+	public Bitmap transferCircleImage(Bitmap source, int min) {
 		final Paint paint = new Paint();
 		paint.setAntiAlias(true);
 		Bitmap target = Bitmap.createBitmap(min, min, Config.ARGB_8888);

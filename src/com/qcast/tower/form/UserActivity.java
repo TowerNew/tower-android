@@ -1,10 +1,20 @@
 package com.qcast.tower.form;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import com.qcast.tower.R;
+import com.qcast.tower.logic.Host;
 import com.qcast.tower.logic.Logic;
+import com.qcast.tower.logic.Storage;
+import com.qcast.tower.logic.response.CommonResponse;
+import com.qcast.tower.logic.response.ImageResponse;
+import com.qcast.tower.logic.response.Response;
+import com.slfuture.carrie.base.json.JSONArray;
+import com.slfuture.carrie.base.json.JSONNumber;
+import com.slfuture.carrie.base.json.JSONObject;
+import com.slfuture.carrie.base.json.JSONString;
+import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
 
 import android.content.Intent;
@@ -35,6 +45,16 @@ import android.widget.TextView;
  * 用户界面
  */
 public class UserActivity extends Fragment {
+	/**
+	 * 用户面板列表
+	 */
+	private LinkedList<HashMap<String, Object>> userBoardList = new LinkedList<HashMap<String, Object>>();
+	/**
+	 * 是否加载
+	 */
+	private boolean isLoad = false;
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.activity_user, container, true);
@@ -45,6 +65,8 @@ public class UserActivity extends Fragment {
 		super.onStart();
 		//
 		prepare();
+		//
+		load();
 	}
 	
 	@Override
@@ -81,38 +103,76 @@ public class UserActivity extends Fragment {
 		});
 		//
 		dealList();
-		dealUser();
 	}
 	
 	/**
-	 * 处理用户信息
+	 * 加载用户信息
 	 */
-	public void dealUser() {
+	public void load() {
+		if(isLoad) {
+			return;
+		}
+		Host.doCommand("userboardlist", new CommonResponse<String>() {
+			@Override
+			public void onFinished(String content) {
+				if(Response.CODE_SUCCESS != code()) {
+					Toast.makeText(UserActivity.this.getActivity(), "网络异常", Toast.LENGTH_LONG).show();
+					return;
+				}
+				JSONObject resultObject = JSONObject.convert(content);
+				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+					Toast.makeText(UserActivity.this.getActivity(), ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
+					return;
+				}
+				isLoad = true;
+				JSONArray result = (JSONArray) resultObject.get("data");
+				for(IJSON item : result) {
+					JSONObject newJSONObject = (JSONObject) item;
+					String icon = ((JSONString) newJSONObject.get("icon")).getValue();
+					String caption = ((JSONString) newJSONObject.get("caption")).getValue();
+					String url = ((JSONString) newJSONObject.get("url")).getValue();
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					String iconName = Storage.getImageName(icon);
+					map.put("icon", iconName);
+					map.put("caption", caption);
+					map.put("url", url);
+					userBoardList.add(map);
+					// 加载图片
+		            Host.doImage("image", new ImageResponse(iconName, userBoardList.size() - 1) {
+						@Override
+						public void onFinished(Bitmap content) {
+							HashMap<String, Object> map = userBoardList.get((Integer) tag);
+							map.put("icon", content);
+						}
+		            }, icon);
+				}
+				ListView listview = (ListView) UserActivity.this.getActivity().findViewById(R.id.user_list);
+				SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
+				adapter.notifyDataSetChanged();
+			}
+		}, Logic.token);
 	}
 
 	/**
 	 * 处理咨询
 	 */
 	private void dealList() {
-		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> map = null;
-//		map = new HashMap<String, Object>();
-//		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_info));
-//		map.put("caption", "我的信息");
-//		map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
-//		list.add(map);
+		//
 		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_profile));
-		map.put("caption", "健康档案");
-		map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
-		list.add(map);
+		map.put("caption", "健康管理");
+		userBoardList.add(map);
 		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_family));
 		map.put("caption", "我的家庭");
-		map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
-		list.add(map);
+		userBoardList.add(map);
 		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_product));
+<<<<<<< HEAD
+		map.put("caption", "产品包");
+		userBoardList.add(map);		
+=======
 		map.put("caption", "我的预约");
 		map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
 		list.add(map);
@@ -121,16 +181,16 @@ public class UserActivity extends Fragment {
         map.put("caption", "我的问诊");
         map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
         list.add(map);
+>>>>>>> 8e14264698ad8fcc995d6973b7d3b4f6995d8425
 		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_packet));
 		map.put("caption", "我的钱包");
-		map.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
-		list.add(map);
+		userBoardList.add(map);
 		//
 		ListView listview = (ListView) this.getActivity().findViewById(R.id.user_list);
-		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), list, R.layout.listview_user,
-			new String[]{"icon", "caption", "arrow"}, 
-	        new int[]{R.id.user_listview_icon, R.id.user_listview_caption, R.id.user_listview_arrow});
+		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), userBoardList, R.layout.listview_user,
+			new String[]{"icon", "caption"}, 
+	        new int[]{R.id.user_listview_icon, R.id.user_listview_caption});
 		listItemAdapter.setViewBinder(new ViewBinder() {
 			public boolean setViewValue(View view, Object data, String textRepresentation) {
                 if(view instanceof ImageView && data instanceof Bitmap) {
@@ -146,6 +206,16 @@ public class UserActivity extends Fragment {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
+				if(0 == index) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), HealthManageActivity.class);
+					UserActivity.this.startActivity(intent);
+					return;
+				}
+				else if(index >= 4) {
+					String url = (String) (userBoardList.get(index).get("url"));
+					openWeb(url);
+					return;
+				}
 				if(1 != index) {
 					//return;
 				}
@@ -200,5 +270,16 @@ public class UserActivity extends Fragment {
 		 */
 		canvas.drawBitmap(source, 0, 0, paint);
 		return target;
+	}
+	
+	/**
+	 * 打开浏览器
+	 * 
+	 * @param url 地址
+	 */
+	private void openWeb(String url) {
+		Intent intent = new Intent(UserActivity.this.getActivity(), WebActivity.class);
+		intent.putExtra("url", url);
+		UserActivity.this.getActivity().startActivity(intent);
 	}
 }

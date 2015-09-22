@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+	<RelativeLayout
+		android:id="@+id/healthmanage_layout_head"
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:layout_alignParentTop="true" 
+		android:background="@drawable/topbar" 
+		android:focusable="true"
+		android:focusableInTouchMode="true">
+		<ImageButton
+            android:id="@+id/healthmanage_button_return"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/button_return" />
+        <TextView
+            android:id="@+id/healthmanage_label_caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="健康管理"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
+	</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/healthmanage_layout_prescription"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/healthmanage_layout_head"
+        android:background="@drawable/list_item_backgroud"
+        android:clickable="true">
+		<TextView
+		    android:id="@+id/healthmanage_label_prescription_title"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_marginLeft="20dp"
+		    android:layout_marginRight="45dp"
+		    android:gravity="center_vertical"
+		    android:text="预约体检"
+		    android:textColor="@color/grey"
+		    android:textSize="18sp" />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/arrow" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/healthmanage_layout_report"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/healthmanage_layout_prescription"
+        android:background="@drawable/list_item_backgroud"
+        android:clickable="true">
+		<TextView
+		    android:id="@+id/healthmanage_label_report_title"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_marginLeft="20dp"
+		    android:layout_marginRight="45dp"
+		    android:gravity="center_vertical"
+		    android:text="体检报告"
+		    android:textColor="@color/grey"
+		    android:textSize="18sp" />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/arrow" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/healthmanage_layout_survey"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/healthmanage_layout_report"
+        android:background="@drawable/list_item_backgroud"
+        android:clickable="true">
+		<TextView
+		    android:id="@+id/healthmanage_label_survey_title"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_marginLeft="20dp"
+		    android:layout_marginRight="45dp"
+		    android:gravity="center_vertical"
+		    android:text="问卷调查"
+		    android:textColor="@color/grey"
+		    android:textSize="18sp" />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/arrow" />
+    </RelativeLayout>
+</RelativeLayout>

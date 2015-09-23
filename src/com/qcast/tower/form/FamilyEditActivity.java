@@ -1,5 +1,7 @@
 package com.qcast.tower.form;
 
+import java.text.ParseException;
+
 import com.qcast.tower.R;
 import com.qcast.tower.logic.Host;
 import com.qcast.tower.logic.Logic;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -110,11 +113,11 @@ public class FamilyEditActivity extends Activity {
 				EditText txtRelation = (EditText) findViewById(R.id.familyedit_text_relation);
 				EditText txtName = (EditText) findViewById(R.id.familyedit_text_name);
 				EditText txtIdNumber = (EditText) findViewById(R.id.familyedit_text_idnumber);
-				EditText txtBirthday = (EditText) findViewById(R.id.familyedit_text_birthday);
+				DatePicker datBirthday = (DatePicker) findViewById(R.id.familyedit_datepicker_birthday);
 				member.relation = txtRelation.getText().toString();
 				member.name = txtName.getText().toString();
 				member.idNumber = txtIdNumber.getText().toString();
-				member.birthday = txtBirthday.getText().toString();
+				member.birthday = datBirthday.getYear() + "-" + (1 + datBirthday.getMonth()) + "-" + datBirthday.getDayOfMonth();
 				member.category = FamilyMember.CATEGORY_OWNER;
 				member.status = FamilyMember.STATUS_UNCONFIRM;
 				int mode = 1;
@@ -164,8 +167,13 @@ public class FamilyEditActivity extends Activity {
 		txtName.setText(member.name);
 		EditText txtIdNumber = (EditText) findViewById(R.id.familyedit_text_idnumber);
 		txtIdNumber.setText(member.idNumber);
-		EditText txtAge = (EditText) findViewById(R.id.familyedit_text_birthday);
-		txtAge.setText(member.birthday);
+		DatePicker datBirthday = (DatePicker) findViewById(R.id.familyedit_datepicker_birthday);
+		com.slfuture.carrie.base.time.Date date;
+		try {
+			date = com.slfuture.carrie.base.time.Date.parse(member.birthday);
+			datBirthday.updateDate(date.year(), date.month(), date.day());
+		}
+		catch (ParseException e) { }
 	}
 	
 	/**

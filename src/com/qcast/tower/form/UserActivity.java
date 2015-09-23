@@ -2,6 +2,7 @@ package com.qcast.tower.form;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.qcast.tower.R;
 import com.qcast.tower.logic.Host;
@@ -57,7 +58,7 @@ public class UserActivity extends Fragment {
 	/**
 	 * 是否加载
 	 */
-	private boolean isLoad = false;
+	private AtomicBoolean isLoad = new AtomicBoolean(false);
 	
 	
 	@Override
@@ -69,11 +70,13 @@ public class UserActivity extends Fragment {
 	public void onStart() {
 		super.onStart();
 		//
+		if(isLoad.getAndSet(true)) {
+			return;
+		}
 		prepare();
-		//
 		load();
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -114,9 +117,6 @@ public class UserActivity extends Fragment {
 	 * 加载用户信息
 	 */
 	public void load() {
-		if(isLoad) {
-			return;
-		}
 		Host.doCommand("userboardlist", new CommonResponse<String>() {
 			@Override
 			public void onFinished(String content) {
@@ -129,7 +129,6 @@ public class UserActivity extends Fragment {
 					Toast.makeText(UserActivity.this.getActivity(), ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
 					return;
 				}
-				isLoad = true;
 				JSONArray result = (JSONArray) resultObject.get("data");
 				for(IJSON item : result) {
 					JSONObject newJSONObject = (JSONObject) item;

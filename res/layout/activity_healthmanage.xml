@@ -45,7 +45,7 @@
 		    android:layout_marginLeft="20dp"
 		    android:layout_marginRight="45dp"
 		    android:gravity="center_vertical"
-		    android:text="预约体检"
+		    android:text="医生处方"
 		    android:textColor="@color/grey"
 		    android:textSize="18sp" />
         <ImageView

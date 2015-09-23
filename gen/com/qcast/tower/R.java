@@ -100,15 +100,18 @@ public final class R {
         public static final int selected=0x7f02003e;
         public static final int selector_btn_back=0x7f02003f;
         public static final int topbar=0x7f020040;
-        public static final int transparent=0x7f020049;
+        public static final int transparent=0x7f02004c;
         public static final int user_bg=0x7f020041;
-        public static final int user_icon_family=0x7f020042;
-        public static final int user_icon_healthmanage=0x7f020043;
-        public static final int user_icon_info=0x7f020044;
-        public static final int user_icon_inquiry=0x7f020045;
-        public static final int user_icon_packet=0x7f020046;
-        public static final int user_icon_reserve=0x7f020047;
-        public static final int user_photo_default=0x7f020048;
+        public static final int user_icon_ask=0x7f020042;
+        public static final int user_icon_family=0x7f020043;
+        public static final int user_icon_healthmanage=0x7f020044;
+        public static final int user_icon_info=0x7f020045;
+        public static final int user_icon_inquiry=0x7f020046;
+        public static final int user_icon_packet=0x7f020047;
+        public static final int user_icon_product=0x7f020048;
+        public static final int user_icon_profile=0x7f020049;
+        public static final int user_icon_reserve=0x7f02004a;
+        public static final int user_photo_default=0x7f02004b;
     }
     public static final class id {
         public static final int arrow_iv=0x7f080105;

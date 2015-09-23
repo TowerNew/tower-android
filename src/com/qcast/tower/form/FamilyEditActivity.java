@@ -97,13 +97,14 @@ public class FamilyEditActivity extends Activity {
 									String userId = ((JSONString)(((JSONObject) result.get("data")).get("userGlobalId"))).getValue();
 									Logic.familys.put(userId, new FamilyMember(userId, member.phone, member.relation));
 								}
+								FamilyEditActivity.this.finish();
+								return;
 							}
 							else {
 								Toast.makeText(FamilyEditActivity.this, ((JSONString) result.get("msg")).getValue(), Toast.LENGTH_LONG).show();
 							}
 						}
 					}, Logic.token, "", txtRelation.getText().toString(), txtPhone.getText().toString());
-					
 					return;
 				}
 				EditText txtRelation = (EditText) findViewById(R.id.familyedit_text_relation);

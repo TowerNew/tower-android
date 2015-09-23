@@ -103,12 +103,12 @@ public class MyInquiryDoctorActivity extends Activity{
                     MyChatHistoryModel myChatHistoryModel = new MyChatHistoryModel();
                     String imageUrl = "";
                     String photoName = "";
-                    if (newJSONObject.get("photo") != null) {
-                        imageUrl = ((JSONString) newJSONObject.get("photo")).getValue();
+                    if (newJSONObject.get("imgUrl") != null) {
+                        imageUrl = ((JSONString) newJSONObject.get("imgUrl")).getValue();
                         photoName = Storage.getImageName(imageUrl);
                         myChatHistoryModel.imageUrl = photoName;
                     }
-                    //myChatHistoryModel.docName = ((JSONString) newJSONObject.get("name")).getValue();
+                    myChatHistoryModel.docName = ((JSONString) newJSONObject.get("name")).getValue();
                     SimpleDateFormat sdf= new SimpleDateFormat("MM/dd/yyyy");
                     long time = ((JSONNumber) newJSONObject.get("time")).longValue();
                     myChatHistoryModel.time = sdf.format(time);
@@ -192,9 +192,11 @@ public class MyInquiryDoctorActivity extends Activity{
             }else{
                 viewHolder = (ViewHolder)convertView.getTag();
             }
-            //viewHolder.doctor_name_tv.setText(model.docName);
+            viewHolder.doctor_name_tv.setText(model.docName);
             viewHolder.chatTime.setText(model.time);
-            viewHolder.doctor_photo_image.setImageBitmap(model.getPhoto());
+            if(model.getPhoto() instanceof Bitmap) {
+                viewHolder.doctor_photo_image.setImageBitmap(model.getPhoto());
+            }
             return convertView;
         }
 

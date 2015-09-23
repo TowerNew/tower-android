@@ -11,6 +11,7 @@ public class ChatMsgEntity {
 	private boolean isComMeg = true;// 是否为收到的消息
 	private String speakeId;
 	private String time;
+	private int messageId;
 	public String getMessage() {
 		return message;
 	}
@@ -58,5 +59,13 @@ public class ChatMsgEntity {
 
 	public void setTime(String time) {
 		this.time = time;
+	}
+
+	public int getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(int messageId) {
+		this.messageId = messageId;
 	}
 }

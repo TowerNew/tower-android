@@ -377,6 +377,16 @@ public class HomeActivity extends Fragment {
 				selectRegion();
 			}
 		});
+		final Button home_button_notify = (Button) this.getActivity().findViewById(R.id.home_button_notify);
+		home_button_notify.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(HomeActivity.this.getContext(),MyMessageActivity.class);
+				HomeActivity.this.getContext().startActivity(intent);
+			}
+		});
+
 		if(null == Logic.regionName) {
 			selectRegion();
 		}

@@ -106,7 +106,7 @@ public class MyReserveHistoryActivity extends Activity{
                             myReserveModel.photoName = photoName;
                         }
                         myReserveModel.name= ((JSONString) doctorObj.get("name")).getValue();
-                        myReserveModel.subId = ((JSONNumber) doctorObj.get("id")).intValue();
+                        myReserveModel.subId = ((JSONNumber) doctorObj.get("userGlobalId")).intValue();
                         myReserveModel.memo= ((JSONString) doctorObj.get("memo")).getValue();
                     }else if(myReserveModel.type==2){
                         JSONObject obj= (JSONObject) newJSONObject.get("examination");
@@ -191,8 +191,9 @@ public class MyReserveHistoryActivity extends Activity{
             viewHolder.reverseTime.setText(model.date + " " + model.span);
             viewHolder.doctor_photo_image.setImageBitmap(model.getPhoto());
             if(model.status==1){
-                viewHolder.cancel_btn.setVisibility(View.VISIBLE);
-                viewHolder.status_tv.setVisibility(View.GONE);
+                viewHolder.cancel_btn.setVisibility(View.GONE);
+                viewHolder.status_tv.setTextColor(Color.RED);
+                viewHolder.status_tv.setText("已预约");
             }else if(model.status==2){
                 viewHolder.cancel_btn.setVisibility(View.GONE);
                 viewHolder.status_tv.setVisibility(View.VISIBLE);

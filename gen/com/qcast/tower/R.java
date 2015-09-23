@@ -100,15 +100,18 @@ public final class R {
         public static final int selected=0x7f02003e;
         public static final int selector_btn_back=0x7f02003f;
         public static final int topbar=0x7f020040;
-        public static final int transparent=0x7f020049;
+        public static final int transparent=0x7f02004c;
         public static final int user_bg=0x7f020041;
-        public static final int user_icon_family=0x7f020042;
-        public static final int user_icon_healthmanage=0x7f020043;
-        public static final int user_icon_info=0x7f020044;
-        public static final int user_icon_inquiry=0x7f020045;
-        public static final int user_icon_packet=0x7f020046;
-        public static final int user_icon_reserve=0x7f020047;
-        public static final int user_photo_default=0x7f020048;
+        public static final int user_icon_ask=0x7f020042;
+        public static final int user_icon_family=0x7f020043;
+        public static final int user_icon_healthmanage=0x7f020044;
+        public static final int user_icon_info=0x7f020045;
+        public static final int user_icon_inquiry=0x7f020046;
+        public static final int user_icon_packet=0x7f020047;
+        public static final int user_icon_product=0x7f020048;
+        public static final int user_icon_profile=0x7f020049;
+        public static final int user_icon_reserve=0x7f02004a;
+        public static final int user_photo_default=0x7f02004b;
     }
     public static final class id {
         public static final int arrow_iv=0x7f080105;
@@ -162,6 +165,7 @@ public final class R {
         public static final int familyedit_button_confirm=0x7f08003c;
         public static final int familyedit_button_owner=0x7f080027;
         public static final int familyedit_button_relation=0x7f080026;
+        public static final int familyedit_datepicker_birthday=0x7f080037;
         public static final int familyedit_divide1=0x7f08002c;
         public static final int familyedit_divide2=0x7f080030;
         public static final int familyedit_divide3=0x7f080034;
@@ -180,7 +184,6 @@ public final class R {
         public static final int familyedit_layout_head=0x7f080023;
         public static final int familyedit_layout_tab=0x7f080025;
         public static final int familyedit_list=0x7f080028;
-        public static final int familyedit_text_birthday=0x7f080037;
         public static final int familyedit_text_idnumber=0x7f080033;
         public static final int familyedit_text_name=0x7f08002f;
         public static final int familyedit_text_phone=0x7f08003b;

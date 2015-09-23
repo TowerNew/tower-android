@@ -154,6 +154,18 @@ public class InquiryDoctorDetailActivity extends Activity{
             }
         });
         reserve_layout = (LinearLayout) this.findViewById(R.id.reserve_layout);
+        reserve_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	if(null == Logic.token) {
+            		Toast.makeText(InquiryDoctorDetailActivity.this, "请先登录", Toast.LENGTH_LONG).show();
+                    return;
+            	}
+                Intent intent = new Intent(InquiryDoctorDetailActivity.this, ReserveDoctorActivity.class);
+                intent.putExtra("doctorId",doctorModel.doctorId);
+                InquiryDoctorDetailActivity.this.startActivity(intent);
+            }
+        });
         comments_layout = (LinearLayout) this.findViewById(R.id.comments_layout);
         dataList = new ArrayList<DoctorCommentsModel>();
         adapter = new CommentsAdapter(this,dataList);

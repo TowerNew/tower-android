@@ -46,6 +46,15 @@
 	<protocol name="prescriptionlist" path="user-platform-web-1.0.0/rest/user/prescriptionList#token=[0]" mock="{&quot;code&quot;:1,&quot;data&quot;:[{&quot;caption&quot;:&quot;2015-01-01&quot;,&quot;url&quot;:&quot;http://www.baidu.com&quot;},{&quot;caption&quot;:&quot;2015-02-01&quot;,&quot;url&quot;:&quot;http://www.baidu.com&quot;}]}" />
 	<protocol name="userboardlist" path="user-platform-web-1.0.0/rest/user/userBoardList#token=[0]" mock="{&quot;code&quot;:1,&quot;data&quot;:[{&quot;icon&quot;:&quot;https://www.baidu.com/img/bd_logo1.png&quot;,&quot;caption&quot;:&quot;2015-01-01&quot;,&quot;url&quot;:&quot;http://www.baidu.com&quot;},{&quot;icon&quot;:&quot;https://www.baidu.com/img/bd_logo1.png&quot;,&quot;caption&quot;:&quot;2015-02-01&quot;,&quot;url&quot;:&quot;http://www.baidu.com&quot;}]}" />
 	<protocol name="reserveHistory"
-        mock="{&quot;code&quot;:1,&quot;data&quot;:[{ &quot;id&quot;: 121,&quot;type&quot;: 1,&quot;date&quot;: &quot;2015-01-01&quot;,&quot;span&quot;: &quot;AM&quot;,&quot;status&quot;: 1,&quot;doctor&quot;: {&quot;id&quot;: 12121212,&quot;name&quot;: &quot;王医生&quot;,&quot;memo&quot;: &quot;牙疼&quot;,&quot;photo&quot;: &quot;http://www/1.gif&quot;}}]}"
+        mock="{&quot;code&quot;:1,&quot;data&quot;:[{ &quot;id&quot;: 121,&quot;type&quot;: 1,&quot;date&quot;: &quot;2015-01-01&quot;,&quot;span&quot;: &quot;AM&quot;,&quot;status&quot;: 3,&quot;doctor&quot;: {&quot;id&quot;: 12121212,&quot;name&quot;: &quot;王医生&quot;,&quot;memo&quot;: &quot;牙疼&quot;,&quot;photo&quot;: &quot;http://www/1.gif&quot;}}]}"
         path="user-platform-web-1.0.0/rest/user/reserveHistory?token=[0]" />
+  <protocol name="queryPipe"
+        mock="{&quot;code&quot;: 1,&quot;msg&quot;: null,&quot;data&quot;: [{&quot;name&quot;: &quot;张三&quot;,&quot;doctor&quot;: &quot;3c762425-22fc-4da0-9af1-30b8ee7e&quot;,&quot;topic&quot;: &quot;嗓子疼怎么办&quot;,&quot;status&quot;: 1,&quot;time&quot;: &quot;2015-02-01 12:00:00&quot;}]}"
+        path="user-platform-web-1.0.0/rest/user/queryPipe?token=[0]" />
+        <protocol name="myWallet"
+        mock="{&quot;code&quot;: 1,&quot;data&quot;: [{&quot;id&quot;: 123,&quot;title&quot;: &quot;红包&quot;,&quot;amount&quot;: 5,&quot;bank&quot;: &quot;招商银行（尾号0999）&quot;,&quot;time&quot;: &quot;2015-09-09 14:12:20&quot;},{&quot;id&quot;: 456,&quot;title&quot;: &quot;红包&quot;,&quot;amount&quot;: 10,&quot;bank&quot;: &quot;招商银行（尾号0999）&quot;,&quot;time&quot;: &quot;2015-09-18 20:10:07&quot;}]}"
+        path="user-platform-web-1.0.0/rest/user/myWallet#token=[0]" />
+        <protocol name="myMessage"
+        mock="{&quot;code&quot;: 1,&quot;data&quot;: [{&quot;id&quot;: 1233,&quot;type&quot;: 1,&quot;hasRead&quot;: true,&quot;title&quot;: &quot;您有一个添加亲友消息&quot;,&quot;time&quot;: &quot;2015-09-09 14: 12: 20&quot;,&quot;info&quot;: {&quot;requestId&quot;: 1,&quot;name&quot;: &quot;Jose&quot;,&quot;phone&quot;: &quot;139****0987&quot;,&quot;relation&quot;: &quot;父亲&quot;}},{&quot;id&quot;: 1234,&quot;type&quot;: 2, &quot;hasRead&quot;: false,&quot;title&quot;: &quot;恭喜您获得一个100元现金礼包&quot;,&quot;time&quot;: &quot;2015-09-10 05: 12: 20&quot;,&quot;isRead&quot;: false, &quot;info&quot;: {}}]}"
+        path="user-platform-web-1.0.0/rest/user/myMessage?token=[0]" />
 </protocols>

@@ -163,7 +163,9 @@ public class ExaminationActivity extends Activity {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				reserve();
+				if(!reserve()) {
+					return;
+				}
 				ExaminationActivity.this.finish();
 			}
 		});
@@ -197,10 +199,10 @@ public class ExaminationActivity extends Activity {
 	/**
 	 * 预约
 	 */
-	public void reserve() {
+	public boolean reserve() {
 		if(null == getCurrentPeriod()) {
 			Toast.makeText(ExaminationActivity.this, "请选择套餐和时间段", Toast.LENGTH_LONG).show();
-			return;
+			return false;
 		}
 		Host.doCommand("reserveExamination", new CommonResponse<String>() {
 			@Override
@@ -219,6 +221,7 @@ public class ExaminationActivity extends Activity {
 				return;
 			}
 		}, getCurrentPackage().id, getCurrentPeriod().date.toString(), getCurrentPeriod().span, Logic.token);
+		return true;
 	}
 
 	/**

@@ -140,7 +140,9 @@ public class ReserveDoctorActivity extends Activity {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				reserve();
+				if(!reserve()) {
+					return;
+				}
 				ReserveDoctorActivity.this.finish();
 			}
 		});
@@ -189,10 +191,10 @@ public class ReserveDoctorActivity extends Activity {
 	/**
 	 * 预约
 	 */
-	public void reserve() {
+	public boolean reserve() {
 		if(null == getCurrentTime()) {
 			Toast.makeText(ReserveDoctorActivity.this, "请选择时间段", Toast.LENGTH_LONG).show();
-			return;
+			return false;
 		}
 		EditText memo = (EditText) this.findViewById(R.id.reservedoctor_text_memo); 
 		Host.doCommand("reserveDoctor", new CommonResponse<String>() {
@@ -212,6 +214,7 @@ public class ReserveDoctorActivity extends Activity {
 				return;
 			}
 		}, getCurrentTime().date.toString(), getCurrentTime().span, memo.getText().toString(), doctorId, Logic.token);
+		return true;
 	}
 	
 	/**

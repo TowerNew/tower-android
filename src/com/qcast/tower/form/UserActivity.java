@@ -83,9 +83,17 @@ public class UserActivity extends Fragment {
 		TextView txtCaption = (TextView) this.getActivity().findViewById(R.id.user_text_caption);
 		if(Text.isBlank(Logic.name)) {
 			txtCaption.setText("点击登录");
-			return;
 		}
-		txtCaption.setText(Logic.name);
+		else {
+			txtCaption.setText(Logic.name);
+		}
+		ImageButton imgButton = (ImageButton) this.getActivity().findViewById(R.id.user_button_photo);
+		if(Text.isBlank(Logic.name)) {
+			imgButton.setBackgroundResource(R.drawable.user_photo_null);
+		}
+		else {
+			imgButton.setBackgroundResource(R.drawable.user_photo_default);
+		}
 	}
 
 	@Override

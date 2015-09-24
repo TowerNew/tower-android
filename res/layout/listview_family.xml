@@ -16,11 +16,11 @@
 	    android:paddingLeft="4dp" />
     <ImageView
 		android:id="@+id/family_listview_delete"
-       	android:layout_width="60dp"
+       	android:layout_width="66dp"
        	android:layout_height="40dp"
 	    android:layout_centerVertical="true"
 		android:layout_alignParentRight="true"
-       	android:layout_marginRight="20dp"
+       	android:layout_marginRight="10dp"
 	    android:src="@drawable/arrow" 
 	    android:clickable="true" 
 	    android:focusable="false" />

@@ -18,7 +18,7 @@
 		    android:layout_centerInParent="false"
 		    android:layout_gravity="center"
 		    android:adjustViewBounds="true"
-		    android:background="@drawable/user_photo_default"
+		    android:background="@drawable/user_photo_null"
 		    android:padding="0dip" />
 
         <TextView

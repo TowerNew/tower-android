@@ -17,6 +17,7 @@ import com.slfuture.carrie.base.type.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -124,6 +125,8 @@ public class ExaminationActivity extends Activity {
 				ExaminationActivity.this.startActivityForResult(intent, 1);
 			}
 		});
+		TextView text = (TextView) this.findViewById(R.id.examination_text_description);
+		text.setMovementMethod(new ScrollingMovementMethod());
 	}
 
 	/**

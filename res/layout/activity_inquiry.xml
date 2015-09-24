@@ -217,7 +217,7 @@
                 android:id="@+id/famous_inquiry_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="名医义诊"
+                android:text="名医问诊"
                 android:textColor="@color/black"
                 android:paddingLeft="4dp"
                 android:textSize="22sp" />

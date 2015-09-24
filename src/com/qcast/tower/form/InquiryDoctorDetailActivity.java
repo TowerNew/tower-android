@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +81,9 @@ public class InquiryDoctorDetailActivity extends Activity{
         doctor_type_tv = (TextView) this.findViewById(R.id.doctor_type_tv);
         doctor_title_tv = (TextView) this.findViewById(R.id.doctor_title_tv);
         doctor_skill_tv = (TextView) this.findViewById(R.id.doctor_skill_tv);
+        doctor_skill_tv.setMovementMethod(new ScrollingMovementMethod());
         doctor_des_tv = (TextView) this.findViewById(R.id.doctor_des_tv);
+        doctor_des_tv.setMovementMethod(new ScrollingMovementMethod());
         user_comments_num_tv = (TextView) this.findViewById(R.id.user_comments_num_tv);
         bad_result_tv = (TextView) this.findViewById(R.id.bad_result_tv);
         good_result_tv = (TextView) this.findViewById(R.id.good_result_tv);

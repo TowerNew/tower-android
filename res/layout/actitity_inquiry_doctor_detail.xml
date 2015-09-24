@@ -103,18 +103,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:maxLines="2"
+            android:maxLines="10"
             android:ellipsize="end"
-            android:text="擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长" />
+			android:scrollbars = "vertical"
+            android:text="描述" />
 
         <TextView
             android:id="@+id/doctor_skill_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:maxLines="3"
+            android:maxLines="5"
             android:ellipsize="end"
-            android:text="擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长擅长" />
+			android:scrollbars = "vertical"
+            android:text="技能" />
 
     </LinearLayout>
 

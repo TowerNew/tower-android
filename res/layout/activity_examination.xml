@@ -109,6 +109,7 @@
         android:background="@drawable/edittext1"
         android:ems="10"
         android:inputType="textMultiLine"
+		android:scrollbars = "vertical"
         android:padding="10dp"
         android:textColor="@color/grey"
         android:text="预约信息" >

@@ -82,6 +82,7 @@ public class UserActivity extends Fragment {
 		super.onResume();
 		TextView txtCaption = (TextView) this.getActivity().findViewById(R.id.user_text_caption);
 		if(Text.isBlank(Logic.name)) {
+			txtCaption.setText("点击登录");
 			return;
 		}
 		txtCaption.setText(Logic.name);
@@ -132,23 +133,31 @@ public class UserActivity extends Fragment {
 				JSONArray result = (JSONArray) resultObject.get("data");
 				for(IJSON item : result) {
 					JSONObject newJSONObject = (JSONObject) item;
-					String icon = ((JSONString) newJSONObject.get("icon")).getValue();
+					String icon = null;
+					if(null != ((JSONString) newJSONObject.get("icon"))) {
+						icon = ((JSONString) newJSONObject.get("icon")).getValue();
+					}
 					String caption = ((JSONString) newJSONObject.get("caption")).getValue();
 					String url = ((JSONString) newJSONObject.get("url")).getValue();
 					HashMap<String, Object> map = new HashMap<String, Object>();
-					String iconName = Storage.getImageName(icon);
-					map.put("icon", iconName);
+					String iconName = null;
+					if(null == icon) {
+						iconName = Storage.getImageName(icon);
+						map.put("icon", iconName);
+					}
 					map.put("caption", caption);
 					map.put("url", url);
 					userBoardList.add(map);
 					// 加载图片
-		            Host.doImage("image", new ImageResponse(iconName, userBoardList.size() - 1) {
-						@Override
-						public void onFinished(Bitmap content) {
-							HashMap<String, Object> map = userBoardList.get((Integer) tag);
-							map.put("icon", content);
-						}
-		            }, icon);
+					if(null != icon) {
+			            Host.doImage("image", new ImageResponse(iconName, userBoardList.size() - 1) {
+							@Override
+							public void onFinished(Bitmap content) {
+								HashMap<String, Object> map = userBoardList.get((Integer) tag);
+								map.put("icon", content);
+							}
+			            }, icon);
+					}
 				}
 				ListView listview = (ListView) UserActivity.this.getActivity().findViewById(R.id.user_list);
 				SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();

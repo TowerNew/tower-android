@@ -1,6 +1,8 @@
 package com.qcast.tower.form;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.qcast.tower.R;
 import com.qcast.tower.logic.Host;
@@ -77,6 +79,13 @@ public class LoginActivity extends Activity {
 		btnPhone.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				String phone = ((EditText) findViewById(R.id.login_text_phone)).getText().toString();
+				Pattern pattern = Pattern.compile("^[1][358][0-9]{9}$");
+				Matcher matcher = pattern.matcher(phone);
+				if(!matcher.matches()) {
+					Toast.makeText(LoginActivity.this, "手机号码格式不正确", Toast.LENGTH_LONG).show();
+					return;
+				}
 				if((new Date()).getTime() <= 30 * 1000 + lastTick) {
 					Toast.makeText(LoginActivity.this, "请等待" + (lastTick + 30 * 1000 - (new Date()).getTime()) / 1000 + "秒后重试", Toast.LENGTH_LONG).show();
 					return;
@@ -95,8 +104,13 @@ public class LoginActivity extends Activity {
 							return;
 						}
 						Toast.makeText(LoginActivity.this, "请输入短信验证码", Toast.LENGTH_LONG).show();
+						EditText txtCode = (EditText) findViewById(R.id.login_text_code);
+						txtCode.setFocusable(true);
+						txtCode.setFocusableInTouchMode(true);
+						txtCode.requestFocus();
+						txtCode.findFocus();
 					}
-				}, ((EditText) findViewById(R.id.login_text_phone)).getText().toString());
+				}, phone);
 			}
 		});
 		Button btnCode = (Button) findViewById(R.id.login_button_code);

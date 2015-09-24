@@ -87,13 +87,44 @@ public class FamilyActivity extends Activity {
 	private void dealMember() {
 		ListView listview = (ListView) FamilyActivity.this.findViewById(R.id.family_list_member);
 		SimpleAdapter listItemAdapter = new SimpleAdapter(FamilyActivity.this, memberList, R.layout.listview_family,
-			new String[]{"caption", "arrow"}, 
-	        new int[]{R.id.family_listview_caption, R.id.family_listview_arrow});
+			new String[]{"caption", "delete"}, 
+	        new int[]{R.id.family_listview_caption, R.id.family_listview_delete});
 		listItemAdapter.setViewBinder(new ViewBinder() {
 			@SuppressWarnings("deprecation")
 			public boolean setViewValue(View view, Object data, String textRepresentation) {
                 if(view instanceof ImageView && data instanceof Bitmap) {
-                    ImageView imageView = (ImageView)view;
+                    ImageView imageView = (ImageView) view;
+                    imageView.setTag("");
+                    imageView.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							ListView listView = (ListView) v.getParent().getParent();
+							for(int i = 0; i < listView.getChildCount(); i++) {
+								if(v.getParent() == listView.getChildAt(i)) {
+									HashMap<String, Object> map = memberList.get(i);
+									String userId = (String) map.get("userId");
+									Log.i("TOWER", "DELETE FAMILY");
+									Host.doCommand("removefamily", new CommonResponse<String>() {
+										@Override
+										public void onFinished(String content) {
+											if(Response.CODE_SUCCESS != code()) {
+												Toast.makeText(FamilyActivity.this, "删除家庭成员失败", Toast.LENGTH_LONG).show();
+												return;
+											}
+											JSONObject resultObject = JSONObject.convert(content);
+											if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+												Toast.makeText(FamilyActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
+												return;
+											}
+											Toast.makeText(FamilyActivity.this, "删除家庭成员功能", Toast.LENGTH_LONG).show();
+											loadMember();
+										}
+									}, Logic.token, userId);
+									break;
+								}
+							}
+						}
+					});
                     Bitmap bitmap = (Bitmap) data;
                     imageView.setImageDrawable(new BitmapDrawable(bitmap));
                     return true;
@@ -105,7 +136,7 @@ public class FamilyActivity extends Activity {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
-				//TODO:点击成员
+				Log.i("TOWER", "CLICK FAMILY");
             }
 		});
 	}
@@ -128,6 +159,7 @@ public class FamilyActivity extends Activity {
 				}
 				JSONArray result = (JSONArray) resultObject.get("data");
 				Logic.familys.clear();
+				memberList.clear();
 				for(IJSON item : result) {
 					JSONObject newJSONObject = (JSONObject) item;
 					FamilyMember member = new FamilyMember();
@@ -146,16 +178,14 @@ public class FamilyActivity extends Activity {
 					if(null != newJSONObject.get("idnumber")) {
 						member.idNumber = ((JSONString) newJSONObject.get("idnumber")).getValue();
 					}
-					if(null != newJSONObject.get("birthday")) {
-						member.birthday = ((JSONString) newJSONObject.get("birthday")).getValue();
-					}
 					if(null != member.userId) {
 						Logic.familys.put(member.userId, member);
 					}
 					//
 					HashMap<String, Object> memberMap = new HashMap<String, Object>();
+					memberMap.put("userId", member.userId);
 					memberMap.put("caption", member.relation);
-					memberMap.put("arrow", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.arrow));
+					memberMap.put("delete", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.button_delete));
 					memberList.add(memberMap);
 				}
 				ListView listview = (ListView) FamilyActivity.this.findViewById(R.id.family_list_member);

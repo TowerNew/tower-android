@@ -13,6 +13,7 @@ import com.qcast.tower.logic.util.FileUtils;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
+import com.slfuture.carrie.base.text.Text;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,12 +26,19 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
  * 我的信息页
  */
 public class UserInfoActivity extends Activity {
+	/**
+	 * 支持的银行种类
+	 */
+	public final static String[] BANK_NAMES = {"中国银行", "招商银行", "农业银行", "建设银行", "工商银行"};
+	
+
 	/**
 	 * 界面创建
 	 */
@@ -70,8 +78,11 @@ public class UserInfoActivity extends Activity {
 			public void onClick(View v) {
 				Logic.token = null;
 				Logic.name = null;
+				Logic.phone = null;
 				Storage.setUser("token", null);
 				Storage.setUser("userId", null);
+				Storage.setUser("name", null);
+				Storage.setUser("phone", null);
 				Storage.save();
 				UserInfoActivity.this.finish();
 			}
@@ -123,45 +134,70 @@ public class UserInfoActivity extends Activity {
 				if(null == name) {
 					name = "";
 				}
-				String idnumber = ((JSONString) dataObject.get("idnumber")).getValue();
-				if(null == idnumber) {
-					idnumber = "";
+				String idnumber = "";
+				if(null != dataObject.get("idnumber")) {
+					idnumber = ((JSONString) dataObject.get("idnumber")).getValue();
 				}
-				int gender = ((JSONNumber) dataObject.get("gender")).intValue();
-				String birthday = ((JSONString) dataObject.get("birthday")).getValue();
-				if(null == birthday) {
-					birthday = "";
+				String bankName = "";
+				if(null != dataObject.get("bankName")) {
+					bankName = ((JSONString) dataObject.get("bankName")).getValue();
 				}
-				String bankNumber = ((JSONString) dataObject.get("bankNumber")).getValue();
-				if(null == bankNumber) {
-					bankNumber = "";
+				String bankRegion = "";
+				if(null != dataObject.get("bankRegion")) {
+					bankRegion = ((JSONString) dataObject.get("bankRegion")).getValue();
 				}
-				String idCardFrontImage = ((JSONString) dataObject.get("idcardfront")).getValue();
-				String idCardBackImage = ((JSONString) dataObject.get("idcardback")).getValue();
+				String bankNumber = "";
+				if(null != dataObject.get("bankNumber")) {
+					bankNumber = ((JSONString) dataObject.get("bankNumber")).getValue();
+				}
+				String idCardFrontImage = null;
+				String idCardFrontImageName = null;
+				if(null != dataObject.get("idcardfront")) {
+					idCardFrontImage = ((JSONString) dataObject.get("idcardfront")).getValue();
+					idCardFrontImageName = Storage.getImageName(idCardFrontImage);
+				}
+				String idCardBackImage = null;
+				String idCardBackImageName = null;
+				if(null != dataObject.get("idcardback")) {
+					idCardBackImage = ((JSONString) dataObject.get("idcardback")).getValue();
+					idCardBackImageName = Storage.getImageName(idCardBackImage);
+				}
 				//
 				EditText txtPhone = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_photo);
 				txtPhone.setText(phone);
+				txtPhone.setEnabled(false);
 				EditText txtName = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_name);
 				txtName.setText(name);
 				EditText txtIdNumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_idnumber);
 				txtIdNumber.setText(idnumber);
-				EditText txtGender= (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_gender);
-				if(1 == gender) {
-					txtGender.setText("男");
-				}
-				else if(2 == gender) {
-					txtGender.setText("女");
-				}
-				else {
-					txtGender.setText("未填写");
-				}
-				EditText txtBirthday = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_birthday);
-				txtBirthday.setText(birthday);
+				TextView labBankName = (TextView) UserInfoActivity.this.findViewById(R.id.userinfo_text_bankname);
+				labBankName.setText(bankName);
+				labBankName.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						TextView labBankName = (TextView) UserInfoActivity.this.findViewById(R.id.userinfo_text_bankname);
+						String bankName = labBankName.getText().toString();
+						Intent intent = new Intent(UserInfoActivity.this, RadioActivity.class);
+						intent.putExtra("title", "选择银行");
+						intent.putExtra("items", BANK_NAMES);
+						intent.putExtra("index", 0);
+						for(int i = 0; i < BANK_NAMES.length; i++) {
+							String item = BANK_NAMES[i];
+							if(item.equals(bankName)) {
+								intent.putExtra("index", i);
+								break;
+							}
+						}
+						UserInfoActivity.this.startActivityForResult(intent, 1);
+					}
+				});
+				EditText txtBankRegion = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_bankregion);
+				txtBankRegion.setText(bankRegion);
 				EditText txtBanknumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_banknumber);
 				txtBanknumber.setText(bankNumber);
 	            // 加载图片
-				if(null != idCardFrontImage) {
-		            Host.doImage("image", new ImageResponse(idCardFrontImage, null) {
+				if(!Text.isBlank(idCardFrontImage)) {
+		            Host.doImage("image", new ImageResponse(idCardFrontImageName, null) {
 						@Override
 						public void onFinished(Bitmap content) {
 							ImageButton buttonIdCardFront = (ImageButton) UserInfoActivity.this.findViewById(R.id.userinfo_image_idcardfront);
@@ -169,8 +205,8 @@ public class UserInfoActivity extends Activity {
 						}
 		            }, idCardFrontImage);
 				}
-				if(null != idCardBackImage) {
-		            Host.doImage("image", new ImageResponse(idCardBackImage, null) {
+				if(!Text.isBlank(idCardBackImage)) {
+		            Host.doImage("image", new ImageResponse(idCardBackImageName, null) {
 						@Override
 						public void onFinished(Bitmap content) {
 							ImageButton buttonIdCardBack = (ImageButton) UserInfoActivity.this.findViewById(R.id.userinfo_image_idcardback);
@@ -188,14 +224,15 @@ public class UserInfoActivity extends Activity {
 	public void saveUserInfo() {
 		EditText txtPhone = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_photo);
 		final String phone = txtPhone.getText().toString();
+		Log.i("TOWER", phone);
 		EditText txtName = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_name);
 		final String name = txtName.getText().toString();
 		EditText txtIdNumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_idnumber);
 		final String idnumber = txtIdNumber.getText().toString();
-		EditText txtGender= (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_gender);
-		final String gender = txtGender.getText().toString();
-		EditText txtBirthday = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_birthday);
-		final String birthday = txtBirthday.getText().toString();
+		TextView labBankName = (TextView) UserInfoActivity.this.findViewById(R.id.userinfo_text_bankname);
+		final String bankName = labBankName.getText().toString();
+		EditText txtBankRegion = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_bankregion);
+		final String bankRegion = txtBankRegion.getText().toString();
 		EditText txtBanknumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_banknumber);
 		final String banknumber = txtBanknumber.getText().toString();
 		Host.doCommand("saveUserInfo", new CommonResponse<String>() {
@@ -218,21 +255,11 @@ public class UserInfoActivity extends Activity {
 				}
 				Logic.name = name;
 				Logic.idNumber = idnumber;
-				if("男".equals(gender)) {
-					Logic.gender = 1;
-				}
-				else if("女".equals(gender)) {
-					Logic.gender = 2;
-				}
-				else {
-					Logic.gender = 0;
-				}
-				Logic.birthday = birthday;
 				Logic.bankNumber = banknumber;
 				UserInfoActivity.this.finish();
 				return;
 			}
-		}, Logic.token, name, idnumber, gender, birthday, banknumber);
+		}, Logic.token, name, idnumber, bankName, bankRegion, banknumber);
 	}
 	
 	private void showFileChooser(int rId) {
@@ -252,6 +279,19 @@ public class UserInfoActivity extends Activity {
 		Uri uri = null;
 		String path = null;
 		switch (requestCode) {
+			case 1:
+				if(resultCode == RadioActivity.RESULT_CANCEL) {
+					return;
+				}
+				if(1 == requestCode) {
+					int current = -1;
+					current = data.getIntExtra("index", current);
+					if(-1 == current) {
+						return;
+					}
+					TextView labBankName = (TextView) UserInfoActivity.this.findViewById(R.id.userinfo_text_bankname);
+					labBankName.setText(BANK_NAMES[current]);
+				}
 	        case 5:
 		        if (resultCode != RESULT_OK) {
 		        	return;
@@ -277,7 +317,8 @@ public class UserInfoActivity extends Activity {
 							return;
 						}
 						String url = ((JSONString) resultObject.get("data")).getValue();
-			            Host.doImage("image", new ImageResponse(url, null) {
+						String imageName = Storage.getImageName(url);
+			            Host.doImage("image", new ImageResponse(imageName, null) {
 							@Override
 							public void onFinished(Bitmap content) {
 								ImageButton buttonIdCardFront = (ImageButton) UserInfoActivity.this.findViewById(R.id.userinfo_image_idcardfront);
@@ -309,6 +350,9 @@ public class UserInfoActivity extends Activity {
 							else {
 								Toast.makeText(UserInfoActivity.this, msg.getValue(), Toast.LENGTH_LONG).show();
 							}
+							return;
+						}
+						if(null == resultObject.get("data")) {
 							return;
 						}
 						String url = ((JSONString) resultObject.get("data")).getValue();

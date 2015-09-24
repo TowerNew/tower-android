@@ -21,7 +21,6 @@ import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.type.Table;
 import com.slfuture.carrie.base.type.core.ILink;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -390,19 +389,9 @@ public class HomeActivity extends Fragment {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), RadioActivity.class);
-				intent.putExtra("title", "title");
-				intent.putExtra("items", new String[] {"1", "2", "2"});
-				intent.putExtra("index", 1);
+				Intent intent = new Intent(HomeActivity.this.getActivity(), ExaminationActivity.class);
+				intent.putExtra("docLevel", 1);
 				HomeActivity.this.startActivity(intent);
-				
-//				Intent intent = new Intent(HomeActivity.this.getActivity(), ExaminationActivity.class);
-//				intent.putExtra("docLevel", 1);
-//				HomeActivity.this.startActivity(intent);
-				
-//				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
-//				intent.putExtra("docLevel", 1);
-//				HomeActivity.this.startActivity(intent);
 			}
 		});
 		button = (ImageButton) this.getActivity().findViewById(R.id.home_button_inquiry);
@@ -411,6 +400,16 @@ public class HomeActivity extends Fragment {
 			public void onClick(View v) {
 				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
 				intent.putExtra("docLevel", 2);
+				HomeActivity.this.startActivity(intent);
+			}
+		});
+		button = (ImageButton) this.getActivity().findViewById(R.id.home_button_reserve);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
+				intent.putExtra("docLevel", 2);
+				intent.putExtra("services", "reserve");
 				HomeActivity.this.startActivity(intent);
 			}
 		});

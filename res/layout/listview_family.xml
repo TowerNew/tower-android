@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="65dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants">
 	<TextView
 	    android:id="@+id/family_listview_caption"
 	    android:layout_width="wrap_content"
@@ -14,11 +15,13 @@
         android:textSize="16sp"
 	    android:paddingLeft="4dp" />
     <ImageView
-		android:id="@+id/family_listview_arrow"
-       	android:layout_width="20dp"
-       	android:layout_height="20dp"
+		android:id="@+id/family_listview_delete"
+       	android:layout_width="60dp"
+       	android:layout_height="40dp"
 	    android:layout_centerVertical="true"
 		android:layout_alignParentRight="true"
        	android:layout_marginRight="20dp"
-	    android:src="@drawable/arrow" />
+	    android:src="@drawable/arrow" 
+	    android:clickable="true" 
+	    android:focusable="false" />
 </RelativeLayout>

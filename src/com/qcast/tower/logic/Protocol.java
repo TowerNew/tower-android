@@ -2,7 +2,6 @@ package com.qcast.tower.logic;
 
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.type.Table;
-import com.slfuture.carrie.base.type.core.ITable;
 import com.slfuture.pluto.net.HttpLoader;
 import com.slfuture.pluto.net.Option;
 import com.slfuture.pluto.net.future.Future;
@@ -62,24 +61,15 @@ public class Protocol {
 	 * @param parameters 参数列表
 	 */
 	public void invoke(HttpLoader loader, Future future, Object... parameters) {
-		// 梳理URL
 		String url = urlTemplate;
-		for(int i = parameters.length - 1; i >= 0; i--) {
-			Object parameter = parameters[i];
-			if(null == parameter) {
-				url = url.replace("[" + i + "]", "");
-			}
-			else {
-				url = url.replace("[" + i + "]", parameter.toString());
-			}
-		}
 		// 梳理POST参数
 		Table<String, Object> postParameterMap = null;
 		int i = url.indexOf("#");
 		if(i > 0) {
-			postParameterMap = new Table<String, Object>();
-			String[] postParameters = url.substring(i + 1).split("&");
+			String path = url.substring(i + 1);
 			url = url.substring(0, i);
+			postParameterMap = new Table<String, Object>();
+			String[] postParameters = path.split("&");
 			for(String postParameter : postParameters) {
 				if(Text.isBlank(postParameter)) {
 					continue;
@@ -88,7 +78,24 @@ public class Protocol {
 				if(pair.length != 2) {
 					continue;
 				}
-				postParameterMap.put(pair[0], pair[1]);
+				String indexString = Text.substring(pair[1], "[", "]");
+				if(null == indexString) {
+					postParameterMap.put(pair[0], pair[1]);
+				}
+				else {
+					postParameterMap.put(pair[0], parameters[Integer.parseInt(indexString)]);
+				}
+			}
+		}
+		else {
+			for(int j = parameters.length - 1; j >= 0; j--) {
+				Object parameter = parameters[j];
+				if(null == parameter) {
+					url = url.replace("[" + j + "]", "");
+				}
+				else {
+					url = url.replace("[" + j + "]", parameter.toString());
+				}
 			}
 		}
 		// 开始投递

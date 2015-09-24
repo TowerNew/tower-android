@@ -116,9 +116,6 @@ public class InquiryDoctorActivity extends Activity {
                 if(page != thisPage) {
                     return;
                 }
-                if(null == result) {
-                	return;
-                }
                 for (IJSON item : result) {
                     JSONObject newJSONObject = (JSONObject) item;
                     DoctorModel doctorModel = new DoctorModel();
@@ -159,7 +156,6 @@ public class InquiryDoctorActivity extends Activity {
                     }else{
                         doctorModel.isFamous = false;
                     }
-
                     dataList.add(doctorModel);
                     if (!TextUtils.isEmpty(imageUrl)&&Text.isBlank(imageUrl)) {
                         continue;
@@ -256,6 +252,9 @@ public class InquiryDoctorActivity extends Activity {
             }
             if(model.getPhoto() instanceof Bitmap){
                 viewHolder.doctor_photo_image.setImageBitmap(model.getPhoto());
+            }
+            else {
+            	viewHolder.doctor_photo_image.setImageResource(R.drawable.askdoctor_chat_other);
             }
             return convertView;
         }

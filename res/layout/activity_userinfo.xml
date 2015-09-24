@@ -33,7 +33,7 @@
     <RelativeLayout
         android:id="@+id/userinfo_layout_phone"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_below="@id/userinfo_layout_head"
         android:background="@color/white"
         android:focusable="true"
@@ -53,7 +53,7 @@
 		<EditText
 			android:id="@+id/userinfo_text_photo"
 			android:layout_width="150dp"
-		    android:layout_height="32dp"
+		    android:layout_height="40dp"
             android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
@@ -61,6 +61,7 @@
 			android:inputType="phone"
 		    android:singleLine="true"
 		    android:text=""
+		    android:textSize="16sp"
 			android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
@@ -75,7 +76,7 @@
 	<RelativeLayout
         android:id="@+id/userinfo_layout_name"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_below="@id/userinfo_divide7"
         android:background="@color/white"
         android:focusable="true"
@@ -95,14 +96,15 @@
 		<EditText
 			android:id="@+id/userinfo_text_name"
 			android:layout_width="150dp"
-		    android:layout_height="32dp"
+		    android:layout_height="40dp"
             android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
 			android:ems="10"
-		    android:inputType="number"
+		    android:inputType="text"
 		    android:singleLine="true"
 		    android:text=""
+		    android:textSize="16sp"
 			android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
@@ -117,7 +119,7 @@
 	<RelativeLayout
         android:id="@+id/userinfo_layout_idnumber"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_below="@id/userinfo_divide6"
         android:background="@color/white"
         android:focusable="true"
@@ -137,7 +139,7 @@
 		<EditText
 			android:id="@+id/userinfo_text_idnumber"
 			android:layout_width="150dp"
-		    android:layout_height="32dp"
+		    android:layout_height="40dp"
             android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
@@ -145,6 +147,7 @@
 		    android:inputType="number"
 		    android:singleLine="true"
 		    android:text=""
+		    android:textSize="16sp"
 			android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
@@ -157,15 +160,15 @@
 		android:background="@drawable/divider">
 	</ImageView>
 	<RelativeLayout
-        android:id="@+id/userinfo_layout_gender"
+        android:id="@+id/userinfo_layout_bankname"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_below="@id/userinfo_divide5"
         android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true">
         <TextView
-            android:id="@+id/userinfo_label_gender"
+            android:id="@+id/userinfo_label_bankname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -173,41 +176,42 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="性别"
+            android:text="银  行"
             android:textColor="@color/black"
             android:textSize="18sp" />
-		<EditText
-		    android:id="@+id/userinfo_text_gender"
+
+		<TextView
+		    android:id="@+id/userinfo_text_bankname"
 		    android:layout_width="150dp"
-		    android:layout_height="32dp"
+		    android:layout_height="40dp"
 		    android:layout_alignParentRight="true"
 		    android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
-		    android:ems="10"
-		    android:inputType="text"
-		    android:singleLine="true"
+		    android:gravity="center_vertical"
 		    android:text=""
-		    android:textColor="@color/midgrey" >
-		</EditText>
+		    android:textColor="@color/midgrey"
+		    android:textSize="16sp" >
+
+		</TextView>
 	</RelativeLayout>
 	<ImageView 
         android:id="@+id/userinfo_divide4"
 		android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/userinfo_layout_gender"
+        android:layout_below="@id/userinfo_layout_bankname"
 		android:background="@drawable/divider">
 	</ImageView>
 	<RelativeLayout
-        android:id="@+id/userinfo_layout_birthday"
+        android:id="@+id/userinfo_layout_bankregion"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_below="@id/userinfo_divide4"
         android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true">
         <TextView
-            android:id="@+id/userinfo_label_birthday"
+            android:id="@+id/userinfo_label_bankregion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -215,21 +219,23 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="出生年月"
+            android:text="开户支行"
             android:textColor="@color/black"
             android:textSize="18sp" />
 		<EditText
-			android:id="@+id/userinfo_text_birthday"
-			android:layout_width="150dp"
-		    android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
+		    android:id="@+id/userinfo_text_bankregion"
+		    android:layout_width="150dp"
+		    android:layout_height="40dp"
+		    android:layout_alignParentRight="true"
+		    android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
-			android:ems="10"
+		    android:cursorVisible="true"
+		    android:ems="10"
 		    android:inputType="number"
 		    android:singleLine="true"
 		    android:text=""
-			android:textColor="@color/midgrey" >
+		    android:textSize="16sp"
+		    android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
 	<ImageView 
@@ -237,13 +243,13 @@
 		android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/userinfo_layout_birthday"
+        android:layout_below="@id/userinfo_layout_bankregion"
 		android:background="@drawable/divider">
 	</ImageView>
 	<RelativeLayout
         android:id="@+id/userinfo_layout_banknumber"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_below="@id/userinfo_divide3"
         android:background="@color/white"
         android:focusable="true"
@@ -260,19 +266,19 @@
             android:text="银行卡号"
             android:textColor="@color/black"
             android:textSize="18sp" />
-
 		<EditText
 		    android:id="@+id/userinfo_text_banknumber"
 		    android:layout_width="150dp"
-		    android:layout_height="32dp"
+		    android:layout_height="40dp"
 		    android:layout_alignParentRight="true"
-		    android:layout_centerVertical="true"
+			android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
 		    android:cursorVisible="true"
 		    android:ems="10"
 		    android:inputType="number"
 		    android:singleLine="true"
 		    android:text=""
+		    android:textSize="16sp"
 		    android:textColor="@color/midgrey" >
 		</EditText>
 	</RelativeLayout>
@@ -306,13 +312,13 @@
 		<ImageButton
             android:id="@+id/userinfo_image_idcardfront"
 			android:layout_width="150dp"
-		    android:layout_height="60dp"
+		    android:layout_height="50dp"
             android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
 		    android:layout_marginTop="10dp"
 		    android:layout_marginBottom="10dp"
 		    android:layout_marginRight="10dp"
-            android:background="@drawable/photo_default" />
+			android:background="@color/grey" />
 	</RelativeLayout>
 	<ImageView 
         android:id="@+id/userinfo_divide1"
@@ -344,13 +350,13 @@
 		<ImageButton
             android:id="@+id/userinfo_image_idcardback"
 			android:layout_width="150dp"
-		    android:layout_height="60dp"
+		    android:layout_height="50dp"
             android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
 		    android:layout_marginTop="10dp"
 		    android:layout_marginBottom="10dp"
 		    android:layout_marginRight="10dp"
-            android:background="@drawable/photo_default" />
+			android:background="@color/grey" />
 	</RelativeLayout>
 	<ImageView
         android:id="@+id/userinfo_divide0"

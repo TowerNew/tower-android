@@ -2,9 +2,7 @@ package com.qcast.tower.form;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,11 +127,11 @@ public class MyFriendMessageActivity extends Activity {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             viewHolder.my_friend_message_name_tv.setText(model.friendName);
-            //viewHolder.my_friend_massage_sub_tv.setText(model.subTitle);
+            viewHolder.my_friend_massage_sub_tv.setText("请求添加你为"+model.relation);
             viewHolder.my_friend_message_refuse.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Host.doCommand("responseFamliy", new CommonResponse<String>() {
+                    Host.doCommand("responseFamily", new CommonResponse<String>() {
                         @Override
                         public void onFinished(String content) {
                             if (Response.CODE_SUCCESS != code()) {

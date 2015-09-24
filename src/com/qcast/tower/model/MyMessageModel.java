@@ -14,7 +14,7 @@ public class MyMessageModel implements Serializable{
     public int type;
     public String name;
     public String phone;
-    public int requestId;
+    public String requestId;
     public String relation;
 
 

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -170,6 +169,19 @@ public class InquiryDoctorDetailActivity extends Activity{
             }
         });
         comments_layout = (LinearLayout) this.findViewById(R.id.comments_layout);
+        comments_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(null == Logic.token) {
+                    Toast.makeText(InquiryDoctorDetailActivity.this, "请先登录", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Intent intent = new Intent(InquiryDoctorDetailActivity.this, MyCommentsActivity.class);
+                intent.putExtra("doctorId",doctorModel.doctorId);
+                intent.putExtra("doctorName",doctorModel.name);
+                InquiryDoctorDetailActivity.this.startActivity(intent);
+            }
+        });
         dataList = new ArrayList<DoctorCommentsModel>();
         adapter = new CommentsAdapter(this,dataList);
         doctor_comments_list.setAdapter(adapter);

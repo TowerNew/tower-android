@@ -7,6 +7,6 @@ public class MyFriendMessageModel {
     public String friendName;
     public String subTitle;
     public String phoneNum;
-    public int requestId;
+    public String requestId;
     public String relation;
 }

@@ -60,7 +60,7 @@
         mock="{&quot;code&quot;: 1,&quot;data&quot;: [{&quot;id&quot;: 1233,&quot;type&quot;: 1,&quot;hasRead&quot;: true,&quot;title&quot;: &quot;您有一个添加亲友消息&quot;,&quot;time&quot;: &quot;2015-09-09 14: 12: 20&quot;,&quot;info&quot;: {&quot;requestId&quot;: 1,&quot;name&quot;: &quot;Jose&quot;,&quot;phone&quot;: &quot;139****0987&quot;,&quot;relation&quot;: &quot;父亲&quot;}},{&quot;id&quot;: 1234,&quot;type&quot;: 2, &quot;hasRead&quot;: false,&quot;title&quot;: &quot;恭喜您获得一个100元现金礼包&quot;,&quot;time&quot;: &quot;2015-09-10 05: 12: 20&quot;,&quot;isRead&quot;: false, &quot;info&quot;: {}}]}"
         path="user-platform-web-1.0.0/rest/user/myMessage?token=[0]" />
 	<protocol name="removefamily" path="user-platform-web-1.0.0/rest/user/removeFamily#token=[0]&amp;userGlobalId=[1]" mock="{&quot;code&quot;:200, &quot;msg&quot;:&quot;&quot;}" />
-	<protocol name="hasMessage" path="user-platform-web-1.0.0/rest/user/hasMessage#token=[0]" mock="{&quot;code&quot;:200, &quot;data&quot;:&quot;0&quot;}" />
+	<protocol name="hasMessage" path="user-platform-web-1.0.0/rest/user/hasMessage?token=[0]" mock="{&quot;code&quot;:200, &quot;data&quot;:&quot;0&quot;}" />
 	<protocol name="responseFamily"
         mock=""
         path="user-platform-web-1.0.0/rest/user/responseFamily?token=[0]&amp;isResponse=[1]&amp;requestId=[2]" />

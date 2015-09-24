@@ -28,6 +28,7 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -59,13 +60,13 @@ public class MyMessageActivity extends Activity {
         messageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MyMessageModel myMessageModel=dataList.get(position);
-                if(myMessageModel.type==1){
-//                    Intent intent = new Intent(MyMessageActivity.this, MyFriendMessageActivity.class);
-//                    Bundle bundle =new Bundle();
-//                    bundle.putSerializable("myFriendMessage",myMessageModel);
-//                    intent.putExtras(bundle);
-//                    MyMessageActivity.this.startActivity(intent);
+                MyMessageModel myMessageModel = dataList.get(position);
+                if (myMessageModel.type == 1) {
+                    Intent intent = new Intent(MyMessageActivity.this, MyFriendMessageActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("myFriendMessage", myMessageModel);
+                    intent.putExtras(bundle);
+                    MyMessageActivity.this.startActivity(intent);
                 }
             }
         });
@@ -95,15 +96,17 @@ public class MyMessageActivity extends Activity {
 
                     myMessageModel.title = ((JSONString) newJSONObject.get("title")).getValue();
                     myMessageModel.id = ((JSONNumber) newJSONObject.get("id")).intValue();
-                    myMessageModel.time = ((JSONString) newJSONObject.get("time")).getValue();
-                    myMessageModel.type =((JSONNumber) newJSONObject.get("type")).intValue();
+                    long time = ((JSONNumber) newJSONObject.get("time")).longValue();
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                    myMessageModel.time = sdf.format(time);
+                    myMessageModel.type = ((JSONNumber) newJSONObject.get("type")).intValue();
                     myMessageModel.hasRead = ((JSONBoolean) newJSONObject.get("hasRead")).getValue();
-                    if(myMessageModel.type==1){
+                    if (myMessageModel.type == 1) {
                         JSONObject infoJSObj = (JSONObject) newJSONObject.get("info");
-                        myMessageModel.name=((JSONString) infoJSObj.get("name")).getValue();
-                        myMessageModel.phone=((JSONString) infoJSObj.get("phone")).getValue();
-                        myMessageModel.relation=((JSONString) infoJSObj.get("relation")).getValue();
-                        myMessageModel.requestId=((JSONNumber) infoJSObj.get("requestId")).intValue();
+                        myMessageModel.name = ((JSONString) infoJSObj.get("name")).getValue();
+                        myMessageModel.phone = ((JSONString) infoJSObj.get("phone")).getValue();
+                        myMessageModel.relation = ((JSONString) infoJSObj.get("relation")).getValue();
+                        myMessageModel.requestId = ((JSONString) infoJSObj.get("requestId")).getValue();
                     }
                     dataList.add(myMessageModel);
 

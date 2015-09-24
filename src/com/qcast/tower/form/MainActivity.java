@@ -21,6 +21,8 @@ public class MainActivity extends FragmentActivity {
 	 * 选项卡对象
 	 */
 	protected TabHost tabhost = null;
+	private Handler hasMessageHandler;
+
 
 
 	/**
@@ -61,11 +63,47 @@ public class MainActivity extends FragmentActivity {
 				}
 			}
         });
+        hasMessageHandler=new Handler();
+        refreshMessage();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
+    }
+    
+    public void refreshMessage(){
+        hasMessageHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(Logic.token==null){
+                    Host.doCommand("comment", new CommonResponse<String>() {
+                        @Override
+                        public void onFinished(String content) {
+                            if (Response.CODE_SUCCESS != code()) {
+                                Toast.makeText(MainActivity.this, "网络问题", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                            JSONObject resultObject = JSONObject.convert(content);
+                            if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+                                Toast.makeText(MainActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
+                                return;
+                            } else {
+                                if(tabhost.getCurrentTab()==0) {
+                                    View v = tabhost.getCurrentView();
+                                    Button aa = (Button) v.findViewById(R.id.home_button_notify);
+                                    if(aa!=null)
+                                        aa.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+                    },Logic.token);
+                }
+
+                MainActivity.this.refreshMessage();
+
+            }
+        },5000);
     }
     
     public void goOnline(View view){
@@ -83,5 +121,11 @@ public class MainActivity extends FragmentActivity {
         Intent intent = new Intent(MainActivity.this,InquiryDoctorActivity.class);
         intent.putExtra("docLevel",1);
         MainActivity.this.startActivity(intent);
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        hasMessageHandler.removeCallbacksAndMessages(null);
     }
 }

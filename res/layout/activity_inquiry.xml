@@ -20,6 +20,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="6dp"
+            android:visibility="gone"
             android:background="@drawable/button_home_notify" />
 
         <TextView

@@ -1,10 +1,12 @@
 package com.qcast.tower.form;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -48,6 +50,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
     private String docId;
     private String channel;
     private String topic;
+    private Bitmap docBitmap;
     private int messageId = 0;
     public static final int CHAT_REFRESH_TIME=5000;
 
@@ -56,16 +59,17 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
         super.onCreate(savedInstanceState);
         docId = this.getIntent().getStringExtra("docId");
         topic = this.getIntent().getStringExtra("topic");
-        if (TextUtils.isEmpty(docId)) {
-            topic = "头疼怎么办";
+        if(TextUtils.isEmpty(topic)){
+            topic=System.currentTimeMillis()+"";
         }
+        docBitmap = this.getIntent().getParcelableExtra("doctorBitmap");
         if (TextUtils.isEmpty(docId)) {
             this.finish();
         }
         setContentView(R.layout.activity_inquiry_doctor_chat);
         initView();// 初始化view
         mDataArrays = new ArrayList<ChatMsgEntity>();
-        mAdapter = new ChatMsgViewAdapter(this, mDataArrays);
+        mAdapter = new ChatMsgViewAdapter(this, mDataArrays,docBitmap);
         mListView.setAdapter(mAdapter);
         chatHandler = new Handler();
         requestChannel();
@@ -202,6 +206,8 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
      */
     private void send() {
         contString = mEditTextContent.getText().toString();
+        InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mEditTextContent.getWindowToken(), 0) ;
         if (contString.length() > 0) {
             Host.doCommand("push", new CommonResponse<String>() {
                 @Override

@@ -152,6 +152,7 @@ public class InquiryDoctorDetailActivity extends Activity{
             	}
                 Intent intent = new Intent(InquiryDoctorDetailActivity.this,InquiryDoctorChatActivity.class);
                 intent.putExtra("docId",doctorModel.doctorId);
+                intent.putExtra("doctorBitmap",doctorModel.getPhoto());
                 InquiryDoctorDetailActivity.this.startActivity(intent);
 
             }

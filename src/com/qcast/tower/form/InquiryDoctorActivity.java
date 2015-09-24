@@ -240,9 +240,9 @@ public class InquiryDoctorActivity extends Activity {
             }
 
             if(model.isFamous){
-                viewHolder.isask_tv.setVisibility(View.VISIBLE);
+                viewHolder.isfamous_tv.setVisibility(View.VISIBLE);
             }else{
-                viewHolder.isask_tv.setVisibility(View.GONE);
+                viewHolder.isfamous_tv.setVisibility(View.INVISIBLE);
             }
 
             if(model.isPre){

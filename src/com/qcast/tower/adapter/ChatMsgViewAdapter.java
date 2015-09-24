@@ -2,11 +2,13 @@ package com.qcast.tower.adapter;
 
 import java.util.ArrayList;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qcast.tower.R;
@@ -28,10 +30,17 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 	private static final int ITEMCOUNT = 2;// 消息类型的总数
 	private ArrayList<ChatMsgEntity> coll;// 消息对象数组
 	private LayoutInflater mInflater;
+	private Bitmap bitmap;
 
 	public ChatMsgViewAdapter(Context context, ArrayList<ChatMsgEntity> coll) {
 		this.coll = coll;
 		mInflater = LayoutInflater.from(context);
+	}
+
+	public ChatMsgViewAdapter(Context context, ArrayList<ChatMsgEntity> coll,Bitmap bitmap) {
+		this.coll = coll;
+		mInflater = LayoutInflater.from(context);
+		this.bitmap=bitmap;
 	}
 
 	public int getCount() {
@@ -84,6 +93,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 			viewHolder = new ViewHolder();
 			viewHolder.tvContent = (TextView) convertView
 					.findViewById(R.id.tv_chatcontent);
+			viewHolder.icon=(ImageView)convertView.findViewById(R.id.iv_userhead);
 			viewHolder.isComMsg = isComMsg;
 
 			convertView.setTag(viewHolder);
@@ -93,8 +103,11 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 		viewHolder.tvContent.setText(entity.getMessage());
 		if (isComMsg){
 			viewHolder.tvContent.setTextColor(Color.parseColor("#ff000000"));
+			if(bitmap!=null)
+				viewHolder.icon.setImageBitmap(bitmap);
 		}else {
 			viewHolder.tvContent.setTextColor(Color.parseColor("#ffffffff"));
+
 		}
 		return convertView;
 	}
@@ -102,6 +115,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 	static class ViewHolder {
 		public TextView tvContent;
 		public boolean isComMsg = true;
+		public ImageView icon;
 	}
 
 }

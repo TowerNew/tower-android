@@ -148,13 +148,13 @@ public class MyFriendMessageActivity extends Activity {
                                 viewHolder.my_friend_message_accept.setVisibility(View.GONE);
                             }
                         }
-                    }, Logic.token,0,model.requestId);
+                    }, Logic.token,false,model.requestId);
                 }
             });
             viewHolder.my_friend_message_accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Host.doCommand("responseFamliy", new CommonResponse<String>() {
+                    Host.doCommand("responseFamily", new CommonResponse<String>() {
                         @Override
                         public void onFinished(String content) {
                             if (Response.CODE_SUCCESS != code()) {
@@ -171,7 +171,7 @@ public class MyFriendMessageActivity extends Activity {
                                 viewHolder.my_friend_message_accept.setVisibility(View.GONE);
                             }
                         }
-                    }, Logic.token,1,model.requestId);
+                    }, Logic.token,true,model.requestId);
                 }
             });
             return convertView;

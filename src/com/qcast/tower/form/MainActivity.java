@@ -4,30 +4,40 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 import com.qcast.tower.R;
+import com.qcast.tower.logic.Host;
+import com.qcast.tower.logic.Logic;
+import com.qcast.tower.logic.response.CommonResponse;
+import com.qcast.tower.logic.response.Response;
+import com.slfuture.carrie.base.json.JSONNumber;
+import com.slfuture.carrie.base.json.JSONObject;
+import com.slfuture.carrie.base.json.JSONString;
 
 /**
  * 主界面
  */
 public class MainActivity extends FragmentActivity {
-	/**
-	 * 选项卡对象
-	 */
-	protected TabHost tabhost = null;
-	private Handler hasMessageHandler;
+    /**
+     * 选项卡对象
+     */
+    protected TabHost tabhost = null;
+    private Handler hasMessageHandler;
 
 
 
-	/**
-	 * 界面创建
-	 */
+    /**
+     * 界面创建
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,24 +54,24 @@ public class MainActivity extends FragmentActivity {
         RadioGroup group = (RadioGroup)findViewById(R.id.main_tab);
         group.check(R.id.main_tab_home);
         group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-				TabHost tabhost = (TabHost)findViewById(R.id.main_tabhost);
-				switch(checkedId) {
-				case R.id.main_tab_home:
-					tabhost.setCurrentTabByTag("main_tab_home");
-					break;
-				case R.id.main_tab_inquiry:
-					tabhost.setCurrentTabByTag("main_tab_inquiry");
-					break;
-				case R.id.main_tab_reserve:
-					tabhost.setCurrentTabByTag("main_tab_reserve");
-					break;
-				case R.id.main_tab_user:
-					tabhost.setCurrentTabByTag("main_tab_user");
-					break;
-				}
-			}
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                TabHost tabhost = (TabHost)findViewById(R.id.main_tabhost);
+                switch(checkedId) {
+                    case R.id.main_tab_home:
+                        tabhost.setCurrentTabByTag("main_tab_home");
+                        break;
+                    case R.id.main_tab_inquiry:
+                        tabhost.setCurrentTabByTag("main_tab_inquiry");
+                        break;
+                    case R.id.main_tab_reserve:
+                        tabhost.setCurrentTabByTag("main_tab_reserve");
+                        break;
+                    case R.id.main_tab_user:
+                        tabhost.setCurrentTabByTag("main_tab_user");
+                        break;
+                }
+            }
         });
         hasMessageHandler=new Handler();
         refreshMessage();
@@ -71,7 +81,7 @@ public class MainActivity extends FragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
     }
-    
+
     public void refreshMessage(){
         hasMessageHandler.postDelayed(new Runnable() {
             @Override
@@ -89,15 +99,15 @@ public class MainActivity extends FragmentActivity {
                                 Toast.makeText(MainActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
                                 return;
                             } else {
-                                if(tabhost.getCurrentTab()==0) {
+                                if (tabhost.getCurrentTab() == 0) {
                                     View v = tabhost.getCurrentView();
                                     Button aa = (Button) v.findViewById(R.id.home_button_notify);
-                                    if(aa!=null)
+                                    if (aa != null)
                                         aa.setVisibility(View.GONE);
                                 }
                             }
                         }
-                    },Logic.token);
+                    }, Logic.token);
                 }
 
                 MainActivity.this.refreshMessage();
@@ -105,7 +115,7 @@ public class MainActivity extends FragmentActivity {
             }
         },5000);
     }
-    
+
     public void goOnline(View view){
         Intent intent = new Intent(MainActivity.this,InquiryDoctorActivity.class);
         intent.putExtra("docLevel",2);
@@ -113,8 +123,8 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void goSelf(View view){
-		 Intent intent = new Intent(this, SelfDiagnosticActivity.class);
-		 this.startActivity(intent);
+        Intent intent = new Intent(this, SelfDiagnosticActivity.class);
+        this.startActivity(intent);
     }
 
     public void goFamous(View view){
@@ -122,7 +132,7 @@ public class MainActivity extends FragmentActivity {
         intent.putExtra("docLevel",1);
         MainActivity.this.startActivity(intent);
     }
-    
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

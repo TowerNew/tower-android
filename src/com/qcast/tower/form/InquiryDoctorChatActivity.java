@@ -59,6 +59,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
         super.onCreate(savedInstanceState);
         docId = this.getIntent().getStringExtra("docId");
         topic = this.getIntent().getStringExtra("topic");
+        channel = this.getIntent().getStringExtra("channel");
         if(TextUtils.isEmpty(topic)){
             topic=System.currentTimeMillis()+"";
         }
@@ -72,7 +73,9 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
         mAdapter = new ChatMsgViewAdapter(this, mDataArrays,docBitmap);
         mListView.setAdapter(mAdapter);
         chatHandler = new Handler();
-        requestChannel();
+        if(TextUtils.isEmpty(channel)) {
+            requestChannel();
+        }
         refreshMessage(CHAT_REFRESH_TIME);
     }
 

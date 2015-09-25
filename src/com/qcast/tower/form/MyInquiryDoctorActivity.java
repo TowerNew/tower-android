@@ -75,6 +75,7 @@ public class MyInquiryDoctorActivity extends Activity{
                 Intent intent = new Intent(MyInquiryDoctorActivity.this,InquiryDoctorChatActivity.class);
                 intent.putExtra("docId", dataList.get(position).docId);
                 intent.putExtra("topic", dataList.get(position).topic);
+                intent.putExtra("channel",dataList.get(position).id+"");
                 MyInquiryDoctorActivity.this.startActivity(intent);
             }
         });

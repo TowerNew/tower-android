@@ -200,6 +200,7 @@ public class MyReserveHistoryActivity extends Activity{
             viewHolder.doctor_photo_image.setImageBitmap(model.getPhoto());
             if(model.status==1){
                 viewHolder.cancel_btn.setVisibility(View.GONE);
+                viewHolder.status_tv.setVisibility(View.VISIBLE);
                 viewHolder.status_tv.setTextColor(Color.RED);
                 viewHolder.status_tv.setText("已预约");
             }else if(model.status==2){
@@ -210,7 +211,7 @@ public class MyReserveHistoryActivity extends Activity{
             }else if(model.status==3){
                 viewHolder.cancel_btn.setVisibility(View.GONE);
                 viewHolder.status_tv.setVisibility(View.VISIBLE);
-                viewHolder.status_tv.setTextColor(Color.GRAY);
+                viewHolder.status_tv.setTextColor(Color.BLACK);
                 viewHolder.status_tv.setText("已取消");
             }
             return convertView;

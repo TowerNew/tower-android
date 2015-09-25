@@ -82,7 +82,7 @@ public class MyWalletActivity extends Activity {
                     JSONObject newJSONObject = (JSONObject) item;
                     MyWalletModel myWalletModel = new MyWalletModel();
 
-                    myWalletModel.title = ((JSONString) newJSONObject.get("title")).getValue();
+                    myWalletModel.title = ((JSONString) newJSONObject.get("bank")).getValue();
                     myWalletModel.bindBankCard = ((JSONString) newJSONObject.get("bank")).getValue();
                     myWalletModel.amount = ((JSONNumber) newJSONObject.get("amount")).intValue();
                     myWalletModel.id = ((JSONNumber) newJSONObject.get("id")).intValue();

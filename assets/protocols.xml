@@ -67,4 +67,6 @@
     <protocol name="comment"
         mock=""
         path="user-platform-web-1.0.0/rest/user/comment#id=[0]&amp;content=[1]&amp;attitude=[2]&amp;token=[3]" />
+    <protocol name="hasMessage" path="user-platform-web-1.0.0/rest/user/hasMessage?token=[0]" mock="{&quot;code&quot;:200, &quot;data&quot;:2}" />
+
 </protocols>

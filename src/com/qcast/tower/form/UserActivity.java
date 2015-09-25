@@ -250,8 +250,8 @@ public class UserActivity extends Fragment {
                     return;
                 }
 				else if(4 == index) {
-					Intent intent = new Intent(UserActivity.this.getActivity(), AboutActivity.class);
-					UserActivity.this.startActivity(intent);
+										Intent intent = new Intent(UserActivity.this.getActivity(), MyReserveHistoryActivity.class);
+                    UserActivity.this.startActivity(intent);
                     return;
                 }
 				else if(5 == index) {

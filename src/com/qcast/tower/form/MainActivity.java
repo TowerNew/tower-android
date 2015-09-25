@@ -19,6 +19,7 @@ import com.qcast.tower.logic.Host;
 import com.qcast.tower.logic.Logic;
 import com.qcast.tower.logic.response.CommonResponse;
 import com.qcast.tower.logic.response.Response;
+import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
@@ -86,8 +87,8 @@ public class MainActivity extends FragmentActivity {
         hasMessageHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(Logic.token==null){
-                    Host.doCommand("comment", new CommonResponse<String>() {
+                if(Logic.token!=null){
+                    Host.doCommand("hasMessage", new CommonResponse<String>() {
                         @Override
                         public void onFinished(String content) {
                             if (Response.CODE_SUCCESS != code()) {
@@ -98,12 +99,19 @@ public class MainActivity extends FragmentActivity {
                             if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
                                 Toast.makeText(MainActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
                                 return;
-                            } else {
+                            } else if(((JSONNumber) resultObject.get("data")).intValue() >0){
                                 if (tabhost.getCurrentTab() == 0) {
                                     View v = tabhost.getCurrentView();
                                     Button aa = (Button) v.findViewById(R.id.home_button_notify);
                                     if (aa != null)
-                                        aa.setVisibility(View.GONE);
+                                        aa.setBackgroundResource(R.drawable.button_home_notify_has_message);
+                                }
+                            }else if(((JSONNumber) resultObject.get("data")).intValue() ==0){
+                                if (tabhost.getCurrentTab() == 0) {
+                                    View v = tabhost.getCurrentView();
+                                    Button aa = (Button) v.findViewById(R.id.home_button_notify);
+                                    if (aa != null)
+                                        aa.setBackgroundResource(R.drawable.button_home_notify);
                                 }
                             }
                         }

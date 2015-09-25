@@ -16,6 +16,7 @@ public class MyReserveModel {
     public int subId;
     public String name;
     public String photoUrl;
+    public String userGlobalId;
     public String memo;
     public String photoName =null;
 

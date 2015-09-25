@@ -106,13 +106,21 @@ public class MyReserveHistoryActivity extends Activity{
                             myReserveModel.photoName = photoName;
                         }
                         myReserveModel.name= ((JSONString) doctorObj.get("name")).getValue();
-                        myReserveModel.subId = ((JSONNumber) doctorObj.get("userGlobalId")).intValue();
-                        myReserveModel.memo= ((JSONString) doctorObj.get("memo")).getValue();
+                        if(doctorObj.get("userGlobalId")!=null) {
+                            myReserveModel.userGlobalId = ((JSONString) doctorObj.get("userGlobalId")).getValue();
+                        }else{
+                            myReserveModel.userGlobalId="";
+                        }
+                        if(doctorObj.get("memo")!=null){
+                            myReserveModel.memo= ((JSONString) doctorObj.get("memo")).getValue();
+                        }
                     }else if(myReserveModel.type==2){
                         JSONObject obj= (JSONObject) newJSONObject.get("examination");
                         myReserveModel.name= ((JSONString) obj.get("name")).getValue();
                         myReserveModel.subId = ((JSONNumber) obj.get("id")).intValue();
-                        myReserveModel.memo= ((JSONString) obj.get("memo")).getValue();
+                        if(obj.get("memo")!=null){
+                            myReserveModel.memo= ((JSONString) obj.get("memo")).getValue();
+                        }
                     }
 
 

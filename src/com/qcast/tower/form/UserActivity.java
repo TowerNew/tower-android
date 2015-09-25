@@ -49,7 +49,7 @@ public class UserActivity extends Fragment {
 	/**
 	 * 用户面板静态功能个数
 	 */
-	public final static int USER_BOARD_COUNT = 5;
+	public final static int USER_BOARD_COUNT = 6;
 	
 	/**
 	 * 用户面板列表
@@ -200,6 +200,10 @@ public class UserActivity extends Fragment {
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_reserve));
 		map.put("caption", "我的预约");
 		userBoardList.add(map);
+		map = new HashMap<String, Object>();
+		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_about));
+		map.put("caption", "关于我们");
+		userBoardList.add(map);
 		//
 		ListView listview = (ListView) this.getActivity().findViewById(R.id.user_list);
 		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), userBoardList, R.layout.listview_user,
@@ -246,8 +250,13 @@ public class UserActivity extends Fragment {
                     return;
                 }
 				else if(4 == index) {
-                    // Intent intent = new Intent(UserActivity.this.getActivity(), MyReserveHistoryActivity.class);
-                    // UserActivity.this.startActivity(intent);
+					Intent intent = new Intent(UserActivity.this.getActivity(), AboutActivity.class);
+					UserActivity.this.startActivity(intent);
+                    return;
+                }
+				else if(5 == index) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), AboutActivity.class);
+					UserActivity.this.startActivity(intent);
                     return;
                 }
 				else if(index >= USER_BOARD_COUNT) {

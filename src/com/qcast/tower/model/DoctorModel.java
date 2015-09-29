@@ -24,6 +24,8 @@ public class DoctorModel implements Serializable {
     public String description;
     public String resume;
     public String photoName = null;
+    public int goodCount;
+    public int badCount;
     
     public Bitmap getPhoto() {
     	return Storage.getImage(photoName);

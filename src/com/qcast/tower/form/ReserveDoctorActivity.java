@@ -211,7 +211,9 @@ public class ReserveDoctorActivity extends Activity {
 				}
 				Toast.makeText(ReserveDoctorActivity.this, "预约成功", Toast.LENGTH_LONG).show();
 				ReserveDoctorActivity.this.finish();
-				return;
+				Intent intent = new Intent(ReserveDoctorActivity.this, MyReserveHistoryActivity.class);
+				ReserveDoctorActivity.this.startActivity(intent);
+                return;
 			}
 		}, getCurrentTime().date.toString(), getCurrentTime().span, memo.getText().toString(), doctorId, Logic.token);
 		return true;

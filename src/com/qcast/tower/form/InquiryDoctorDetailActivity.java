@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -33,13 +32,11 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 
-import org.json.JSONException;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * Created by zhengningchuan on 15/9/2.
+ * 
  */
 public class InquiryDoctorDetailActivity extends Activity{
 
@@ -205,8 +202,9 @@ public class InquiryDoctorDetailActivity extends Activity{
         if(!TextUtils.isEmpty(doctorModel.resume)){
             doctor_skill_tv.setText(doctorModel.resume);
         }
+        bad_result_tv.setText(String.valueOf(doctorModel.badCount));
+        good_result_tv.setText(String.valueOf(doctorModel.goodCount));
         loadData();
-
     }
 
     private void loadData() {
@@ -228,18 +226,6 @@ public class InquiryDoctorDetailActivity extends Activity{
                 nextStart = ((JSONNumber)result.get("nextStart")).intValue();
                 if(!TextUtils.isEmpty(commentsNum)){
                     user_comments_num_tv.setText("用户评价（"+commentsNum+"）");
-                }
-                if(result.get("bad")!=null) {
-                    String badNum = ((JSONString) result.get("bad")).getValue();
-                    if (TextUtils.isEmpty(commentsNum)) {
-                        bad_result_tv.setText(badNum);
-                    }
-                }
-                if(result.get("good")!=null) {
-                    String goodNum = ((JSONString) result.get("good")).getValue();
-                    if (TextUtils.isEmpty(commentsNum)) {
-                        good_result_tv.setText(goodNum);
-                    }
                 }
                 JSONArray listResult = (JSONArray)result.get("records");
                 if(null != listResult) {

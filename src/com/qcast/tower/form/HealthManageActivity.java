@@ -1,6 +1,7 @@
 package com.qcast.tower.form;
 
 import com.qcast.tower.R;
+import com.qcast.tower.logic.Logic;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -66,14 +67,21 @@ public class HealthManageActivity extends Activity {
 		report.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				openWeb("http://m.baidu.com");
+				openWeb("http://cdn.oss.wehop-resources.wehop.cn/user/sites/health-data/v-1/index.html?token=" + Logic.token);
 			}
 		});
 		View survey = (View) this.findViewById(R.id.healthmanage_layout_survey);
 		survey.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				openWeb("http://m.baidu.com");
+				openWeb("http://cdn.oss.wehop-resources.wehop.cn/well-risk/sites/v-1/index.html#/form?token=" + Logic.token);
+			}
+		});
+		View paper = (View) this.findViewById(R.id.healthmanage_layout_paper);
+		paper.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				openWeb("http://cdn.oss.wehop-resources.wehop.cn/user/sites/health-report/v-1/index.html");
 			}
 		});
 	}

@@ -61,11 +61,15 @@ public class MyMessageActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MyMessageModel myMessageModel = dataList.get(position);
+                if(myMessageModel.hasRead) {
+                	return;
+                }
                 if (myMessageModel.type == 1) {
                     Intent intent = new Intent(MyMessageActivity.this, MyFriendMessageActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("myFriendMessage", myMessageModel);
                     intent.putExtras(bundle);
+                    intent.putExtra("messageId", myMessageModel.id);
                     MyMessageActivity.this.startActivity(intent);
                 }
             }
@@ -108,8 +112,14 @@ public class MyMessageActivity extends Activity {
                         myMessageModel.relation = ((JSONString) infoJSObj.get("relation")).getValue();
                         myMessageModel.requestId = ((JSONString) infoJSObj.get("requestId")).getValue();
                     }
+                    if(1 != myMessageModel.type) {
+                        Host.doCommand("readMessage", new CommonResponse<String>() {
+                            @Override
+                            public void onFinished(String content) {
+                            }
+                        }, Logic.token, myMessageModel.id);
+                    }
                     dataList.add(myMessageModel);
-
                 }
                 adapter.notifyDataSetChanged();
             }

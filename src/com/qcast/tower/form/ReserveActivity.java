@@ -47,8 +47,8 @@ public class ReserveActivity extends Fragment {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ReserveActivity.this.getActivity(), InquiryDoctorActivity.class);
-				intent.putExtra("docLevel", 2);
 				intent.putExtra("services", "reserve");
+				intent.putExtra("docLevel", 2);
 				ReserveActivity.this.getActivity().startActivity(intent);
 			}
 		});

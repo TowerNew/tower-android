@@ -218,6 +218,8 @@ public class ExaminationActivity extends Activity {
 				}
 				Toast.makeText(ExaminationActivity.this, "预约成功", Toast.LENGTH_LONG).show();
 				ExaminationActivity.this.finish();
+				Intent intent = new Intent(ExaminationActivity.this, MyReserveHistoryActivity.class);
+				ExaminationActivity.this.startActivity(intent);
 				return;
 			}
 		}, getCurrentPackage().id, getCurrentPeriod().date.toString(), getCurrentPeriod().span, Logic.token);

@@ -92,10 +92,13 @@ public class MainActivity extends FragmentActivity {
                         @Override
                         public void onFinished(String content) {
                             if (Response.CODE_SUCCESS != code()) {
-                                Toast.makeText(MainActivity.this, "网络问题", Toast.LENGTH_LONG).show();
+                                // Toast.makeText(MainActivity.this, "网络问题", Toast.LENGTH_LONG).show();
                                 return;
                             }
                             JSONObject resultObject = JSONObject.convert(content);
+                            if (((JSONNumber) resultObject.get("code")).intValue() == -302) {
+                            	return;
+                            }
                             if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
                                 Toast.makeText(MainActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
                                 return;
@@ -117,16 +120,15 @@ public class MainActivity extends FragmentActivity {
                         }
                     }, Logic.token);
                 }
-
                 MainActivity.this.refreshMessage();
-
             }
-        },5000);
+        }, 5000);
     }
 
     public void goOnline(View view){
         Intent intent = new Intent(MainActivity.this,InquiryDoctorActivity.class);
-        intent.putExtra("docLevel",2);
+        intent.putExtra("services", "inquiry");
+		intent.putExtra("docLevel",2);
         MainActivity.this.startActivity(intent);
     }
 
@@ -137,7 +139,8 @@ public class MainActivity extends FragmentActivity {
 
     public void goFamous(View view){
         Intent intent = new Intent(MainActivity.this,InquiryDoctorActivity.class);
-        intent.putExtra("docLevel",1);
+        intent.putExtra("services", "inquiry");
+		intent.putExtra("docLevel",1);
         MainActivity.this.startActivity(intent);
     }
 

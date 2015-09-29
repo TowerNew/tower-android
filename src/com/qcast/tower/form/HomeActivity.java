@@ -1,5 +1,6 @@
 package com.qcast.tower.form;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
@@ -399,7 +400,8 @@ public class HomeActivity extends Fragment {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), ExaminationActivity.class);
+				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
+				intent.putExtra("services", "inquiry");
 				intent.putExtra("docLevel", 1);
 				HomeActivity.this.startActivity(intent);
 			}
@@ -409,6 +411,7 @@ public class HomeActivity extends Fragment {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
+				intent.putExtra("services", "inquiry");
 				intent.putExtra("docLevel", 2);
 				HomeActivity.this.startActivity(intent);
 			}
@@ -418,8 +421,8 @@ public class HomeActivity extends Fragment {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
-				intent.putExtra("docLevel", 2);
 				intent.putExtra("services", "reserve");
+				intent.putExtra("docLevel", 2);
 				HomeActivity.this.startActivity(intent);
 			}
 		});
@@ -447,9 +450,18 @@ public class HomeActivity extends Fragment {
 		txtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				String keyword = txtSearch.getText().toString();
+				if("".equals(keyword)) {
+					return false;
+				}
 				if(actionId == EditorInfo.IME_ACTION_SEARCH ||(event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {                
 					Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
-					intent.putExtra("url", "http://www.baidu.com/s?wd=" + txtSearch.getText().toString());
+					try {
+						keyword = URLEncoder.encode(keyword, "UTF-8");
+					}
+					catch(Exception ex) {}
+					String url = Host.fetchURL("search", keyword);
+					intent.putExtra("url", url);
 					HomeActivity.this.startActivity(intent);
 					return true;
 				}

@@ -1,5 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical"
+    android:background="@color/white">
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -144,7 +148,7 @@
 			android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
 			android:ems="10"
-		    android:inputType="number"
+		    android:inputType="text"
 		    android:singleLine="true"
 		    android:text=""
 		    android:textSize="16sp"
@@ -188,7 +192,7 @@
 		    android:layout_centerVertical="true"
 		    android:layout_marginRight="10dp"
 		    android:gravity="center_vertical"
-		    android:text=""
+		    android:text="点击选择"
 		    android:textColor="@color/midgrey"
 		    android:textSize="16sp" >
 
@@ -231,7 +235,7 @@
 		    android:layout_marginRight="10dp"
 		    android:cursorVisible="true"
 		    android:ems="10"
-		    android:inputType="number"
+		    android:inputType="text"
 		    android:singleLine="true"
 		    android:text=""
 		    android:textSize="16sp"
@@ -382,7 +386,7 @@
 			android:layout_marginLeft="20dp"
 			android:layout_marginRight="20dp"
 		    android:background="@drawable/button_common"
-		    android:text="@string/family_confirm"
+		    android:text="保 存"
 		    android:textColor="#ffffffff"
 			android:layout_weight="1"
 		    android:textSize="15sp" />
@@ -397,9 +401,10 @@
 			android:layout_marginLeft="20dp"
 			android:layout_marginRight="20dp"
 		    android:background="@drawable/button_common"
-		    android:text="退出"
+		    android:text="注 销"
 		    android:textColor="#ffffffff"
 			android:layout_weight="1"
 		    android:textSize="15sp" />
 	</LinearLayout>
 </RelativeLayout>
+</ScrollView>

@@ -19,7 +19,7 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 
 /**
- * Created by zhengningchuan on 15/9/24.
+ * 
  */
 public class MyCommentsActivity extends Activity {
     private Button my_commtents_return_btn;
@@ -83,7 +83,7 @@ public class MyCommentsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 String comments=my_comments_et.getText().toString();
-                if(!TextUtils.isEmpty(comments)){
+                if(!TextUtils.isEmpty(comments) && (goodFlag || badFlag)) {
                     Host.doCommand("comment", new CommonResponse<String>() {
                         @Override
                         public void onFinished(String content) {
@@ -95,12 +95,12 @@ public class MyCommentsActivity extends Activity {
                             if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
                                 Toast.makeText(MyCommentsActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
                                 return;
-                            } else {
+                            }
+                            else {
                                 Toast.makeText(MyCommentsActivity.this, "评论成功", Toast.LENGTH_LONG).show();
-
                             }
                         }
-                    }, docId, comments, goodFlag,Logic.token);
+                    }, docId, comments, goodFlag, Logic.token);
                 }
             }
         });

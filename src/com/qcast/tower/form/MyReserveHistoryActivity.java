@@ -96,6 +96,9 @@ public class MyReserveHistoryActivity extends Activity{
                     myReserveModel.type = ((JSONNumber) newJSONObject.get("type")).intValue();
                     myReserveModel.date = ((JSONString) newJSONObject.get("date")).getValue();
                     myReserveModel.span = ((JSONString) newJSONObject.get("span")).getValue();
+                    if(null != newJSONObject.get("discount")) {
+                        myReserveModel.discount = ((JSONString) newJSONObject.get("discount")).getValue();
+                    }
                     myReserveModel.status = ((JSONNumber) newJSONObject.get("status")).intValue();
                     if(myReserveModel.type==1){
                         JSONObject doctorObj= (JSONObject) newJSONObject.get("doctor");
@@ -106,6 +109,9 @@ public class MyReserveHistoryActivity extends Activity{
                             myReserveModel.photoName = photoName;
                         }
                         myReserveModel.name= ((JSONString) doctorObj.get("name")).getValue();
+                        if(null != myReserveModel.discount) {
+                        	myReserveModel.name = myReserveModel.name + "\n[" + myReserveModel.discount + "]";
+                        }
                         if(doctorObj.get("userGlobalId")!=null) {
                             myReserveModel.userGlobalId = ((JSONString) doctorObj.get("userGlobalId")).getValue();
                         }else{
@@ -212,7 +218,7 @@ public class MyReserveHistoryActivity extends Activity{
                 viewHolder.cancel_btn.setVisibility(View.GONE);
                 viewHolder.status_tv.setVisibility(View.VISIBLE);
                 viewHolder.status_tv.setTextColor(Color.BLACK);
-                viewHolder.status_tv.setText("已取消");
+                viewHolder.status_tv.setText("已结束");
             }
             return convertView;
         }

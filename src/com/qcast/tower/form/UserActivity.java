@@ -149,7 +149,7 @@ public class UserActivity extends Fragment {
 					String url = ((JSONString) newJSONObject.get("url")).getValue();
 					HashMap<String, Object> map = new HashMap<String, Object>();
 					String iconName = null;
-					if(null == icon) {
+					if(null != icon) {
 						iconName = Storage.getImageName(icon);
 						map.put("icon", iconName);
 					}
@@ -202,7 +202,7 @@ public class UserActivity extends Fragment {
 		userBoardList.add(map);
 		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_about));
-		map.put("caption", "关于我们");
+		map.put("caption", "程序版本");
 		userBoardList.add(map);
 		//
 		ListView listview = (ListView) this.getActivity().findViewById(R.id.user_list);
@@ -250,7 +250,7 @@ public class UserActivity extends Fragment {
                     return;
                 }
 				else if(4 == index) {
-										Intent intent = new Intent(UserActivity.this.getActivity(), MyReserveHistoryActivity.class);
+					Intent intent = new Intent(UserActivity.this.getActivity(), MyReserveHistoryActivity.class);
                     UserActivity.this.startActivity(intent);
                     return;
                 }

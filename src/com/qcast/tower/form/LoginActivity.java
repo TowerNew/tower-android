@@ -103,7 +103,7 @@ public class LoginActivity extends Activity {
 							Toast.makeText(LoginActivity.this, ((JSONString) object.get("msg")).getValue(), Toast.LENGTH_LONG).show();
 							return;
 						}
-						Toast.makeText(LoginActivity.this, "请输入短信验证码", Toast.LENGTH_LONG).show();
+						Toast.makeText(LoginActivity.this, "短信发送成功", Toast.LENGTH_LONG).show();
 						EditText txtCode = (EditText) findViewById(R.id.login_text_code);
 						txtCode.setFocusable(true);
 						txtCode.setFocusableInTouchMode(true);

@@ -9,15 +9,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,9 +35,14 @@ import com.slfuture.carrie.base.text.Text;
 import java.util.ArrayList;
 
 /**
- * Created by zhengningchuan on 15/9/1.
+ * 
  */
 public class InquiryDoctorActivity extends Activity {
+	/**
+	 * 支持的服务种类
+	 */
+	private String services = null;
+	
     private ArrayList<DoctorModel> dataList;
     private DoctorAdapter adapter;
     private ListView doctorList;
@@ -56,7 +57,11 @@ public class InquiryDoctorActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        doctorLevel=this.getIntent().getIntExtra("docLevel", 1);
+        doctorLevel = this.getIntent().getIntExtra("docLevel", 1);
+        services = this.getIntent().getStringExtra("services");
+        if(null == services) {
+        	services = "inquiry";
+        }
         this.setContentView(R.layout.activity_inquiry_doctor);
         doctorList = (ListView)findViewById(R.id.doctor_list);
         inquiry_return_btn = (Button)findViewById(R.id.inquiry_return_btn);
@@ -134,6 +139,12 @@ public class InquiryDoctorActivity extends Activity {
                     doctorModel.doctorId = ((JSONString) newJSONObject.get("userGlobalId")).getValue();
                     doctorModel.resume = ((JSONString) newJSONObject.get("resume")).getValue();
                     doctorModel.photoName = photoName;
+                    if(newJSONObject.get("bad") != null) {
+                    	doctorModel.badCount = ((JSONNumber) newJSONObject.get("bad")).intValue();
+                    }
+                    if(newJSONObject.get("good")!=null) {
+                    	doctorModel.goodCount = ((JSONNumber) newJSONObject.get("good")).intValue();
+                    }
                     JSONArray servicesArray = (JSONArray) newJSONObject.get("services");
                     doctorModel.services = new ArrayList<String>();
                     for(int i=0;i<servicesArray.size();i++){
@@ -175,7 +186,7 @@ public class InquiryDoctorActivity extends Activity {
                 adapter.notifyDataSetChanged();
                 page = thisPage + 1;
             }
-        }, page,doctorLevel,"inquiry",Logic.regionId);
+        }, page, doctorLevel, services, Logic.regionId);
     }
 
     public class DoctorAdapter extends BaseAdapter{

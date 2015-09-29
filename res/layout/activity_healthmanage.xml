@@ -46,7 +46,7 @@
 		    android:layout_marginRight="45dp"
 		    android:gravity="center_vertical"
 		    android:text="医生处方"
-		    android:textColor="@color/grey"
+		    android:textColor="@color/black"
 		    android:textSize="18sp" />
         <ImageView
             android:layout_width="20dp"
@@ -71,8 +71,8 @@
 		    android:layout_marginLeft="20dp"
 		    android:layout_marginRight="45dp"
 		    android:gravity="center_vertical"
-		    android:text="体检报告"
-		    android:textColor="@color/grey"
+		    android:text="健康数据"
+		    android:textColor="@color/black"
 		    android:textSize="18sp" />
         <ImageView
             android:layout_width="20dp"
@@ -98,7 +98,33 @@
 		    android:layout_marginRight="45dp"
 		    android:gravity="center_vertical"
 		    android:text="问卷调查"
-		    android:textColor="@color/grey"
+		    android:textColor="@color/black"
+		    android:textSize="18sp" />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/arrow" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/healthmanage_layout_paper"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/healthmanage_layout_survey"
+        android:background="@drawable/list_item_backgroud"
+        android:clickable="true">
+		<TextView
+		    android:id="@+id/healthmanage_label_paper_title"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_marginLeft="20dp"
+		    android:layout_marginRight="45dp"
+		    android:gravity="center_vertical"
+		    android:text="健康报告"
+		    android:textColor="@color/black"
 		    android:textSize="18sp" />
         <ImageView
             android:layout_width="20dp"

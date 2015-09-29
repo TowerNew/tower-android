@@ -142,6 +142,9 @@ public class UserInfoActivity extends Activity {
 				if(null != dataObject.get("bankName")) {
 					bankName = ((JSONString) dataObject.get("bankName")).getValue();
 				}
+				if(Text.isBlank(bankName)) {
+					bankName = "点击选择";
+				}
 				String bankRegion = "";
 				if(null != dataObject.get("bankRegion")) {
 					bankRegion = ((JSONString) dataObject.get("bankRegion")).getValue();
@@ -180,7 +183,7 @@ public class UserInfoActivity extends Activity {
 						Intent intent = new Intent(UserInfoActivity.this, RadioActivity.class);
 						intent.putExtra("title", "选择银行");
 						intent.putExtra("items", BANK_NAMES);
-						intent.putExtra("index", 0);
+						intent.putExtra("index", -1);
 						for(int i = 0; i < BANK_NAMES.length; i++) {
 							String item = BANK_NAMES[i];
 							if(item.equals(bankName)) {
@@ -230,7 +233,10 @@ public class UserInfoActivity extends Activity {
 		EditText txtIdNumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_idnumber);
 		final String idnumber = txtIdNumber.getText().toString();
 		TextView labBankName = (TextView) UserInfoActivity.this.findViewById(R.id.userinfo_text_bankname);
-		final String bankName = labBankName.getText().toString();
+		String bankName = labBankName.getText().toString();
+		if(bankName.equals("点击选择")) {
+			bankName = "";
+		}
 		EditText txtBankRegion = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_bankregion);
 		final String bankRegion = txtBankRegion.getText().toString();
 		EditText txtBanknumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_banknumber);
@@ -254,6 +260,7 @@ public class UserInfoActivity extends Activity {
 					return;
 				}
 				Logic.name = name;
+				Storage.setUser("name", Logic.name);
 				Logic.idNumber = idnumber;
 				Logic.bankNumber = banknumber;
 				UserInfoActivity.this.finish();
@@ -356,7 +363,8 @@ public class UserInfoActivity extends Activity {
 							return;
 						}
 						String url = ((JSONString) resultObject.get("data")).getValue();
-			            Host.doImage("image", new ImageResponse(url, null) {
+						String imageName = Storage.getImageName(url);
+			            Host.doImage("image", new ImageResponse(imageName, null) {
 							@Override
 							public void onFinished(Bitmap content) {
 								ImageButton buttonIdCardBack = (ImageButton) UserInfoActivity.this.findViewById(R.id.userinfo_image_idcardback);

@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 import com.qcast.tower.R;
 import com.qcast.tower.logic.Host;
-import com.qcast.tower.logic.Logic;
 import com.qcast.tower.logic.response.CommonResponse;
 import com.qcast.tower.logic.response.Response;
 import com.slfuture.carrie.base.json.JSONArray;
@@ -16,15 +15,12 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -105,9 +101,16 @@ public class SelfDiagnosticActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
 				for(int i = 0; i < listview.getChildCount(); i++) {
-					listview.getChildAt(i).setBackgroundResource(R.color.lightgrey);
+					if(index == i) {
+						// v.setBackgroundResource(R.color.white);
+						listview.getChildAt(i).setBackgroundResource(R.color.white);
+					}
+					else {
+						listview.getChildAt(i).setBackgroundResource(R.color.lightgrey);
+					}
 				}
-				v.setBackgroundResource(R.color.white);
+				SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
+				adapter.notifyDataSetChanged();
 				loadSymptom((String) bodyList.get(index).get("caption"));
             }
 		});

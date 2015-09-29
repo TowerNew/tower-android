@@ -52,7 +52,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
     private String topic;
     private Bitmap docBitmap;
     private int messageId = 0;
-    public static final int CHAT_REFRESH_TIME=5000;
+    public static final int CHAT_REFRESH_TIME = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
         if(TextUtils.isEmpty(channel)) {
             requestChannel();
         }
-        refreshMessage(CHAT_REFRESH_TIME);
+        refreshMessage(500);
     }
 
     private void requestChannel() {
@@ -127,7 +127,10 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_send:// 发送按钮点击事件
-                send();
+            	try {
+                    send();
+            	}
+            	catch(Throwable e) { }
                 break;
             case R.id.btn_back:// 返回按钮点击事件
                 finish();// 结束,实际开发中，可以返回主界面
@@ -136,73 +139,73 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
     }
 
     private void refreshMessage(int delayTime) {
-        chatHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!breakFlag && !TextUtils.isEmpty(channel)) {
-                    Host.doCommand("pull", new CommonResponse<String>() {
-                        @Override
-                        public void onFinished(String content) {
-                            if(null == content){
-                                return;
-                            }
-                            if (IResponse.CODE_SUCCESS != code()) {
-                                Toast.makeText(InquiryDoctorChatActivity.this, "网络错误", Toast.LENGTH_LONG).show();
-                            }
-                            JSONObject resultObject = JSONObject.convert(content);
-                            if (null == resultObject) {
-                                return;
-                            }
-                            if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-                                Toast.makeText(InquiryDoctorChatActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
-                                return;
-                            }
-                            if(messageId==0){
-                                mDataArrays.clear();
-                            }
-                            com.slfuture.carrie.base.json.JSONArray result = (com.slfuture.carrie.base.json.JSONArray) resultObject.get("data");
-                            if (result != null) {
-                                for (IJSON item : result) {
-                                    JSONObject newJSONObject = (JSONObject) item;
-                                    ChatMsgEntity entity = new ChatMsgEntity();
-                                    IJSON obj = newJSONObject.get("content");
-                                    entity.setMessage(((JSONString) newJSONObject.get("content")).getValue());
-                                    String userID = ((JSONString) newJSONObject.get("speaker")).getValue();
-                                    entity.setSpeakeId(userID);
-                                    int mesId = ((JSONNumber) newJSONObject.get("messageId")).intValue();
-                                    entity.setMessageId(mesId);
-                                    long time = ((JSONNumber) newJSONObject.get("time")).longValue();
-                                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-                                    entity.setTime(sdf.format(time));
-                                    if (userID.equals(docId)) {
-                                        entity.setMsgType(true);
-                                    } else {
-                                        entity.setMsgType(false);
-                                    }
-                                    mDataArrays.add(entity);
-                                    if(result.get(result.size()-1)==item) {
-                                        messageId = entity.getMessageId();
-                                    }
-
+    	try {
+    		chatHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!breakFlag && !TextUtils.isEmpty(channel)) {
+                        Host.doCommand("pull", new CommonResponse<String>() {
+                            @Override
+                            public void onFinished(String content) {
+                                if(null == content){
+                                    return;
                                 }
-                                if (refreshFlag) {
-
-                                    mAdapter.notifyDataSetChanged();
-                                    mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
+                                if (IResponse.CODE_SUCCESS != code()) {
+                                    // Toast.makeText(InquiryDoctorChatActivity.this, "网络错误", Toast.LENGTH_LONG).show();
+                                	refreshMessage(CHAT_REFRESH_TIME);
+                                	return;
                                 }
-                                InquiryDoctorChatActivity.this.refreshMessage(CHAT_REFRESH_TIME);
-                            } else {
-                                refreshMessage(CHAT_REFRESH_TIME);
+                                JSONObject resultObject = JSONObject.convert(content);
+                                if (null == resultObject) {
+                                    return;
+                                }
+                                if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+                                    Toast.makeText(InquiryDoctorChatActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+                                if(messageId==0){
+                                    mDataArrays.clear();
+                                }
+                                com.slfuture.carrie.base.json.JSONArray result = (com.slfuture.carrie.base.json.JSONArray) resultObject.get("data");
+                                if (result != null) {
+                                    for (IJSON item : result) {
+                                        JSONObject newJSONObject = (JSONObject) item;
+                                        ChatMsgEntity entity = new ChatMsgEntity();
+                                        IJSON obj = newJSONObject.get("content");
+                                        entity.setMessage(((JSONString) newJSONObject.get("content")).getValue());
+                                        String userID = ((JSONString) newJSONObject.get("speaker")).getValue();
+                                        entity.setSpeakeId(userID);
+                                        int mesId = ((JSONNumber) newJSONObject.get("messageId")).intValue();
+                                        entity.setMessageId(mesId);
+                                        long time = ((JSONNumber) newJSONObject.get("time")).longValue();
+                                        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                                        entity.setTime(sdf.format(time));
+                                        if (userID.equals(docId)) {
+                                            entity.setMsgType(true);
+                                        } else {
+                                            entity.setMsgType(false);
+                                        }
+                                        mDataArrays.add(entity);
+                                        if(result.get(result.size()-1)==item) {
+                                            messageId = entity.getMessageId();
+                                        }
+                                    }
+                                    if (refreshFlag) {
+                                        mAdapter.notifyDataSetChanged();
+                                        mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
+                                    }
+                                    InquiryDoctorChatActivity.this.refreshMessage(CHAT_REFRESH_TIME);
+                                } else {
+                                    refreshMessage(CHAT_REFRESH_TIME);
+                                }
                             }
-                        }
-
-                    }, channel, Logic.token, messageId);
+                        }, channel, Logic.token, messageId);
+                    }
                 }
-            }
-        }, delayTime);
-
+            }, delayTime);
+    	}
+    	catch(Throwable e) { }
     }
-
 
     /**
      * 发送消息

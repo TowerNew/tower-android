@@ -14,6 +14,7 @@ import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
+import com.slfuture.carrie.base.text.Text;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -62,8 +64,22 @@ public class FamilyActivity extends Activity {
 	 * 界面预处理
 	 */
 	public void prepare() {
+		dealReturn();
 		dealAdd();
 		dealMember();
+	}
+	
+	/**
+	 * 处理返回按钮
+	 */
+	public void dealReturn() {
+		ImageButton button = (ImageButton) this.findViewById(R.id.family_button_return);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				FamilyActivity.this.finish();
+			}
+		});
 	}
 
 	/**
@@ -116,7 +132,7 @@ public class FamilyActivity extends Activity {
 												Toast.makeText(FamilyActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
 												return;
 											}
-											Toast.makeText(FamilyActivity.this, "删除家庭成员功能", Toast.LENGTH_LONG).show();
+											Toast.makeText(FamilyActivity.this, "删除家庭成员成功", Toast.LENGTH_LONG).show();
 											loadMember();
 										}
 									}, Logic.token, userId);
@@ -184,7 +200,15 @@ public class FamilyActivity extends Activity {
 					//
 					HashMap<String, Object> memberMap = new HashMap<String, Object>();
 					memberMap.put("userId", member.userId);
-					memberMap.put("caption", member.relation);
+					if(!Text.isBlank(member.relation)) {
+						memberMap.put("caption", member.relation);
+					}
+					else if(!Text.isBlank(member.name)) {
+						memberMap.put("caption", member.name);
+					}
+					else {
+						memberMap.put("caption", member.phone);
+					}
 					memberMap.put("delete", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.button_delete));
 					memberList.add(memberMap);
 				}

@@ -76,6 +76,7 @@ public class MyInquiryDoctorActivity extends Activity{
                 intent.putExtra("docId", dataList.get(position).docId);
                 intent.putExtra("topic", dataList.get(position).topic);
                 intent.putExtra("channel",dataList.get(position).id+"");
+                intent.putExtra("doctorBitmap", dataList.get(position).getPhoto());
                 MyInquiryDoctorActivity.this.startActivity(intent);
             }
         });

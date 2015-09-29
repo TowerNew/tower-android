@@ -9,6 +9,14 @@
 		android:layout_height="48dp"
 		android:layout_alignParentTop="true" 
 		android:background="@drawable/topbar" >
+		<ImageButton
+            android:id="@+id/family_button_return"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/button_return" />
         <Button
             android:id="@+id/family_button_add"
             android:layout_width="36dp"

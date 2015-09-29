@@ -36,6 +36,7 @@ import java.util.ArrayList;
  * Created by zhengningchuan on 15/9/20.
  */
 public class MyFriendMessageActivity extends Activity {
+	private int messageId = 0;
     private ArrayList<MyFriendMessageModel> dataList;
     private MyFriendMessageAdapter adapter;
     private ListView messageListView;
@@ -46,6 +47,7 @@ public class MyFriendMessageActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
+        messageId = this.getIntent().getIntExtra("messageId", 0);
         model= (MyMessageModel) bundle.get("myFriendMessage");
         if(model==null){
             finish();
@@ -171,7 +173,14 @@ public class MyFriendMessageActivity extends Activity {
                                 viewHolder.my_friend_message_accept.setVisibility(View.GONE);
                             }
                         }
-                    }, Logic.token,true,model.requestId);
+                    }, Logic.token,true, model.requestId);
+                    if(messageId > 0) {
+                        Host.doCommand("readMessage", new CommonResponse<String>() {
+                            @Override
+                            public void onFinished(String content) {
+                            }
+                        }, Logic.token, messageId);
+                    }
                 }
             });
             return convertView;

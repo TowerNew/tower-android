@@ -1,7 +1,10 @@
 package com.qcast.tower.model;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import com.qcast.tower.R;
+import com.qcast.tower.logic.Logic;
 import com.qcast.tower.logic.Storage;
 
 /**
@@ -19,8 +22,14 @@ public class MyReserveModel {
     public String userGlobalId;
     public String memo;
     public String photoName =null;
+    public String discount = null;
 
     public Bitmap getPhoto() {
-        return Storage.getImage(photoName);
+    	if(1 == type) {
+            return Storage.getImage(photoName);
+    	}
+    	else {
+    		return BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.askdoctor_self);
+    	}
     }
 }

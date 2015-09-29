@@ -144,7 +144,7 @@ public class RadioActivity extends Activity {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("caption", item);
 			if(current == i) {
-				map.put("status", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.selected));
+				map.put("status", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.yes));
 			}
 			i++;
 			dataList.add(map);

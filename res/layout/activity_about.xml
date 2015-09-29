@@ -27,7 +27,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:text="关于我们"
+            android:text="程序版本"
             android:textColor="#ffffffff"
             android:textSize="18sp" />
 	</RelativeLayout>

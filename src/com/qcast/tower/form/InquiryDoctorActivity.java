@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AbsListView.OnScrollListener;
 
 import com.qcast.tower.R;
 import com.qcast.tower.logic.Host;
@@ -97,7 +99,23 @@ public class InquiryDoctorActivity extends Activity {
                 InquiryDoctorActivity.this.startActivity(intent);
             }
         });
+        doctorList.setOnScrollListener(new OnScrollListener() {    
+	        boolean isLastRow = false;
 
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				if (isLastRow && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {      
+					loadData();
+	                isLastRow = false;      
+	            }
+			}
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				if(firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 2) {      
+	                isLastRow = true;      
+	            }
+			}
+		});
     }
 
     private void loadData() {
@@ -137,7 +155,12 @@ public class InquiryDoctorActivity extends Activity {
                     doctorModel.description = ((JSONString) newJSONObject.get("description")).getValue();
                     doctorModel.level =((JSONNumber) newJSONObject.get("level")).intValue();
                     doctorModel.doctorId = ((JSONString) newJSONObject.get("userGlobalId")).getValue();
-                    doctorModel.resume = ((JSONString) newJSONObject.get("resume")).getValue();
+                    if(null == newJSONObject.get("resume")) {
+                    	doctorModel.resume = "暂无简历信息";
+                    }
+                    else {
+                        doctorModel.resume = ((JSONString) newJSONObject.get("resume")).getValue();
+                    }
                     doctorModel.photoName = photoName;
                     if(newJSONObject.get("bad") != null) {
                     	doctorModel.badCount = ((JSONNumber) newJSONObject.get("bad")).intValue();

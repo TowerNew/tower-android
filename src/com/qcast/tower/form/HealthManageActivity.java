@@ -81,7 +81,7 @@ public class HealthManageActivity extends Activity {
 		paper.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				openWeb("http://cdn.oss.wehop-resources.wehop.cn/user/sites/health-report/v-1/index.html");
+				openWeb("http://cdn.oss.wehop-resources.wehop.cn/user/sites/health-report/v-1/index.html?token=" + Logic.token);
 			}
 		});
 	}

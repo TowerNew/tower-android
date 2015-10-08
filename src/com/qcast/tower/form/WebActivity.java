@@ -2,10 +2,13 @@ package com.qcast.tower.form;
 
 import com.qcast.tower.R;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.Window;
+import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -51,6 +54,14 @@ public class WebActivity extends Activity {
                 TextView textView = (TextView) WebActivity.this.findViewById(R.id.web_text_caption);
 				textView.setText(title);
             }
+		});
+		browser.setDownloadListener(new DownloadListener() {
+			@Override  
+	        public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {  
+	            Uri uri = Uri.parse(url);  
+	            Intent intent = new Intent(Intent.ACTION_VIEW, uri);  
+	            startActivity(intent);  
+	        }
 		});
 		ImageButton button = (ImageButton) this.findViewById(R.id.web_button_return);
 		button.setOnClickListener(new View.OnClickListener() {

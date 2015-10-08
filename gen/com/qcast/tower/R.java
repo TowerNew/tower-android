@@ -258,7 +258,7 @@ public final class R {
         public static final int main_tab_user=0x7f080079;
         public static final int main_tabhost=0x7f080070;
         public static final int message_mark_iv=0x7f080113;
-        public static final int message_tv=0x7f080115;
+        public static final int message_tv=0x7f080114;
         public static final int my_comments_bad_btn=0x7f080081;
         public static final int my_comments_et=0x7f08007f;
         public static final int my_comments_good_btn=0x7f080080;
@@ -295,7 +295,7 @@ public final class R {
         public static final int myinquiry_text_caption=0x7f080099;
         public static final int mymassage_layout_bar=0x7f080088;
         public static final int mymessage_bell_btn=0x7f080085;
-        public static final int mymessage_date_tv=0x7f080114;
+        public static final int mymessage_date_tv=0x7f080115;
         public static final int mymessage_return_btn=0x7f080089;
         public static final int mymessage_text_caption=0x7f08008a;
         public static final int mywallet_bell_btn=0x7f080093;

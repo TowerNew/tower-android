@@ -34,6 +34,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -332,6 +334,9 @@ public class HomeActivity extends Fragment {
 				if(page != thisPage) {
 					return;
 				}
+				if(0 == result.size()) {
+					return;
+				}
 				for(IJSON item : result) {
 					JSONObject newJSONObject = (JSONObject) item;
 					HashMap<String, Object> newsMap = new HashMap<String, Object>();
@@ -386,7 +391,6 @@ public class HomeActivity extends Fragment {
 				HomeActivity.this.getActivity().startActivity(intent);
 			}
 		});
-
 		if(null == Logic.regionName) {
 			selectRegion();
 		}
@@ -505,6 +509,23 @@ public class HomeActivity extends Fragment {
 				intent.putExtra("url", newsMap.get("url").toString());
 				HomeActivity.this.startActivity(intent);
             }
+		});
+		listview.setOnScrollListener(new OnScrollListener() {    
+	        boolean isLastRow = false;
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				if (isLastRow && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {      
+					loadNews();
+	                isLastRow = false;      
+	            }
+			}
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				if(firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 2) {      
+	                isLastRow = true;      
+	            }
+			}
 		});
 	}
 	

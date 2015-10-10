@@ -71,6 +71,13 @@ public class WebActivity extends Activity {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				browser.goBack();
+			}
+		});
+		TextView closeButton = (TextView) this.findViewById(R.id.web_text_close);
+		closeButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
 				WebActivity.this.finish();
 			}
 		});

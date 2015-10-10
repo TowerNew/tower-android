@@ -30,7 +30,16 @@
             android:text="正在加载..."
             android:textColor="#ffffffff"
             android:textSize="18sp" />
-
+        <TextView
+            android:id="@+id/web_text_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="6dp"
+            android:text="关闭"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
 	</RelativeLayout>
 
     <WebView

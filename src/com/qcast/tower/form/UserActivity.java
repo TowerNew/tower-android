@@ -71,6 +71,7 @@ public class UserActivity extends Fragment {
 		super.onStart();
 		//
 		if(isLoad.getAndSet(true)) {
+			load();
 			return;
 		}
 		prepare();
@@ -139,6 +140,9 @@ public class UserActivity extends Fragment {
 					return;
 				}
 				JSONArray result = (JSONArray) resultObject.get("data");
+				while(userBoardList.size() > USER_BOARD_COUNT) {
+					userBoardList.remove(USER_BOARD_COUNT);
+				}
 				for(IJSON item : result) {
 					JSONObject newJSONObject = (JSONObject) item;
 					String icon = null;

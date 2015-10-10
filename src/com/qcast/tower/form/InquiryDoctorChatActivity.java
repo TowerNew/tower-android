@@ -2,6 +2,7 @@ package com.qcast.tower.form;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -63,7 +64,8 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
         if(TextUtils.isEmpty(topic)){
             topic=System.currentTimeMillis()+"";
         }
-        docBitmap = this.getIntent().getParcelableExtra("doctorBitmap");
+        byte[] bytes = this.getIntent().getByteArrayExtra("BMP");
+        docBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         if (TextUtils.isEmpty(docId)) {
             this.finish();
         }

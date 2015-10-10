@@ -10,6 +10,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +33,7 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -148,8 +150,12 @@ public class InquiryDoctorDetailActivity extends Activity{
                     return;
             	}
                 Intent intent = new Intent(InquiryDoctorDetailActivity.this,InquiryDoctorChatActivity.class);
-                intent.putExtra("docId",doctorModel.doctorId);
-                intent.putExtra("doctorBitmap",doctorModel.getPhoto());
+                intent.putExtra("docId", doctorModel.doctorId);
+                Bitmap bmp=doctorModel.getPhoto();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] bytes = stream.toByteArray();
+                intent.putExtra("BMP", bytes);
                 InquiryDoctorDetailActivity.this.startActivity(intent);
 
             }
@@ -204,11 +210,33 @@ public class InquiryDoctorDetailActivity extends Activity{
         }
         bad_result_tv.setText(String.valueOf(doctorModel.badCount));
         good_result_tv.setText(String.valueOf(doctorModel.goodCount));
+        doctor_comments_list.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int lastItemIndex;//当前ListView中最后一个Item的索引
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
+                        && lastItemIndex == adapter.getCount() - 1) {
+                    loadData();
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                lastItemIndex = firstVisibleItem + visibleItemCount - 1;
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         loadData();
     }
 
     private void loadData() {
-        Host.doCommand("commentlist", new CommonResponse<String>() {
+        Host.doCommand("commentlist", new CommonResponse<String>(page) {
             @Override
             public void onFinished(String content) {
                 if (Response.CODE_SUCCESS != code()) {
@@ -218,6 +246,10 @@ public class InquiryDoctorDetailActivity extends Activity{
                 JSONObject resultObject = JSONObject.convert(content);
                 if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
                     Toast.makeText(InquiryDoctorDetailActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
+                    return;
+                }
+                int thisPage = (Integer) this.tag;
+                if(page != thisPage) {
                     return;
                 }
                 JSONObject result = (JSONObject) resultObject.get("data");
@@ -244,9 +276,8 @@ public class InquiryDoctorDetailActivity extends Activity{
                     }
                 }
                 adapter.notifyDataSetChanged();
-                if(page<nextStart) {
-                    page = page + 1;
-                }
+                page = thisPage + 1;
+
             }
         }, doctorModel.doctorId ,page);
     }

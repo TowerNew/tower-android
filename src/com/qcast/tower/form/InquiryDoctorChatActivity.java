@@ -216,27 +216,29 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
         contString = mEditTextContent.getText().toString();
         InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mEditTextContent.getWindowToken(), 0) ;
+        mEditTextContent.setText("");// 清空编辑框数据
         if (contString.length() > 0) {
             Host.doCommand("push", new CommonResponse<String>() {
                 @Override
                 public void onFinished(String content) {
                     if(null == content){
+                        mEditTextContent.setText(contString);
                         return;
                     }
                     if (IResponse.CODE_SUCCESS != code()) {
                         Toast.makeText(InquiryDoctorChatActivity.this, "网络错误", Toast.LENGTH_LONG).show();
+                        mEditTextContent.setText(contString);
                     }
                     JSONObject resultObject = JSONObject.convert(content);
                     if (null == resultObject) {
+                        mEditTextContent.setText(contString);
                         return;
                     }
                     if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
                         Toast.makeText(InquiryDoctorChatActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
+                        mEditTextContent.setText(contString);
                         return;
                     }
-
-
-                    mEditTextContent.setText("");// 清空编辑框数据
 
                     if (!breakFlag && !TextUtils.isEmpty(channel)) {
                         chatHandler.removeCallbacksAndMessages(null);

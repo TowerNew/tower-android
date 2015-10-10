@@ -38,7 +38,11 @@ public class WebActivity extends Activity {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				browser.loadUrl(url);
-				return true;
+				if(url.startsWith("mailto:") || url.startsWith("geo:") ||url.startsWith("tel:")) {
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+	                startActivity(intent);
+	            }
+	            return true;  
 			}
 		});
 		browser.setWebChromeClient(new WebChromeClient() {
@@ -65,6 +69,13 @@ public class WebActivity extends Activity {
 		});
 		ImageButton button = (ImageButton) this.findViewById(R.id.web_button_return);
 		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				browser.goBack();
+			}
+		});
+		TextView closeButton = (TextView) this.findViewById(R.id.web_text_close);
+		closeButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				WebActivity.this.finish();

@@ -70,4 +70,5 @@
         path="user-platform-web-1.0.0/rest/user/comment#id=[0]&amp;content=[1]&amp;attitude=[2]&amp;token=[3]" />
     <protocol name="hasMessage" path="user-platform-web-1.0.0/rest/user/hasMessage?token=[0]" mock="{&quot;code&quot;:200, &quot;data&quot;:2}" />
     <protocol name="readMessage" path="user-platform-web-1.0.0/rest/user/readMessage#token=[0]&amp;id=[1]" mock="{&quot;code&quot;:200, &quot;msg&quot;:&quot;ok&quot;}" />
+    <protocol name="readVersion" path="user-platform-web-1.0.0/rest/getCurrentAppVersion?firmType=andriod" mock="{&quot;code&quot;:1,&quot;msg&quot;:null,&quot;data&quot;:{&quot;firmType&quot;:&quot;andriod&quot;,&quot;appVersion&quot;:&quot;1.0.4&quot;,&quot;downloadUrl&quot;:&quot;http://cdn.oss.wehop-resources.wehop.cn/mobile/android/release/stable/v-1.1/wehop.apk&quot;}}" />
 </protocols>

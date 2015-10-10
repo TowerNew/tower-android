@@ -38,7 +38,11 @@ public class WebActivity extends Activity {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				browser.loadUrl(url);
-				return true;
+				if(url.startsWith("mailto:") || url.startsWith("geo:") ||url.startsWith("tel:")) {
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+	                startActivity(intent);
+	            }
+	            return true;  
 			}
 		});
 		browser.setWebChromeClient(new WebChromeClient() {

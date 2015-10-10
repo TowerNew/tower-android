@@ -244,6 +244,7 @@ public class HomeActivity extends Fragment {
 		dealSearch();
 		dealEntry();
 		//
+		loadVersion();
 		loadAd();
 		loadNews();
 	}
@@ -265,6 +266,33 @@ public class HomeActivity extends Fragment {
 		}
 		timer.cancel();
 		timer = null;
+	}
+
+	/**
+	 * 加载版本准备升级
+	 */
+	private void loadVersion() {
+		Host.doCommand("readVersion", new CommonResponse<String>() {
+			@Override
+			public void onFinished(String content) {
+				if(Response.CODE_SUCCESS != code()) {
+					return;
+				}
+				JSONObject resultObject = JSONObject.convert(content);
+				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+					return;
+				}
+				JSONObject result = (JSONObject) resultObject.get("data");
+				String version = ((JSONString) (result.get("appVersion"))).getValue();
+				String url = ((JSONString) (result.get("downloadUrl"))).getValue();
+				if("1.0.4".endsWith(version)) {
+					return;
+				}
+				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
+				intent.putExtra("url", url);
+				HomeActivity.this.startActivity(intent);
+			}
+		});
 	}
 
 	/**

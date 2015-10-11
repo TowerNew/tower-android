@@ -32,6 +32,7 @@ import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -76,7 +77,12 @@ public class MyInquiryDoctorActivity extends Activity{
                 intent.putExtra("docId", dataList.get(position).docId);
                 intent.putExtra("topic", dataList.get(position).topic);
                 intent.putExtra("channel",dataList.get(position).id+"");
-                intent.putExtra("doctorBitmap", dataList.get(position).getPhoto());
+                // intent.putExtra("doctorBitmap", dataList.get(position).getPhoto());
+                Bitmap bmp = dataList.get(position).getPhoto();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] bytes = stream.toByteArray();
+                intent.putExtra("BMP", bytes);
                 MyInquiryDoctorActivity.this.startActivity(intent);
             }
         });

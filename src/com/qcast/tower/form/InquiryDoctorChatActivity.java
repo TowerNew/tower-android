@@ -61,7 +61,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
         docId = this.getIntent().getStringExtra("docId");
         topic = this.getIntent().getStringExtra("topic");
         channel = this.getIntent().getStringExtra("channel");
-        if(TextUtils.isEmpty(topic)){
+        if(TextUtils.isEmpty(topic)) {
             topic=System.currentTimeMillis()+"";
         }
         byte[] bytes = this.getIntent().getByteArrayExtra("BMP");

@@ -3,7 +3,9 @@ package com.qcast.tower.form;
 import com.qcast.tower.R;
 import com.qcast.tower.logic.Host;
 import com.qcast.tower.logic.Logic;
+import com.qcast.tower.logic.Storage;
 import com.qcast.tower.logic.response.CommonResponse;
+import com.qcast.tower.logic.response.ImageResponse;
 import com.qcast.tower.logic.response.Response;
 import com.qcast.tower.logic.structure.ExaminationPackage;
 import com.qcast.tower.logic.structure.TimePeriod;
@@ -16,6 +18,7 @@ import com.slfuture.carrie.base.type.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -23,6 +26,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -269,8 +273,30 @@ public class ExaminationActivity extends Activity {
 		}
 		Button button = (Button) this.findViewById(R.id.examination_button_package);
 		button.setText(getCurrentPackage().name);
-		TextView text = (TextView) this.findViewById(R.id.examination_text_description);
-		text.setText(getCurrentPackage().detail);
+		//
+		final ImageView image = (ImageView) this.findViewById(R.id.examination_image_description);
+		if(null != getCurrentPackage().image && !"".equals(getCurrentPackage().image)) {
+			String imageName = Storage.getImageName(getCurrentPackage().image);
+            Host.doImage("image", new ImageResponse(imageName, null) {
+				@Override
+				public void onFinished(Bitmap content) {
+					image.setImageBitmap(content);
+					image.setVisibility(View.VISIBLE);
+				}
+            }, getCurrentPackage().image);
+		}
+		else {
+			image.setVisibility(View.GONE);
+			TextView text = (TextView) this.findViewById(R.id.examination_text_description);
+			if(null != getCurrentPackage().detail && !"".equals(getCurrentPackage().detail)) {
+				text.setText(getCurrentPackage().detail);
+				text.setVisibility(View.VISIBLE);
+			}
+			else {
+				text.setText("");
+				text.setVisibility(View.GONE);
+			}
+		}
 		if(null == getCurrentPeriod()) {
 			return;
 		}

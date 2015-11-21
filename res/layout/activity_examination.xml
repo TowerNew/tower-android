@@ -27,7 +27,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:text="预约体检"
+            android:text="体检介绍"
             android:textColor="#ffffffff"
             android:textSize="18sp" />
 	</RelativeLayout>
@@ -68,7 +68,8 @@
         android:background="@drawable/button_common"
         android:text="申请"
         android:textColor="#ffffffff"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/examination_button_time"
@@ -82,8 +83,9 @@
         android:adjustViewBounds="true"
         android:background="@drawable/edittext1"
         android:padding="0dip"
-        android:textColor="@color/grey" 
-        android:text="请选择体检时间" />
+        android:text="请选择体检时间"
+        android:textColor="@color/grey"
+        android:visibility="invisible" />
     
     <TextView
         android:id="@+id/examination_label_time"
@@ -94,8 +96,23 @@
         android:layout_marginTop="10dp"
         android:text="选择体检时间:"
         android:textColor="@color/blue"
-        android:textSize="18sp" />
-    
+        android:textSize="18sp"
+        android:visibility="invisible" />
+
+	<com.qcast.tower.adapter.MatrixImageView 
+        android:id="@+id/examination_image_description"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/examination_button_package"
+		android:scrollbars = "vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white">
+	</com.qcast.tower.adapter.MatrixImageView>
+	
     <TextView
         android:id="@+id/examination_text_description"
         android:layout_width="fill_parent"
@@ -109,10 +126,11 @@
         android:background="@drawable/edittext1"
         android:ems="10"
         android:inputType="textMultiLine"
-		android:scrollbars = "vertical"
         android:padding="10dp"
+        android:scrollbars="vertical"
+        android:text="预约信息"
         android:textColor="@color/grey"
-        android:text="预约信息" >
+        android:visibility="gone" >
 
         <requestFocus />
     </TextView>

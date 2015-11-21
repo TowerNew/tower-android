@@ -285,7 +285,7 @@ public class HomeActivity extends Fragment {
 				JSONObject result = (JSONObject) resultObject.get("data");
 				String version = ((JSONString) (result.get("appVersion"))).getValue();
 				String url = ((JSONString) (result.get("downloadUrl"))).getValue();
-				if("1.0.4".endsWith(version)) {
+				if("1.0.5".endsWith(version)) {
 					return;
 				}
 				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);

@@ -24,6 +24,10 @@ public class ExaminationPackage {
 	 */
 	public String detail = null;
 	/**
+	 * 描述图片
+	 */
+	public String image = null;
+	/**
 	 * 时间段
 	 */
 	public List<TimePeriod> periods = new List<TimePeriod>();
@@ -44,6 +48,9 @@ public class ExaminationPackage {
 		}
 		if(null != json.get("detail")) {
 			result.detail = ((JSONString) json.get("detail")).getValue();
+		}
+		if(null != json.get("image")) {
+			result.image = ((JSONString) json.get("image")).getValue();
 		}
 		if(null != json.get("times")) {
 			for(IJSON time : (JSONArray) json.get("times")) {

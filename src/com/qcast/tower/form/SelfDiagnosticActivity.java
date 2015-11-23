@@ -28,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleAdapter.ViewBinder;
@@ -62,6 +63,68 @@ public class SelfDiagnosticActivity extends Activity {
 	}
 	
 	/**
+	 * 过滤器回调
+	 */
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		//
+		if(resultCode == Activity.RESULT_CANCELED) {
+			return;
+		}
+		if(1 == requestCode) {
+			switch(data.getIntExtra("body", 0)) {
+			case R.id.male_front_head:
+			case R.id.male_back_head:
+			case R.id.female_front_head:
+			case R.id.female_back_head:
+				selectBody(0);
+				break;
+			case R.id.male_front_neck:
+			case R.id.male_back_neck:
+			case R.id.female_front_neck:
+			case R.id.female_back_neck:
+				selectBody(1);
+				break;
+			case R.id.male_front_chest:
+			case R.id.female_front_chest:
+				selectBody(2);
+				break;
+			case R.id.male_front_belly:
+			case R.id.female_front_belly:
+				selectBody(3);
+				break;
+			case R.id.male_front_basin:
+				selectBody(5);
+				break;
+			case R.id.female_front_basin:
+				selectBody(6);
+				break;
+			case R.id.male_front_arm:
+			case R.id.male_back_arm:
+			case R.id.female_front_arm:
+			case R.id.female_back_arm:
+				selectBody(8);
+				break;
+			case R.id.male_front_leg:
+			case R.id.male_back_leg:
+			case R.id.female_front_leg:
+			case R.id.female_back_leg:
+				selectBody(9);
+				break;
+			case R.id.male_back_butt:
+			case R.id.female_back_butt:
+				selectBody(10);
+				break;
+			case R.id.male_back_back:
+			case R.id.female_back_back:
+				selectBody(12);
+				break;
+			}
+		}
+	}
+	
+	/**
 	 * 界面预处理
 	 */
 	public void prepare() {
@@ -70,6 +133,14 @@ public class SelfDiagnosticActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				SelfDiagnosticActivity.this.finish();
+			}
+		});
+		TextView text = (TextView) this.findViewById(R.id.selfdiagnostic_text_filter);
+		text.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(SelfDiagnosticActivity.this, BodyActivity.class);
+				SelfDiagnosticActivity.this.startActivityForResult(intent, 1);
 			}
 		});
 		dealBody();
@@ -100,20 +171,29 @@ public class SelfDiagnosticActivity extends Activity {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
-				for(int i = 0; i < listview.getChildCount(); i++) {
-					if(index == i) {
-						// v.setBackgroundResource(R.color.white);
-						listview.getChildAt(i).setBackgroundResource(R.color.white);
-					}
-					else {
-						listview.getChildAt(i).setBackgroundResource(R.color.lightgrey);
-					}
-				}
-				SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
-				adapter.notifyDataSetChanged();
-				loadSymptom((String) bodyList.get(index).get("caption"));
+				selectBody(index);
             }
 		});
+	}
+
+	/**
+	 * 选择肢体
+	 * 
+	 * @param index 身体索引号
+	 */
+	public void selectBody(int index) {
+		final ListView listview = (ListView) this.findViewById(R.id.selfdiagnostic_list_body);
+		for(int i = 0; i < listview.getChildCount(); i++) {
+			if(index == i) {
+				listview.getChildAt(i).setBackgroundResource(R.color.white);
+			}
+			else {
+				listview.getChildAt(i).setBackgroundResource(R.color.lightgrey);
+			}
+		}
+		SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
+		adapter.notifyDataSetChanged();
+		loadSymptom((String) bodyList.get(index).get("caption"));
 	}
 
 	/**

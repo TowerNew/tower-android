@@ -29,6 +29,16 @@
             android:text="自我诊断"
             android:textColor="#ffffffff"
             android:textSize="18sp" />
+        <TextView
+            android:id="@+id/selfdiagnostic_text_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="6dp"
+            android:text="肢体视图"
+            android:textColor="@color/grey"
+            android:textSize="16sp" />
 	</RelativeLayout>
 	
     <ListView

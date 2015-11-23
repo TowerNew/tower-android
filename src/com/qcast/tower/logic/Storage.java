@@ -1,7 +1,9 @@
 package com.qcast.tower.logic;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -66,8 +68,41 @@ public class Storage {
 		if(null == imageName) {
 			return null;
 		}
-		return BitmapFactory.decodeFile(IMAGE_ROOT + imageName);
+		String path = IMAGE_ROOT + imageName;
+		if(!(new File(path)).exists()) {
+			return null;
+		}
+		return BitmapFactory.decodeFile(path);
 	}
+
+	/**
+	 * 获取指定URL中的图片名称
+	 * 
+	 * @param url 图片URL
+	 * @return 图片名称
+	 */
+	public static boolean existImage(String url) {
+		String path = IMAGE_ROOT + getImageName(url);
+		if((new File(path)).exists()) {
+			return true;
+		}
+		return false;
+	}
+	
+	   /** 
+     * 保存文件 
+     * @param bm 
+     * @param fileName 
+     * @throws IOException 
+     */  
+    public static void saveFile(Bitmap bm, String fileName) throws IOException { 
+    	String path = IMAGE_ROOT + fileName;
+        File myCaptureFile = new File(path);  
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));  
+        bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);  
+        bos.flush();  
+        bos.close();  
+    }
 
 	/**
 	 * 获取指定URL中的图片名称

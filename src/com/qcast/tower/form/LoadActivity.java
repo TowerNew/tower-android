@@ -1,18 +1,31 @@
 package com.qcast.tower.form;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import com.qcast.tower.R;
+import com.qcast.tower.logic.Host;
 import com.qcast.tower.logic.Logic;
+import com.qcast.tower.logic.Storage;
+import com.qcast.tower.logic.response.CommonResponse;
+import com.qcast.tower.logic.response.ImageResponse;
+import com.qcast.tower.logic.response.Response;
+import com.slfuture.carrie.base.json.JSONNumber;
+import com.slfuture.carrie.base.json.JSONObject;
+import com.slfuture.carrie.base.json.JSONString;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 /**
  * 引导界面
@@ -95,5 +108,41 @@ public class LoadActivity extends Activity {
 		handler = new LoadHandler();
 		timer = new Timer();
 		timer.schedule(new LoadTask(), 3000);
+		String currentImage = Storage.user("startupImage", String.class);
+		if(null != currentImage) {
+			ImageView view = (ImageView) this.findViewById(R.id.load_image_ad);
+			try {
+				view.setImageBitmap(Storage.getImage(currentImage));
+			}
+			catch(Exception ex) {}
+		}
+		Host.doCommand("startupImage", new CommonResponse<String>() {
+			@Override
+			public void onFinished(String content) {
+				if(Response.CODE_SUCCESS != code()) {
+					return;
+				}
+				JSONObject resultObject = JSONObject.convert(content);
+				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+					return;
+				}
+				JSONString json = (JSONString) resultObject.get("data");
+				if(Storage.existImage(json.getValue())) {
+					return;
+				}
+				String imageName = Storage.getImageName(json.getValue());
+				Host.doImage("image", new ImageResponse(imageName, imageName) {
+					@Override
+					public void onFinished(Bitmap content) {
+						try {
+							Storage.saveFile(content, (String) tag);
+							Storage.setUser("startupImage", (String) tag);
+						}
+						catch (IOException e) { }
+					}
+		        }, json.getValue());
+			}
+		});
+		
 	}
 }

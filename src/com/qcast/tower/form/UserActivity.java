@@ -309,6 +309,12 @@ public class UserActivity extends Fragment {
 	 */
 	private void openWeb(String url) {
 		Intent intent = new Intent(UserActivity.this.getActivity(), WebActivity.class);
+		if(url.contains("?")) {
+			url = url + "&regionId=" + Logic.regionId;
+		}
+		else {
+			url = url + "?regionId=" + Logic.regionId;
+		}
 		intent.putExtra("url", url);
 		UserActivity.this.getActivity().startActivity(intent);
 	}

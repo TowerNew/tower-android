@@ -20,6 +20,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="6dp"
             android:background="@drawable/button_return" />
+
         <TextView
             android:id="@+id/web_text_caption"
             android:layout_width="wrap_content"
@@ -27,9 +28,11 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
+            android:maxLength="15"
             android:text="正在加载..."
             android:textColor="#ffffffff"
             android:textSize="18sp" />
+
         <TextView
             android:id="@+id/web_text_close"
             android:layout_width="wrap_content"

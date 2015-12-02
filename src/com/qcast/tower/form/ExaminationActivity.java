@@ -197,7 +197,7 @@ public class ExaminationActivity extends Activity {
 					packages.add(ExaminationPackage.build((JSONObject) item));
 				}
 			}
-		}, Logic.token);
+		}, Logic.token, Logic.regionId);
 	}
 	
 	/**

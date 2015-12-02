@@ -285,7 +285,7 @@ public class HomeActivity extends Fragment {
 				JSONObject result = (JSONObject) resultObject.get("data");
 				String version = ((JSONString) (result.get("appVersion"))).getValue();
 				String url = ((JSONString) (result.get("downloadUrl"))).getValue();
-				if("1.0.5".endsWith(version)) {
+				if("1.0.6".endsWith(version)) {
 					return;
 				}
 				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
@@ -338,7 +338,7 @@ public class HomeActivity extends Fragment {
 		            }, imageURL);
 				}
 			}
-		});
+		}, Logic.regionId);
 	}
 
 	/**
@@ -561,49 +561,8 @@ public class HomeActivity extends Fragment {
 	 * 选择小区
 	 */
 	public void selectRegion() {
-		if(null != Logic.regions) {
-			final String[] regionNames = new String[Logic.regions.size()];
-			regionIds = new int[Logic.regions.size()];
-			int current = -1;
-			int i = 0;
-			for(ILink<Integer, String> entry : Logic.regions) {
-				regionIds[i] = entry.origin();
-				regionNames[i] = entry.destination();
-				if(regionIds[i] == Logic.regionId) {
-					current = i;
-				}
-				i++;
-			}
-			Intent intent = new Intent(HomeActivity.this.getActivity(), RadioActivity.class);
-			intent.putExtra("title", "选择小区");
-			intent.putExtra("items", regionNames);
-			intent.putExtra("index", current);
-			HomeActivity.this.startActivityForResult(intent, 1);
-			return;
-		}
-		Host.doCommand("regionlist", new CommonResponse<String>() {
-			@Override
-			public void onFinished(String content) {
-				if(Response.CODE_SUCCESS != code()) {
-					Toast.makeText(HomeActivity.this.getActivity(), "网络错误", Toast.LENGTH_LONG).show();
-					return;
-				}
-				JSONObject resultObject = JSONObject.convert(content);
-				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-					Toast.makeText(HomeActivity.this.getActivity(), ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
-					return;
-				}
-				JSONArray array = (JSONArray) resultObject.get("data");
-				Logic.regions = new com.slfuture.carrie.base.type.safe.Table<Integer, String>();
-				for(int i = 0; i < array.size(); i++) {
-					IJSON item = array.get(i);
-					int regionId = ((JSONNumber)((JSONObject)item).get("id")).intValue();
-					String regionName = ((JSONString)((JSONObject)item).get("name")).getValue();
-					Logic.regions.put(regionId, regionName);
-				}
-				selectRegion();
-			}
-		});
+		Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
+		HomeActivity.this.startActivityForResult(intent, 2);
 	}
 
 	/**
@@ -624,6 +583,16 @@ public class HomeActivity extends Fragment {
 			}
 			Logic.regionId = regionIds[current];
 			Logic.regionName = Logic.regions.get(Logic.regionId);
+			if(null != Logic.regionName) {
+				final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
+				regionButton.setText(Logic.regionName);
+			}
+			Storage.setUser("regionId", Logic.regionId);
+			Storage.setUser("regionName", Logic.regionName);
+		}
+		else if(2 == requestCode) {
+			Logic.regionId = data.getIntExtra("regionId", 0);
+			Logic.regionName = data.getStringExtra("regionName");
 			if(null != Logic.regionName) {
 				final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
 				regionButton.setText(Logic.regionName);

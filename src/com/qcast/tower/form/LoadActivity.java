@@ -22,10 +22,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 /**
  * 引导界面
@@ -127,6 +125,9 @@ public class LoadActivity extends Activity {
 					return;
 				}
 				JSONString json = (JSONString) resultObject.get("data");
+				if(null == json) {
+					return;
+				}
 				if(Storage.existImage(json.getValue())) {
 					return;
 				}

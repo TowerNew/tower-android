@@ -5,12 +5,12 @@ import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.qcast.tower.R;
-import com.qcast.tower.logic.Host;
+import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
 import com.qcast.tower.logic.Storage;
-import com.qcast.tower.logic.response.CommonResponse;
-import com.qcast.tower.logic.response.ImageResponse;
-import com.qcast.tower.logic.response.Response;
+import com.slfuture.pluto.communication.response.CommonResponse;
+import com.slfuture.pluto.communication.response.ImageResponse;
+import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -63,6 +63,8 @@ public class UserActivity extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		
+		
 		return inflater.inflate(R.layout.activity_user, container, true);
 	}
 
@@ -94,6 +96,14 @@ public class UserActivity extends Fragment {
 		}
 		else {
 			imgButton.setBackgroundResource(R.drawable.user_photo_default);
+		}
+		if(Logic.messageFamily.size() > 0) {
+			HashMap<String, Object> map = userBoardList.get(1);
+			map.put("caption", "我的家庭[消息]");
+		}
+		else {
+			HashMap<String, Object> map = userBoardList.get(1);
+			map.put("caption", "我的家庭");
 		}
 	}
 

@@ -1,77 +1,1037 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols>
-	<protocol name="gethospital" path="user-platform-web-1.0.0/rest/getHospital?regionId=[0]" mock="{&quot;code&quot;:1,&quot;msg&quot;:null,&quot;data&quot;:{&quot;id&quot;:1,&quot;regionId&quot;:1,&quot;name&quot;:&quot;广州金碧花园&quot;,&quot;address&quot;:&quot;广州&quot;,&quot;phoneNo&quot;:&quot;020-89620708&quot;,&quot;type&quot;:&quot;2&quot;,&quot;cityId&quot;:1}}" />
-	<protocol name="citylist" path="user-platform-web-1.0.0/rest/cityList" mock="{&quot;code&quot;:1,&quot;msg&quot;:null,&quot;data&quot;:[{&quot;id&quot;:1,&quot;name&quot;:&quot;广州&quot;,&quot;pinyin&quot;:&quot;guangzhou&quot;}]}" />
-	<protocol name="regionlist" path="user-platform-web-1.0.0/rest/regionList?cityId=[0]" mock="{&quot;code&quot;:1,&quot;msg&quot;:null,&quot;data&quot;:[{&quot;id&quot;:1,&quot;name&quot;:&quot;广州-金碧花园&quot;,&quot;cityId&quot;:1,&quot;latitude&quot;:&quot;abc&quot;,&quot;longitude&quot;:&quot;abc&quot;,&quot;scope&quot;:1000}]}" />
-	<protocol name="banner" path="user-platform-web-1.0.0/rest/banner?regionId=[0]" mock="{&quot;code&quot;:1, &quot;data&quot;:[{&quot;image&quot;:&quot;banner1.png&quot;,&quot;url&quot;:&quot;http://news.baidu.com&quot;},{&quot;image&quot;:&quot;banner2.png&quot;,&quot;url&quot;:&quot;http://news.baidu.com&quot;}]}" />
-	<protocol name="news" path="user-platform-web-1.0.0/rest/news?page=[0]" mock="{&quot;code&quot;:1,&quot;data&quot;:[{&quot;imageUrl&quot;:&quot;news1.png&quot;,&quot;title&quot;:&quot;脚气的烦恼又开始了，袜子里放它不用再去医院&quot;,&quot;publisher&quot;:&quot;杨飞恒大社区医院&quot;,&quot;date&quot;:&quot;2015-08-19&quot;,&quot;url&quot;:&quot;http://sina.cn/?from=wap&quot;},{&quot;imageUrl&quot;:&quot;news2.png&quot;,&quot;title&quot;:&quot;俗话说笑一笑十年少，人多笑笑更健康&quot;,&quot;publisher&quot;:&quot;付长江上海第一人民医院&quot;,&quot;date&quot;:&quot;2015-08-19&quot;,&quot;url&quot;:&quot;http://m.baidu.com&quot;},{&quot;imageUrl&quot;:&quot;news3.png&quot;,&quot;title&quot;:&quot;颈椎问题，得看这里&quot;,&quot;publisher&quot;:&quot;秦岭&quot;,&quot;date&quot;:&quot;2015-08-11&quot;,&quot;url&quot;:&quot;http://news.baidu.com&quot;},{&quot;imageUrl&quot;:&quot;news4.png&quot;,&quot;title&quot;:&quot;如何预防肩周炎&quot;,&quot;publisher&quot;:&quot;王小勇&quot;,&quot;date&quot;:&quot;2015-08-19&quot;,&quot;url&quot;:&quot;http://news.baidu.com&quot;}]}" />
-	<protocol name="member" path="user-platform-web-1.0.0/rest/user/member?token=[0]" mock="{&quot;code&quot;:1,&quot;data&quot;:[{&quot;userGlobalId&quot;:&quot;1&quot;,&quot;category&quot;:1,&quot;status&quot;:1,&quot;phone&quot;:&quot;1502819287&quot;,&quot;relation&quot;:&quot;爸爸&quot;,&quot;name&quot;:&quot;柳君&quot;,&quot;idnumber&quot;:&quot;340221198311259527&quot;,&quot;birthday&quot;:&quot;1980-01-01&quot;},{&quot;userGlobalId&quot;:&quot;2&quot;,&quot;category&quot;:2,&quot;status&quot;:2,&quot;phone&quot;:&quot;1502819288&quot;,&quot;relation&quot;:&quot;妈妈&quot;,&quot;name&quot;:&quot;林志玲&quot;,&quot;idnumber&quot;:&quot;340221198411259527&quot;,&quot;birthday&quot;:&quot;1982-11-25&quot;}]}" />
-	<protocol name="editowner" path="user-platform-web-1.0.0/rest/user/editowner#token=[0]&amp;userGlobalId=[1]&amp;mode=[2]&amp;relation=[3]&amp;name=[4]&amp;idnumber=[5]" mock="{&quot;code&quot;:200, &quot;data&quot;:null}" />
-	<protocol name="editrelation" path="user-platform-web-1.0.0/rest/user/editrelation#token=[0]&amp;userGlobalId=[1]&amp;relation=[2]&amp;phone=[3]" mock="{&quot;code&quot;:200, &quot;data&quot;:null}" />
-	<protocol name="removefamily" path="user-platform-web-1.0.0/rest/user/removefamily#token=[0]&amp;userGlobalId=[1]" mock="{&quot;code&quot;:200, &quot;data&quot;:null}" />
-	<protocol name="image" url="[0]" mock="" />
-	<protocol name="search" path="user-platform-web-1.0.0/rest/search?disease=[0]" mock="" />
-	<protocol name="fetchCode" path="user-platform-web-1.0.0/rest/fetchCode?phone=[0]" mock="{&quot;code&quot;:200, &quot;msg&quot;:&quot;&quot;}" />
-	<protocol name="login" path="user-platform-web-1.0.0/rest/login#phone=[0]&amp;code=[1]" mock="{&quot;code&quot;:200, &quot;data&quot;:{&quot;token&quot;:&quot;abc&quot;,&quot;userGlobalId&quot;:&quot;ABCD9527&quot;, &quot;name&quot;:&quot;王思聪&quot;, &quot;photo&quot;:&quot;&quot;}}" />
-	<protocol name="logout" path="user-platform-web-1.0.0/rest/user/logout#token=[0]" mock="{&quot;code&quot;:200, &quot;msg&quot;:&quot;&quot;}" />
-	<protocol name="loadBody" path="user-platform-web-1.0.0/rest/loadBody" mock="{&quot;code&quot;:1,&quot;data&quot;:[&quot;头部&quot;,&quot;四肢&quot;,&quot;颈椎&quot;]}" />
-	<protocol name="loadSymptom" path="user-platform-web-1.0.0/rest/loadSymptom?body=[0]" mock="{&quot;code&quot;:1,&quot;data&quot;:[&quot;头晕&quot;,&quot;心慌&quot;,&quot;嗜睡&quot;,&quot;头疼&quot;]}" />
-	<protocol name="loadDisease" path="user-platform-web-1.0.0/rest/loadDisease?symptom=[0]" mock="{&quot;code&quot;:1,&quot;data&quot;:[{&quot;caption&quot;:&quot;感冒&quot;,&quot;description&quot;:&quot;伴有头晕，发烧等症状&quot;},{&quot;caption&quot;:&quot;颈椎病&quot;,&quot;description&quot;:&quot;伴有头晕，走路漂浮等症状&quot;}]}" />
-	<protocol name="searchDisease" path="user-platform-web-1.0.0/rest/search?disease=[0]" mock="" />
-    <protocol name="commentlist"
-        mock="{&quot;code&quot;:1,&quot;msg&quot;:null,&quot;data&quot;: {&quot;recordCount&quot;:1,&quot;pageSize&quot;:10,&quot;page&quot;:1,&quot;records&quot;:[{&quot;username&quot;:&quot;秦岭&quot;,&quot;date&quot;:1441785979000,&quot;content&quot;:&quot;a'a'a&quot;,&quot;attitude&quot;:true}],&quot;sortField&quot;:null,&quot;&quot;:true,&quot;pageCount&quot;:1,&quot;nextStart&quot;:2}}"
-        path="user-platform-web-1.0.0/rest/commentList?id=[0]&amp;page=[1]" />
-    <protocol name="doctorlist"
-        path="user-platform-web-1.0.0/rest/doctorList?page=[0]&amp;level=[1]&amp;services=[2]&amp;regionId=[3]"
-        mock="{&quot;code&quot;:1,&quot;msg&quot;:null,&quot;data&quot;:[{&quot;userGlobalId&quot;:&quot;057ad21e-5cff-4adf-9df8-94ae4985ef86&quot;,&quot;name&quot;:&quot;肖建强&quot;,&quot;photo&quot;:null,&quot;department&quot;:&quot;全科&quot;,&quot;level&quot;:1,&quot;title&quot;:&quot;全科医学 骨科 主治医师&quot;,&quot;services&quot;:[&quot;inquiry&quot;],&quot;description&quot;:&quot;欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。&quot;,&quot;resume&quot;:&quot;研究成果&quot;},{&quot;userGlobalId&quot;:&quot;b594d0c7-ac96-428b-b955-8368faa2e239&quot;,&quot;name&quot;:&quot;李跃通&quot;,&quot;photo&quot;:null,&quot;department&quot;:&quot;全科&quot;,&quot;level&quot;:1,&quot;title&quot;:&quot;全科医学  内科主治医师&quot;,&quot;services&quot;:[&quot;inquiry&quot;],&quot;description&quot;:&quot;欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。&quot;,&quot;resume&quot;:&quot;研究成果&quot;},{&quot;userGlobalId&quot;:&quot;0a93256a-4c9f-4294-bc86-c941e67e9dfb&quot;,&quot;name&quot;:&quot;黎子俭&quot;,&quot;photo&quot;:null,&quot;department&quot;:&quot;全科&quot;,&quot;level&quot;:1,&quot;title&quot;:&quot;全科医师 主治中医师&quot;,&quot;services&quot;:[&quot;inquiry&quot;],&quot;description&quot;:&quot;欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。&quot;,&quot;resume&quot;:&quot;研究成果&quot;},{&quot;userGlobalId&quot;:&quot;48414110-c999-475f-b2d1-f2d00ab96a17&quot;,&quot;name&quot;:&quot;徐文贤&quot;,&quot;photo&quot;:null,&quot;department&quot;:&quot;全科&quot;,&quot;level&quot;:1,&quot;title&quot;:&quot;妇科医师&quot;,&quot;services&quot;:[&quot;inquiry&quot;],&quot;description&quot;:&quot;欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。&quot;,&quot;resume&quot;:&quot;研究成果&quot;},{&quot;userGlobalId&quot;:&quot;f5302dbd-2724-480b-bfc7-8dc5fe5829bd&quot;,&quot;name&quot;:&quot;李润怡&quot;,&quot;photo&quot;:null,&quot;department&quot;:&quot;全科&quot;,&quot;level&quot;:1,&quot;title&quot;:&quot;健康管理师 营养管理师&quot;,&quot;services&quot;:[&quot;inquiry&quot;],&quot;description&quot;:&quot;欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。&quot;,&quot;resume&quot;:&quot;研究成果&quot;},{&quot;userGlobalId&quot;:&quot;ed833dbe-24e3-4666-8dff-5c01cf9a1a84&quot;,&quot;name&quot;:&quot;颜龙海&quot;,&quot;photo&quot;:null,&quot;department&quot;:&quot;全科&quot;,&quot;level&quot;:1,&quot;title&quot;:&quot;营养指导师  国家二级营养师&quot;,&quot;services&quot;:[&quot;inquiry&quot;],&quot;description&quot;:&quot;欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。&quot;,&quot;resume&quot;:&quot;研究成果&quot;},{&quot;userGlobalId&quot;:&quot;7c319512-eb61-4b52-aca9-cb9a3f4df6bb&quot;,&quot;name&quot;:&quot;李国培&quot;,&quot;photo&quot;:null,&quot;department&quot;:&quot;全科&quot;,&quot;level&quot;:1,&quot;title&quot;:&quot;内科医师 国家三级营养师 三级心理咨询师&quot;,&quot;services&quot;:[&quot;inquiry&quot;],&quot;description&quot;:&quot;欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。&quot;,&quot;resume&quot;:&quot;研究成果&quot;},{&quot;userGlobalId&quot;:&quot;aaa&quot;,&quot;name&quot;:&quot;胥丽科&quot;,&quot;photo&quot;:null,&quot;department&quot;:&quot;全科&quot;,&quot;level&quot;:1,&quot;title&quot;:&quot;健康管理师  中医科医师&quot;,&quot;services&quot;:[&quot;inquiry&quot;],&quot;description&quot;:&quot;欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。&quot;,&quot;resume&quot;:&quot;研究成果&quot;}]}" />
-    <protocol name="talk" path="user-platform-web-1.0.0/rest/user/talk#topic=[0]&amp;id=[1]&amp;token=[2]"
-        mock="{&quot;code&quot;: 1,&quot;msg&quot;: null,&quot;data&quot;: &quot;9527&quot;}" />
-    <protocol name="pull"
-        mock="{&quot;code&quot;: 1,&quot;msg&quot;: null,&quot;data&quot;: [{&quot;id&quot;:1,&quot;speaker&quot;: &quot;057ad21e-5cff-4adf-9df8-94ae4985ef86&quot;,&quot;content&quot;: &quot;你好，婊子&quot;,&quot;time&quot;: 1442996297;},{&quot;id&quot;:2,&quot;speaker&quot;: &quot;3609adda-2a59-4ed2-8284-d2737fe552ac&quot;,&quot;content&quot;: &quot;请叫我婊子哥发发发嘎嘎嘎asfasasdddddddsfasgasgasgasgags&quot;,&quot;time&quot;: 1442996297;}]}"
-        path="user-platform-web-1.0.0/rest/user/pull?pipe=[0]&amp;token=[1]&amp;messageId=[2]" />
-    <protocol name="push"
-        path="user-platform-web-1.0.0/rest/user/push#pipe=[0]&amp;content=[1]&amp;token=[2]"
-        mock="{&quot;code&quot;: 1,&quot;msg&quot;: null}" />
-    <protocol name="examinationlist"
-        path="user-platform-web-1.0.0/rest/user/examinationList?token=[0]&amp;regionId=[1]"
-        mock="{&quot;code&quot;: 1,&quot;data&quot;: [{&quot;id&quot;: 1,&quot;name&quot;: &quot;基础套餐&quot;,&quot;detail&quot;: &quot;各种基础检查等等等等&quot;,&quot;times&quot;: [{&quot;date&quot;: &quot;2015-09-09&quot;,&quot;span&quot;: &quot;AM&quot;},{&quot;date&quot;: &quot;2015-09-09&quot;,&quot;span&quot;: &quot;PM&quot;},{&quot;date&quot;: &quot;2015-09-10&quot;,&quot;span&quot;: &quot;AM&quot;}]},{&quot;id&quot;: 2,&quot;name&quot;: &quot;白领套餐&quot;,&quot;detail&quot;: &quot;适合白领人士的体检套餐&quot;,&quot;times&quot;: [{&quot;date&quot;: &quot;2015-11-09&quot;,&quot;span&quot;: &quot;AM&quot;},{&quot;date&quot;: &quot;2015-11-09&quot;,&quot;span&quot;: &quot;PM&quot;},{&quot;date&quot;: &quot;2015-11-10&quot;,&quot;span&quot;: &quot;AM&quot;}]}]}" />
-	<protocol name="reserveExamination"
-        path="user-platform-web-1.0.0/rest/user/reserveExamination#examinationId=[0]&amp;date=[1]&amp;span=[2]&amp;token=[3]"
-        mock="{&quot;code&quot;:1,&quot;msg&quot;:&quot;预约成功&quot;}" />
-	<protocol name="reserveDoctor"
-        path="user-platform-web-1.0.0/rest/user/doctorTimeOrder#date=[0]&amp;span=[1]&amp;memo=[2]&amp;doctorId=[3]&amp;token=[4]"
-        mock="{&quot;code&quot;:1,&quot;msg&quot;:&quot;预约成功&quot;}" />
-	<protocol name="doctortimelist"
-        path="user-platform-web-1.0.0/rest/doctorTime?doctorId=[0]"
-        mock="{&quot;code&quot;:1,&quot;data&quot;:[{&quot;date&quot;:&quot;2015-09-09&quot;,&quot;span&quot;:&quot;AM&quot;},{&quot;date&quot;:&quot;2015-09-09&quot;,&quot;span&quot;:&quot;PM&quot;},{&quot;date&quot;:&quot;2015-09-10&quot;,&quot;span&quot;:&quot;AM&quot;}]}" />
-	<protocol name="idcardfront" path="user-platform-web-1.0.0/rest/user/idcardfront#token=[0]&amp;image=[1]" mock="{&quot;code&quot;:200, &quot;msg&quot;:&quot;&quot;, &quot;data&quot;:&quot;https://www.baidu.com/img/bd_logo1.png&quot;}" />
-	<protocol name="idcardback" path="user-platform-web-1.0.0/rest/user/idcardback#token=[0]&amp;image=[1]" mock="{&quot;code&quot;:200, &quot;msg&quot;:&quot;&quot;, &quot;data&quot;:&quot;https://www.baidu.com/img/bd_logo1.png&quot;}" />
-	<protocol name="loadUserInfo" path="user-platform-web-1.0.0/rest/user/loadUserInfo?token=[0]" mock="{&quot;code&quot;: 1,&quot;data&quot;: {&quot;phone&quot;: &quot;15021819287&quot;,&quot;name&quot;: &quot;老王&quot;,&quot;idnumber&quot;: &quot;340221198601199527&quot;,&quot;gender&quot;: 1,&quot;birthday&quot;: &quot;1986-01-19&quot;,&quot;bankNumber&quot;: &quot;6226198601199527&quot;,&quot;idcardfront&quot;: &quot;https://www.baidu.com/img/bd_logo1.png&quot;,&quot;idcardback&quot;: &quot;https://www.baidu.com/img/bd_logo1.png&quot;}}" />
-	<protocol name="saveUserInfo" path="user-platform-web-1.0.0/rest/user/saveUserInfo#token=[0]&amp;name=[1]&amp;idnumber=[2]&amp;bankName=[3]&amp;bankRegion=[4]&amp;bankNumber=[5]" mock="{&quot;code&quot;:1,&quot;msg&quot;:&quot;操作成功&quot;}" />
-	<protocol name="prescriptionlist" path="user-platform-web-1.0.0/rest/user/prescriptionlist?token=[0]" mock="{&quot;code&quot;:1,&quot;data&quot;:[{&quot;caption&quot;:&quot;2015-01-01&quot;,&quot;url&quot;:&quot;http://www.baidu.com&quot;},{&quot;caption&quot;:&quot;2015-02-01&quot;,&quot;url&quot;:&quot;http://www.baidu.com&quot;}]}" />
-	<protocol name="userboardlist" path="user-platform-web-1.0.0/rest/userBoardList?token=[0]" mock="{&quot;code&quot;:1,&quot;data&quot;:[{&quot;icon&quot;:&quot;https://www.baidu.com/img/bd_logo1.png&quot;,&quot;caption&quot;:&quot;2015-01-01&quot;,&quot;url&quot;:&quot;http://www.baidu.com&quot;},{&quot;icon&quot;:&quot;https://www.baidu.com/img/bd_logo1.png&quot;,&quot;caption&quot;:&quot;2015-02-01&quot;,&quot;url&quot;:&quot;http://www.baidu.com&quot;}]}" />
-	<protocol name="reserveHistory"
-        mock="{&quot;code&quot;:1,&quot;data&quot;:[{ &quot;id&quot;: 121,&quot;type&quot;: 1,&quot;date&quot;: &quot;2015-01-01&quot;,&quot;span&quot;: &quot;AM&quot;,&quot;status&quot;: 3,&quot;doctor&quot;: {&quot;userGlobalId&quot;: 12121212,&quot;name&quot;: &quot;王医生&quot;,&quot;memo&quot;: &quot;牙疼&quot;,&quot;photo&quot;: &quot;http://www/1.gif&quot;}}]}"
-        path="user-platform-web-1.0.0/rest/user/reserveHistory?token=[0]" />
-  <protocol name="queryPipe"
-        mock="{&quot;code&quot;: 1,&quot;msg&quot;: null,&quot;data&quot;: [{&quot;name&quot;: &quot;张三&quot;,&quot;doctor&quot;: &quot;3c762425-22fc-4da0-9af1-30b8ee7e&quot;,&quot;topic&quot;: &quot;嗓子疼怎么办&quot;,&quot;status&quot;: 1,&quot;time&quot;: &quot;2015-02-01 12:00:00&quot;}]}"
-        path="user-platform-web-1.0.0/rest/user/queryPipe?token=[0]" />
-        <protocol name="myWallet"
-        mock="{&quot;code&quot;: 1,&quot;data&quot;: [{&quot;id&quot;: 123,&quot;title&quot;: &quot;红包&quot;,&quot;amount&quot;: 5,&quot;bank&quot;: &quot;招商银行（尾号0999）&quot;,&quot;time&quot;: &quot;2015-09-09 14:12:20&quot;},{&quot;id&quot;: 456,&quot;title&quot;: &quot;红包&quot;,&quot;amount&quot;: 10,&quot;bank&quot;: &quot;招商银行（尾号0999）&quot;,&quot;time&quot;: &quot;2015-09-18 20:10:07&quot;}]}"
-        path="user-platform-web-1.0.0/rest/user/myWallet?token=[0]" />
-        <protocol name="myMessage"
-        mock="{&quot;code&quot;: 1,&quot;data&quot;: [{&quot;id&quot;: 1233,&quot;type&quot;: 1,&quot;hasRead&quot;: true,&quot;title&quot;: &quot;您有一个添加亲友消息&quot;,&quot;time&quot;: &quot;2015-09-09 14: 12: 20&quot;,&quot;info&quot;: {&quot;requestId&quot;: 1,&quot;name&quot;: &quot;Jose&quot;,&quot;phone&quot;: &quot;139****0987&quot;,&quot;relation&quot;: &quot;父亲&quot;}},{&quot;id&quot;: 1234,&quot;type&quot;: 2, &quot;hasRead&quot;: false,&quot;title&quot;: &quot;恭喜您获得一个100元现金礼包&quot;,&quot;time&quot;: &quot;2015-09-10 05: 12: 20&quot;,&quot;isRead&quot;: false, &quot;info&quot;: {}}]}"
-        path="user-platform-web-1.0.0/rest/user/myMessage?token=[0]" />
-	<protocol name="removefamily" path="user-platform-web-1.0.0/rest/user/removefamily#token=[0]&amp;userGlobalId=[1]" mock="{&quot;code&quot;:200, &quot;msg&quot;:&quot;&quot;}" />
-	<protocol name="hasMessage" path="user-platform-web-1.0.0/rest/user/hasMessage?token=[0]" mock="{&quot;code&quot;:200, &quot;data&quot;:&quot;0&quot;}" />
-	<protocol name="responseFamily"
-        mock=""
-        path="user-platform-web-1.0.0/rest/user/responseFamily#token=[0]&amp;isResponse=[1]&amp;requestId=[2]" />
-    <protocol name="comment"
-        mock=""
-        path="user-platform-web-1.0.0/rest/user/comment#id=[0]&amp;content=[1]&amp;attitude=[2]&amp;token=[3]" />
-    <protocol name="hasMessage" path="user-platform-web-1.0.0/rest/user/hasMessage?token=[0]" mock="{&quot;code&quot;:200, &quot;data&quot;:2}" />
-    <protocol name="readMessage" path="user-platform-web-1.0.0/rest/user/readMessage#token=[0]&amp;id=[1]" mock="{&quot;code&quot;:200, &quot;msg&quot;:&quot;ok&quot;}" />
-    <protocol name="readVersion" path="user-platform-web-1.0.0/rest/getCurrentAppVersion?firmType=andriod" mock="{&quot;code&quot;:1,&quot;msg&quot;:null,&quot;data&quot;:{&quot;firmType&quot;:&quot;andriod&quot;,&quot;appVersion&quot;:&quot;1.0.4&quot;,&quot;downloadUrl&quot;:&quot;http://cdn.oss.wehop-resources.wehop.cn/mobile/android/release/stable/v-1.1/wehop.apk&quot;}}" />
-	<protocol name="startupImage" path="user-platform-web-1.0.0/rest/startupImage" mock="{&quot;code&quot;:1,&quot;data&quot;:&quot;https://www.baidu.com/img/bd_logo1.png&quot;}" />
+<protocols domain="beta.service.wehop.cn" mock="false" storage="tower\image\">
+	<protocol name="gethospital">
+		<path>
+		<![CDATA[
+user-platform-web-1.0.0/rest/getHospital?regionId=[1]
+		]]>
+		</path>
+	<mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null,
+    "data": {
+        "id": 1,
+        "regionId": 1,
+        "name": "广州金碧花园",
+        "address": "广州",
+        "phoneNo": "020-89620708",
+        "type": "2",
+        "cityId": 1
+    }
+}
+	    ]]>
+	    </mock>
+	</protocol>
+	<protocol name="citylist">
+		<path>
+		<![CDATA[
+user-platform-web-1.0.0/rest/cityList
+		]]>
+		</path>
+	<mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null,
+    "data": [
+        {
+            "id": 1,
+            "name": "广州",
+            "pinyin": "guangzhou"
+        }
+    ]
+}
+	    ]]>
+	    </mock>
+	</protocol>
+    <protocol name="regionlist">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/regionList?cityId=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null,
+    "data": [
+        {
+            "id": 1,
+            "name": "广州-金碧花园",
+            "cityId": 1,
+            "latitude": "abc",
+            "longitude": "abc",
+            "scope": 1000
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+     <protocol name="banner">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/banner?regionId=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "image": "banner1.png",
+            "url": "http://news.baidu.com"
+        },
+        {
+            "image": "banner2.png",
+            "url": "http://news.baidu.com"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="news">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/news?page=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "imageUrl": "news1.png",
+            "title": "脚气的烦恼又开始了，袜子里放它不用再去医院",
+            "publisher": "杨飞恒大社区医院",
+            "date": "2015-08-19",
+            "url": "http://sina.cn/?from=wap"
+        },
+        {
+            "imageUrl": "news2.png",
+            "title": "俗话说笑一笑十年少，人多笑笑更健康",
+            "publisher": "付长江上海第一人民医院",
+            "date": "2015-08-19",
+            "url": "http://m.baidu.com"
+        },
+        {
+            "imageUrl": "news3.png",
+            "title": "颈椎问题，得看这里",
+            "publisher": "秦岭",
+            "date": "2015-08-11",
+            "url": "http://news.baidu.com"
+        },
+        {
+            "imageUrl": "news4.png",
+            "title": "如何预防肩周炎",
+            "publisher": "王小勇",
+            "date": "2015-08-19",
+            "url": "http://news.baidu.com"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="member">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/member?token=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+        {
+    "code": 1,
+    "data": [
+        {
+            "userGlobalId": "1",
+            "category": 1,
+            "status": 1,
+            "phone": "1502819287",
+            "relation": "爸爸",
+            "name": "柳君",
+            "idnumber": "340221198311259527",
+            "birthday": "1980-01-01"
+        },
+        {
+            "userGlobalId": "2",
+            "category": 2,
+            "status": 2,
+            "phone": "1502819288",
+            "relation": "妈妈",
+            "name": "林志玲",
+            "idnumber": "340221198411259527",
+            "birthday": "1982-11-25"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+     <protocol name="editowner">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/editowner#token=[1]&userGlobalId=[2]&mode=[3]&relation=[4]&name=[5]&idnumber=[6]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 200,
+    "data": null
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="editrelation">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/editrelation#token=[1]&userGlobalId=[2]&relation=[3]&phone=[4]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 200,
+    "data": null
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="removefamily">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/removefamily#token=[1]&userGlobalId=[2]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 200,
+    "data": null
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="image">
+        <url>
+        <![CDATA[
+[1]
+        ]]>
+        </url>
+    <mock>
+        <![CDATA[
+
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="search">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/search?disease=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+
+        ]]>
+        </mock>
+    </protocol>
+     <protocol name="fetchCode">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/fetchCode?phone=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 200,
+    "msg": ""
+}
+        ]]>
+        </mock>
+    </protocol>
+     <protocol name="login">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/login#phone=[1]&code=[2]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 200,
+    "data": {
+        "token": "abc",
+        "userGlobalId": "ABCD9527",
+        "name": "王思聪",
+        "photo": ""
+    }
+}
+        ]]>
+        </mock>
+    </protocol>
+     <protocol name="logout">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/logout#token=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 200,
+    "msg": ""
+}
+        ]]>
+        </mock>
+    </protocol>
+     <protocol name="loadBody">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/loadBody
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        "头部",
+        "四肢",
+        "颈椎"
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+     <protocol name="loadSymptom">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/loadSymptom?body=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        "头晕",
+        "心慌",
+        "嗜睡",
+        "头疼"
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+     <protocol name="loadDisease">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/loadDisease?symptom=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "caption": "感冒",
+            "description": "伴有头晕，发烧等症状"
+        },
+        {
+            "caption": "颈椎病",
+            "description": "伴有头晕，走路漂浮等症状"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+     <protocol name="searchDisease">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/search?disease=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "caption": "感冒",
+            "description": "伴有头晕，发烧等症状"
+        },
+        {
+            "caption": "颈椎病",
+            "description": "伴有头晕，走路漂浮等症状"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+     <protocol name="commentlist">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/commentList?id=[1]&page=[2]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null,
+    "data": {
+        "recordCount": 1,
+        "pageSize": 10,
+        "page": 1,
+        "records": [
+            {
+                "username": "秦岭",
+                "date": 1441785979000,
+                "content": "a'a'a",
+                "attitude": true
+            }
+        ],
+        "sortField": null,
+        "": true,
+        "pageCount": 1,
+        "nextStart": 2
+    }
+        ]]>
+        </mock>
+    </protocol>
+         <protocol name="doctorlist">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/doctorList?page=[1]&level=[2]&services=[3]&regionId=[4]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null,
+    "data": [
+        {
+            "userGlobalId": "057ad21e-5cff-4adf-9df8-94ae4985ef86",
+            "name": "肖建强",
+            "photo": null,
+            "department": "全科",
+            "level": 1,
+            "title": "全科医学 骨科 主治医师",
+            "services": [
+                "inquiry"
+            ],
+            "description": "欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。",
+            "resume": "研究成果"
+        },
+        {
+            "userGlobalId": "b594d0c7-ac96-428b-b955-8368faa2e239",
+            "name": "李跃通",
+            "photo": null,
+            "department": "全科",
+            "level": 1,
+            "title": "全科医学  内科主治医师",
+            "services": [
+                "inquiry"
+            ],
+            "description": "欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。",
+            "resume": "研究成果"
+        },
+        {
+            "userGlobalId": "0a93256a-4c9f-4294-bc86-c941e67e9dfb",
+            "name": "黎子俭",
+            "photo": null,
+            "department": "全科",
+            "level": 1,
+            "title": "全科医师 主治中医师",
+            "services": [
+                "inquiry"
+            ],
+            "description": "欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。",
+            "resume": "研究成果"
+        },
+        {
+            "userGlobalId": "48414110-c999-475f-b2d1-f2d00ab96a17",
+            "name": "徐文贤",
+            "photo": null,
+            "department": "全科",
+            "level": 1,
+            "title": "妇科医师",
+            "services": [
+                "inquiry"
+            ],
+            "description": "欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。",
+            "resume": "研究成果"
+        },
+        {
+            "userGlobalId": "f5302dbd-2724-480b-bfc7-8dc5fe5829bd",
+            "name": "李润怡",
+            "photo": null,
+            "department": "全科",
+            "level": 1,
+            "title": "健康管理师 营养管理师",
+            "services": [
+                "inquiry"
+            ],
+            "description": "欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。",
+            "resume": "研究成果"
+        },
+        {
+            "userGlobalId": "ed833dbe-24e3-4666-8dff-5c01cf9a1a84",
+            "name": "颜龙海",
+            "photo": null,
+            "department": "全科",
+            "level": 1,
+            "title": "营养指导师  国家二级营养师",
+            "services": [
+                "inquiry"
+            ],
+            "description": "欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。",
+            "resume": "研究成果"
+        },
+        {
+            "userGlobalId": "7c319512-eb61-4b52-aca9-cb9a3f4df6bb",
+            "name": "李国培",
+            "photo": null,
+            "department": "全科",
+            "level": 1,
+            "title": "内科医师 国家三级营养师 三级心理咨询师",
+            "services": [
+                "inquiry"
+            ],
+            "description": "欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。",
+            "resume": "研究成果"
+        },
+        {
+            "userGlobalId": "aaa",
+            "name": "胥丽科",
+            "photo": null,
+            "department": "全科",
+            "level": 1,
+            "title": "健康管理师  中医科医师",
+            "services": [
+                "inquiry"
+            ],
+            "description": "欢迎关注我！通过恒大健康平台挂号成功来店，首次可以赠送血压、心电、形体检测服务。欢迎随时咨询，我会提供及时、专业的医疗服务。",
+            "resume": "研究成果"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+         <protocol name="talk">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/talk#topic=[1]&id=[2]&token=[3]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null,
+    "data": "9527"
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="pull">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/pull?pipe=[1]&token=[2]&messageId=[3]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="push">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/push#pipe=[1]&content=[2]&token=[3]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null
+}
+        ]]>
+        </mock>
+    </protocol>
+        <protocol name="examinationlist">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/examinationList?token=[1]&regionId=[2]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "id": 1,
+            "name": "基础套餐",
+            "detail": "各种基础检查等等等等",
+            "times": [
+                {
+                    "date": "2015-09-09",
+                    "span": "AM"
+                },
+                {
+                    "date": "2015-09-09",
+                    "span": "PM"
+                },
+                {
+                    "date": "2015-09-10",
+                    "span": "AM"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "白领套餐",
+            "detail": "适合白领人士的体检套餐",
+            "times": [
+                {
+                    "date": "2015-11-09",
+                    "span": "AM"
+                },
+                {
+                    "date": "2015-11-09",
+                    "span": "PM"
+                },
+                {
+                    "date": "2015-11-10",
+                    "span": "AM"
+                }
+            ]
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+        <protocol name="reserveExamination">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/reserveExamination#examinationId=[1]&date=[2]&span=[3]&token=[4]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": "预约成功"
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="reserveDoctor">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/doctorTimeOrder#date=[1]&span=[2]&memo=[3]&doctorId=[4]&token=[5]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": "预约成功"
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="doctortimelist">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/doctorTime?doctorId=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "date": "2015-09-09",
+            "span": "AM"
+        },
+        {
+            "date": "2015-09-09",
+            "span": "PM"
+        },
+        {
+            "date": "2015-09-10",
+            "span": "AM"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="idcardfront">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/idcardfront#token=[1]&image=[2]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 200,
+    "msg": "",
+    "data": "https://www.baidu.com/img/bd_logo1.png"
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="idcardback">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/idcardback#token=[1]&image=[2]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 200,
+    "msg": "",
+    "data": "https://www.baidu.com/img/bd_logo1.png"
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="loadUserInfo">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/loadUserInfo?token=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": {
+        "phone": "15021819287",
+        "name": "老王",
+        "idnumber": "340221198601199527",
+        "gender": 1,
+        "birthday": "1986-01-19",
+        "bankNumber": "6226198601199527",
+        "idcardfront": "https://www.baidu.com/img/bd_logo1.png",
+        "idcardback": "https://www.baidu.com/img/bd_logo1.png"
+    }
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="saveUserInfo">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/saveUserInfo#token=[1]&name=[2]&idnumber=[3]&bankName=[4]&bankRegion=[5]&bankNumber=[6]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": "操作成功"
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="prescriptionlist">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/prescriptionlist?token=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "caption": "2015-01-01",
+            "url": "http://www.baidu.com"
+        },
+        {
+            "caption": "2015-02-01",
+            "url": "http://www.baidu.com"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="userboardlist">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/userBoardList?token=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "icon": "https://www.baidu.com/img/bd_logo1.png",
+            "caption": "2015-01-01",
+            "url": "http://www.baidu.com"
+        },
+        {
+            "icon": "https://www.baidu.com/img/bd_logo1.png",
+            "caption": "2015-02-01",
+            "url": "http://www.baidu.com"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="reserveHistory">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/reserveHistory?token=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "id": 121,
+            "type": 1,
+            "date": "2015-01-01",
+            "span": "AM",
+            "status": 3,
+            "doctor": {
+                "userGlobalId": 12121212,
+                "name": "王医生",
+                "memo": "牙疼",
+                "photo": "http://www/1.gif"
+            }
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="queryPipe">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/queryPipe?token=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null,
+    "data": [
+        {
+            "name": "张三",
+            "doctor": "3c762425-22fc-4da0-9af1-30b8ee7e",
+            "topic": "嗓子疼怎么办",
+            "status": 1,
+            "time": "2015-02-01 12:00:00"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="myWallet">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/queryPipe?token=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "id": 123,
+            "title": "红包",
+            "amount": 5,
+            "bank": "招商银行（尾号0999）",
+            "time": "2015-09-09 14:12:20"
+        },
+        {
+            "id": 456,
+            "title": "红包",
+            "amount": 10,
+            "bank": "招商银行（尾号0999）",
+            "time": "2015-09-18 20:10:07"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+     <protocol name="myMessage">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/myMessage?token=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "id": 1233,
+            "type": 1,
+            "hasRead": true,
+            "title": "您有一个添加亲友消息",
+            "time": "2015-09-09 14: 12: 20",
+            "info": {
+                "requestId": 1,
+                "name": "Jose",
+                "phone": "139****0987",
+                "relation": "父亲"
+            }
+        },
+        {
+            "id": 1234,
+            "type": 2,
+            "hasRead": false,
+            "title": "恭喜您获得一个100元现金礼包",
+            "time": "2015-09-10 05: 12: 20",
+            "isRead": false,
+            "info": {}
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+         <protocol name="removeFamily">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/removefamily#token=[1]&userGlobalId=[2]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 200,
+    "msg": ""
+}
+        ]]>
+        </mock>
+    </protocol>
+             <protocol name="hasMessage">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/hasMessage?token=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 200,
+    "data": "0"
+}
+        ]]>
+        </mock>
+    </protocol>
+                 <protocol name="responseFamily">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/responseFamily#token=[1]&isResponse=[2]&requestId=[3]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+
+        ]]>
+        </mock>
+    </protocol>
+                   <protocol name="comment">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/comment#id=[1]&content=[2]&attitude=[3]&token=[4]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+
+        ]]>
+        </mock>
+    </protocol>
+                      <protocol name="readMessage">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/readMessage#token=[1]&id=[2]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 200,
+    "msg": "ok"
+}
+        ]]>
+        </mock>
+    </protocol>
+                      <protocol name="readVersion">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/getCurrentAppVersion?firmType=andriod
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null,
+    "data": {
+        "firmType": "andriod",
+        "appVersion": "1.0.4",
+        "downloadUrl": "http://cdn.oss.wehop-resources.wehop.cn/mobile/android/release/stable/v-1.1/wehop.apk"
+    }
+}
+        ]]>
+        </mock>
+    </protocol>
+                          <protocol name="startupImage">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/startupImage
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": "https://www.baidu.com/img/bd_logo1.png"
+}
+        ]]>
+        </mock>
+    </protocol>
 </protocols>

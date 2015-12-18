@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.qcast.tower.R;
-import com.qcast.tower.logic.Host;
+import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.response.CommonResponse;
-import com.qcast.tower.logic.response.Response;
+import com.slfuture.pluto.communication.response.CommonResponse;
+import com.slfuture.pluto.communication.response.Response;
 import com.qcast.tower.logic.structure.FamilyMember;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
@@ -60,6 +60,24 @@ public class FamilyActivity extends Activity {
 		loadMember();
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		for(HashMap<String, Object> member : memberList) {
+			if(null != member.get("hasmessage")) {
+				if(Logic.messageFamily.contains((String) member.get("remoteId"))) {
+					
+				}
+				else {
+					member.remove("remoteId");
+				}
+			}
+		}
+		ListView listview = (ListView) FamilyActivity.this.findViewById(R.id.family_list_member);
+		SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
+		adapter.notifyDataSetChanged();
+	}
+
 	/**
 	 * 界面预处理
 	 */
@@ -103,8 +121,8 @@ public class FamilyActivity extends Activity {
 	private void dealMember() {
 		ListView listview = (ListView) FamilyActivity.this.findViewById(R.id.family_list_member);
 		SimpleAdapter listItemAdapter = new SimpleAdapter(FamilyActivity.this, memberList, R.layout.listview_family,
-			new String[]{"caption", "delete"}, 
-	        new int[]{R.id.family_listview_caption, R.id.family_listview_delete});
+			new String[]{"caption", "hasmessage", "delete"}, 
+	        new int[]{R.id.family_listview_caption, R.id.family_listview_hasmessage, R.id.family_listview_delete});
 		listItemAdapter.setViewBinder(new ViewBinder() {
 			@SuppressWarnings("deprecation")
 			public boolean setViewValue(View view, Object data, String textRepresentation) {
@@ -153,7 +171,17 @@ public class FamilyActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
 				Log.i("TOWER", "CLICK FAMILY");
-            }
+				String remoteId = (String) memberList.get(index).get("remoteId");
+				String remoteNickName = (String) memberList.get(index).get("remoteNickName");
+				if(null == remoteId) {
+					remoteId = "t2";
+					remoteNickName = "t2";
+				}
+				Intent intent = new Intent(FamilyActivity.this, ChatActivity.class);
+				intent.putExtra("remoteId", remoteId);
+				intent.putExtra("remoteNickName", remoteNickName);
+				FamilyActivity.this.startActivity(intent);
+			}
 		});
 	}
 	
@@ -194,6 +222,9 @@ public class FamilyActivity extends Activity {
 					if(null != newJSONObject.get("idnumber")) {
 						member.idNumber = ((JSONString) newJSONObject.get("idnumber")).getValue();
 					}
+					if(null != newJSONObject.get("imUsername")) {
+						member.imUsername = ((JSONString) newJSONObject.get("imUsername")).getValue();
+					}
 					if(null != member.userId) {
 						Logic.familys.put(member.userId, member);
 					}
@@ -208,6 +239,18 @@ public class FamilyActivity extends Activity {
 					}
 					else {
 						memberMap.put("caption", member.phone);
+					}
+					memberMap.put("remoteId", member.imUsername);
+					if(null != member.imUsername) {
+						if(Logic.messageFamily.contains(member.imUsername)) {
+							memberMap.put("hasmessage", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.icon_hasmessage));
+						}
+					}
+					if(null == member.relation) {
+						memberMap.put("remoteNickName", member.name);
+					}
+					else {
+						memberMap.put("remoteNickName", member.relation);
 					}
 					memberMap.put("delete", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.button_delete));
 					memberList.add(memberMap);

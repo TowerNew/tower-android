@@ -5,11 +5,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.qcast.tower.R;
-import com.qcast.tower.logic.Host;
+import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
 import com.qcast.tower.logic.Storage;
-import com.qcast.tower.logic.response.CommonResponse;
-import com.qcast.tower.logic.response.core.IResponse;
+import com.slfuture.pluto.communication.response.CommonResponse;
+import com.slfuture.pluto.communication.response.core.IResponse;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
@@ -141,6 +141,10 @@ public class LoginActivity extends Activity {
 						Logic.token = ((JSONString) ((JSONObject) object.get("data")).get("token")).getValue();
 						Logic.userId = ((JSONString) ((JSONObject) object.get("data")).get("userGlobalId")).getValue();
 						Logic.name = ((JSONString) ((JSONObject) object.get("data")).get("name")).getValue();
+						if(null != ((JSONObject) object.get("data")).get("imUsername")) {
+							Logic.imUsername = ((JSONString) ((JSONObject) object.get("data")).get("imUsername")).getValue();
+							Storage.setUser("imUsername", Logic.imUsername);
+						}
 						Storage.setUser("token", Logic.token);
 						Storage.setUser("userId", Logic.userId);
 						Storage.setUser("phone", phone);

@@ -45,6 +45,19 @@ public class Storage {
 	private Storage() { }
 
 	/**
+	 * 获取文件后缀名
+	 * 
+	 * @return 文件后缀名
+	 */
+	public static String getFileSuffix(String path) {
+		int i = path.lastIndexOf(".");
+		if(-1 == i) {
+			return "";
+		}
+		return path.substring(i);
+	}
+
+	/**
 	 * 获取指定图片码的路径
 	 * 
 	 * @param code 图片码

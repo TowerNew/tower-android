@@ -7,12 +7,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.qcast.tower.R;
-import com.qcast.tower.logic.Host;
+import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
 import com.qcast.tower.logic.Storage;
-import com.qcast.tower.logic.response.CommonResponse;
-import com.qcast.tower.logic.response.ImageResponse;
-import com.qcast.tower.logic.response.Response;
+import com.slfuture.pluto.communication.response.CommonResponse;
+import com.slfuture.pluto.communication.response.ImageResponse;
+import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -285,7 +285,8 @@ public class HomeActivity extends Fragment {
 				JSONObject result = (JSONObject) resultObject.get("data");
 				String version = ((JSONString) (result.get("appVersion"))).getValue();
 				String url = ((JSONString) (result.get("downloadUrl"))).getValue();
-				if("1.0.6".endsWith(version)) {
+				int v = Integer.parseInt(version.replace(".", ""));
+				if(v <= 106) {
 					return;
 				}
 				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
@@ -312,7 +313,7 @@ public class HomeActivity extends Fragment {
 				//
 				JSONObject resultObject = JSONObject.convert(content);
 				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-					Toast.makeText(HomeActivity.this.getActivity(), ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
+					// Toast.makeText(HomeActivity.this.getActivity(), ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
 					return;
 				}
 				JSONArray result = (JSONArray) resultObject.get("data");

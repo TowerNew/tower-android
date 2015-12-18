@@ -1,6 +1,7 @@
 package com.qcast.tower.logic;
 
 import com.qcast.tower.logic.structure.FamilyMember;
+import com.slfuture.carrie.base.type.Set;
 import com.slfuture.carrie.base.type.safe.Table;
 
 import android.app.Application;
@@ -68,6 +69,14 @@ public class Logic {
 	 * 背面照片
 	 */
 	public static String backImage;
+	/**
+	 * 是否有未读消息
+	 */
+	public static Set<String> messageFamily = new Set<String>();
+	/**
+	 * 用户名
+	 */
+	public static String imUsername = null;
 
 
 	/**
@@ -78,6 +87,7 @@ public class Logic {
 		token = Storage.user("token", String.class);
 		userId = Storage.user("userId", String.class);
 		name = Storage.user("name", String.class);
+		imUsername = Storage.user("imUsername", String.class);
 		if(null != Storage.user("regionId", Integer.class)) {
 			regionId = (int) (double) (Double) Storage.user("regionId", Double.class);
 		}

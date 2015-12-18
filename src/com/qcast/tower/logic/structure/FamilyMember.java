@@ -26,6 +26,7 @@ public class FamilyMember {
 	public String relation;
 	public String name;
 	public String idNumber;
+	public String imUsername;
 	
 	
 	/**

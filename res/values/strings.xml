@@ -23,4 +23,9 @@
     <string name="login_text_phone">请输入手机号码</string>
     <string name="login_text_code">请输入验证码</string>
     <string name="about_version">当前版本: 1.0.6</string>
+    
+	<string name="mute">Mute</string>
+    <string name="Hands_free">Hands free</string>
+    <string name="hang_up">Hang up</string>
+    <string name="answer">Answer</string>
 </resources>

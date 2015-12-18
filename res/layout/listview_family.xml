@@ -14,6 +14,13 @@
         android:layout_marginLeft="20dp"
         android:textSize="16sp"
 	    android:paddingLeft="4dp" />
+	<ImageView
+		android:id="@+id/family_listview_hasmessage"
+       	android:layout_width="30dp"
+       	android:layout_height="30dp"
+	    android:layout_centerVertical="true"
+		android:layout_toRightOf="@id/family_listview_caption"
+       	android:layout_marginLeft="10dp" />
     <ImageView
 		android:id="@+id/family_listview_delete"
        	android:layout_width="66dp"

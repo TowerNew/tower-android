@@ -1,6 +1,10 @@
 package com.qcast.tower.form;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -9,20 +13,27 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.SimpleAdapter;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMChatOptions;
 import com.qcast.tower.R;
-import com.qcast.tower.logic.Host;
+import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.response.CommonResponse;
-import com.qcast.tower.logic.response.Response;
+import com.slfuture.pluto.communication.response.CommonResponse;
+import com.slfuture.pluto.communication.response.Response;
+import com.qcast.tower.logic.structure.FamilyMember;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
+import com.slfuture.carrie.base.json.core.IJSON;
+import com.slfuture.carrie.base.text.Text;
 
 /**
  * 主界面
@@ -34,6 +45,14 @@ public class MainActivity extends FragmentActivity {
     protected TabHost tabhost = null;
     private Handler hasMessageHandler;
 
+    /**
+     * 对话接收器
+     */
+    private BroadcastReceiver chatReceiver = null;
+    /**
+     * 拨号接收器
+     */
+    private BroadcastReceiver dialReceiver = null;
 
 
     /**
@@ -76,6 +95,83 @@ public class MainActivity extends FragmentActivity {
         });
         hasMessageHandler=new Handler();
         refreshMessage();
+        //
+		EMChatOptions chatOptions = EMChatManager.getInstance().getChatOptions();
+		chatOptions.setNotifyBySoundAndVibrate(true);
+		//
+        IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
+    	intentFilter.setPriority(2);
+    	chatReceiver = new BroadcastReceiver() {
+           	@Override
+           	public void onReceive(Context context, Intent intent) {
+           		String from = intent.getStringExtra("from");
+           		String type = intent.getStringExtra("type");
+           		//
+           		Logic.messageFamily.add(from);
+           		MediaPlayer player = MediaPlayer.create(MainActivity.this, R.raw.newmessage);
+                player.start();
+           	}
+        };
+        registerReceiver(chatReceiver, intentFilter);
+        //
+        dialReceiver = new BroadcastReceiver() {
+           	@Override
+           	public void onReceive(Context context, Intent intent) {
+           		String from = intent.getStringExtra("from");
+           		String type = intent.getStringExtra("type");
+                Host.doCommand("member", new CommonResponse<String>(from + "|" + type) {
+        			@Override
+        			public void onFinished(String content) {
+        				if(Response.CODE_SUCCESS != code()) {
+        					return;
+        				}
+        				JSONObject resultObject = JSONObject.convert(content);
+        				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+        					return;
+        				}
+                   		String from = Text.substring((String) tag, null, "|");
+                   		String type = Text.substring((String) tag, "|", null);
+        				JSONArray result = (JSONArray) resultObject.get("data");
+        				for(IJSON item : result) {
+        					JSONObject newJSONObject = (JSONObject) item;
+        					if(null != newJSONObject.get("imUsername")) {
+        						String imUsername = ((JSONString) newJSONObject.get("imUsername")).getValue();
+        						if(!from.equals(imUsername)) {
+        							continue;
+        						}
+        						String relation = "亲友";
+        						if(null != newJSONObject.get("relation")) {
+        							relation = ((JSONString) newJSONObject.get("relation")).getValue();
+            					}
+        						Intent ringIntent = new Intent(MainActivity.this, RingActivity.class);
+        		           		ringIntent.putExtra("userId", from);
+        		           		ringIntent.putExtra("userName", relation);
+        		           		ringIntent.putExtra("type", type);
+        		           		MainActivity.this.startActivity(ringIntent);
+        					}
+        				}
+        			}
+        		}, Logic.token);
+           	}
+        };
+        registerReceiver(dialReceiver, new IntentFilter(EMChatManager.getInstance().getIncomingCallBroadcastAction()));
+    }
+    
+    /**
+     * 终结
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        hasMessageHandler.removeCallbacksAndMessages(null);
+        if(null != chatReceiver) {
+        	this.unregisterReceiver(chatReceiver);
+        }
+        chatReceiver = null;
+        if(null != dialReceiver) {
+        	this.unregisterReceiver(dialReceiver);
+        }
+        dialReceiver = null;
     }
 
     @Override
@@ -142,11 +238,5 @@ public class MainActivity extends FragmentActivity {
         intent.putExtra("services", "inquiry");
 		intent.putExtra("docLevel",1);
         MainActivity.this.startActivity(intent);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        hasMessageHandler.removeCallbacksAndMessages(null);
     }
 }

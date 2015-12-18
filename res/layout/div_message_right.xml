@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#ececec"
+    android:padding="6dp">
+	<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+		<TextView
+		    android:id="@+id/message_right_label_nickname"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:layout_alignParentTop="true"
+		    android:focusable="false"
+		    android:gravity="center"
+		    android:text="凯瑞"
+		    android:textColor="@color/black"
+		    android:textSize="18sp" />
+		<TextView
+		    android:id="@+id/message_right_label_message"
+		    style="@style/chat_content_date_style"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_toLeftOf="@id/message_right_label_nickname"
+		    android:text="你好世界" 
+		    android:background="@drawable/chatto_bg_normal"
+		    android:textSize="16sp" />
+		<ImageView
+		    android:id="@+id/message_right_image_message"
+		    android:layout_width="150dp"
+		    android:layout_height="150dp"
+		    android:scaleType="fitXY"
+		    android:layout_toLeftOf="@id/message_right_label_nickname"
+		    android:padding="2dp"
+		    android:layout_marginRight="5dp"
+		    android:visibility="gone" />
+	</RelativeLayout>
+</LinearLayout>

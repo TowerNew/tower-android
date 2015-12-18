@@ -15,10 +15,10 @@ import android.widget.Toast;
 
 import com.qcast.tower.R;
 import com.qcast.tower.adapter.ChatMsgViewAdapter;
-import com.qcast.tower.logic.Host;
+import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.response.CommonResponse;
-import com.qcast.tower.logic.response.core.IResponse;
+import com.slfuture.pluto.communication.response.CommonResponse;
+import com.slfuture.pluto.communication.response.core.IResponse;
 import com.qcast.tower.model.ChatMsgEntity;
 import com.slfuture.carrie.base.json.JSONBoolean;
 import com.slfuture.carrie.base.json.JSONNumber;

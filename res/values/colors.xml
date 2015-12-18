@@ -9,10 +9,12 @@
     <color name="listview_down">#fff7f7f7</color>
     <color name="black">#ff000000</color>
     <color name="white">#ffffffff</color>
+    <color name="red">#ffff0000</color>
     <color name="grey">#ffcccccc</color>
     <color name="midgrey">#ff999999</color>
     <color name="lightgrey">#fff3f3f3</color>
     <color name="docgrey">#ececec</color>
     <color name="transprant">#00000000</color>
     <color name="blue">#ff4278a7</color>
+    <color name="voip_interface_text_color">#bababa</color>
 </resources>

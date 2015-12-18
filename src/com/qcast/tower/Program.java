@@ -1,6 +1,7 @@
 package com.qcast.tower;
 
-import com.qcast.tower.logic.Host;
+import com.easemob.chat.EMChat;
+import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
 import com.slfuture.pluto.config.Configuration;
 
@@ -18,6 +19,9 @@ public class Program extends Application {
     public void onCreate() {
 		Log.i("TOWER", "Program.onCreate() execute");
 		super.onCreate();
+		//
+		EMChat.getInstance().init(this);
+		EMChat.getInstance().setDebugMode(true);
 		//
 		Logic.application = this;
 		// 初始化配置系统

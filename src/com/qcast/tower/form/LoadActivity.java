@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroupManager;
 import com.qcast.tower.R;
-import com.qcast.tower.logic.Host;
+import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
 import com.qcast.tower.logic.Storage;
-import com.qcast.tower.logic.response.CommonResponse;
-import com.qcast.tower.logic.response.ImageResponse;
-import com.qcast.tower.logic.response.Response;
+import com.slfuture.pluto.communication.response.CommonResponse;
+import com.slfuture.pluto.communication.response.ImageResponse;
+import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
@@ -51,9 +54,18 @@ public class LoadActivity extends Activity {
             	// 页面切换
             	if(0 == Logic.regionId) {
     				startActivity(new Intent(LoadActivity.this, MainActivity.class));
-                }
+            	}
             	else {
+            		// startActivity(new Intent(LoadActivity.this, VoiceActivity.class));
+//            		Intent intent = new Intent(LoadActivity.this, VideoActivity.class);
+//            		intent.putExtra("userName", "t2");
+//            		intent.putExtra("mode", true);
+//            		startActivity(intent);
             		startActivity(new Intent(LoadActivity.this, MainActivity.class));
+//            		Intent intent = new Intent(LoadActivity.this, ChatActivity.class);
+//            		intent.putExtra("remoteId", "t2");
+//            		intent.putExtra("remoteNickName", "凯瑞");
+//            		startActivity(intent);
             	}
             	LoadActivity.this.finish();
                 break;
@@ -144,6 +156,31 @@ public class LoadActivity extends Activity {
 		        }, json.getValue());
 			}
 		});
-		
+		//
+		if(null == Logic.imUsername) {
+			return;
+		}
+		EMChatManager.getInstance().login(Logic.imUsername, Logic.phone, new EMCallBack() {
+			@Override
+			public void onSuccess() {
+				runOnUiThread(new Runnable() {
+					public void run() {
+						EMGroupManager.getInstance().loadAllGroups();
+						EMChatManager.getInstance().loadAllConversations();
+						Log.d("main", "登陆聊天服务器成功！");		
+					}
+				});
+			}
+		 
+			@Override
+			public void onProgress(int progress, String status) {
+		 
+			}
+		 
+			@Override
+			public void onError(int code, String message) {
+				Log.d("main", "登陆聊天服务器失败！");
+			}
+		});
 	}
 }

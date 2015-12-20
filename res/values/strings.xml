@@ -8,8 +8,12 @@
     <string name="main_tab_user">我的</string>
     <string name="home_region_default">选择小区</string>
     <string name="home_caption">聚健康</string>
-    <string name="search_tip">搜索疾病</string>
+    <string name="search_disease">搜索疾病</string>
+    <string name="search_tip">医生/预约/优惠</string>
+    <string name="reserve_examination">预约体检</string>
+    <string name="reserve_doctor">预约就诊</string>
     <string name="news_caption">最新医讯</string>
+    <string name="hot_recommend">精彩推荐</string>
     <string name="user_name_default">点击登录</string>
     <string name="family_input_relation">关  系</string>
     <string name="family_input_name">姓  名</string>
@@ -23,6 +27,12 @@
     <string name="login_text_phone">请输入手机号码</string>
     <string name="login_text_code">请输入验证码</string>
     <string name="about_version">当前版本: 1.0.6</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="my_wallet_description">银行卡、会员卡等</string>
+    <string name="account_left">账户余额</string>
+    <string name="account_red_packet">红包</string>
+    <string name="account_points">积分</string>
+    <string name="account_bank_card">银行卡</string>
     
 	<string name="mute">Mute</string>
     <string name="Hands_free">Hands free</string>

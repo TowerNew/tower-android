@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
+import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.exceptions.EaseMobException;
@@ -43,9 +44,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 聊天对话框
+ * 问诊聊天对话框
  */
-public class ChatActivity extends Activity {
+public class DoctorChatActivity extends Activity {
 	/**
 	 * 消息接收器
 	 */
@@ -111,6 +112,10 @@ public class ChatActivity extends Activity {
 	 * 对方ID
 	 */
 	private String remoteId;
+	/**
+	 * 医生ID
+	 */
+	private String doctorId;
 	/**
 	 * 对方ID
 	 */
@@ -186,6 +191,7 @@ public class ChatActivity extends Activity {
 			        EMMessage message = EMMessage.createSendMessage(EMMessage.Type.IMAGE);
 			        ImageMessageBody body = new ImageMessageBody(imageFile);
 			        message.addBody(body);
+			        message.setChatType(ChatType.GroupChat);
 			        message.setReceipt(remoteId);
 			        conversation.addMessage(message);
 			        try {
@@ -203,6 +209,7 @@ public class ChatActivity extends Activity {
      */
     private void prepareData() {
     	remoteId = getIntent().getStringExtra("remoteId");
+    	doctorId = getIntent().getStringExtra("doctorId");
     	remoteNickName = getIntent().getStringExtra("remoteNickName");
     	messages = new ArrayList<ChatMessage>();
     	adapter = new MessageAdapter(this, messages);
@@ -219,7 +226,7 @@ public class ChatActivity extends Activity {
         btnClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ChatActivity.this.finish();
+				DoctorChatActivity.this.finish();
 			}
         });
     }
@@ -324,6 +331,7 @@ public class ChatActivity extends Activity {
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
         TextMessageBody txtBody = new TextMessageBody(content);
         message.addBody(txtBody);
+        message.setChatType(ChatType.GroupChat);
         message.setReceipt(remoteId);
         conversation.addMessage(message);
         try {
@@ -338,7 +346,7 @@ public class ChatActivity extends Activity {
 	 * @param activity 上下文
 	 */
 	private void showMore() {
-		final AlertDialog alertDialog = new AlertDialog.Builder(ChatActivity.this).create();
+		final AlertDialog alertDialog = new AlertDialog.Builder(DoctorChatActivity.this).create();
 		alertDialog.show();
 		Window window = alertDialog.getWindow();
 		WindowManager.LayoutParams layoutParams = window.getAttributes();
@@ -360,7 +368,7 @@ public class ChatActivity extends Activity {
 				Intent intent = new Intent();
 				intent.setType("image/*");
 				intent.setAction(Intent.ACTION_GET_CONTENT);
-				ChatActivity.this.startActivityForResult(intent, 1);
+				DoctorChatActivity.this.startActivityForResult(intent, 1);
 				alertDialog.hide();
 			}
 		});
@@ -368,11 +376,11 @@ public class ChatActivity extends Activity {
 		labelAudio.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(ChatActivity.this, VoiceActivity.class);
-				intent.putExtra("userId", remoteId);
+				Intent intent = new Intent(DoctorChatActivity.this, VoiceActivity.class);
+				intent.putExtra("userId", doctorId);
 				intent.putExtra("userName", remoteNickName);
 				intent.putExtra("mode", true);
-				ChatActivity.this.startActivity(intent);
+				DoctorChatActivity.this.startActivity(intent);
 				alertDialog.hide();
 			}
 		});
@@ -380,11 +388,11 @@ public class ChatActivity extends Activity {
 		labelVideo.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(ChatActivity.this, VideoActivity.class);
-				intent.putExtra("userId", remoteId);
+				Intent intent = new Intent(DoctorChatActivity.this, VideoActivity.class);
+				intent.putExtra("userId", doctorId);
 				intent.putExtra("userName", remoteNickName);
 				intent.putExtra("mode", true);
-				ChatActivity.this.startActivity(intent);
+				DoctorChatActivity.this.startActivity(intent);
 				alertDialog.hide();
 			}
 		});

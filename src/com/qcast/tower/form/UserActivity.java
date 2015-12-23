@@ -99,7 +99,7 @@ public class UserActivity extends Fragment {
 		}
 		if(Logic.messageFamily.size() > 0) {
 			HashMap<String, Object> map = userBoardList.get(1);
-			map.put("caption", "我的家庭[消息]");
+			map.put("caption", "我的家庭[未读消息]");
 		}
 		else {
 			HashMap<String, Object> map = userBoardList.get(1);

@@ -7,7 +7,7 @@ import com.qcast.tower.logic.Storage;
 import java.io.Serializable;
 
 /**
- * Created by zhengningchuan on 15/9/16.
+ * 问诊历史
  */
 public class MyChatHistoryModel implements Serializable {
     public String userId;
@@ -20,6 +20,9 @@ public class MyChatHistoryModel implements Serializable {
     public String photoName =null;
     public String imageUrl;
 
+    public String imUsername = null;
+    public String imGroupId = null;
+    
     public Bitmap getPhoto() {
         return Storage.getImage(photoName);
     }

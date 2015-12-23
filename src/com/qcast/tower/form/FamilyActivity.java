@@ -177,9 +177,11 @@ public class FamilyActivity extends Activity {
 					remoteId = "t2";
 					remoteNickName = "t2";
 				}
-				Intent intent = new Intent(FamilyActivity.this, ChatActivity.class);
+				Logic.messageFamily.clear();
+				Intent intent = new Intent(FamilyActivity.this, GroupChatActivity.class);
+				intent.putExtra("localId", Logic.imUsername);
 				intent.putExtra("remoteId", remoteId);
-				intent.putExtra("remoteNickName", remoteNickName);
+				intent.putExtra("remoteName", remoteNickName);
 				FamilyActivity.this.startActivity(intent);
 			}
 		});

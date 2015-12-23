@@ -167,6 +167,14 @@
             android:name="com.qcast.tower.form.DoctorChatActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.qcast.tower.form.GroupChatActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.qcast.tower.form.TopicActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"></activity>
         <!-- 设置环信应用的appkey -->
     	<meta-data android:name="EASEMOB_APPKEY"  android:value="wehopim#wehop" />
     	<!-- 声明sdk所需的service SDK核心功能-->

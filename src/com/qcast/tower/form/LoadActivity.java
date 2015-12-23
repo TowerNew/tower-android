@@ -62,6 +62,16 @@ public class LoadActivity extends Activity {
 //            		intent.putExtra("mode", true);
 //            		startActivity(intent);
             		startActivity(new Intent(LoadActivity.this, MainActivity.class));
+            		//Intent intent = new Intent(LoadActivity.this, GroupChatActivity.class);
+            		//intent.putExtra("localId", "appuser_1003");
+            		//intent.putExtra("groupId", "140368589411582504");
+            		//intent.putExtra("remoteId", "appdoctor_1");
+            		//intent.putExtra("localPhoto", "https://www.baidu.com/img/bd_logo1.png");
+            		//intent.putExtra("remotePhoto", "https://www.baidu.com/img/bd_logo1.png");
+            		//startActivity(intent);
+            		
+            		// startActivity(new Intent(LoadActivity.this, GroupChatActivity.class));
+            		
 //            		Intent intent = new Intent(LoadActivity.this, ChatActivity.class);
 //            		intent.putExtra("remoteId", "t2");
 //            		intent.putExtra("remoteNickName", "凯瑞");

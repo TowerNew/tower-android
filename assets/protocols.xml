@@ -841,7 +841,7 @@ user-platform-web-1.0.0/rest/user/reserveHistory?token=[1]
     <protocol name="queryPipe">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/queryPipe?token=[1]
+user-platform-web-1.0.0/rest/user/queryTopic?token=[1]&status=1
         ]]>
         </path>
     <mock>
@@ -849,15 +849,30 @@ user-platform-web-1.0.0/rest/user/queryPipe?token=[1]
 {
     "code": 1,
     "msg": null,
-    "data": [
-        {
-            "name": "张三",
-            "doctor": "3c762425-22fc-4da0-9af1-30b8ee7e",
-            "topic": "嗓子疼怎么办",
-            "status": 1,
-            "time": "2015-02-01 12:00:00"
-        }
-    ]
+    "data": {
+        "recordCount": 1,
+        "pageSize": 10,
+        "page": 1,
+        "records": [
+            {
+                "id": 6464,
+                "groupId": "140368589411582504",
+                "user": "3609adda-2a59-4ed2-8284-d2737fe552ac",
+                "userName": "秦岭",
+                "doctor": "b197e518-fdd9-4c8e-b386-ecc4925ca6f3",
+                "doctorName": "黄新",
+                "doctorPortrait": "http://cdn.make.oss.wehop-resources.wehop.cnportrait/170460f5-77bf-4357-be83-f423f594584c@100h_100w_0e",
+                "doctorImUsername": "appdoctor_1",
+                "topic": "涨停！",
+                "status": 1,
+                "time": 1450687522000
+            }
+        ],
+        "sortField": null,
+        "sortAsc": true,
+        "pageCount": 1,
+        "nextStart": 2
+    }
 }
         ]]>
         </mock>
@@ -1019,7 +1034,7 @@ user-platform-web-1.0.0/rest/getCurrentAppVersion?firmType=andriod
         ]]>
         </mock>
     </protocol>
-                          <protocol name="startupImage">
+	<protocol name="startupImage">
         <path>
         <![CDATA[
 user-platform-web-1.0.0/rest/startupImage
@@ -1030,6 +1045,34 @@ user-platform-web-1.0.0/rest/startupImage
 {
     "code": 1,
     "data": "https://www.baidu.com/img/bd_logo1.png"
+}
+        ]]>
+        </mock>
+    </protocol>
+	<protocol name="loadAvailableTopic">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/loadAvailableTopic?doctorId=[1]&token=[2]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null,
+    "data": {
+        "id": 6464,
+        "groupId": "140368589411582504",
+        "user": "3609adda-2a59-4ed2-8284-d2737fe552ac",
+        "userName": "秦岭",
+        "doctor": "b197e518-fdd9-4c8e-b386-ecc4925ca6f3",
+        "doctorName": "黄新",
+        "doctorPortrait": "http://cdn.make.oss.wehop-resources.wehop.cnportrait/170460f5-77bf-4357-be83-f423f594584c@100h_100w_0e",
+        "doctorImUsername": "appdoctor_1",
+        "topic": "涨停！",
+        "status": 1,
+        "time": 1450687522000
+    }
 }
         ]]>
         </mock>

@@ -32,12 +32,11 @@ import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
 
-import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * Created by zhengningchuan on 15/9/16.
+ * 我的问诊历史
  */
 public class MyInquiryDoctorActivity extends Activity{
 
@@ -73,16 +72,14 @@ public class MyInquiryDoctorActivity extends Activity{
                     Toast.makeText(MyInquiryDoctorActivity.this, "请先登录", Toast.LENGTH_LONG).show();
                     return;
                 }
-                Intent intent = new Intent(MyInquiryDoctorActivity.this,InquiryDoctorChatActivity.class);
-                intent.putExtra("docId", dataList.get(position).docId);
-                intent.putExtra("topic", dataList.get(position).topic);
-                intent.putExtra("channel",dataList.get(position).id+"");
-                // intent.putExtra("doctorBitmap", dataList.get(position).getPhoto());
-                Bitmap bmp = dataList.get(position).getPhoto();
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] bytes = stream.toByteArray();
-                intent.putExtra("BMP", bytes);
+                MyChatHistoryModel model = dataList.get(position);
+                
+                Intent intent = new Intent(MyInquiryDoctorActivity.this, GroupChatActivity.class);
+                intent.putExtra("localId", Logic.imUsername);
+                intent.putExtra("groupId", model.imGroupId);
+                intent.putExtra("remoteId", model.imUsername);
+                intent.putExtra("remoteName", model.docName);
+                intent.putExtra("remotePhoto", model.imageUrl);
                 MyInquiryDoctorActivity.this.startActivity(intent);
             }
         });
@@ -101,8 +98,8 @@ public class MyInquiryDoctorActivity extends Activity{
                     Toast.makeText(MyInquiryDoctorActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
                     return;
                 }
-                JSONArray result = (JSONArray) resultObject.get("data");
-
+                resultObject = (JSONObject) resultObject.get("data");
+                JSONArray result = (JSONArray) resultObject.get("records");
                 if (null == result) {
                     return;
                 }
@@ -130,6 +127,8 @@ public class MyInquiryDoctorActivity extends Activity{
                     myChatHistoryModel.userId=((JSONString) newJSONObject.get("user")).getValue();
                     myChatHistoryModel.id=((JSONNumber) newJSONObject.get("id")).intValue();
                     myChatHistoryModel.photoName = photoName;
+                    myChatHistoryModel.imGroupId = ((JSONString) newJSONObject.get("groupId")).getValue();
+                    myChatHistoryModel.imUsername = ((JSONString) newJSONObject.get("doctorImUsername")).getValue();
 
                     dataList.add(myChatHistoryModel);
                     if (!TextUtils.isEmpty(imageUrl) && Text.isBlank(imageUrl)) {

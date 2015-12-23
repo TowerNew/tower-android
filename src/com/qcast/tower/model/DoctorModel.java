@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import com.qcast.tower.logic.Storage;
 
 /**
- * Created by zhengningchuan on 15/9/1.
+ * 医生结构体
  */
 public class DoctorModel implements Serializable {
     public String imageUrl;
@@ -26,6 +26,9 @@ public class DoctorModel implements Serializable {
     public String photoName = null;
     public int goodCount;
     public int badCount;
+    
+    public String imUsername = null;
+    public String imGroupId = null;
     
     public Bitmap getPhoto() {
     	return Storage.getImage(photoName);

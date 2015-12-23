@@ -23,7 +23,9 @@ import com.qcast.tower.R;
 import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
 import com.slfuture.pluto.communication.response.CommonResponse;
+import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.communication.response.Response;
+import com.slfuture.pluto.communication.response.core.IResponse;
 import com.qcast.tower.model.DoctorCommentsModel;
 import com.qcast.tower.model.DoctorModel;
 import com.slfuture.carrie.base.json.JSONArray;
@@ -31,6 +33,7 @@ import com.slfuture.carrie.base.json.JSONBoolean;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
+import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.json.core.IJSON;
 
 import java.io.ByteArrayOutputStream;
@@ -149,15 +152,14 @@ public class InquiryDoctorDetailActivity extends Activity{
             		Toast.makeText(InquiryDoctorDetailActivity.this, "请先登录", Toast.LENGTH_LONG).show();
                     return;
             	}
-                Intent intent = new Intent(InquiryDoctorDetailActivity.this,InquiryDoctorChatActivity.class);
-                intent.putExtra("docId", doctorModel.doctorId);
-                Bitmap bmp=doctorModel.getPhoto();
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] bytes = stream.toByteArray();
-                intent.putExtra("BMP", bytes);
+            	Intent intent = new Intent(InquiryDoctorDetailActivity.this, TopicActivity.class);
+            	intent.putExtra("doctorId", doctorModel.doctorId);
+            	intent.putExtra("localId", Logic.imUsername);
+                intent.putExtra("groupId", doctorModel.imGroupId);
+                intent.putExtra("remoteId", doctorModel.imUsername);
+                intent.putExtra("remoteName", doctorModel.name);
+                intent.putExtra("remotePhoto", doctorModel.imageUrl);
                 InquiryDoctorDetailActivity.this.startActivity(intent);
-
             }
         });
         reserve_layout = (LinearLayout) this.findViewById(R.id.reserve_layout);

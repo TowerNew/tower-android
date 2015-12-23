@@ -13,9 +13,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.SimpleAdapter;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -27,7 +25,6 @@ import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
-import com.qcast.tower.logic.structure.FamilyMember;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -105,7 +102,7 @@ public class MainActivity extends FragmentActivity {
            	@Override
            	public void onReceive(Context context, Intent intent) {
            		String from = intent.getStringExtra("from");
-           		String type = intent.getStringExtra("type");
+           		// int type = intent.getIntExtra("type", 0);
            		//
            		Logic.messageFamily.add(from);
            		MediaPlayer player = MediaPlayer.create(MainActivity.this, R.raw.newmessage);

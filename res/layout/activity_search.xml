@@ -6,15 +6,15 @@
 	<RelativeLayout
         android:id="@+id/search_layout_bar"
         android:layout_width="fill_parent"
-        android:layout_height="42dp"
-        android:background="@color/lightblue"
+        android:layout_height="48dp"
+        android:background="@drawable/topbar"
         android:orientation="vertical">
 		<ImageButton
             android:id="@+id/search_button_close"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:background="@color/transprant"
             android:src="@drawable/left_arrow"
             android:scaleType="fitXY"
@@ -28,22 +28,24 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:background="@color/transprant"
-            android:src="@drawable/arrow"
+            android:src="@drawable/icon_search"
             android:scaleType="fitXY"
             android:textColor="#ffffff"
             android:textSize="18sp" />
 		<EditText
             android:id="@+id/search_text_keword"
             android:layout_width="fill_parent"
-            android:layout_height="36dp"
+            android:layout_height="32dp"
             android:layout_toRightOf="@id/search_button_close"
             android:layout_toLeftOf="@id/search_button_confirm"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/button_search"
             android:text=""
-            android:textColor="#ffffff"
-            android:textSize="20.0sp" />
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:paddingLeft="15dp" />
 	</RelativeLayout>
     <ListView
         android:id="@+id/search_list_hot"

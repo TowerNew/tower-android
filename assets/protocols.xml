@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="beta.service.wehop.cn" mock="false" storage="tower\image\">
+<protocols domain="beta.service.wehop.cn" mock="true" storage="tower\image\">
 	<protocol name="gethospital">
 		<path>
 		<![CDATA[
@@ -107,28 +107,28 @@ user-platform-web-1.0.0/rest/news?page=[1]
     "code": 1,
     "data": [
         {
-            "imageUrl": "news1.png",
+            "imageUrl": "http://www.baidu.com/img/bd_logo1.png",
             "title": "脚气的烦恼又开始了，袜子里放它不用再去医院",
             "publisher": "杨飞恒大社区医院",
             "date": "2015-08-19",
             "url": "http://sina.cn/?from=wap"
         },
         {
-            "imageUrl": "news2.png",
+            "imageUrl": "http://www.baidu.com/img/bd_logo1.png",
             "title": "俗话说笑一笑十年少，人多笑笑更健康",
             "publisher": "付长江上海第一人民医院",
             "date": "2015-08-19",
             "url": "http://m.baidu.com"
         },
         {
-            "imageUrl": "news3.png",
+            "imageUrl": "http://www.baidu.com/img/bd_logo1.png",
             "title": "颈椎问题，得看这里",
             "publisher": "秦岭",
             "date": "2015-08-11",
             "url": "http://news.baidu.com"
         },
         {
-            "imageUrl": "news4.png",
+            "imageUrl": "http://www.baidu.com/img/bd_logo1.png",
             "title": "如何预防肩周炎",
             "publisher": "王小勇",
             "date": "2015-08-19",
@@ -970,7 +970,7 @@ user-platform-web-1.0.0/rest/user/hasMessage?token=[1]
         <![CDATA[
 {
     "code": 200,
-    "data": "0"
+    "data": 0
 }
         ]]>
         </mock>

@@ -20,7 +20,6 @@ import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.type.Table;
-import com.slfuture.carrie.base.type.core.ILink;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -254,7 +253,7 @@ public class HomeActivity extends Fragment {
 		super.onResume();
 		final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
 		if(null != Logic.regionName) {
-			regionButton.setText(Logic.regionName);
+			regionButton.setText(fetchRegionName());
 		}
 	}
 
@@ -477,40 +476,12 @@ public class HomeActivity extends Fragment {
 	 * 处理搜索按钮
 	 */
 	public void dealSearch() {
-		final EditText txtSearch = (EditText) this.getActivity().findViewById(R.id.home_text_search);
-		txtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		Button btnSearch = (Button) this.getActivity().findViewById(R.id.home_button_search);
+		btnSearch.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				String search = txtSearch.getText().toString();
-				if (hasFocus) {
-					if(HomeActivity.this.getActivity().getString(R.string.search_tip).equals(search)) {
-						txtSearch.setText("");
-					}
-				}
-				else if(Text.isBlank(search)) {
-					txtSearch.setText(HomeActivity.this.getActivity().getString(R.string.search_tip));
-				}
-			}
-		});
-		txtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				String keyword = txtSearch.getText().toString();
-				if("".equals(keyword)) {
-					return false;
-				}
-				if(actionId == EditorInfo.IME_ACTION_SEARCH ||(event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {                
-					Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
-					try {
-						keyword = URLEncoder.encode(keyword, "UTF-8");
-					}
-					catch(Exception ex) {}
-					String url = Host.fetchURL("search", keyword);
-					intent.putExtra("url", url);
-					HomeActivity.this.startActivity(intent);
-					return true;
-				}
-				return false;
+			public void onClick(View v) {
+				Intent intent = new Intent(HomeActivity.this.getActivity(), SearchActivity.class);
+				HomeActivity.this.getActivity().startActivity(intent);
 			}
 		});
 	}
@@ -600,7 +571,7 @@ public class HomeActivity extends Fragment {
 			Logic.regionName = Logic.regions.get(Logic.regionId);
 			if(null != Logic.regionName) {
 				final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
-				regionButton.setText(Logic.regionName);
+				regionButton.setText(fetchRegionName());
 			}
 			Storage.setUser("regionId", Logic.regionId);
 			Storage.setUser("regionName", Logic.regionName);
@@ -612,12 +583,27 @@ public class HomeActivity extends Fragment {
 			Logic.regionName = data.getStringExtra("regionName");
 			if(null != Logic.regionName) {
 				final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
-				regionButton.setText(Logic.regionName);
+				regionButton.setText(fetchRegionName());
 			}
 			Storage.setUser("cityId", Logic.cityId);
 			Storage.setUser("cityName", Logic.cityName);
 			Storage.setUser("regionId", Logic.regionId);
 			Storage.setUser("regionName", Logic.regionName);
 		}
+	}
+
+	/**
+	 * 获取处理后的区域名称
+	 * 
+	 * @return 处理后的区域名称
+	 */
+	public String fetchRegionName() {
+		if(null == Logic.regionName) {
+			return "选择小区";
+		}
+		if(Logic.regionName.length() <= 4) {
+			return Logic.regionName;
+		}
+		return "..." + Logic.regionName.substring(Logic.regionName.length() - 3);
 	}
 }

@@ -235,7 +235,7 @@ user-platform-web-1.0.0/rest/user/removefamily#token=[1]&userGlobalId=[2]
     <protocol name="search">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/search?disease=[1]
+user-platform-web-1.0.0/rest/searchKeyword?keyword=[1]
         ]]>
         </path>
     <mock>
@@ -1073,6 +1073,28 @@ user-platform-web-1.0.0/rest/user/loadAvailableTopic?doctorId=[1]&token=[2]
         "status": 1,
         "time": 1450687522000
     }
+}
+        ]]>
+        </mock>
+    </protocol>
+	<protocol name="hot">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/hotKeyword
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null,
+    "data": [
+        "恐怖袭击的紧急医学应对措施",
+        "巴黎",
+        "医生",
+        "肿瘤",
+        "全世界"
+    ]
 }
         ]]>
         </mock>

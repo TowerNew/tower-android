@@ -33,6 +33,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.HeaderViewListAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -49,7 +50,7 @@ public class UserActivity extends Fragment {
 	/**
 	 * 用户面板静态功能个数
 	 */
-	public final static int USER_BOARD_COUNT = 6;
+	public final static int USER_BOARD_COUNT = 5;
 	
 	/**
 	 * 用户面板列表
@@ -182,7 +183,7 @@ public class UserActivity extends Fragment {
 					}
 				}
 				ListView listview = (ListView) UserActivity.this.getActivity().findViewById(R.id.user_list);
-				SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
+				SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
 				adapter.notifyDataSetChanged();
 			}
 		}, Logic.token);
@@ -202,10 +203,10 @@ public class UserActivity extends Fragment {
 		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_family));
 		map.put("caption", "我的家庭");
 		userBoardList.add(map);
-		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_packet));
-		map.put("caption", "我的钱包");
-		userBoardList.add(map);
+		//map = new HashMap<String, Object>();
+		//map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_packet));
+		//map.put("caption", "我的钱包");
+		//userBoardList.add(map);
         map = new HashMap<String, Object>();
         map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_inquiry));
         map.put("caption", "我的问诊");
@@ -220,6 +221,12 @@ public class UserActivity extends Fragment {
 		userBoardList.add(map);
 		//
 		ListView listview = (ListView) this.getActivity().findViewById(R.id.user_list);
+		if(listview.getHeaderViewsCount() > 0) {
+			return;
+		}
+		View viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_user_head, null);
+		listview.addHeaderView(viewHead);
+
 		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), userBoardList, R.layout.listview_user,
 			new String[]{"icon", "caption"}, 
 	        new int[]{R.id.user_listview_icon, R.id.user_listview_caption});
@@ -243,21 +250,17 @@ public class UserActivity extends Fragment {
 					Toast.makeText(UserActivity.this.getActivity(), "尚未登录", Toast.LENGTH_LONG).show();
 					return;
 				}
-				if(0 == index) {
+				//index 0 is the header
+				if(1 == index) {
 					Intent intent = new Intent(UserActivity.this.getActivity(), HealthManageActivity.class);
 					UserActivity.this.startActivity(intent);
 					return;
 				}
-				else if(1 == index) {
+				else if(2 == index) {
 					Intent intent = new Intent(UserActivity.this.getActivity(), FamilyActivity.class);
 					UserActivity.this.startActivity(intent);
 					return;
 				}
-				else if(2 == index) {
-                    Intent intent = new Intent(UserActivity.this.getActivity(), MyWalletActivity.class);
-                    UserActivity.this.startActivity(intent);
-                    return;
-                }
 				else if(3 == index) {
                     Intent intent = new Intent(UserActivity.this.getActivity(), MyInquiryDoctorActivity.class);
                     UserActivity.this.startActivity(intent);
@@ -280,8 +283,48 @@ public class UserActivity extends Fragment {
 				}
             }
 		});
+
+		dealHeader();
 	}
 	
+	private void dealHeader() {
+		this.getActivity().findViewById(R.id.user_my_wallet).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(UserActivity.this.getActivity(), MyWalletActivity.class);
+                UserActivity.this.startActivity(intent);
+			}
+		});
+
+		this.getActivity().findViewById(R.id.account_left).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
+
+		this.getActivity().findViewById(R.id.account_packet).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
+
+		this.getActivity().findViewById(R.id.account_point).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
+
+		this.getActivity().findViewById(R.id.account_bank).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});		
+	}
+
 	/**
 	 * 根据原图和变长绘制圆形图片
 	 * 

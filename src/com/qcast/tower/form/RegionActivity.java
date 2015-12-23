@@ -51,7 +51,21 @@ public class RegionActivity extends Activity {
 	 */
 	public final static int REGION_REGION = 2;
 	
-	
+	/**
+	 * 区域级别
+	 */
+	public final static String REGION_LEVEL = "region_level";
+
+	/**
+	 * 省份/城市 ID
+	 */
+	public final static String STRING_CITY_ID = "region_cityId";
+
+	/**
+	 * 区域 ID
+	 */
+	public final static String STRING_REGION_ID = "region_regionId";
+
 	/**
 	 * 当前区域级别
 	 */
@@ -60,6 +74,10 @@ public class RegionActivity extends Activity {
 	 * 当前省份ID
 	 */
 	protected int currentCityId = 0;
+	/**
+	 * 当前省份名字
+	 */
+	protected String currentCityName = null;
 	/**
 	 * 当前城市ID
 	 */
@@ -79,6 +97,13 @@ public class RegionActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_region);
+
+		Intent intent = getIntent();
+		if(intent != null) {
+			regionLevel = intent.getIntExtra(REGION_LEVEL, REGION_CITYID);
+			currentCityId = intent.getIntExtra(STRING_CITY_ID, 0);
+		}
+
 		// 参数处理
 		currentRegionId = this.getIntent().getIntExtra("regionId", 0);
 		// 界面处理
@@ -95,9 +120,14 @@ public class RegionActivity extends Activity {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent();
-				RegionActivity.this.setResult(RESULT_CANCEL, intent);
-				RegionActivity.this.finish();
+				if(REGION_CITYID == regionLevel) {
+					Intent intent = new Intent();
+					RegionActivity.this.setResult(RESULT_CANCEL, intent);
+					RegionActivity.this.finish();
+				} else {
+					regionLevel = REGION_CITYID;
+					load();
+				}
 			}
 		});
 		//
@@ -122,11 +152,14 @@ public class RegionActivity extends Activity {
 				if(REGION_CITYID == regionLevel) {
 					regionLevel = REGION_REGION;
 					currentCityId = (Integer) dataList.get(index).get("id");
+					currentCityName = (String) dataList.get(index).get("name");
 					load();
 				}
 				else if(REGION_REGION == regionLevel) {
 					currentRegionId = (Integer) dataList.get(index).get("id");
 					Intent intent = new Intent();
+					intent.putExtra("cityId", currentCityId);
+					intent.putExtra("cityName", currentCityName);
 					intent.putExtra("regionId", currentRegionId);
 					intent.putExtra("regionName", (String) dataList.get(index).get("name"));
 					RegionActivity.this.setResult(RESULT_UPDATED, intent);

@@ -408,7 +408,11 @@ public class HomeActivity extends Fragment {
 		regionButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				selectRegion();
+				if(null == Logic.regionName) {
+					selectRegion(RegionActivity.REGION_CITYID);
+				} else {
+					selectRegion(RegionActivity.REGION_REGION);
+				}
 			}
 		});
 		final Button home_button_notify = (Button) this.getActivity().findViewById(R.id.home_button_notify);
@@ -421,7 +425,7 @@ public class HomeActivity extends Fragment {
 			}
 		});
 		if(null == Logic.regionName) {
-			selectRegion();
+			selectRegion(RegionActivity.REGION_CITYID);
 		}
 	}
 
@@ -429,7 +433,7 @@ public class HomeActivity extends Fragment {
 	 * 处理入口按钮
 	 */
 	public void dealEntry() {
-		ImageButton button = (ImageButton) this.getActivity().findViewById(R.id.home_button_famous);
+		ImageButton button = (ImageButton) this.getActivity().findViewById(R.id.home_button_free_inquiry);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -439,7 +443,16 @@ public class HomeActivity extends Fragment {
 				HomeActivity.this.startActivity(intent);
 			}
 		});
-		button = (ImageButton) this.getActivity().findViewById(R.id.home_button_inquiry);
+		button = (ImageButton) this.getActivity().findViewById(R.id.home_button_healthy_archive);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(HomeActivity.this.getActivity(), HealthManageActivity.class);
+				HomeActivity.this.startActivity(intent);
+			}
+		});
+
+		button = (ImageButton) this.getActivity().findViewById(R.id.home_button_reserve);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -449,13 +462,12 @@ public class HomeActivity extends Fragment {
 				HomeActivity.this.startActivity(intent);
 			}
 		});
-		button = (ImageButton) this.getActivity().findViewById(R.id.home_button_reserve);
+
+		button = (ImageButton) this.getActivity().findViewById(R.id.home_button_family_fastview);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
-				intent.putExtra("services", "reserve");
-				intent.putExtra("docLevel", 2);
+				Intent intent = new Intent(HomeActivity.this.getActivity(), FamilyActivity.class);
 				HomeActivity.this.startActivity(intent);
 			}
 		});
@@ -561,8 +573,10 @@ public class HomeActivity extends Fragment {
 	/**
 	 * 选择小区
 	 */
-	public void selectRegion() {
+	public void selectRegion(int regionLevel) {
 		Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
+		intent.putExtra(RegionActivity.REGION_LEVEL, regionLevel);
+		intent.putExtra(RegionActivity.STRING_CITY_ID, Logic.cityId);
 		HomeActivity.this.startActivityForResult(intent, 2);
 	}
 
@@ -592,12 +606,16 @@ public class HomeActivity extends Fragment {
 			Storage.setUser("regionName", Logic.regionName);
 		}
 		else if(2 == requestCode) {
+			Logic.cityId = data.getIntExtra("cityId", 0);
+			Logic.cityName = data.getStringExtra("cityName");
 			Logic.regionId = data.getIntExtra("regionId", 0);
 			Logic.regionName = data.getStringExtra("regionName");
 			if(null != Logic.regionName) {
 				final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
 				regionButton.setText(Logic.regionName);
 			}
+			Storage.setUser("cityId", Logic.cityId);
+			Storage.setUser("cityName", Logic.cityName);
 			Storage.setUser("regionId", Logic.regionId);
 			Storage.setUser("regionName", Logic.regionName);
 		}

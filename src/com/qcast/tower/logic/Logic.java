@@ -45,6 +45,16 @@ public class Logic {
 	 * 区域
 	 */
 	public static Table<Integer, String> regions = null;
+
+	/**
+	 * 当前城市ID
+	 */
+	public static int cityId = 1;
+	/**
+	 * 当前城市名称
+	 */
+	public static String cityName;
+
 	/**
 	 * 当前区域ID
 	 */
@@ -88,6 +98,10 @@ public class Logic {
 		userId = Storage.user("userId", String.class);
 		name = Storage.user("name", String.class);
 		imUsername = Storage.user("imUsername", String.class);
+		if(null != Storage.user("cityId", Integer.class)) {
+			cityId = (int) (double) (Double) Storage.user("cityId", Double.class);
+		}
+		cityName = Storage.user("cityName", String.class);
 		if(null != Storage.user("regionId", Integer.class)) {
 			regionId = (int) (double) (Double) Storage.user("regionId", Double.class);
 		}

@@ -20,6 +20,15 @@
 		    android:adjustViewBounds="true"
 		    android:background="@drawable/user_photo_null"
 		    android:padding="0dip" />
+		<ImageView
+		    android:id="@+id/user_status"
+		    android:layout_width="20dp"
+		    android:layout_height="20dp"
+		    android:layout_alignRight="@id/user_button_photo"
+		    android:layout_alignBottom="@id/user_button_photo"
+		    android:layout_marginBottom="10dp"
+		    android:layout_marginRight="0dp"
+		    android:src="@drawable/icon_user_status"/>
 
         <TextView
             android:id="@+id/user_text_caption"

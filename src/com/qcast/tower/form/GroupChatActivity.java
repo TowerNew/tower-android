@@ -29,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
@@ -155,16 +156,16 @@ public class GroupChatActivity extends ActivityEx {
 			TextView messageText = null;
 			ImageView messageImage = null;
 			if(message.sender.equals(localId)) {
-				convertView = inflater.inflate(R.layout.div_chat_left, null);
-				messagePhoto = (ImageView) convertView.findViewById(R.id.chat_left_image_photo);
-				messageText = (TextView) convertView.findViewById(R.id.chat_left_label_message);
-				messageImage = (ImageView) convertView.findViewById(R.id.chat_left_image_message);
-			}
-			else {
 				convertView = inflater.inflate(R.layout.div_chat_right, null);
 				messagePhoto = (ImageView) convertView.findViewById(R.id.chat_right_image_photo);
 				messageText = (TextView) convertView.findViewById(R.id.chat_right_label_message);
 				messageImage = (ImageView) convertView.findViewById(R.id.chat_right_image_message);
+			}
+			else {
+				convertView = inflater.inflate(R.layout.div_chat_left, null);
+				messagePhoto = (ImageView) convertView.findViewById(R.id.chat_left_image_photo);
+				messageText = (TextView) convertView.findViewById(R.id.chat_left_label_message);
+				messageImage = (ImageView) convertView.findViewById(R.id.chat_left_image_message);
 			}
 			messagePhoto.setImageBitmap(message.photo);
 			if(null == message.image) {
@@ -303,6 +304,7 @@ public class GroupChatActivity extends ActivityEx {
 	public void prepare() {
 		prepareParameter();
 		prepareClose();
+		prepareTitle();
 		prepareMessages();
 		prepareMore();
 		prepareSend();
@@ -322,7 +324,7 @@ public class GroupChatActivity extends ActivityEx {
     	}
     	String url = getIntent().getStringExtra("localPhoto");
     	if(null == url) {
-    		localPhoto = BitmapFactory.decodeResource(GroupChatActivity.this.getResources(), R.drawable.groupchat_photo_default);
+    		localPhoto = BitmapFactory.decodeResource(GroupChatActivity.this.getResources(), R.drawable.user_photo_default);
     	}
     	else {
     		Host.doImage("image", new ImageResponse(url, null) {
@@ -375,6 +377,13 @@ public class GroupChatActivity extends ActivityEx {
         });
     }
     
+    /**
+     * 准备关闭按钮
+     */
+    private void prepareTitle() {
+    	labTitle.setText(remoteName);
+    }
+
     /**
      * 准备消息列表
      */
@@ -464,6 +473,7 @@ public class GroupChatActivity extends ActivityEx {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(txtMessage.getWindowToken(), 0) ;
         if(text.equals("")) {
+        	Toast.makeText(GroupChatActivity.this, "请填写要发送的文字", Toast.LENGTH_LONG).show();
         	return;
         }
         txtMessage.setText("");

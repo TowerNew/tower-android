@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="beta.service.wehop.cn" mock="true" storage="tower\image\">
+<protocols domain="beta.service.wehop.cn" mock="false" storage="tower\image\">
 	<protocol name="gethospital">
 		<path>
 		<![CDATA[
@@ -235,7 +235,7 @@ user-platform-web-1.0.0/rest/user/removefamily#token=[1]&userGlobalId=[2]
     <protocol name="search">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/searchKeyword?keyword=[1]
+user-platform-web-1.0.0/rest/contentSearch?keyword=[1]
         ]]>
         </path>
     <mock>

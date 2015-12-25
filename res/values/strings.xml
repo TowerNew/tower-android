@@ -28,7 +28,7 @@
     <string name="login_text_code">请输入验证码</string>
     <string name="about_version">当前版本: 1.0.6</string>
     <string name="my_wallet">我的钱包</string>
-    <string name="my_wallet_description">银行卡、会员卡等</string>
+    <string name="my_wallet_description">银行卡、会员卡等 </string>
     <string name="account_left">账户余额</string>
     <string name="account_red_packet">红包</string>
     <string name="account_points">积分</string>

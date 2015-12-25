@@ -59,8 +59,8 @@
 	
 	        <ImageView
 	            android:id="@+id/online_inquiry_icon"
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
+	            android:layout_width="50dp"
+	            android:layout_height="50dp"
 	            android:src="@drawable/askdoctor_online"
 	            android:layout_alignParentLeft="true"
 	            android:layout_centerVertical="true"
@@ -130,8 +130,8 @@
 	
 	        <ImageView
 	            android:id="@+id/self_inquiry_icon"
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
+	            android:layout_width="50dp"
+	            android:layout_height="50dp"
 	            android:layout_alignParentLeft="true"
 	            android:layout_centerVertical="true"
 	            android:layout_marginBottom="6dp"
@@ -201,8 +201,8 @@
 	
 	        <ImageView
 	            android:id="@+id/famous_inquiry_icon"
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
+	            android:layout_width="50dp"
+	            android:layout_height="50dp"
 	            android:layout_alignParentLeft="true"
 	            android:layout_centerVertical="true"
 	            android:layout_marginBottom="6dp"

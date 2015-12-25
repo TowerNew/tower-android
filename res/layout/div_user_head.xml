@@ -75,7 +75,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            android:id="@+id/account_left_num"
-	            android:gravity="center_horizontal"
+	            android:gravity="center"
 	            android:text="0.00"
 	            android:textSize="15sp"/>
 	        <TextView
@@ -83,7 +83,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            android:text="@string/account_left"
-	            android:gravity="center_horizontal"
+	            android:gravity="center"
 	            android:textSize="15sp"
 	            android:textColor="@color/grey"/>
 	    </LinearLayout>
@@ -99,7 +99,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            android:id="@+id/account_packet_num"
-	            android:gravity="center_horizontal"
+	            android:gravity="center"
 	            android:text="0个"
 	            android:textSize="15sp"/>
 	        <TextView
@@ -107,7 +107,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            android:text="@string/account_red_packet"
-	            android:gravity="center_horizontal"
+	            android:gravity="center"
 	            android:textSize="15sp"
 	            android:textColor="@color/grey"/>
 	    </LinearLayout>
@@ -131,7 +131,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            android:text="@string/account_points"
-	            android:gravity="center_horizontal"
+	            android:gravity="center"
 	            android:textSize="15sp"
 	            android:textColor="@color/grey"/>
 	    </LinearLayout>
@@ -147,7 +147,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            android:id="@+id/account_bank_card_num"
-	            android:gravity="center_horizontal"
+	            android:gravity="center"
 	            android:text="0张"
 	            android:textSize="15sp"/>
 	        <TextView

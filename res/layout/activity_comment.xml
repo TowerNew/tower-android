@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:background="@color/white" >
+	android:background="@color/lightgrey" >
     <RelativeLayout
 		android:id="@+id/comment_layout_head"
 		android:layout_width="match_parent"
@@ -51,28 +51,30 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal"
+		android:layout_marginBottom="10dp"
 	    android:layout_weight="1"
 	    android:layout_below="@id/comment_layout_head">
 		<RelativeLayout
 		    android:id="@+id/comment_layout_verygood"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
+		    android:layout_marginTop="10dp"
 		    android:layout_alignParentLeft="true"
 		    android:layout_weight="1"
 		    android:focusable="true"
 		    android:focusableInTouchMode="true" >
 			<ImageView
-	            android:id="@+id/comment_button_verygood"
+	            android:id="@+id/comment_image_verygood"
 				android:layout_width="match_parent"
 	            android:layout_height="60dp"
 	            android:layout_centerHorizontal="true"
 	            android:scaleType="fitCenter"
-	            android:src="@drawable/left_arrow" />
+	            android:src="@drawable/verygood_uncheck" />
 			<TextView 
 			    android:id="@+id/comment_label_verygood"
 			    android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_below="@id/comment_button_verygood"
+	            android:layout_below="@id/comment_image_verygood"
 	            android:layout_centerHorizontal="true"
 	            android:textColor="@color/grey"
 	            android:textSize="18sp"
@@ -82,22 +84,23 @@
 		    android:id="@+id/comment_layout_good"
 		    android:layout_width="wrap_content"
 		    android:layout_height="match_parent"
+		    android:layout_marginTop="10dp"
 		    android:layout_alignParentLeft="true"
 		    android:layout_weight="1"
 		    android:focusable="true"
 		    android:focusableInTouchMode="true" >
 			<ImageView
-	            android:id="@+id/comment_button_good"
+	            android:id="@+id/comment_image_good"
 				android:layout_width="match_parent"
 	            android:layout_height="60dp"
 	            android:scaleType="fitCenter"
 	            android:layout_centerHorizontal="true"
-	            android:src="@drawable/left_arrow" />
+	            android:src="@drawable/good_unchecked" />
 			<TextView 
 			    android:id="@+id/comment_label_good"
 			    android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_below="@id/comment_button_good"
+	            android:layout_below="@id/comment_image_good"
 	            android:layout_centerHorizontal="true"
 	            android:textColor="@color/grey"
 	            android:textSize="18sp"
@@ -107,22 +110,23 @@
 		    android:id="@+id/comment_layout_bad"
 		    android:layout_width="wrap_content"
 		    android:layout_height="match_parent"
+		    android:layout_marginTop="10dp"
 		    android:layout_alignParentLeft="true"
 		    android:layout_weight="1"
 		    android:focusable="true"
 		    android:focusableInTouchMode="true" >
 			<ImageView
-	            android:id="@+id/comment_button_bad"
+	            android:id="@+id/comment_image_bad"
 				android:layout_width="match_parent"
 	            android:layout_height="60dp"
 	            android:scaleType="fitCenter"
 	            android:layout_centerHorizontal="true"
-	            android:src="@drawable/left_arrow" />
+	            android:src="@drawable/bad_unchecked" />
 			<TextView 
 			    android:id="@+id/comment_label_bad"
 			    android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_below="@id/comment_button_bad"
+	            android:layout_below="@id/comment_image_bad"
 	            android:layout_centerHorizontal="true"
 	            android:textColor="@color/grey"
 	            android:textSize="18sp"
@@ -368,12 +372,16 @@
         android:layout_below="@id/comment_layout_skill"
 		android:background="@drawable/divider">
 	</ImageView>
+
 	<EditText
-        android:id="@+id/comment_text_content"
-        android:layout_height="100dp"
-        android:layout_width="match_parent"
-        android:layout_below="@id/comment_divide4"
-        android:layout_marginTop="10dp"
-        android:background="@color/white">
+	    android:id="@+id/comment_text_content"
+	    android:layout_width="match_parent"
+	    android:layout_height="100dp"
+	    android:layout_below="@id/comment_divide4"
+	    android:layout_margin="5dp"
+	    android:background="@color/white"
+	    android:gravity="top|left"
+	    android:hint="请在这里填写你对医生的评价吧" >
+
 	</EditText>
 </RelativeLayout>

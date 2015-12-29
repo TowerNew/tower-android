@@ -987,19 +987,7 @@ user-platform-web-1.0.0/rest/user/responseFamily#token=[1]&isResponse=[2]&reques
         ]]>
         </mock>
     </protocol>
-                   <protocol name="comment">
-        <path>
-        <![CDATA[
-user-platform-web-1.0.0/rest/user/comment#id=[1]&content=[2]&attitude=[3]&token=[4]
-        ]]>
-        </path>
-    <mock>
-        <![CDATA[
-
-        ]]>
-        </mock>
-    </protocol>
-                      <protocol name="readMessage">
+    <protocol name="readMessage">
         <path>
         <![CDATA[
 user-platform-web-1.0.0/rest/user/readMessage#token=[1]&id=[2]
@@ -1095,6 +1083,21 @@ user-platform-web-1.0.0/rest/hotKeyword
         "肿瘤",
         "全世界"
     ]
+}
+        ]]>
+        </mock>
+    </protocol>
+	<protocol name="comment">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/user/comment#id=[1]&choice=[2]&attitude=[3]&service=[4]&skill=[5]&content=[6]&token=[7]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null
 }
         ]]>
         </mock>

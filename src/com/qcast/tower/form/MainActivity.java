@@ -129,6 +129,14 @@ public class MainActivity extends FragmentActivity {
                    		String from = Text.substring((String) tag, null, "|");
                    		String type = Text.substring((String) tag, "|", null);
         				JSONArray result = (JSONArray) resultObject.get("data");
+        				if(0 == result.size()) {
+        					Intent ringIntent = new Intent(MainActivity.this, RingActivity.class);
+    		           		ringIntent.putExtra("userId", from);
+    		           		ringIntent.putExtra("userName", "未知来源");
+    		           		ringIntent.putExtra("type", type);
+    		           		MainActivity.this.startActivity(ringIntent);
+    		           		return;
+        				}
         				for(IJSON item : result) {
         					JSONObject newJSONObject = (JSONObject) item;
         					if(null != newJSONObject.get("imUsername")) {

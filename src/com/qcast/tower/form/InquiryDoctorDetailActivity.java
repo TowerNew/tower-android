@@ -78,7 +78,7 @@ public class InquiryDoctorDetailActivity extends Activity{
         if(doctorModel==null){
             this.finish();
         }
-        this.setContentView(R.layout.actitity_inquiry_doctor_detail);
+        this.setContentView(R.layout.activity_inquiry_doctor_detail);
         doctor_name_tv = (TextView) this.findViewById(R.id.doctor_name_tv);
         doctor_type_tv = (TextView) this.findViewById(R.id.doctor_type_tv);
         doctor_title_tv = (TextView) this.findViewById(R.id.doctor_title_tv);

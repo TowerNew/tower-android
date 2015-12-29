@@ -22,7 +22,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * 视频通话界面
@@ -47,12 +46,11 @@ public class VideoActivity extends Activity {
         public void surfaceDestroyed(SurfaceHolder holder) {
         }
     }
-    
+
     /**
      * 对方SurfaceHolder callback
      */
     class OppositeCallback implements SurfaceHolder.Callback {
-
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
             holder.setType(SurfaceHolder.SURFACE_TYPE_GPU);
@@ -61,15 +59,13 @@ public class VideoActivity extends Activity {
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         	EMVideoCallHelper.getInstance().onWindowResize(width, height, format);
-   
         }
 
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
         }
-
     }
-    
+
     /**
      * 
      */
@@ -112,7 +108,7 @@ public class VideoActivity extends Activity {
 		// 界面处理
 		prepare();
 	}
-	
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

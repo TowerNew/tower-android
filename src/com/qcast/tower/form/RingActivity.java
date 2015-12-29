@@ -116,11 +116,20 @@ public class RingActivity extends Activity {
 				catch (EMNetworkUnconnectedException e) {
 					Log.e("TOWER", "prepareAnswer execute failed", e);
 				}
-				Intent voiceIntent = new Intent(RingActivity.this, VoiceActivity.class);
-				voiceIntent.putExtra("userId", userId);
-				voiceIntent.putExtra("userName", userName);
-				voiceIntent.putExtra("mode", false);
-           		RingActivity.this.startActivity(voiceIntent);
+				if("audio".equals(type)) {
+					Intent voiceIntent = new Intent(RingActivity.this, VoiceActivity.class);
+					voiceIntent.putExtra("userId", userId);
+					voiceIntent.putExtra("userName", userName);
+					voiceIntent.putExtra("mode", false);
+	           		RingActivity.this.startActivity(voiceIntent);
+				}
+				else {
+					Intent videoIntent = new Intent(RingActivity.this, VideoActivity.class);
+					videoIntent.putExtra("userId", userId);
+					videoIntent.putExtra("userName", userName);
+					videoIntent.putExtra("mode", false);
+	           		RingActivity.this.startActivity(videoIntent);
+				}
 				RingActivity.this.finish();
 			}
 		});

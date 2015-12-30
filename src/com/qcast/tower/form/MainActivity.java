@@ -116,6 +116,14 @@ public class MainActivity extends FragmentActivity {
            	public void onReceive(Context context, Intent intent) {
            		String from = intent.getStringExtra("from");
            		String type = intent.getStringExtra("type");
+           		if(null != Logic.tvMap.get(from)) {
+               		Intent ringIntent = new Intent(MainActivity.this, RingActivity.class);
+               		ringIntent.putExtra("userId", from);
+               		ringIntent.putExtra("userName", "电视");
+               		ringIntent.putExtra("type", type);
+               		MainActivity.this.startActivity(ringIntent);
+               		return;
+           		}
                 Host.doCommand("member", new CommonResponse<String>(from + "|" + type) {
         			@Override
         			public void onFinished(String content) {

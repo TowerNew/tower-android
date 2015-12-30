@@ -1090,7 +1090,7 @@ user-platform-web-1.0.0/rest/hotKeyword
 	<protocol name="comment">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/comment#id=[1]&choice=[2]&attitude=[3]&service=[4]&skill=[5]&content=[6]&token=[7]
+user-platform-web-1.0.0/rest/user/comment#doctorId=[1]&attitude=[2]&score1=[3]&score2=[4]&score3=[5]&content=[6]&token=[7]
         ]]>
         </path>
     <mock>

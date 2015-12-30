@@ -24,12 +24,12 @@ public class CommentActivity extends ActivityEx {
 	public ImageButton btnClose;
 	@ResourceView(id = R.id.comment_button_confirm)
 	public Button btnConfirm;
-	@ResourceView(id = R.id.comment_layout_verygood)
-	public View viewVerygood;
-	@ResourceView(id = R.id.comment_layout_good)
-	public View viewGood;
-	@ResourceView(id = R.id.comment_layout_bad)
-	public View viewBad;
+	@ResourceView(id = R.id.comment_image_verygood)
+	public ImageView imgVerygood;
+	@ResourceView(id = R.id.comment_image_good)
+	public ImageView imgGood;
+	@ResourceView(id = R.id.comment_image_bad)
+	public ImageView imgBad;
 	
 	@ResourceView(id = R.id.comment_image_attitude1)
 	public ImageView imgAttitude1;
@@ -74,7 +74,7 @@ public class CommentActivity extends ActivityEx {
 	/**
 	 * 选择，1：非常满意，2：满意，3：不满意
 	 */
-	private int choice;
+	private boolean choice;
 	/**
 	 * 态度，0-5星
 	 */
@@ -113,12 +113,13 @@ public class CommentActivity extends ActivityEx {
 		btnConfirm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Host.doCommand("", new JSONResponse(CommentActivity.this) {
+				Host.doCommand("comment", new JSONResponse(CommentActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null == content) {
 							return;
 						}
+						
 						if(content.getInteger("code", 0) > 0) {
 							CommentActivity.this.finish();
 						}
@@ -126,24 +127,34 @@ public class CommentActivity extends ActivityEx {
 				}, doctorId, choice, attitudeLevel, serviceLevel, skillLevel, txtContent.getText().toString(), Logic.token);
 			}
 		});
-		viewVerygood.setOnClickListener(new View.OnClickListener() {
+		imgVerygood.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				choice = 1;
+				choice = true;
 				//
-				
+				imgVerygood.setImageResource(R.drawable.verygood_checked);
+				imgGood.setImageResource(R.drawable.good_uncheck);
+				imgBad.setImageResource(R.drawable.bad_uncheck);
 			}
 		});
-		viewGood.setOnClickListener(new View.OnClickListener() {
+		imgGood.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				choice = 2;
+				choice = true;
+				//
+				imgVerygood.setImageResource(R.drawable.verygood_uncheck);
+				imgGood.setImageResource(R.drawable.good_checked);
+				imgBad.setImageResource(R.drawable.bad_uncheck);
 			}
 		});
-		viewBad.setOnClickListener(new View.OnClickListener() {
+		imgBad.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				choice = 3;
+				choice = false;
+				//
+				imgVerygood.setImageResource(R.drawable.verygood_uncheck);
+				imgGood.setImageResource(R.drawable.good_uncheck);
+				imgBad.setImageResource(R.drawable.bad_checked);
 			}
 		});
 		//

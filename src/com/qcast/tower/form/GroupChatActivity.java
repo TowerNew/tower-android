@@ -500,11 +500,11 @@ public class GroupChatActivity extends ActivityEx {
 			emMessage = EMMessage.createSendMessage(EMMessage.Type.IMAGE);
 			emMessage.addBody(new ImageMessageBody(message.file));
 		}
-		emMessage.setChatType(ChatType.GroupChat);
 		if(null == groupId) {
 			emMessage.setReceipt(remoteId);
 		}
 		else {
+			emMessage.setChatType(ChatType.GroupChat);
 			emMessage.setReceipt(groupId);
 		}
         conversation.addMessage(emMessage);

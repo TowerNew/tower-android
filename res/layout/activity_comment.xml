@@ -95,7 +95,7 @@
 	            android:layout_height="60dp"
 	            android:scaleType="fitCenter"
 	            android:layout_centerHorizontal="true"
-	            android:src="@drawable/good_unchecked" />
+	            android:src="@drawable/good_uncheck" />
 			<TextView 
 			    android:id="@+id/comment_label_good"
 			    android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
 	            android:layout_height="60dp"
 	            android:scaleType="fitCenter"
 	            android:layout_centerHorizontal="true"
-	            android:src="@drawable/bad_unchecked" />
+	            android:src="@drawable/bad_uncheck" />
 			<TextView 
 			    android:id="@+id/comment_label_bad"
 			    android:layout_width="wrap_content"
@@ -376,12 +376,11 @@
 	<EditText
 	    android:id="@+id/comment_text_content"
 	    android:layout_width="match_parent"
-	    android:layout_height="100dp"
+	    android:layout_height="120dp"
 	    android:layout_below="@id/comment_divide4"
 	    android:layout_margin="5dp"
 	    android:background="@color/white"
 	    android:gravity="top|left"
-	    android:hint="请在这里填写你对医生的评价吧" >
-
+	    android:hint="请在这里填写你对医生的评价吧">
 	</EditText>
 </RelativeLayout>

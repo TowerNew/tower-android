@@ -167,7 +167,8 @@ public class LoadActivity extends Activity {
 			}
 		});
 		//
-		if(null == Logic.imUsername) {
+		if(null == Logic.imUsername || null == Logic.phone) {
+			Logic.phone = null;
 			return;
 		}
 		EMChatManager.getInstance().login(Logic.imUsername, Logic.phone, new EMCallBack() {

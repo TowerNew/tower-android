@@ -11,6 +11,20 @@ import android.app.Application;
  */
 public class Logic {
 	/**
+	 * 电视信息
+	 */
+	public static class TVInfo {
+		/**
+		 * 称呼
+		 */
+		public String name;
+		/**
+		 * 环信ID
+		 */
+		public String imUsername;
+	}
+
+	/**
 	 * 程序引用
 	 */
 	public static Application application = null;
@@ -84,6 +98,10 @@ public class Logic {
 	 */
 	public static Set<String> messageFamily = new Set<String>();
 	/**
+	 * TV通信列表
+	 */
+	public static Table<String, TVInfo> tvMap = new Table<String, TVInfo>();
+	/**
 	 * 用户名
 	 */
 	public static String imUsername = null;
@@ -107,5 +125,18 @@ public class Logic {
 		}
 		regionName = Storage.user("regionName", String.class);
 		return true;
+	}
+	
+	/**
+	 * 增加TV信息
+	 * 
+	 * @param name 昵称
+	 * @param imUsername 通信ID
+	 */
+	public static void addTVInfo(String name, String imUsername) {
+		TVInfo tv = new TVInfo();
+		tv.name = name;
+		tv.imUsername = imUsername;
+		tvMap.put(imUsername, tv);
 	}
 }

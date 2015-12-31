@@ -111,8 +111,20 @@ public class FamilyEditActivity extends Activity {
 				EditText txtName = (EditText) findViewById(R.id.familyedit_text_name);
 				EditText txtIdNumber = (EditText) findViewById(R.id.familyedit_text_idnumber);
 				member.relation = txtRelation.getText().toString();
+				if(member.relation.equals("")) {
+					Toast.makeText(FamilyEditActivity.this, "请填写关系", Toast.LENGTH_LONG).show();
+					return;
+				}
 				member.name = txtName.getText().toString();
+				if(member.relation.equals("")) {
+					Toast.makeText(FamilyEditActivity.this, "请填写姓名", Toast.LENGTH_LONG).show();
+					return;
+				}
 				member.idNumber = txtIdNumber.getText().toString();
+				if(member.relation.equals("")) {
+					Toast.makeText(FamilyEditActivity.this, "请填写身份证号码", Toast.LENGTH_LONG).show();
+					return;
+				}
 				member.category = FamilyMember.CATEGORY_OWNER;
 				member.status = FamilyMember.STATUS_UNCONFIRM;
 				int mode = 1;

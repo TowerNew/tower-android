@@ -712,13 +712,12 @@ public final class R {
         public static final int ring=0x7f040001;
     }
     public static final class string {
-        public static final int Hands_free=0x7f070022;
-        public static final int about_version=0x7f07001a;
-        public static final int account_bank_card=0x7f070020;
-        public static final int account_left=0x7f07001d;
-        public static final int account_points=0x7f07001f;
-        public static final int account_red_packet=0x7f07001e;
-        public static final int answer=0x7f070024;
+        public static final int Hands_free=0x7f070021;
+        public static final int account_bank_card=0x7f07001f;
+        public static final int account_left=0x7f07001c;
+        public static final int account_points=0x7f07001e;
+        public static final int account_red_packet=0x7f07001d;
+        public static final int answer=0x7f070023;
         public static final int app_name=0x7f070000;
         public static final int family_confirm=0x7f070014;
         public static final int family_input_birthday=0x7f070012;
@@ -729,7 +728,7 @@ public final class R {
         public static final int familydialog_label_phone=0x7f070016;
         public static final int familydialog_label_relation=0x7f070015;
         public static final int familyedit_label_title=0x7f070017;
-        public static final int hang_up=0x7f070023;
+        public static final int hang_up=0x7f070022;
         public static final int home_caption=0x7f070007;
         public static final int home_region_default=0x7f070006;
         public static final int hot_recommend=0x7f07000d;
@@ -740,9 +739,9 @@ public final class R {
         public static final int main_tab_reserve=0x7f070004;
         public static final int main_tab_user=0x7f070005;
         public static final int menu_settings=0x7f070001;
-        public static final int mute=0x7f070021;
-        public static final int my_wallet=0x7f07001b;
-        public static final int my_wallet_description=0x7f07001c;
+        public static final int mute=0x7f070020;
+        public static final int my_wallet=0x7f07001a;
+        public static final int my_wallet_description=0x7f07001b;
         public static final int news_caption=0x7f07000c;
         public static final int reserve_doctor=0x7f07000b;
         public static final int reserve_examination=0x7f07000a;

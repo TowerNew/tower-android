@@ -1,11 +1,11 @@
 package com.qcast.tower.form;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.qcast.tower.Program;
 import com.qcast.tower.R;
 import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
@@ -28,24 +28,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Gallery.LayoutParams;
@@ -285,7 +281,7 @@ public class HomeActivity extends Fragment {
 				String version = ((JSONString) (result.get("appVersion"))).getValue();
 				String url = ((JSONString) (result.get("downloadUrl"))).getValue();
 				int v = Integer.parseInt(version.replace(".", ""));
-				if(v <= 106) {
+				if(v >= Integer.valueOf(Program.VERSION.replace(".", ""))) {
 					return;
 				}
 				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
@@ -438,7 +434,7 @@ public class HomeActivity extends Fragment {
 			public void onClick(View v) {
 				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
 				intent.putExtra("services", "inquiry");
-				intent.putExtra("docLevel", 1);
+				intent.putExtra("docLevel", 0);
 				HomeActivity.this.startActivity(intent);
 			}
 		});

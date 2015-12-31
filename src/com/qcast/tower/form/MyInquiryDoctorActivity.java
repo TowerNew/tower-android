@@ -113,7 +113,7 @@ public class MyInquiryDoctorActivity extends Activity{
                         photoName = Storage.getImageName(imageUrl);
                         myChatHistoryModel.imageUrl = photoName;
                     }
-                    myChatHistoryModel.docName = ((JSONString) newJSONObject.get("name")).getValue();
+                    myChatHistoryModel.docName = ((JSONString) newJSONObject.get("doctorName")).getValue();
                     SimpleDateFormat sdf= new SimpleDateFormat("MM/dd/yyyy");
                     long time = ((JSONNumber) newJSONObject.get("time")).longValue();
                     myChatHistoryModel.time = sdf.format(time);

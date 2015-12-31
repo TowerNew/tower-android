@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="beta.service.wehop.cn" mock="false" storage="tower\image\">
+<protocols domain="service.wehop.cn" mock="false" storage="tower\image\">
 	<protocol name="gethospital">
 		<path>
 		<![CDATA[
-user-platform-web-1.0.0/rest/getHospital?regionId=[1]
+user-platform-web/rest/getHospital?regionId=[1]
 		]]>
 		</path>
 	<mock>
@@ -27,7 +27,7 @@ user-platform-web-1.0.0/rest/getHospital?regionId=[1]
 	<protocol name="citylist">
 		<path>
 		<![CDATA[
-user-platform-web-1.0.0/rest/cityList
+user-platform-web/rest/cityList
 		]]>
 		</path>
 	<mock>
@@ -49,7 +49,7 @@ user-platform-web-1.0.0/rest/cityList
     <protocol name="regionlist">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/regionList?cityId=[1]
+user-platform-web/rest/regionList?cityId=[1]
         ]]>
         </path>
     <mock>
@@ -74,7 +74,7 @@ user-platform-web-1.0.0/rest/regionList?cityId=[1]
      <protocol name="banner">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/banner?regionId=[1]
+user-platform-web/rest/banner?regionId=[1]
         ]]>
         </path>
     <mock>
@@ -98,7 +98,7 @@ user-platform-web-1.0.0/rest/banner?regionId=[1]
     <protocol name="news">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/news?page=[1]
+user-platform-web/rest/news?page=[1]
         ]]>
         </path>
     <mock>
@@ -142,7 +142,7 @@ user-platform-web-1.0.0/rest/news?page=[1]
     <protocol name="member">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/member?token=[1]
+user-platform-web/rest/user/member?token=[1]
         ]]>
         </path>
     <mock>
@@ -178,7 +178,7 @@ user-platform-web-1.0.0/rest/user/member?token=[1]
      <protocol name="editowner">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/editowner#token=[1]&userGlobalId=[2]&mode=[3]&relation=[4]&name=[5]&idnumber=[6]
+user-platform-web/rest/user/editowner#token=[1]&userGlobalId=[2]&mode=[3]&relation=[4]&name=[5]&idnumber=[6]
         ]]>
         </path>
     <mock>
@@ -193,7 +193,7 @@ user-platform-web-1.0.0/rest/user/editowner#token=[1]&userGlobalId=[2]&mode=[3]&
     <protocol name="editrelation">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/editrelation#token=[1]&userGlobalId=[2]&relation=[3]&phone=[4]
+user-platform-web/rest/user/editrelation#token=[1]&userGlobalId=[2]&relation=[3]&phone=[4]
         ]]>
         </path>
     <mock>
@@ -208,7 +208,7 @@ user-platform-web-1.0.0/rest/user/editrelation#token=[1]&userGlobalId=[2]&relati
     <protocol name="removefamily">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/removefamily#token=[1]&userGlobalId=[2]
+user-platform-web/rest/user/removefamily#token=[1]&userGlobalId=[2]
         ]]>
         </path>
     <mock>
@@ -235,7 +235,7 @@ user-platform-web-1.0.0/rest/user/removefamily#token=[1]&userGlobalId=[2]
     <protocol name="search">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/contentSearch?keyword=[1]
+user-platform-web/rest/contentSearch?keyword=[1]
         ]]>
         </path>
     <mock>
@@ -247,7 +247,7 @@ user-platform-web-1.0.0/rest/contentSearch?keyword=[1]
      <protocol name="fetchCode">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/fetchCode?phone=[1]
+user-platform-web/rest/fetchCode?phone=[1]
         ]]>
         </path>
     <mock>
@@ -262,7 +262,7 @@ user-platform-web-1.0.0/rest/fetchCode?phone=[1]
      <protocol name="login">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/login#phone=[1]&code=[2]
+user-platform-web/rest/login#phone=[1]&code=[2]
         ]]>
         </path>
     <mock>
@@ -282,7 +282,7 @@ user-platform-web-1.0.0/rest/login#phone=[1]&code=[2]
      <protocol name="logout">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/logout#token=[1]
+user-platform-web/rest/user/logout#token=[1]
         ]]>
         </path>
     <mock>
@@ -297,7 +297,7 @@ user-platform-web-1.0.0/rest/user/logout#token=[1]
      <protocol name="loadBody">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/loadBody
+user-platform-web/rest/loadBody
         ]]>
         </path>
     <mock>
@@ -316,7 +316,7 @@ user-platform-web-1.0.0/rest/loadBody
      <protocol name="loadSymptom">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/loadSymptom?body=[1]
+user-platform-web/rest/loadSymptom?body=[1]
         ]]>
         </path>
     <mock>
@@ -336,7 +336,7 @@ user-platform-web-1.0.0/rest/loadSymptom?body=[1]
      <protocol name="loadDisease">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/loadDisease?symptom=[1]
+user-platform-web/rest/loadDisease?symptom=[1]
         ]]>
         </path>
     <mock>
@@ -360,7 +360,7 @@ user-platform-web-1.0.0/rest/loadDisease?symptom=[1]
      <protocol name="searchDisease">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/search?disease=[1]
+user-platform-web/rest/search?disease=[1]
         ]]>
         </path>
     <mock>
@@ -384,7 +384,7 @@ user-platform-web-1.0.0/rest/search?disease=[1]
      <protocol name="commentlist">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/commentList?id=[1]&page=[2]
+user-platform-web/rest/commentList?id=[1]&page=[2]
         ]]>
         </path>
     <mock>
@@ -415,7 +415,7 @@ user-platform-web-1.0.0/rest/commentList?id=[1]&page=[2]
          <protocol name="doctorlist">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/doctorList?page=[1]&level=[2]&services=[3]&regionId=[4]
+user-platform-web/rest/doctorList?page=[1]&level=[2]&services=[3]&regionId=[4]
         ]]>
         </path>
     <mock>
@@ -536,7 +536,7 @@ user-platform-web-1.0.0/rest/doctorList?page=[1]&level=[2]&services=[3]&regionId
          <protocol name="talk">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/talk#topic=[1]&id=[2]&token=[3]
+user-platform-web/rest/user/talk#topic=[1]&id=[2]&token=[3]
         ]]>
         </path>
     <mock>
@@ -552,7 +552,7 @@ user-platform-web-1.0.0/rest/user/talk#topic=[1]&id=[2]&token=[3]
     <protocol name="pull">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/pull?pipe=[1]&token=[2]&messageId=[3]
+user-platform-web/rest/user/pull?pipe=[1]&token=[2]&messageId=[3]
         ]]>
         </path>
     <mock>
@@ -564,7 +564,7 @@ user-platform-web-1.0.0/rest/user/pull?pipe=[1]&token=[2]&messageId=[3]
     <protocol name="push">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/push#pipe=[1]&content=[2]&token=[3]
+user-platform-web/rest/user/push#pipe=[1]&content=[2]&token=[3]
         ]]>
         </path>
     <mock>
@@ -579,7 +579,7 @@ user-platform-web-1.0.0/rest/user/push#pipe=[1]&content=[2]&token=[3]
         <protocol name="examinationlist">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/examinationList?token=[1]&regionId=[2]
+user-platform-web/rest/user/examinationList?token=[1]&regionId=[2]
         ]]>
         </path>
     <mock>
@@ -633,7 +633,7 @@ user-platform-web-1.0.0/rest/user/examinationList?token=[1]&regionId=[2]
         <protocol name="reserveExamination">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/reserveExamination#examinationId=[1]&date=[2]&span=[3]&token=[4]
+user-platform-web/rest/user/reserveExamination#examinationId=[1]&date=[2]&span=[3]&token=[4]
         ]]>
         </path>
     <mock>
@@ -648,7 +648,7 @@ user-platform-web-1.0.0/rest/user/reserveExamination#examinationId=[1]&date=[2]&
     <protocol name="reserveDoctor">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/doctorTimeOrder#date=[1]&span=[2]&memo=[3]&doctorId=[4]&token=[5]
+user-platform-web/rest/user/doctorTimeOrder#date=[1]&span=[2]&memo=[3]&doctorId=[4]&token=[5]
         ]]>
         </path>
     <mock>
@@ -663,7 +663,7 @@ user-platform-web-1.0.0/rest/user/doctorTimeOrder#date=[1]&span=[2]&memo=[3]&doc
     <protocol name="doctortimelist">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/doctorTime?doctorId=[1]
+user-platform-web/rest/doctorTime?doctorId=[1]
         ]]>
         </path>
     <mock>
@@ -691,7 +691,7 @@ user-platform-web-1.0.0/rest/doctorTime?doctorId=[1]
     <protocol name="idcardfront">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/idcardfront#token=[1]&image=[2]
+user-platform-web/rest/user/idcardfront#token=[1]&image=[2]
         ]]>
         </path>
     <mock>
@@ -707,7 +707,7 @@ user-platform-web-1.0.0/rest/user/idcardfront#token=[1]&image=[2]
     <protocol name="idcardback">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/idcardback#token=[1]&image=[2]
+user-platform-web/rest/user/idcardback#token=[1]&image=[2]
         ]]>
         </path>
     <mock>
@@ -723,7 +723,7 @@ user-platform-web-1.0.0/rest/user/idcardback#token=[1]&image=[2]
     <protocol name="loadUserInfo">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/loadUserInfo?token=[1]
+user-platform-web/rest/user/loadUserInfo?token=[1]
         ]]>
         </path>
     <mock>
@@ -747,7 +747,7 @@ user-platform-web-1.0.0/rest/user/loadUserInfo?token=[1]
     <protocol name="saveUserInfo">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/saveUserInfo#token=[1]&name=[2]&idnumber=[3]&bankName=[4]&bankRegion=[5]&bankNumber=[6]
+user-platform-web/rest/user/saveUserInfo#token=[1]&name=[2]&idnumber=[3]&bankName=[4]&bankRegion=[5]&bankNumber=[6]
         ]]>
         </path>
     <mock>
@@ -762,7 +762,7 @@ user-platform-web-1.0.0/rest/user/saveUserInfo#token=[1]&name=[2]&idnumber=[3]&b
     <protocol name="prescriptionlist">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/prescriptionlist?token=[1]
+user-platform-web/rest/user/prescriptionlist?token=[1]
         ]]>
         </path>
     <mock>
@@ -786,7 +786,7 @@ user-platform-web-1.0.0/rest/user/prescriptionlist?token=[1]
     <protocol name="userboardlist">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/userBoardList?token=[1]
+user-platform-web/rest/userBoardList?token=[1]
         ]]>
         </path>
     <mock>
@@ -812,7 +812,7 @@ user-platform-web-1.0.0/rest/userBoardList?token=[1]
     <protocol name="reserveHistory">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/reserveHistory?token=[1]
+user-platform-web/rest/user/reserveHistory?token=[1]
         ]]>
         </path>
     <mock>
@@ -841,7 +841,7 @@ user-platform-web-1.0.0/rest/user/reserveHistory?token=[1]
     <protocol name="queryPipe">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/queryTopic?token=[1]&status=1
+user-platform-web/rest/user/queryTopic?token=[1]&status=1
         ]]>
         </path>
     <mock>
@@ -880,7 +880,7 @@ user-platform-web-1.0.0/rest/user/queryTopic?token=[1]&status=1
     <protocol name="myWallet">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/queryPipe?token=[1]
+user-platform-web/rest/user/queryPipe?token=[1]
         ]]>
         </path>
     <mock>
@@ -910,7 +910,7 @@ user-platform-web-1.0.0/rest/user/queryPipe?token=[1]
      <protocol name="myMessage">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/myMessage?token=[1]
+user-platform-web/rest/user/myMessage?token=[1]
         ]]>
         </path>
     <mock>
@@ -948,7 +948,7 @@ user-platform-web-1.0.0/rest/user/myMessage?token=[1]
          <protocol name="removeFamily">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/removefamily#token=[1]&userGlobalId=[2]
+user-platform-web/rest/user/removefamily#token=[1]&userGlobalId=[2]
         ]]>
         </path>
     <mock>
@@ -963,7 +963,7 @@ user-platform-web-1.0.0/rest/user/removefamily#token=[1]&userGlobalId=[2]
              <protocol name="hasMessage">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/hasMessage?token=[1]
+user-platform-web/rest/user/hasMessage?token=[1]
         ]]>
         </path>
     <mock>
@@ -978,7 +978,7 @@ user-platform-web-1.0.0/rest/user/hasMessage?token=[1]
                  <protocol name="responseFamily">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/responseFamily#token=[1]&isResponse=[2]&requestId=[3]
+user-platform-web/rest/user/responseFamily#token=[1]&isResponse=[2]&requestId=[3]
         ]]>
         </path>
     <mock>
@@ -990,7 +990,7 @@ user-platform-web-1.0.0/rest/user/responseFamily#token=[1]&isResponse=[2]&reques
     <protocol name="readMessage">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/readMessage#token=[1]&id=[2]
+user-platform-web/rest/user/readMessage#token=[1]&id=[2]
         ]]>
         </path>
     <mock>
@@ -1005,7 +1005,7 @@ user-platform-web-1.0.0/rest/user/readMessage#token=[1]&id=[2]
                       <protocol name="readVersion">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/getCurrentAppVersion?firmType=andriod
+user-platform-web/rest/getCurrentAppVersion?firmType=andriod
         ]]>
         </path>
     <mock>
@@ -1025,7 +1025,7 @@ user-platform-web-1.0.0/rest/getCurrentAppVersion?firmType=andriod
 	<protocol name="startupImage">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/startupImage
+user-platform-web/rest/startupImage
         ]]>
         </path>
     <mock>
@@ -1040,7 +1040,7 @@ user-platform-web-1.0.0/rest/startupImage
 	<protocol name="loadAvailableTopic">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/loadAvailableTopic?doctorId=[1]&token=[2]
+user-platform-web/rest/user/loadAvailableTopic?doctorId=[1]&token=[2]
         ]]>
         </path>
     <mock>
@@ -1068,7 +1068,7 @@ user-platform-web-1.0.0/rest/user/loadAvailableTopic?doctorId=[1]&token=[2]
 	<protocol name="hot">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/hotKeyword
+user-platform-web/rest/hotKeyword
         ]]>
         </path>
     <mock>
@@ -1090,7 +1090,7 @@ user-platform-web-1.0.0/rest/hotKeyword
 	<protocol name="comment">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/user/comment#doctorId=[1]&attitude=[2]&score1=[3]&score2=[4]&score3=[5]&content=[6]&token=[7]
+user-platform-web/rest/user/comment#doctorId=[1]&attitude=[2]&score1=[3]&score2=[4]&score3=[5]&content=[6]&token=[7]
         ]]>
         </path>
     <mock>

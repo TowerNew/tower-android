@@ -1,5 +1,6 @@
 package com.qcast.tower.form;
 
+import com.qcast.tower.Program;
 import com.qcast.tower.R;
 
 import android.app.Activity;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 /**
  * 关于界面
@@ -32,8 +34,11 @@ public class AboutActivity extends Activity {
 	public void prepare() {
 		// 处理返回按钮
 		dealReturn();
+		//
+		TextView labVersion = (TextView) this.findViewById(R.id.about_text_content);
+		labVersion.setText("当前版本：" + Program.VERSION);
 	}
-	
+
 	/**
 	 * 处理返回按钮
 	 */

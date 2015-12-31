@@ -13,6 +13,12 @@ import android.util.Log;
  */
 public class Program extends Application {
 	/**
+	 * 版本号
+	 */
+	public final static String VERSION = "2.0.0";
+
+
+	/**
 	 * 构建回调
 	 */
 	@Override

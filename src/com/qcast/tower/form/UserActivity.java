@@ -277,7 +277,7 @@ public class UserActivity extends Fragment {
                     return;
                 }
 				else if(index >= USER_BOARD_COUNT) {
-					String url = (String) (userBoardList.get(index).get("url"));
+					String url = (String) (userBoardList.get(index - 1).get("url"));
 					openWeb(url);
 					return;
 				}

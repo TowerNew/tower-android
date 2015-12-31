@@ -281,7 +281,7 @@ public class HomeActivity extends Fragment {
 				String version = ((JSONString) (result.get("appVersion"))).getValue();
 				String url = ((JSONString) (result.get("downloadUrl"))).getValue();
 				int v = Integer.parseInt(version.replace(".", ""));
-				if(v >= Integer.valueOf(Program.VERSION.replace(".", ""))) {
+				if(v <= Integer.valueOf(Program.VERSION.replace(".", ""))) {
 					return;
 				}
 				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);

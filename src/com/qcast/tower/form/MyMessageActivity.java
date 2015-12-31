@@ -49,7 +49,6 @@ public class MyMessageActivity extends Activity {
         dataList = new ArrayList<MyMessageModel>();
         adapter = new MyMessageAdapter(this, dataList);
         messageListView.setAdapter(adapter);
-        loadData();
         return_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -75,6 +74,13 @@ public class MyMessageActivity extends Activity {
             }
         });
     }
+    
+
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	loadData();
+    }
 
     private void loadData() {
         Host.doCommand("myMessage", new CommonResponse<String>() {
@@ -91,10 +97,12 @@ public class MyMessageActivity extends Activity {
                 }
                 JSONArray result = (JSONArray) resultObject.get("data");
                 if (null == result) {
+                	dataList.clear();
+                    adapter.notifyDataSetChanged();
                     return;
                 }
-
-                for (IJSON item : result) {
+                dataList.clear();
+                for(IJSON item : result) {
                     JSONObject newJSONObject = (JSONObject) item;
                     MyMessageModel myMessageModel = new MyMessageModel();
 
@@ -112,13 +120,12 @@ public class MyMessageActivity extends Activity {
                         myMessageModel.relation = ((JSONString) infoJSObj.get("relation")).getValue();
                         myMessageModel.requestId = ((JSONString) infoJSObj.get("requestId")).getValue();
                     }
-                    if(1 != myMessageModel.type) {
+                    // myMessageModel.type = 1
                         Host.doCommand("readMessage", new CommonResponse<String>() {
                             @Override
                             public void onFinished(String content) {
                             }
                         }, Logic.token, myMessageModel.id);
-                    }
                     dataList.add(myMessageModel);
                 }
                 adapter.notifyDataSetChanged();
@@ -187,8 +194,6 @@ public class MyMessageActivity extends Activity {
             public ImageView message_mark_iv;
             public TextView message_tv;
             public TextView mymessage_date_tv;
-
-
         }
     }
 }

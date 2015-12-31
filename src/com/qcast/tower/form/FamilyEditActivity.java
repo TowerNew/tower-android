@@ -116,12 +116,12 @@ public class FamilyEditActivity extends Activity {
 					return;
 				}
 				member.name = txtName.getText().toString();
-				if(member.relation.equals("")) {
+				if(member.name.equals("")) {
 					Toast.makeText(FamilyEditActivity.this, "请填写姓名", Toast.LENGTH_LONG).show();
 					return;
 				}
 				member.idNumber = txtIdNumber.getText().toString();
-				if(member.relation.equals("")) {
+				if(member.idNumber.equals("")) {
 					Toast.makeText(FamilyEditActivity.this, "请填写身份证号码", Toast.LENGTH_LONG).show();
 					return;
 				}

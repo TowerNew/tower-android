@@ -16,7 +16,7 @@
 		    android:layout_alignParentLeft="true"
 		    android:layout_alignParentTop="true"
 		    android:scaleType="fitXY"
-		    android:src="@drawable/groupchat_photo_default" />
+		    android:src="@drawable/user_photo_default" />
 		<TextView
 		    android:id="@+id/chat_left_label_message"
 		    style="@style/chat_content_date_style"

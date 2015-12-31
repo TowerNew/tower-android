@@ -50,7 +50,7 @@
 	    android:layout_marginRight="10dp"
 	    android:ems="10"
 	    android:inputType="text"
-	    android:textColor="@color/grey"
+	    android:textColor="@color/black"
 		android:background="@android:color/transparent"
 		android:focusable="true" 
 		android:focusableInTouchMode="true">

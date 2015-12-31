@@ -231,6 +231,10 @@ public class UserInfoActivity extends Activity {
 		Log.i("TOWER", phone);
 		EditText txtName = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_name);
 		final String name = txtName.getText().toString();
+		if("".equals(name)) {
+			Toast.makeText(UserInfoActivity.this, "姓名不能为空", Toast.LENGTH_LONG).show();
+			return;
+		}
 		EditText txtIdNumber = (EditText) UserInfoActivity.this.findViewById(R.id.userinfo_text_idnumber);
 		final String idnumber = txtIdNumber.getText().toString();
 		TextView labBankName = (TextView) UserInfoActivity.this.findViewById(R.id.userinfo_text_bankname);

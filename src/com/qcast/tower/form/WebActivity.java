@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 浏览器页
@@ -43,6 +44,11 @@ public class WebActivity extends Activity {
 	                browser.pauseTimers();
 	                return false;
 	            }
+				else if(url.startsWith("local://")) {
+					Toast.makeText(WebActivity.this, "暂不支持", Toast.LENGTH_LONG).show();
+	                browser.pauseTimers();
+	                return false;
+				}
 				browser.loadUrl(url);
 	            return true;
 			}
@@ -83,10 +89,22 @@ public class WebActivity extends Activity {
 				WebActivity.this.finish();
 			}
 		});
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
 		String url = this.getIntent().getStringExtra("url");
 		if(null == url) {
 			return;
 		}
+		browser.loadUrl("about:blank");
 		browser.loadUrl(url);
+	}
+	
+	@Override
+	public void onStop() {
+		browser.loadUrl("about:blank");
+		super.onStop();
 	}
 }

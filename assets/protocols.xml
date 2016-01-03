@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="service.wehop.cn" mock="false" storage="tower\image\">
+<protocols domain="service.wehop.cn" mock="false" storage="tower/image/">
 	<protocol name="gethospital">
 		<path>
 		<![CDATA[
@@ -880,7 +880,7 @@ user-platform-web/rest/user/queryTopic?token=[1]&status=1
     <protocol name="myWallet">
         <path>
         <![CDATA[
-user-platform-web/rest/user/queryPipe?token=[1]
+user-platform-web/rest/user/myWallet?token=[1]
         ]]>
         </path>
     <mock>

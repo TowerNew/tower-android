@@ -161,8 +161,14 @@ public class MainActivity extends FragmentActivity {
         		           		ringIntent.putExtra("userName", relation);
         		           		ringIntent.putExtra("type", type);
         		           		MainActivity.this.startActivity(ringIntent);
+        		           		return;
         					}
         				}
+						Intent ringIntent = new Intent(MainActivity.this, RingActivity.class);
+		           		ringIntent.putExtra("userId", from);
+		           		ringIntent.putExtra("userName", "医生热线");
+		           		ringIntent.putExtra("type", type);
+		           		MainActivity.this.startActivity(ringIntent);
         			}
         		}, Logic.token);
            	}

@@ -3,13 +3,11 @@ package com.qcast.tower.form;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +15,6 @@ import android.widget.Toast;
 import com.qcast.tower.R;
 import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.Storage;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.qcast.tower.model.MyWalletModel;
@@ -73,11 +70,10 @@ public class MyWalletActivity extends Activity {
                     return;
                 }
                 JSONArray result = (JSONArray) resultObject.get("data");
-                if (null == result) {
+                if (null == result || 0 == result.size()) {
                     Toast.makeText(MyWalletActivity.this, "您暂时没有红包~~~", Toast.LENGTH_LONG).show();
                     return;
                 }
-
                 for (IJSON item : result) {
                     JSONObject newJSONObject = (JSONObject) item;
                     MyWalletModel myWalletModel = new MyWalletModel();
@@ -89,7 +85,6 @@ public class MyWalletActivity extends Activity {
                     myWalletModel.sendTime = ((JSONString) newJSONObject.get("time")).getValue();
 
                     dataList.add(myWalletModel);
-
                 }
                 adapter.notifyDataSetChanged();
             }

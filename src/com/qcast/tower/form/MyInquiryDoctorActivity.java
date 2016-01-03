@@ -24,6 +24,7 @@ import com.qcast.tower.logic.Storage;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
+import com.qcast.tower.model.DoctorModel;
 import com.qcast.tower.model.MyChatHistoryModel;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
@@ -108,8 +109,8 @@ public class MyInquiryDoctorActivity extends Activity{
                     MyChatHistoryModel myChatHistoryModel = new MyChatHistoryModel();
                     String imageUrl = "";
                     String photoName = "";
-                    if (newJSONObject.get("imgUrl") != null) {
-                        imageUrl = ((JSONString) newJSONObject.get("imgUrl")).getValue();
+                    if (newJSONObject.get("doctorPortrait") != null) {
+                        imageUrl = ((JSONString) newJSONObject.get("doctorPortrait")).getValue();
                         photoName = Storage.getImageName(imageUrl);
                         myChatHistoryModel.imageUrl = photoName;
                     }
@@ -139,8 +140,6 @@ public class MyInquiryDoctorActivity extends Activity{
                         Host.doImage("image", new ImageResponse(photoName, dataList.size() - 1) {
                             @Override
                             public void onFinished(Bitmap content) {
-                                // DoctorModel doctorModel = dataList.get((Integer) tag);
-                                // doctorModel.docImage = content;
                                 adapter.notifyDataSetChanged();
                             }
                         }, imageUrl);

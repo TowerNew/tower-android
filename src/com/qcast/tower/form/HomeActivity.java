@@ -600,6 +600,6 @@ public class HomeActivity extends Fragment {
 		if(Logic.regionName.length() <= 4) {
 			return Logic.regionName;
 		}
-		return "..." + Logic.regionName.substring(Logic.regionName.length() - 3);
+		return Logic.regionName.substring(Logic.regionName.length() - 4);
 	}
 }

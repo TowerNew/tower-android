@@ -142,6 +142,9 @@ public class Storage {
 	 * @return 返回值
 	 */
 	public static <T> T user(String key, Class<T> clazz) {
+		if(!(new File(IMAGE_ROOT)).exists()) {
+			(new File(IMAGE_ROOT)).mkdirs();
+		}
 		if(null == user) {
 			synchronized(Storage.class) {
 				if(null == user) {

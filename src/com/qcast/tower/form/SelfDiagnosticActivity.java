@@ -45,6 +45,10 @@ public class SelfDiagnosticActivity extends Activity {
 	 * 当前症状列表
 	 */
 	protected ArrayList<HashMap<String, Object>> symptomList = new ArrayList<HashMap<String, Object>>();
+	/**
+	 * 当前肢体ID
+	 */
+	private int currentBody = 0;
 	
 	
 	/**
@@ -73,61 +77,57 @@ public class SelfDiagnosticActivity extends Activity {
 			return;
 		}
 		if(1 == requestCode) {
-			switch(data.getIntExtra("body", 0)) {
-			case R.id.male_front_head:
-			case R.id.male_back_head:
-			case R.id.female_front_head:
-			case R.id.female_back_head:
-				selectBody(0);
-				break;
-			case R.id.male_front_neck:
-			case R.id.male_back_neck:
-			case R.id.female_front_neck:
-			case R.id.female_back_neck:
-				selectBody(1);
-				break;
-			case R.id.male_front_chest:
-			case R.id.female_front_chest:
-				selectBody(2);
-				break;
-			case R.id.male_front_belly:
-			case R.id.female_front_belly:
-				selectBody(3);
-				break;
-			case R.id.male_front_basin:
-				selectBody(5);
-				break;
-			case R.id.female_front_basin:
-				selectBody(6);
-				break;
-			case R.id.male_front_arm:
-			case R.id.male_back_arm:
-			case R.id.female_front_arm:
-			case R.id.female_back_arm:
-				selectBody(8);
-				break;
-			case R.id.male_front_leg:
-			case R.id.male_back_leg:
-			case R.id.female_front_leg:
-			case R.id.female_back_leg:
-				selectBody(9);
-				break;
-			case R.id.male_back_butt:
-			case R.id.female_back_butt:
-				selectBody(10);
-				break;
-			case R.id.male_back_back:
-			case R.id.female_back_back:
-				selectBody(12);
-				break;
-			}
+			selectBody(getBodyId(data.getIntExtra("body", 0)));
 		}
+	}
+	
+	public int getBodyId(int imgId) {
+		switch(imgId) {
+		case R.id.male_front_head:
+		case R.id.male_back_head:
+		case R.id.female_front_head:
+		case R.id.female_back_head:
+			return(0);
+		case R.id.male_front_neck:
+		case R.id.male_back_neck:
+		case R.id.female_front_neck:
+		case R.id.female_back_neck:
+			return(1);
+		case R.id.male_front_chest:
+		case R.id.female_front_chest:
+			return(2);
+		case R.id.male_front_belly:
+		case R.id.female_front_belly:
+			return(3);
+		case R.id.male_front_basin:
+			return(5);
+		case R.id.female_front_basin:
+			return(6);
+		case R.id.male_front_arm:
+		case R.id.male_back_arm:
+		case R.id.female_front_arm:
+		case R.id.female_back_arm:
+			return(8);
+		case R.id.male_front_leg:
+		case R.id.male_back_leg:
+		case R.id.female_front_leg:
+		case R.id.female_back_leg:
+			return(9);
+		case R.id.male_back_butt:
+		case R.id.female_back_butt:
+			return(10);
+		case R.id.male_back_back:
+		case R.id.female_back_back:
+			return(12);
+		}
+		return 0;
 	}
 	
 	/**
 	 * 界面预处理
 	 */
 	public void prepare() {
+		currentBody = getBodyId(this.getIntent().getIntExtra("body", 0));
 		ImageButton button = (ImageButton) this.findViewById(R.id.selfdiagnostic_button_return);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -140,7 +140,8 @@ public class SelfDiagnosticActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(SelfDiagnosticActivity.this, BodyActivity.class);
-				SelfDiagnosticActivity.this.startActivityForResult(intent, 1);
+				SelfDiagnosticActivity.this.startActivity(intent);
+				SelfDiagnosticActivity.this.finish();
 			}
 		});
 		dealBody();
@@ -223,6 +224,7 @@ public class SelfDiagnosticActivity extends Activity {
 				Intent intent = new Intent(SelfDiagnosticActivity.this, DiseaseListActivity.class);
 				intent.putExtra("symptom", (String) symptomList.get(index).get("caption"));
 				SelfDiagnosticActivity.this.startActivity(intent);
+				SelfDiagnosticActivity.this.finish();
             }
 		});
 	}
@@ -255,6 +257,8 @@ public class SelfDiagnosticActivity extends Activity {
 				ListView listview = (ListView) SelfDiagnosticActivity.this.findViewById(R.id.selfdiagnostic_list_body);
 				SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
 				adapter.notifyDataSetChanged();
+				//
+				selectBody(currentBody);
 			}
 		});
 	}

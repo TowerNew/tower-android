@@ -248,7 +248,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void goSelf(View view){
-        Intent intent = new Intent(this, SelfDiagnosticActivity.class);
+        Intent intent = new Intent(this, BodyActivity.class);
         this.startActivity(intent);
     }
 

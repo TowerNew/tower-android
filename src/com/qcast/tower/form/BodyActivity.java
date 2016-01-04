@@ -27,6 +27,9 @@ public class BodyActivity extends Activity {
 	private int[] idFemaleFront = {R.id.female_front_arm, R.id.female_front_basin, R.id.female_front_belly, R.id.female_front_chest, R.id.female_front_head, R.id.female_front_leg, R.id.female_front_neck};
 	private int[] idFemaleBack = {R.id.female_back_arm, R.id.female_back_back, R.id.female_back_butt, R.id.female_back_head, R.id.female_back_leg, R.id.female_back_neck};
 
+	/**
+	 */
+	private boolean isFinished = false;
 	
 	/**
 	 * 界面创建
@@ -37,6 +40,7 @@ public class BodyActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_body);
+		isFinished = false;
 		// 界面处理
 		prepare();
 	}
@@ -125,10 +129,18 @@ public class BodyActivity extends Activity {
 				int y = (int)(event.getY() * bitmap.getHeight() / image.getHeight());
 				if(0 != bitmap.getPixel(x, y)) {
 					// 设置返回值
-					Intent intent = new Intent();
+//					Intent intent = new Intent();
+//					intent.putExtra("body", image.getId());
+//					BodyActivity.this.setResult(Activity.RESULT_OK, intent);
+//					BodyActivity.this.finish();
+					if(isFinished) {
+						return true;
+					}
+					Intent intent = new Intent(BodyActivity.this, SelfDiagnosticActivity.class);
 					intent.putExtra("body", image.getId());
-					BodyActivity.this.setResult(Activity.RESULT_OK, intent);
+					BodyActivity.this.startActivity(intent);
 					BodyActivity.this.finish();
+					isFinished = true;
 					return true;
 				}
                 return false;

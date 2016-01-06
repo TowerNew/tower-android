@@ -113,7 +113,7 @@ public class DiseaseListActivity extends Activity {
 					caption = URLEncoder.encode(caption, "UTF-8");
 				}
 				catch(Exception ex) { }
-				intent.putExtra("url", Host.fetchURL("search", caption));
+				intent.putExtra("url", Host.fetchURL("searchDisease", caption));
 				DiseaseListActivity.this.startActivity(intent);
             }
 		});

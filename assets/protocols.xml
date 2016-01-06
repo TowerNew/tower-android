@@ -244,6 +244,18 @@ user-platform-web/rest/contentSearch?keyword=[1]
         ]]>
         </mock>
     </protocol>
+    <protocol name="searchDisease">
+        <path>
+        <![CDATA[
+user-platform-web/rest/search?keyword=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+
+        ]]>
+        </mock>
+    </protocol>
      <protocol name="fetchCode">
         <path>
         <![CDATA[
@@ -1002,7 +1014,7 @@ user-platform-web/rest/user/readMessage#token=[1]&id=[2]
         ]]>
         </mock>
     </protocol>
-                      <protocol name="readVersion">
+	<protocol name="readVersion">
         <path>
         <![CDATA[
 user-platform-web/rest/getCurrentAppVersion?firmType=andriod

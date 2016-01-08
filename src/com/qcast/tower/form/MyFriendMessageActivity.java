@@ -21,7 +21,7 @@ import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.qcast.tower.model.MyChatHistoryModel;
 import com.qcast.tower.model.MyFriendMessageModel;
-import com.qcast.tower.model.MyMessageModel;
+import com.qcast.tower.model.NotifyModel;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -41,14 +41,14 @@ public class MyFriendMessageActivity extends Activity {
     private MyFriendMessageAdapter adapter;
     private ListView messageListView;
     private Button return_btn;
-    private MyMessageModel model;
+    private NotifyModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
         messageId = this.getIntent().getIntExtra("messageId", 0);
-        model= (MyMessageModel) bundle.get("myFriendMessage");
+        model= (NotifyModel) bundle.get("myFriendMessage");
         if(model==null){
             finish();
         }

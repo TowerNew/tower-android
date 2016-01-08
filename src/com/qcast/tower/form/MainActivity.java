@@ -8,18 +8,19 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.easemob.chat.CmdMessageBody;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatOptions;
+import com.easemob.chat.EMMessage;
+import com.easemob.exceptions.EaseMobException;
 import com.qcast.tower.R;
 import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
@@ -40,7 +41,6 @@ public class MainActivity extends FragmentActivity {
      * 选项卡对象
      */
     protected TabHost tabhost = null;
-    private Handler hasMessageHandler;
 
     /**
      * 对话接收器
@@ -50,6 +50,10 @@ public class MainActivity extends FragmentActivity {
      * 拨号接收器
      */
     private BroadcastReceiver dialReceiver = null;
+    /**
+     * 命令接收器
+     */
+    private BroadcastReceiver commandReceiver = null;
 
 
     /**
@@ -90,9 +94,6 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
-        hasMessageHandler=new Handler();
-        refreshMessage();
-        //
 		EMChatOptions chatOptions = EMChatManager.getInstance().getChatOptions();
 		chatOptions.setNotifyBySoundAndVibrate(true);
 		//
@@ -102,8 +103,6 @@ public class MainActivity extends FragmentActivity {
            	@Override
            	public void onReceive(Context context, Intent intent) {
            		String from = intent.getStringExtra("from");
-           		// int type = intent.getIntExtra("type", 0);
-           		//
            		Logic.messageFamily.add(from);
            		MediaPlayer player = MediaPlayer.create(MainActivity.this, R.raw.newmessage);
                 player.start();
@@ -174,15 +173,58 @@ public class MainActivity extends FragmentActivity {
            	}
         };
         registerReceiver(dialReceiver, new IntentFilter(EMChatManager.getInstance().getIncomingCallBroadcastAction()));
+        //
+    	commandReceiver = new BroadcastReceiver() {
+    		@Override
+    		public void onReceive(Context context, Intent intent) {
+    			String msgId = intent.getStringExtra("msgid");
+    			EMMessage message = intent.getParcelableExtra("message");
+    			CmdMessageBody cmdMsgBody = (CmdMessageBody) message.getBody();
+    			String aciton = cmdMsgBody.action;
+    			Log.d("tower", "command message " + aciton + " receive:" + msgId);
+    			if("notify".equalsIgnoreCase(aciton)) {
+    				// 通知消息
+    				int type = 0;
+    				String title = null;
+        			try {
+        				type = message.getIntAttribute("type");
+        				title = message.getStringAttribute("title");
+    				}
+        			catch (EaseMobException e) {
+        				Log.e("tower", "command message parse failed", e);
+    				}
+    				if(!Text.isBlank(title)) {
+        				Toast.makeText(MainActivity.this, title, Toast.LENGTH_LONG).show();
+    				}
+        			switch(type) {
+        			case 1:
+        				// 添加好友消息
+        				break;
+        			case 2:
+        				// 好友接受消息
+        				break;
+        			case 3:
+        				// 好友拒绝消息
+        				break;
+        			case 4:
+        				// 系统通知消息
+        				break;
+        			}
+        			Logic.hasMessage = true;
+               		MediaPlayer player = MediaPlayer.create(MainActivity.this, R.raw.newmessage);
+                    player.start();
+    			}
+    		}
+    	};
+    	registerReceiver(commandReceiver, new IntentFilter(EMChatManager.getInstance().getCmdMessageBroadcastAction()));
     }
-    
+
     /**
      * 终结
      */
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        hasMessageHandler.removeCallbacksAndMessages(null);
         if(null != chatReceiver) {
         	this.unregisterReceiver(chatReceiver);
         }
@@ -191,53 +233,15 @@ public class MainActivity extends FragmentActivity {
         	this.unregisterReceiver(dialReceiver);
         }
         dialReceiver = null;
+        if(null != commandReceiver) {
+        	this.unregisterReceiver(commandReceiver);
+        }
+        commandReceiver = null;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
-    }
-
-    public void refreshMessage(){
-        hasMessageHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if(Logic.token!=null){
-                    Host.doCommand("hasMessage", new CommonResponse<String>() {
-                        @Override
-                        public void onFinished(String content) {
-                            if (Response.CODE_SUCCESS != code()) {
-                                // Toast.makeText(MainActivity.this, "网络问题", Toast.LENGTH_LONG).show();
-                                return;
-                            }
-                            JSONObject resultObject = JSONObject.convert(content);
-                            if (((JSONNumber) resultObject.get("code")).intValue() == -302) {
-                            	return;
-                            }
-                            if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-                                Toast.makeText(MainActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
-                                return;
-                            } else if(((JSONNumber) resultObject.get("data")).intValue() >0){
-                                if (tabhost.getCurrentTab() == 0) {
-                                    View v = tabhost.getCurrentView();
-                                    Button aa = (Button) v.findViewById(R.id.home_button_notify);
-                                    if (aa != null)
-                                        aa.setBackgroundResource(R.drawable.button_home_notify_has_message);
-                                }
-                            }else if(((JSONNumber) resultObject.get("data")).intValue() ==0){
-                                if (tabhost.getCurrentTab() == 0) {
-                                    View v = tabhost.getCurrentView();
-                                    Button aa = (Button) v.findViewById(R.id.home_button_notify);
-                                    if (aa != null)
-                                        aa.setBackgroundResource(R.drawable.button_home_notify);
-                                }
-                            }
-                        }
-                    }, Logic.token);
-                }
-                MainActivity.this.refreshMessage();
-            }
-        }, 5000);
     }
 
     public void goOnline(View view){

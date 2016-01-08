@@ -934,8 +934,9 @@ user-platform-web/rest/user/myMessage?token=[1]
             "id": 1233,
             "type": 1,
             "hasRead": true,
-            "title": "您有一个添加亲友消息",
-            "time": "2015-09-09 14: 12: 20",
+            "title": "亲友添加申请",
+            "description": "15021819287申请添加你为父亲",
+            "time": "2015-09-09 14:12:20",
             "info": {
                 "requestId": 1,
                 "name": "Jose",
@@ -947,8 +948,9 @@ user-platform-web/rest/user/myMessage?token=[1]
             "id": 1234,
             "type": 2,
             "hasRead": false,
-            "title": "恭喜您获得一个100元现金礼包",
-            "time": "2015-09-10 05: 12: 20",
+            "title": "亲友添加申请",
+            "description": "15021819287申请添加你为父亲",
+            "time": "2015-09-10 05:12:20",
             "isRead": false,
             "info": {}
         }

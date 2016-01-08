@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.easemob.chat.CmdMessageBody;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMMessage;
+import com.easemob.exceptions.EaseMobException;
 import com.qcast.tower.Program;
 import com.qcast.tower.R;
 import com.slfuture.pluto.communication.Host;
@@ -13,6 +17,7 @@ import com.qcast.tower.logic.Storage;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
+import com.slfuture.pluto.etc.Control;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -21,16 +26,24 @@ import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.type.Table;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -199,6 +212,10 @@ public class HomeActivity extends Fragment {
 	 * 定时器
 	 */
 	protected static Timer timer = null;
+    /**
+     * 命令接收器
+     */
+    private BroadcastReceiver commandReceiver = null;
 	/**
 	 * 横栏句柄
 	 */
@@ -251,6 +268,24 @@ public class HomeActivity extends Fragment {
 		if(null != Logic.regionName) {
 			regionButton.setText(fetchRegionName());
 		}
+		if(Logic.hasMessage) {
+			shakeBell();
+		}
+		else {
+			stopBell();
+		}
+		//
+		dealData();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		stopBell();
+        if(null != commandReceiver) {
+        	this.getActivity().unregisterReceiver(commandReceiver);
+        }
+        commandReceiver = null;
 	}
 
 	@Override
@@ -410,7 +445,7 @@ public class HomeActivity extends Fragment {
 				}
 			}
 		});
-		final Button home_button_notify = (Button) this.getActivity().findViewById(R.id.home_button_notify);
+		final ImageView home_button_notify = (ImageView) this.getActivity().findViewById(R.id.home_button_notify);
 		home_button_notify.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -480,6 +515,53 @@ public class HomeActivity extends Fragment {
 				HomeActivity.this.getActivity().startActivity(intent);
 			}
 		});
+	}
+	
+	/**
+	 */
+	private void dealData() {
+		commandReceiver = new BroadcastReceiver() {
+    		@Override
+    		public void onReceive(Context context, Intent intent) {
+    			String msgId = intent.getStringExtra("msgid");
+    			EMMessage message = intent.getParcelableExtra("message");
+    			CmdMessageBody cmdMsgBody = (CmdMessageBody) message.getBody();
+    			String aciton = cmdMsgBody.action;
+    			Log.d("tower", "command message " + aciton + " receive:" + msgId);
+    			if("notify".equalsIgnoreCase(aciton)) {
+    				// 通知消息
+    				int type = 0;
+    				String title = null;
+        			try {
+        				type = message.getIntAttribute("type");
+        				title = message.getStringAttribute("title");
+    				}
+        			catch (EaseMobException e) {
+        				Log.e("tower", "command message parse failed", e);
+    				}
+    				if(!Text.isBlank(title)) {
+        				Toast.makeText(HomeActivity.this.getActivity(), title, Toast.LENGTH_LONG).show();
+    				}
+        			switch(type) {
+        			case 1:
+        				// 添加好友消息
+        				break;
+        			case 2:
+        				// 好友接受消息
+        				break;
+        			case 3:
+        				// 好友拒绝消息
+        				break;
+        			case 4:
+        				// 系统通知消息
+        				break;
+        			}
+        			Logic.hasMessage = true;
+        			shakeBell();
+    			}
+    		}
+    	};
+    	this.getActivity().registerReceiver(commandReceiver, new IntentFilter(EMChatManager.getInstance().getCmdMessageBroadcastAction()));
 	}
 
 	/**
@@ -601,5 +683,53 @@ public class HomeActivity extends Fragment {
 			return Logic.regionName;
 		}
 		return Logic.regionName.substring(Logic.regionName.length() - 4);
+	}
+	
+	/**
+	 * 摇晃铃铛
+	 */
+	public void shakeBell() {
+		final ImageView btnBell = (ImageView) this.getActivity().findViewById(R.id.home_button_notify);
+		btnBell.clearAnimation();
+		btnBell.setImageResource(R.drawable.bell_active);
+		//
+		final RotateAnimation animRight = new RotateAnimation(-30, 30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
+		animRight.setDuration(1000);
+		final RotateAnimation animLeft = new RotateAnimation(30f, -30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
+		animLeft.setDuration(1000);
+		//
+		final AnimationListener listener = new AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+				Log.d("tower", "");
+			}
+			@Override
+			public void onAnimationRepeat(Animation animation) { }
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				btnBell.clearAnimation();
+				animation.setAnimationListener(null);
+				if(animation == animRight) {
+			        animLeft.setAnimationListener(this);
+					btnBell.startAnimation(animLeft);
+				}
+				else if(animation == animLeft) {
+					animRight.setAnimationListener(this);
+					btnBell.startAnimation(animRight);
+				}
+			}
+        };
+        animRight.setAnimationListener(listener);
+        //
+        btnBell.startAnimation(animRight);
+	}
+
+	/**
+	 * 停止摇晃铃铛
+	 */
+	public void stopBell() {
+		final ImageView btnBell = (ImageView) this.getActivity().findViewById(R.id.home_button_notify);
+		btnBell.clearAnimation();
+		btnBell.setImageResource(R.drawable.bell_normal);
 	}
 }

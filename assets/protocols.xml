@@ -244,18 +244,6 @@ user-platform-web/rest/contentSearch?keyword=[1]
         ]]>
         </mock>
     </protocol>
-    <protocol name="searchDisease">
-        <path>
-        <![CDATA[
-user-platform-web/rest/search?keyword=[1]
-        ]]>
-        </path>
-    <mock>
-        <![CDATA[
-
-        ]]>
-        </mock>
-    </protocol>
      <protocol name="fetchCode">
         <path>
         <![CDATA[

@@ -486,18 +486,6 @@ public class GroupChatActivity extends ActivityEx {
 			public void onClick(View v) {
 				GroupChatActivity.this.finish();
 			}
-
-			/**
-			 * 准备关闭按钮
-			 */
-			private void prepareClose() {
-				btnClose.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						GroupChatActivity.this.finish();
-					}
-			    });
-			}
         });
     }
     

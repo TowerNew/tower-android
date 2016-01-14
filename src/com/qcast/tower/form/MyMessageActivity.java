@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMConversation;
 import com.qcast.tower.R;
 import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
@@ -30,6 +32,8 @@ import com.slfuture.carrie.base.json.core.IJSON;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Map.Entry;
 
 /**
  * 我的消息页
@@ -67,7 +71,7 @@ public class MyMessageActivity extends Activity {
                     }, Logic.token, notifyModel.id);
                 }
                 switch(notifyModel.type) {
-                case 1:
+                case NotifyModel.TYPE_1:
                 	Intent intent1 = new Intent(MyMessageActivity.this, MyFriendMessageActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("myFriendMessage", notifyModel);
@@ -75,34 +79,48 @@ public class MyMessageActivity extends Activity {
                     intent1.putExtra("messageId", notifyModel.id);
                     MyMessageActivity.this.startActivity(intent1);
                 	break;
-                case 2:
-                	Intent intent2 = new Intent(MyMessageActivity.this, MyFriendMessageActivity.class);
+                case NotifyModel.TYPE_5:
+                	Intent intent2 = new Intent(MyMessageActivity.this, TextActivity.class);
                 	intent2.putExtra("title", "通知");
                 	intent2.putExtra("content", "对方接受了您的添加请求");
                     MyMessageActivity.this.startActivity(intent2);
                 	break;
-                case 3:
-                	Intent intent3 = new Intent(MyMessageActivity.this, MyFriendMessageActivity.class);
+                case NotifyModel.TYPE_6:
+                	Intent intent3 = new Intent(MyMessageActivity.this, TextActivity.class);
                 	intent3.putExtra("title", "通知");
                 	intent3.putExtra("content", "对方拒绝了您的添加请求");
                     MyMessageActivity.this.startActivity(intent3);
                 	break;
-                case 4:
+                case NotifyModel.TYPE_3:
                 	Intent intent4 = new Intent(MyMessageActivity.this, WebActivity.class);
                 	intent4.putExtra("url", notifyModel.url);
                     MyMessageActivity.this.startActivity(intent4);
                 	break;
-                case 5:
-                	Intent intent5 = new Intent(MyMessageActivity.this, MyFriendMessageActivity.class);
-                	intent5.putExtra("title", "通知");
-                	intent5.putExtra("content", "问诊");
+                case NotifyModel.TYPE_7:
+                	Intent intent5 = new Intent(MyMessageActivity.this, GroupChatActivity.class);
+                	intent5.putExtra("localId", Logic.imUsername);
+                	if(null != notifyModel.imGroupId) {
+                		intent5.putExtra("groupId", notifyModel.imGroupId);
+                	}
+                	intent5.putExtra("remoteId", notifyModel.imUsername);
+                	intent5.putExtra("remotePhoto", notifyModel.remotePhoto);
                     MyMessageActivity.this.startActivity(intent5);
                 	break;
-                case 6:
-                	Intent intent6 = new Intent(MyMessageActivity.this, MyFriendMessageActivity.class);
-                	intent6.putExtra("title", "通知");
-                	intent6.putExtra("content", "互动");
+                case NotifyModel.TYPE_8:
+                	Intent intent6 = new Intent(MyMessageActivity.this, GroupChatActivity.class);
+                	intent6.putExtra("localId", Logic.imUsername);
+                	if(null != notifyModel.imGroupId) {
+                    	intent6.putExtra("groupId", notifyModel.imGroupId);
+                	}
+                	intent6.putExtra("remoteId", notifyModel.imUsername);
+                	intent6.putExtra("remotePhoto", notifyModel.remotePhoto);
                     MyMessageActivity.this.startActivity(intent6);
+                	break;
+                case NotifyModel.TYPE_9:
+                	Intent intent9 = new Intent(MyMessageActivity.this, TextActivity.class);
+                	intent9.putExtra("title", "通知");
+                	intent9.putExtra("content", "对方删除了您");
+                    MyMessageActivity.this.startActivity(intent9);
                 	break;
                 }
             }
@@ -131,6 +149,7 @@ public class MyMessageActivity extends Activity {
                 JSONArray result = (JSONArray) resultObject.get("data");
                 if (null == result) {
                 	dataList.clear();
+                	dataList.addAll(fetchUnreadMessages());
                     adapter.notifyDataSetChanged();
                     return;
                 }
@@ -141,11 +160,17 @@ public class MyMessageActivity extends Activity {
                     NotifyModel myMessageModel = new NotifyModel();
                     myMessageModel.id = ((JSONNumber) newJSONObject.get("id")).intValue();
                     myMessageModel.title = ((JSONString) newJSONObject.get("title")).getValue();
+                    if(null == newJSONObject.get("description")) {
+                        myMessageModel.description = "";
+                    }
+                    else {
+                        myMessageModel.description = ((JSONString) newJSONObject.get("description")).getValue();
+                    }
                     myMessageModel.time = format.format(((JSONNumber) newJSONObject.get("time")).longValue());
                     myMessageModel.type = ((JSONNumber) newJSONObject.get("type")).intValue();
                     myMessageModel.hasRead = ((JSONBoolean) newJSONObject.get("hasRead")).getValue();
                     switch(myMessageModel.type) {
-                    case 1:
+                    case NotifyModel.TYPE_1:
                         JSONObject infomation1 = (JSONObject) newJSONObject.get("info");
                         if(null == infomation1) {
                         	break;
@@ -155,7 +180,7 @@ public class MyMessageActivity extends Activity {
                         myMessageModel.phone = ((JSONString) infomation1.get("phone")).getValue();
                         myMessageModel.relation = ((JSONString) infomation1.get("relation")).getValue();
                     	break;
-                    case 2:
+                    case NotifyModel.TYPE_5:
                         JSONObject infomation2 = (JSONObject) newJSONObject.get("info");
                         if(null == infomation2) {
                         	break;
@@ -173,7 +198,7 @@ public class MyMessageActivity extends Activity {
                             myMessageModel.relation = ((JSONString) infomation2.get("relation")).getValue();
                         }
                     	break;
-                    case 3:
+                    case NotifyModel.TYPE_6:
                         JSONObject infomation3 = (JSONObject) newJSONObject.get("info");
                         if(null == infomation3) {
                         	break;
@@ -191,7 +216,7 @@ public class MyMessageActivity extends Activity {
                             myMessageModel.relation = ((JSONString) infomation3.get("relation")).getValue();
                         }
                     	break;
-                    case 4:
+                    case NotifyModel.TYPE_3:
                         JSONObject infomation4 = (JSONObject) newJSONObject.get("info");
                         if(null == infomation4) {
                         	break;
@@ -201,16 +226,55 @@ public class MyMessageActivity extends Activity {
                         	myMessageModel.url = ((JSONString) infomation4.get("url")).getValue();
                         }
                     	break;
-                    case 5:
+                    case NotifyModel.TYPE_7:
                     	break;
-                    case 6:
+                    case NotifyModel.TYPE_8:
+                    	break;
+                    case NotifyModel.TYPE_9:
                     	break;
                     }
                     dataList.add(myMessageModel);
                 }
+                dataList.addAll(fetchUnreadMessages());
                 adapter.notifyDataSetChanged();
             }
         }, Logic.token);
+    }
+
+    /**
+     * 获取所有未读消息
+     */
+    private ArrayList<NotifyModel> fetchUnreadMessages() {
+    	ArrayList<NotifyModel> result = new ArrayList<NotifyModel>();
+    	Hashtable<String, EMConversation> conversationMap = EMChatManager.getInstance().getAllConversations();
+    	for(Entry<String, EMConversation> conversationEntry : conversationMap.entrySet()) {
+    		String conversationId = conversationEntry.getKey();
+    		int msgCount = conversationEntry.getValue().getUnreadMsgCount();
+        	if(msgCount <= 0) {
+        		continue;
+        	}
+        	if(conversationEntry.getValue().isGroup()) {
+        		NotifyModel model = fetchDoctorConversation(conversationId);
+        		if(null != model) {
+        			result.add(model);
+        		}
+        	}
+        	else {
+        		NotifyModel model = fetchFriendConversation(conversationId);
+        		if(null != model) {
+        			result.add(model);
+        		}
+        	}
+    	}
+    	return result;
+    }
+
+    private NotifyModel fetchFriendConversation(String imUsername) {
+    	return null;
+    }
+
+    private NotifyModel fetchDoctorConversation(String doctorIMUsername) {
+    	return null;
     }
 
     class MyMessageAdapter extends BaseAdapter {
@@ -252,7 +316,7 @@ public class MyMessageActivity extends Activity {
             NotifyModel model = data.get(position);
             ViewHolder viewHolder = null;
             if(null == convertView) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.listview_notify, parent);
+                convertView = LayoutInflater.from(context).inflate(R.layout.listview_notify, null);
                 viewHolder = new ViewHolder();
                 viewHolder.imgIcon = (ImageView) convertView.findViewById(R.id.notify_icon_type);
                 viewHolder.labTitle = (TextView) convertView.findViewById(R.id.notify_label_title);
@@ -267,19 +331,22 @@ public class MyMessageActivity extends Activity {
             if(NotifyModel.TYPE_1 == model.type) {
             	viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_1);
             }
-            else if(NotifyModel.TYPE_2 == model.type) {
+            else if(NotifyModel.TYPE_5 == model.type) {
             	viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_2);
             }
-			else if(NotifyModel.TYPE_3 == model.type) {
+			else if(NotifyModel.TYPE_6 == model.type) {
             	viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_3);
 			}
-			else if(NotifyModel.TYPE_4 == model.type) {
+			else if(NotifyModel.TYPE_3 == model.type) {
             	viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_4);
 			}
-			else if(NotifyModel.TYPE_5 == model.type) {
+			else if(NotifyModel.TYPE_7 == model.type) {
             	viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_5);
 			}
-			else if(NotifyModel.TYPE_6 == model.type) {
+			else if(NotifyModel.TYPE_8 == model.type) {
+            	viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_6);
+			}
+			else if(NotifyModel.TYPE_9 == model.type) {
             	viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_6);
 			}
             viewHolder.labTitle.setText(model.title);

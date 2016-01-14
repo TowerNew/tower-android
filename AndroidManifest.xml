@@ -180,6 +180,10 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name="com.qcast.tower.form.TextActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name="com.qcast.tower.form.CommentActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>

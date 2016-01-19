@@ -38,7 +38,6 @@ public class MatrixImageView extends ImageView {
     public void setImageBitmap(Bitmap bm) {
         // TODO Auto-generated method stub
         super.setImageBitmap(bm);
-        //
         setScaleType(ScaleType.FIT_CENTER);
         //设置完图片后，获取该图片的坐标变换矩阵
         mMatrix.set(getImageMatrix());

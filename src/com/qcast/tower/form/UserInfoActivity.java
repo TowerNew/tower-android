@@ -275,9 +275,11 @@ public class UserInfoActivity extends Activity {
 	}
 	
 	private void showFileChooser(int rId) {
-	    Intent intent = new Intent(Intent.ACTION_GET_CONTENT); 
-	    intent.setType("*/*"); 
-	    intent.addCategory(Intent.CATEGORY_OPENABLE);
+		Intent intent;
+		intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//	    Intent intent = new Intent(Intent.ACTION_GET_CONTENT); 
+//	    intent.setType("*/*"); 
+//	    intent.addCategory(Intent.CATEGORY_OPENABLE);
 	    try {
 	        startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), rId);
 	    }

@@ -78,6 +78,7 @@ public class UserInfoActivity extends Activity {
 			public void onClick(View v) {
 				Logic.token = null;
 				Logic.name = null;
+				Logic.imUsername = null;
 				Logic.phone = null;
 				Storage.setUser("token", null);
 				Storage.setUser("userId", null);

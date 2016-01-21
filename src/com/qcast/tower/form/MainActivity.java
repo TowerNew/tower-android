@@ -1,7 +1,11 @@
 package com.qcast.tower.form;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
@@ -16,14 +20,18 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.easemob.EMConnectionListener;
+import com.easemob.EMError;
 import com.easemob.chat.CmdMessageBody;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatOptions;
 import com.easemob.chat.EMMessage;
 import com.easemob.exceptions.EaseMobException;
+import com.easemob.util.NetUtils;
 import com.qcast.tower.R;
 import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
+import com.qcast.tower.logic.Storage;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.carrie.base.json.JSONArray;
@@ -32,11 +40,68 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
-
 /**
  * 主界面
  */
 public class MainActivity extends FragmentActivity {
+	/**
+	 * 实现ConnectionListener接口
+	 */
+	private class ConnectionListener implements EMConnectionListener {
+	    @Override
+		public void onConnected() {
+	    	Log.d("tower", "已连接到服务器");
+		}
+
+		@Override
+		public void onDisconnected(final int error) {
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					if(error == EMError.USER_REMOVED) {
+						Log.e("tower", "显示帐号已经被移除");
+					}
+					else if (error == EMError.CONNECTION_CONFLICT) {
+						Log.e("tower", "显示帐号在其他设备登陆");
+						//
+						AlertDialog.Builder builder = new Builder(MainActivity.this);
+						builder.setMessage("该帐号在其他地方登录");
+						builder.setTitle("提示");
+						builder.setPositiveButton("确认", new OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								Logic.token = null;
+								Logic.imUsername = null;
+								Logic.name = null;
+								Logic.phone = null;
+								Storage.setUser("token", null);
+								Storage.setUser("userId", null);
+								Storage.setUser("name", null);
+								Storage.setUser("phone", null);
+								Storage.setUser("imUsername", null);
+								Storage.save();
+								dialog.cancel();
+								MainActivity.this.finish();
+								android.os.Process.killProcess(android.os.Process.myPid());
+								System.exit(0);
+						   }
+						});
+						builder.show();
+					}
+					else {
+						if (NetUtils.hasNetwork(MainActivity.this)) {
+							Log.e("tower", "连接不到聊天服务器");
+						}
+						else {
+							Log.e("tower", "当前网络不可用，请检查网络设置");
+						}
+					}
+				}
+			});
+		}
+	}
+	
+	
     /**
      * 选项卡对象
      */
@@ -217,7 +282,10 @@ public class MainActivity extends FragmentActivity {
     		}
     	};
     	registerReceiver(commandReceiver, new IntentFilter(EMChatManager.getInstance().getCmdMessageBroadcastAction()));
+    	//
+    	EMChatManager.getInstance().addConnectionListener(new ConnectionListener());
     }
+    
 
     /**
      * 终结

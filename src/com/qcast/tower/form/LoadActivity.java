@@ -169,6 +169,7 @@ public class LoadActivity extends Activity {
 		//
 		if(null == Logic.imUsername || null == Logic.phone) {
 			Logic.phone = null;
+			EMChatManager.getInstance().logout();
 			return;
 		}
 		EMChatManager.getInstance().login(Logic.imUsername, Logic.phone, new EMCallBack() {

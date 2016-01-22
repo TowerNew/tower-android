@@ -15,19 +15,13 @@ import android.widget.Toast;
 import com.qcast.tower.R;
 import com.slfuture.pluto.communication.Host;
 import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.Storage;
 import com.slfuture.pluto.communication.response.CommonResponse;
-import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
-import com.qcast.tower.model.MyChatHistoryModel;
 import com.qcast.tower.model.MyFriendMessageModel;
-import com.qcast.tower.model.MyMessageModel;
-import com.slfuture.carrie.base.json.JSONArray;
+import com.qcast.tower.model.NotifyModel;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
-import com.slfuture.carrie.base.json.core.IJSON;
-import com.slfuture.carrie.base.text.Text;
 
 
 import java.util.ArrayList;
@@ -41,14 +35,14 @@ public class MyFriendMessageActivity extends Activity {
     private MyFriendMessageAdapter adapter;
     private ListView messageListView;
     private Button return_btn;
-    private MyMessageModel model;
+    private NotifyModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
         messageId = this.getIntent().getIntExtra("messageId", 0);
-        model= (MyMessageModel) bundle.get("myFriendMessage");
+        model= (NotifyModel) bundle.get("myFriendMessage");
         if(model==null){
             finish();
         }

@@ -105,6 +105,10 @@ public class Logic {
 	 * 用户名
 	 */
 	public static String imUsername = null;
+	/**
+	 * 是否存在未读消息
+	 */
+	public static boolean hasMessage = false;
 
 
 	/**

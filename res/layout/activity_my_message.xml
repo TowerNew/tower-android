@@ -42,7 +42,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:text="消息列表"
+            android:text="我的消息"
             android:textColor="#ffffffff"
             android:textSize="18sp" />
     </RelativeLayout>

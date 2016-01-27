@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+	<RelativeLayout
+		android:id="@+id/conversation_layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/blue"
+        android:focusable="true">
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_centerInParent="true"
+			android:layout_centerVertical="true"
+			android:text="联系人"
+			android:textColor="#ffffffff"
+			android:textSize="18sp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/conversation_layout_doctor"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/conversation_layout_header"
+        android:clickable="true">
+        <ImageView
+			android:id="@+id/conversation_image_photo"
+			android:layout_width="50dp"
+			android:layout_height="50dp"
+			android:src="@drawable/conversation_icon_doctor"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:layout_margin="10dp" />
+		<TextView
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="私人医生"
+		    android:textColor="@color/black"
+			android:layout_toRightOf="@id/conversation_image_photo"
+			android:layout_centerVertical="true"
+		    android:textSize="20sp" />
+		<ImageView
+			android:layout_width="20dp"
+			android:layout_height="20dp"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="10dp"
+			android:src="@drawable/arrow" />
+	</RelativeLayout>
+	<TextView
+	    android:id="@+id/conversation_label_family"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="我的家庭"
+	    android:textColor="@color/white"
+	    android:background="@color/grey"
+	    android:paddingLeft="4dp"
+	    android:paddingTop="2dp"
+	    android:paddingBottom="2dp"
+		android:layout_below="@id/conversation_layout_doctor"
+		android:layout_centerVertical="true"
+	    android:textSize="14sp" />
+    <ListView
+        android:id="@+id/conversation_list_family"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/conversation_label_family"
+        android:background="@color/white"
+        android:divider="@drawable/divider" />
+</RelativeLayout>

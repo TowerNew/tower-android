@@ -1,10 +1,20 @@
 package com.qcast.tower.logic;
 
 import com.qcast.tower.logic.structure.FamilyMember;
+import com.slfuture.carrie.base.json.JSONArray;
+import com.slfuture.carrie.base.json.JSONNumber;
+import com.slfuture.carrie.base.json.JSONObject;
+import com.slfuture.carrie.base.json.JSONString;
+import com.slfuture.carrie.base.json.core.IJSON;
+import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.type.Set;
 import com.slfuture.carrie.base.type.safe.Table;
+import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.response.CommonResponse;
+import com.slfuture.pluto.communication.response.Response;
 
 import android.app.Application;
+import android.widget.Toast;
 
 /**
  * 当前运行时
@@ -142,5 +152,63 @@ public class Logic {
 		tv.name = name;
 		tv.imUsername = imUsername;
 		tvMap.put(imUsername, tv);
+	}
+
+	/**
+	 * 加载成员
+	 * 
+	 * @param result 结果
+	 */
+	public static void loadMember(final IEventable<Boolean> callback) {
+		Host.doCommand("member", new CommonResponse<String>() {
+			@Override
+			public void onFinished(String content) {
+				if(Response.CODE_SUCCESS != code()) {
+					Toast.makeText(application, "加载家庭成员失败", Toast.LENGTH_LONG).show();
+					if(null != callback) {
+						callback.on(false);
+					}
+					return;
+				}
+				JSONObject resultObject = JSONObject.convert(content);
+				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+					Toast.makeText(application, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
+					if(null != callback) {
+						callback.on(false);
+					}
+					return;
+				}
+				JSONArray result = (JSONArray) resultObject.get("data");
+				Logic.familys.clear();
+				for(IJSON item : result) {
+					JSONObject newJSONObject = (JSONObject) item;
+					FamilyMember member = new FamilyMember();
+					if(null != newJSONObject.get("userGlobalId")) {
+						member.userId = ((JSONString) newJSONObject.get("userGlobalId")).getValue();
+					}
+					member.category = ((JSONNumber) newJSONObject.get("category")).intValue();
+					member.status = ((JSONNumber) newJSONObject.get("status")).intValue();
+					if(null != newJSONObject.get("phone")) {
+						member.phone = ((JSONString) newJSONObject.get("phone")).getValue();
+					}
+					if(null != newJSONObject.get("relation")) {
+						member.relation = ((JSONString) newJSONObject.get("relation")).getValue();
+					}
+					member.name = ((JSONString) newJSONObject.get("name")).getValue();
+					if(null != newJSONObject.get("idnumber")) {
+						member.idNumber = ((JSONString) newJSONObject.get("idnumber")).getValue();
+					}
+					if(null != newJSONObject.get("imUsername")) {
+						member.imUsername = ((JSONString) newJSONObject.get("imUsername")).getValue();
+					}
+					if(null != member.userId) {
+						Logic.familys.put(member.userId, member);
+					}
+				}
+				if(null != callback) {
+					callback.on(true);
+				}
+			}
+		}, Logic.token);
 	}
 }

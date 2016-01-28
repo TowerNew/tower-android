@@ -13,7 +13,6 @@ import com.qcast.tower.R;
 import com.qcast.tower.logic.Logic;
 import com.qcast.tower.logic.structure.FamilyMember;
 
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -35,7 +34,9 @@ public class ConversationActivity extends FragmentEx {
 
 
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onStart() {
+		super.onStart();
+		//
 		SimpleAdapter adapter = new SimpleAdapter(this.getActivity(), 
 				conversationList,
                 R.layout.listitem_family,
@@ -52,12 +53,14 @@ public class ConversationActivity extends FragmentEx {
 
 	@Override
     public void onResume() {
+		super.onResume();
+		//
 		conversationList.clear();
     	for(ILink<String, FamilyMember> link : Logic.familys) {
     		Map<String, Object> map = new HashMap<String, Object>();
-    		// map.put("icon", BitmapFactory.decodeResource(this.getResources(), R.drawable.conversation_icon_family));
     		map.put("relation", link.destination().relation);
     		map.put("id", link.destination().imUsername);
+    		conversationList.add(map);
     	}
     	((SimpleAdapter) listFamily.getAdapter()).notifyDataSetChanged();
     }

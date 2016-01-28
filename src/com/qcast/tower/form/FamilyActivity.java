@@ -9,12 +9,12 @@ import com.qcast.tower.logic.Logic;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.qcast.tower.logic.structure.FamilyMember;
-import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
-import com.slfuture.carrie.base.json.core.IJSON;
+import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
+import com.slfuture.carrie.base.type.core.ILink;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -191,45 +191,15 @@ public class FamilyActivity extends Activity {
 	 * 加载成员
 	 */
 	public void loadMember() {
-		Host.doCommand("member", new CommonResponse<String>() {
+		Logic.loadMember(new IEventable<Boolean>() {
 			@Override
-			public void onFinished(String content) {
-				if(Response.CODE_SUCCESS != code()) {
-					Toast.makeText(FamilyActivity.this, "加载家庭成员失败", Toast.LENGTH_LONG).show();
+			public void on(Boolean arg0) {
+				if(!arg0) {
 					return;
 				}
-				JSONObject resultObject = JSONObject.convert(content);
-				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-					Toast.makeText(FamilyActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
-					return;
-				}
-				JSONArray result = (JSONArray) resultObject.get("data");
-				Logic.familys.clear();
 				memberList.clear();
-				for(IJSON item : result) {
-					JSONObject newJSONObject = (JSONObject) item;
-					FamilyMember member = new FamilyMember();
-					if(null != newJSONObject.get("userGlobalId")) {
-						member.userId = ((JSONString) newJSONObject.get("userGlobalId")).getValue();
-					}
-					member.category = ((JSONNumber) newJSONObject.get("category")).intValue();
-					member.status = ((JSONNumber) newJSONObject.get("status")).intValue();
-					if(null != newJSONObject.get("phone")) {
-						member.phone = ((JSONString) newJSONObject.get("phone")).getValue();
-					}
-					if(null != newJSONObject.get("relation")) {
-						member.relation = ((JSONString) newJSONObject.get("relation")).getValue();
-					}
-					member.name = ((JSONString) newJSONObject.get("name")).getValue();
-					if(null != newJSONObject.get("idnumber")) {
-						member.idNumber = ((JSONString) newJSONObject.get("idnumber")).getValue();
-					}
-					if(null != newJSONObject.get("imUsername")) {
-						member.imUsername = ((JSONString) newJSONObject.get("imUsername")).getValue();
-					}
-					if(null != member.userId) {
-						Logic.familys.put(member.userId, member);
-					}
+				for(ILink<String, FamilyMember> item : Logic.familys) {
+					FamilyMember member = item.destination();
 					//
 					HashMap<String, Object> memberMap = new HashMap<String, Object>();
 					memberMap.put("userId", member.userId);
@@ -261,6 +231,6 @@ public class FamilyActivity extends Activity {
 				SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
 				adapter.notifyDataSetChanged();
 			}
-		}, Logic.token);
+		});
 	}
 }

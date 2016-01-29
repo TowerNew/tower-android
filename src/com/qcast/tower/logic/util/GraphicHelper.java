@@ -1,6 +1,5 @@
 package com.qcast.tower.logic.util;
 
-import com.qcast.tower.Program;
 import com.qcast.tower.R;
 import com.qcast.tower.logic.Logic;
 

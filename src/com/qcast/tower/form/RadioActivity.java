@@ -3,8 +3,9 @@ package com.qcast.tower.form;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.qcast.tower.Program;
 import com.qcast.tower.R;
-import com.qcast.tower.logic.Logic;
+import com.qcast.tower.business.Logic;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -144,7 +145,7 @@ public class RadioActivity extends Activity {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("caption", item);
 			if(current == i) {
-				map.put("status", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.yes));
+				map.put("status", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.yes));
 			}
 			i++;
 			dataList.add(map);

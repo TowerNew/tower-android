@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.qcast.tower.R;
+import com.qcast.tower.business.Logic;
 import com.slfuture.pluto.communication.Host;
-import com.qcast.tower.logic.Logic;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.carrie.base.json.JSONArray;

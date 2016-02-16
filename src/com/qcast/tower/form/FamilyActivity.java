@@ -3,18 +3,21 @@ package com.qcast.tower.form;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.qcast.tower.Program;
 import com.qcast.tower.R;
+import com.qcast.tower.business.Logic;
+import com.qcast.tower.business.Me;
+import com.qcast.tower.business.user.Friend;
+import com.qcast.tower.business.user.Relative;
 import com.slfuture.pluto.communication.Host;
-import com.qcast.tower.logic.Logic;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
-import com.qcast.tower.logic.structure.FamilyMember;
+import com.slfuture.pretty.im.Module;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
-import com.slfuture.carrie.base.type.core.ILink;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -170,67 +173,69 @@ public class FamilyActivity extends Activity {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
-				Log.i("TOWER", "CLICK FAMILY");
 				String remoteId = (String) memberList.get(index).get("remoteId");
-				String remoteNickName = (String) memberList.get(index).get("remoteNickName");
-				if(null == remoteId) {
-					remoteId = "t2";
-					remoteNickName = "t2";
-				}
 				Logic.messageFamily.clear();
-				Intent intent = new Intent(FamilyActivity.this, GroupChatActivity.class);
-				intent.putExtra("localId", Logic.imUsername);
-				intent.putExtra("remoteId", remoteId);
-				intent.putExtra("remoteName", remoteNickName);
-				FamilyActivity.this.startActivity(intent);
+				Me.instance.doChat(FamilyActivity.this, null, remoteId);
 			}
 		});
 	}
-	
+
 	/**
 	 * 加载成员
 	 */
 	public void loadMember() {
-		Logic.loadMember(new IEventable<Boolean>() {
+		Me.instance.refresh(FamilyActivity.this, new IEventable<Boolean>() {
 			@Override
-			public void on(Boolean arg0) {
-				if(!arg0) {
+			public void on(Boolean result) {
+				if(!result) {
 					return;
 				}
-				memberList.clear();
-				for(ILink<String, FamilyMember> item : Logic.familys) {
-					FamilyMember member = item.destination();
-					//
-					HashMap<String, Object> memberMap = new HashMap<String, Object>();
-					memberMap.put("userId", member.userId);
-					if(!Text.isBlank(member.relation)) {
-						memberMap.put("caption", member.relation);
-					}
-					else if(!Text.isBlank(member.name)) {
-						memberMap.put("caption", member.name);
-					}
-					else {
-						memberMap.put("caption", member.phone);
-					}
-					memberMap.put("remoteId", member.imUsername);
-					if(null != member.imUsername) {
-						if(Logic.messageFamily.contains(member.imUsername)) {
-							memberMap.put("hasmessage", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.icon_hasmessage));
-						}
-					}
-					if(null == member.relation) {
-						memberMap.put("remoteNickName", member.name);
-					}
-					else {
-						memberMap.put("remoteNickName", member.relation);
-					}
-					memberMap.put("delete", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.button_delete));
-					memberList.add(memberMap);
-				}
-				ListView listview = (ListView) FamilyActivity.this.findViewById(R.id.family_list_member);
-				SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
-				adapter.notifyDataSetChanged();
+				refreshList();
 			}
 		});
+	}
+
+	/**
+	 * 刷新列表
+	 */
+	public void refreshList() {
+		memberList.clear();
+		for(Friend friend : Me.instance.friends) {
+			HashMap<String, Object> memberMap = new HashMap<String, Object>();
+			memberMap.put("userId", friend.id);
+			if(!Text.isBlank(friend.nickName)) {
+				memberMap.put("caption", friend.nickName);
+			}
+			else {
+				memberMap.put("caption", friend.phone);
+			}
+			memberMap.put("remoteId", friend.imId);
+			if(Module.getUnreadMessageCount(friend.imId) > 0) {
+				memberMap.put("hasmessage", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_hasmessage));
+			}
+			if(null == friend.nickName) {
+				memberMap.put("remoteNickName", friend.nickName);
+			}
+			else {
+				memberMap.put("remoteNickName", friend.phone);
+			}
+			memberMap.put("delete", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.button_delete));
+			memberList.add(memberMap);
+		}
+		for(Relative relative : Me.instance.relatives) {
+			HashMap<String, Object> memberMap = new HashMap<String, Object>();
+			memberMap.put("userId", relative.id);
+			if(!Text.isBlank(relative.nickName)) {
+				memberMap.put("caption", relative.nickName);
+			}
+			else {
+				memberMap.put("caption", relative.name);
+			}
+			memberMap.put("delete", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.button_delete));
+			memberList.add(memberMap);
+		}
+		ListView listview = (ListView) FamilyActivity.this.findViewById(R.id.family_list_member);
+		SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
+		adapter.notifyDataSetChanged();
 	}
 }

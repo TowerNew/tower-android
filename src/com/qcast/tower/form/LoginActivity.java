@@ -4,26 +4,20 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.easemob.EMCallBack;
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMGroupManager;
 import com.qcast.tower.R;
+import com.qcast.tower.business.Me;
 import com.slfuture.pluto.communication.Host;
-import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.Storage;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.core.IResponse;
-import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
-import com.slfuture.carrie.base.json.core.IJSON;
+import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -45,13 +39,12 @@ public class LoginActivity extends Activity {
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i("TOWER", "LoginActivity.onCreate() execute");
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_login);
 		prepare();
 	}
-	
+
 	/**
 	 * 界面预处理
 	 */
@@ -130,75 +123,18 @@ public class LoginActivity extends Activity {
 				if(Text.isBlank(code)) {
 					return;
 				}
-				Host.doCommand("login", new CommonResponse<String>() {
+				Me.login(LoginActivity.this, phone, code, new IEventable<Boolean>() {
 					@Override
-					public void onFinished(String content) {
-						if(IResponse.CODE_SUCCESS != code()) {
-							Toast.makeText(LoginActivity.this, "网络错误", Toast.LENGTH_LONG).show();
+					public void on(Boolean result) {
+						if(!result) {
 							return;
 						}
-						JSONObject object = JSONObject.convert(content);
-						if(((JSONNumber) object.get("code")).intValue() <= 0) {
-							Toast.makeText(LoginActivity.this, ((JSONString) object.get("msg")).getValue(), Toast.LENGTH_LONG).show();
-							return;
-						}
-						Logic.phone = phone;
-						Logic.token = ((JSONString) ((JSONObject) object.get("data")).get("token")).getValue();
-						Logic.userId = ((JSONString) ((JSONObject) object.get("data")).get("userGlobalId")).getValue();
-						Logic.name = ((JSONString) ((JSONObject) object.get("data")).get("name")).getValue();
-						if(null != ((JSONObject) object.get("data")).get("imUsername")) {
-							Logic.imUsername = ((JSONString) ((JSONObject) object.get("data")).get("imUsername")).getValue();
-							Storage.setUser("imUsername", Logic.imUsername);
-						}
-						Logic.tvMap.clear();
-						JSONArray array = (JSONArray) (((JSONObject) object.get("data")).get("tvList"));
-						for(IJSON item : array) {
-							// {"cityId":0.0,"name":"麦燕贞的电视","regionId":1.0,"imUsername":"tvuser_136"}
-							JSONObject itemObject = (JSONObject) item;
-							String name = "TV";
-							if(null != itemObject.get("name")) {
-								name = ((JSONString) itemObject.get("name")).getValue();
-							}
-							String imUsername = "";
-							if(null != itemObject.get("imUsername")) {
-								imUsername = ((JSONString) itemObject.get("imUsername")).getValue();
-							}
-							Logic.addTVInfo(name, imUsername);
-						}
-						Storage.setUser("token", Logic.token);
-						Storage.setUser("userId", Logic.userId);
-						Storage.setUser("phone", phone);
-						Storage.setUser("name", Logic.name);
-						//
-						EMChatManager.getInstance().login(Logic.imUsername, Logic.phone, new EMCallBack() {
-							@Override
-							public void onSuccess() {
-								runOnUiThread(new Runnable() {
-									public void run() {
-										EMGroupManager.getInstance().loadAllGroups();
-										EMChatManager.getInstance().loadAllConversations();
-										Log.d("main", "登陆聊天服务器成功！");		
-									}
-								});
-							}
-						 
-							@Override
-							public void onProgress(int progress, String status) {
-						 
-							}
-						 
-							@Override
-							public void onError(int code, String message) {
-								Log.d("main", "登陆聊天服务器失败！");
-							}
-						});
-						// 返回
 						Intent intent = new Intent();
 						intent.putExtra("RESULT", "SUCCESS");
 						LoginActivity.this.setResult(1, intent);
 						LoginActivity.this.finish();
 					}
-				}, phone, code);
+				});
 			}
 		});
 	}

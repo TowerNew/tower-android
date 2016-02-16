@@ -8,7 +8,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.qcast.tower.R;
-import com.qcast.tower.logic.Logic;
+import com.qcast.tower.business.Logic;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;

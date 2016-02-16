@@ -3,9 +3,10 @@ package com.qcast.tower.model;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.qcast.tower.Program;
 import com.qcast.tower.R;
-import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.Storage;
+import com.qcast.tower.business.Logic;
+import com.qcast.tower.framework.Storage;
 
 /**
  * Created by zhengningchuan on 15/9/22.
@@ -29,7 +30,7 @@ public class MyReserveModel {
             return Storage.getImage(photoName);
     	}
     	else {
-    		return BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.askdoctor_self);
+    		return BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.askdoctor_self);
     	}
     }
 }

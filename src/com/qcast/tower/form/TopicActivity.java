@@ -1,6 +1,5 @@
 package com.qcast.tower.form;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -8,7 +7,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.qcast.tower.R;
-import com.qcast.tower.logic.Logic;
+import com.qcast.tower.business.Logic;
+import com.qcast.tower.business.Me;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
@@ -75,7 +75,7 @@ public class TopicActivity extends ActivityEx {
     	localPhoto = getIntent().getStringExtra("localPhoto");
     	remotePhoto = getIntent().getStringExtra("remotePhoto");
     }
-    
+
     /**
      * 准备关闭按钮
      */
@@ -110,16 +110,7 @@ public class TopicActivity extends ActivityEx {
         				}
         				groupId = content.getString("groupId");
         				remoteId = content.getString("doctorImUsername");
-                        //
-        				Intent intent = new Intent(TopicActivity.this, GroupChatActivity.class);
-                        intent.putExtra("localId", localId);
-                        intent.putExtra("groupId", groupId);
-                        intent.putExtra("remoteId", remoteId);
-                        intent.putExtra("remoteName", remoteName);
-                        intent.putExtra("localPhoto", localPhoto);
-                        intent.putExtra("remotePhoto", remotePhoto);
-                        TopicActivity.this.startActivity(intent);
-                        //
+        				Me.instance.doChat(TopicActivity.this, groupId, remoteId);
                         TopicActivity.this.finish();
         			}
                 }, txtContent.getText().toString(), doctorId, Logic.token);
@@ -146,15 +137,7 @@ public class TopicActivity extends ActivityEx {
 				}
 				groupId = content.getString("groupId");
 				remoteId = content.getString("doctorImUsername");
-				Intent intent = new Intent(TopicActivity.this, GroupChatActivity.class);
-                intent.putExtra("localId", localId);
-                intent.putExtra("groupId", groupId);
-                intent.putExtra("remoteId", remoteId);
-                intent.putExtra("remoteName", remoteName);
-                intent.putExtra("localPhoto", localPhoto);
-                intent.putExtra("remotePhoto", remotePhoto);
-                TopicActivity.this.startActivity(intent);
-                //
+				Me.instance.doChat(TopicActivity.this, groupId, remoteId);
                 TopicActivity.this.finish();
 			}
     	}, doctorId, Logic.token);

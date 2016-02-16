@@ -1,9 +1,9 @@
 package com.qcast.tower;
 
-import com.easemob.chat.EMChat;
+import com.qcast.tower.business.Logic;
 import com.slfuture.pluto.communication.Host;
-import com.qcast.tower.logic.Logic;
 import com.slfuture.pluto.config.Configuration;
+import com.slfuture.pretty.im.Module;
 
 import android.app.Application;
 import android.util.Log;
@@ -16,6 +16,10 @@ public class Program extends Application {
 	 * 版本号
 	 */
 	public final static String VERSION = "2.0.1";
+	/**
+	 * 程序引用
+	 */
+	public static Application application = null;
 
 
 	/**
@@ -25,16 +29,14 @@ public class Program extends Application {
     public void onCreate() {
 		Log.i("TOWER", "Program.onCreate() execute");
 		super.onCreate();
-		//
-		EMChat.getInstance().init(this);
-		EMChat.getInstance().setDebugMode(true);
-		//
-		Logic.application = this;
+		application = this;
 		// 初始化配置系统
-		Configuration.initialize(Logic.application);
+		Configuration.initialize(application);
+		// 初始化IM组件
+		Module.context = this;
+		Module.initialize();
 		// 初始化网络
 		Host.initialize();
-		Logic.initialize();
     }
 
 	/**
@@ -44,6 +46,8 @@ public class Program extends Application {
 	public void onTerminate() {
 		Log.i("TOWER", "Program.onTerminate() execute");
 		super.onTerminate();
+		// 关闭IM组件
+		Module.terminate();
 		// 关闭配置系统
 		Configuration.terminate();
 		// 关闭网络

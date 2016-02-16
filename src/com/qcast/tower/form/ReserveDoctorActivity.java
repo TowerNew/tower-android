@@ -1,11 +1,11 @@
 package com.qcast.tower.form;
 
 import com.qcast.tower.R;
+import com.qcast.tower.business.Logic;
+import com.qcast.tower.business.structure.TimePeriod;
 import com.slfuture.pluto.communication.Host;
-import com.qcast.tower.logic.Logic;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
-import com.qcast.tower.logic.structure.TimePeriod;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;

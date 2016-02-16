@@ -1,7 +1,7 @@
 package com.qcast.tower.form;
 
 import com.qcast.tower.R;
-import com.qcast.tower.logic.Logic;
+import com.qcast.tower.business.Logic;
 
 import android.app.Activity;
 import android.content.Intent;

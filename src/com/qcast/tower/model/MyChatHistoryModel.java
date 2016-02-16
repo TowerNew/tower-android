@@ -2,9 +2,9 @@ package com.qcast.tower.model;
 
 import android.graphics.Bitmap;
 
-import com.qcast.tower.logic.Storage;
-
 import java.io.Serializable;
+
+import com.qcast.tower.framework.Storage;
 
 /**
  * 问诊历史

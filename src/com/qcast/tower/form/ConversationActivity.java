@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.qcast.tower.R;
-import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.structure.FamilyMember;
+import com.qcast.tower.business.Logic;
+import com.qcast.tower.business.structure.FamilyMember;
 
 import android.view.View;
 import android.view.ViewGroup;

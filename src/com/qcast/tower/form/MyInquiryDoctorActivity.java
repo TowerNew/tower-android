@@ -2,7 +2,6 @@ package com.qcast.tower.form;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,13 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qcast.tower.R;
+import com.qcast.tower.business.Logic;
+import com.qcast.tower.business.Me;
+import com.qcast.tower.framework.Storage;
 import com.slfuture.pluto.communication.Host;
-import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.Storage;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
-import com.qcast.tower.model.DoctorModel;
 import com.qcast.tower.model.MyChatHistoryModel;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
@@ -74,14 +73,7 @@ public class MyInquiryDoctorActivity extends Activity{
                     return;
                 }
                 MyChatHistoryModel model = dataList.get(position);
-                
-                Intent intent = new Intent(MyInquiryDoctorActivity.this, GroupChatActivity.class);
-                intent.putExtra("localId", Logic.imUsername);
-                intent.putExtra("groupId", model.imGroupId);
-                intent.putExtra("remoteId", model.imUsername);
-                intent.putExtra("remoteName", model.docName);
-                intent.putExtra("remotePhoto", model.imageUrl);
-                MyInquiryDoctorActivity.this.startActivity(intent);
+                Me.instance.doChat(MyInquiryDoctorActivity.this, model.imGroupId, model.imUsername);
             }
         });
     }

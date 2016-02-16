@@ -19,9 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qcast.tower.R;
+import com.qcast.tower.business.Logic;
+import com.qcast.tower.framework.Storage;
 import com.slfuture.pluto.communication.Host;
-import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.Storage;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;

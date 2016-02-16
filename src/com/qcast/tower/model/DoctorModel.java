@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.qcast.tower.logic.Storage;
+import com.qcast.tower.framework.Storage;
 
 /**
  * 医生结构体

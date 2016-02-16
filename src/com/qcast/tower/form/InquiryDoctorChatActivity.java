@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import com.qcast.tower.R;
 import com.qcast.tower.adapter.ChatMsgViewAdapter;
+import com.qcast.tower.business.Logic;
 import com.slfuture.pluto.communication.Host;
-import com.qcast.tower.logic.Logic;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.core.IResponse;
 import com.qcast.tower.model.ChatMsgEntity;

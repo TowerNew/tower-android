@@ -3,20 +3,21 @@ package com.qcast.tower.form;
 import java.io.File;
 
 import com.qcast.tower.R;
+import com.qcast.tower.business.Logic;
+import com.qcast.tower.framework.Storage;
 import com.slfuture.pluto.communication.Host;
-import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.Storage;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
-import com.qcast.tower.logic.util.FileUtils;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.text.Text;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -312,7 +313,7 @@ public class UserInfoActivity extends Activity {
 		        	return;
 		        }
 	            uri = data.getData();
-	            path = FileUtils.getPath(this, uri);
+	            path = getPath(this, uri);
 	            Host.doCommand("idcardfront", new CommonResponse<String>() {
 					@Override
 					public void onFinished(String content) {
@@ -348,7 +349,7 @@ public class UserInfoActivity extends Activity {
 		        	return;
 		        }
 	            uri = data.getData();
-	            path = FileUtils.getPath(this, uri);
+	            path = getPath(this, uri);
 	            Host.doCommand("idcardback", new CommonResponse<String>() {
 					@Override
 					public void onFinished(String content) {
@@ -385,4 +386,23 @@ public class UserInfoActivity extends Activity {
 	    }
 	    super.onActivityResult(requestCode, resultCode, data);
 	}
+	
+    public static String getPath(Context context, Uri uri) {
+        if("content".equalsIgnoreCase(uri.getScheme())) {
+            String[] projection = { "_data" };
+            Cursor cursor = null;
+            try {
+                cursor = context.getContentResolver().query(uri, projection,null, null, null);
+                int column_index = cursor.getColumnIndexOrThrow("_data");
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
+            }
+            catch (Exception e) { }
+        }
+        else if("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
 }

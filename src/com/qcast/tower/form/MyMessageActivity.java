@@ -18,8 +18,9 @@ import android.widget.Toast;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.qcast.tower.R;
+import com.qcast.tower.business.Logic;
+import com.qcast.tower.business.Me;
 import com.slfuture.pluto.communication.Host;
-import com.qcast.tower.logic.Logic;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.qcast.tower.model.NotifyModel;
@@ -97,24 +98,10 @@ public class MyMessageActivity extends Activity {
                     MyMessageActivity.this.startActivity(intent4);
                 	break;
                 case NotifyModel.TYPE_7:
-                	Intent intent5 = new Intent(MyMessageActivity.this, GroupChatActivity.class);
-                	intent5.putExtra("localId", Logic.imUsername);
-                	if(null != notifyModel.imGroupId) {
-                		intent5.putExtra("groupId", notifyModel.imGroupId);
-                	}
-                	intent5.putExtra("remoteId", notifyModel.imUsername);
-                	intent5.putExtra("remotePhoto", notifyModel.remotePhoto);
-                    MyMessageActivity.this.startActivity(intent5);
+                	Me.instance.doChat(MyMessageActivity.this, notifyModel.imGroupId, notifyModel.imUsername);
                 	break;
                 case NotifyModel.TYPE_8:
-                	Intent intent6 = new Intent(MyMessageActivity.this, GroupChatActivity.class);
-                	intent6.putExtra("localId", Logic.imUsername);
-                	if(null != notifyModel.imGroupId) {
-                    	intent6.putExtra("groupId", notifyModel.imGroupId);
-                	}
-                	intent6.putExtra("remoteId", notifyModel.imUsername);
-                	intent6.putExtra("remotePhoto", notifyModel.remotePhoto);
-                    MyMessageActivity.this.startActivity(intent6);
+                	Me.instance.doChat(MyMessageActivity.this, notifyModel.imGroupId, notifyModel.imUsername);
                 	break;
                 case NotifyModel.TYPE_9:
                 	Intent intent9 = new Intent(MyMessageActivity.this, TextActivity.class);

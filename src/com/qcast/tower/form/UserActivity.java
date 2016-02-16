@@ -4,10 +4,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.qcast.tower.Program;
 import com.qcast.tower.R;
+import com.qcast.tower.business.Logic;
+import com.qcast.tower.framework.Storage;
 import com.slfuture.pluto.communication.Host;
-import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.Storage;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
@@ -196,11 +197,11 @@ public class UserActivity extends Fragment {
 		HashMap<String, Object> map = null;
 		//
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_healthmanage));
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.user_icon_healthmanage));
 		map.put("caption", "健康管理");
 		userBoardList.add(map);
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_family));
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.user_icon_family));
 		map.put("caption", "我的家庭");
 		userBoardList.add(map);
 		//map = new HashMap<String, Object>();
@@ -208,15 +209,15 @@ public class UserActivity extends Fragment {
 		//map.put("caption", "我的钱包");
 		//userBoardList.add(map);
         map = new HashMap<String, Object>();
-        map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_inquiry));
+        map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.user_icon_inquiry));
         map.put("caption", "我的问诊");
         userBoardList.add(map);
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_reserve));
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.user_icon_reserve));
 		map.put("caption", "我的预约");
 		userBoardList.add(map);
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Logic.application.getResources(), R.drawable.user_icon_about));
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.user_icon_about));
 		map.put("caption", "程序版本");
 		userBoardList.add(map);
 		//

@@ -24,21 +24,12 @@ import com.easemob.EMConnectionListener;
 import com.easemob.EMError;
 import com.easemob.chat.CmdMessageBody;
 import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMChatOptions;
 import com.easemob.chat.EMMessage;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.NetUtils;
 import com.qcast.tower.R;
-import com.slfuture.pluto.communication.Host;
-import com.qcast.tower.logic.Logic;
-import com.qcast.tower.logic.Storage;
-import com.slfuture.pluto.communication.response.CommonResponse;
-import com.slfuture.pluto.communication.response.Response;
-import com.slfuture.carrie.base.json.JSONArray;
-import com.slfuture.carrie.base.json.JSONNumber;
-import com.slfuture.carrie.base.json.JSONObject;
-import com.slfuture.carrie.base.json.JSONString;
-import com.slfuture.carrie.base.json.core.IJSON;
+import com.qcast.tower.business.Logic;
+import com.qcast.tower.framework.Storage;
 import com.slfuture.carrie.base.text.Text;
 /**
  * 主界面
@@ -159,86 +150,6 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
-		EMChatOptions chatOptions = EMChatManager.getInstance().getChatOptions();
-		chatOptions.setNotifyBySoundAndVibrate(true);
-		//
-        IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
-    	intentFilter.setPriority(2);
-    	chatReceiver = new BroadcastReceiver() {
-           	@Override
-           	public void onReceive(Context context, Intent intent) {
-           		String from = intent.getStringExtra("from");
-           		Logic.messageFamily.add(from);
-           		MediaPlayer player = MediaPlayer.create(MainActivity.this, R.raw.newmessage);
-                player.start();
-           	}
-        };
-        registerReceiver(chatReceiver, intentFilter);
-        //
-        dialReceiver = new BroadcastReceiver() {
-           	@Override
-           	public void onReceive(Context context, Intent intent) {
-           		String from = intent.getStringExtra("from");
-           		String type = intent.getStringExtra("type");
-           		if(null != Logic.tvMap.get(from)) {
-               		Intent ringIntent = new Intent(MainActivity.this, RingActivity.class);
-               		ringIntent.putExtra("userId", from);
-               		ringIntent.putExtra("userName", "电视");
-               		ringIntent.putExtra("type", type);
-               		MainActivity.this.startActivity(ringIntent);
-               		return;
-           		}
-                Host.doCommand("member", new CommonResponse<String>(from + "|" + type) {
-        			@Override
-        			public void onFinished(String content) {
-        				if(Response.CODE_SUCCESS != code()) {
-        					return;
-        				}
-        				JSONObject resultObject = JSONObject.convert(content);
-        				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-        					return;
-        				}
-                   		String from = Text.substring((String) tag, null, "|");
-                   		String type = Text.substring((String) tag, "|", null);
-        				JSONArray result = (JSONArray) resultObject.get("data");
-        				if(0 == result.size()) {
-        					Intent ringIntent = new Intent(MainActivity.this, RingActivity.class);
-    		           		ringIntent.putExtra("userId", from);
-    		           		ringIntent.putExtra("userName", "未知来源");
-    		           		ringIntent.putExtra("type", type);
-    		           		MainActivity.this.startActivity(ringIntent);
-    		           		return;
-        				}
-        				for(IJSON item : result) {
-        					JSONObject newJSONObject = (JSONObject) item;
-        					if(null != newJSONObject.get("imUsername")) {
-        						String imUsername = ((JSONString) newJSONObject.get("imUsername")).getValue();
-        						if(!from.equals(imUsername)) {
-        							continue;
-        						}
-        						String relation = "亲友";
-        						if(null != newJSONObject.get("relation")) {
-        							relation = ((JSONString) newJSONObject.get("relation")).getValue();
-            					}
-        						Intent ringIntent = new Intent(MainActivity.this, RingActivity.class);
-        		           		ringIntent.putExtra("userId", from);
-        		           		ringIntent.putExtra("userName", relation);
-        		           		ringIntent.putExtra("type", type);
-        		           		MainActivity.this.startActivity(ringIntent);
-        		           		return;
-        					}
-        				}
-						Intent ringIntent = new Intent(MainActivity.this, RingActivity.class);
-		           		ringIntent.putExtra("userId", from);
-		           		ringIntent.putExtra("userName", "医生热线");
-		           		ringIntent.putExtra("type", type);
-		           		MainActivity.this.startActivity(ringIntent);
-        			}
-        		}, Logic.token);
-           	}
-        };
-        registerReceiver(dialReceiver, new IntentFilter(EMChatManager.getInstance().getIncomingCallBroadcastAction()));
-        //
     	commandReceiver = new BroadcastReceiver() {
     		@Override
     		public void onReceive(Context context, Intent intent) {
@@ -276,8 +187,6 @@ public class MainActivity extends FragmentActivity {
         				break;
         			}
         			Logic.hasMessage = true;
-               		MediaPlayer player = MediaPlayer.create(MainActivity.this, R.raw.newmessage);
-                    player.start();
     			}
     		}
     	};
@@ -285,7 +194,6 @@ public class MainActivity extends FragmentActivity {
     	//
     	EMChatManager.getInstance().addConnectionListener(new ConnectionListener());
     }
-    
 
     /**
      * 终结

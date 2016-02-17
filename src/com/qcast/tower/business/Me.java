@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import com.qcast.tower.Program;
-import com.qcast.tower.R;
+import com.qcast.tower.business.core.IMeListener;
 import com.qcast.tower.business.user.Friend;
 import com.qcast.tower.business.user.Relative;
 import com.qcast.tower.business.user.User;
@@ -19,6 +19,7 @@ import com.slfuture.carrie.base.type.safe.Table;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
+import com.slfuture.pluto.framework.Broadcaster;
 import com.slfuture.pretty.im.Module;
 import com.slfuture.pretty.im.core.IReactor;
 import com.slfuture.pretty.im.view.form.SingleChatActivity;
@@ -26,7 +27,6 @@ import com.slfuture.pretty.im.view.form.SingleChatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.MediaPlayer;
 
 /**
  * 当前登录用户类
@@ -397,12 +397,11 @@ public class Me extends User implements Serializable, IReactor {
 
 	@Override
 	public void onConflict() {
-		
+		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onConflict();
 	}
 
 	@Override
 	public void onCommand(String from, String action, ITable<String, Object> data) {
-   		MediaPlayer player = MediaPlayer.create(Program.application, R.raw.newmessage);
-        player.start();
+		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
 	}
 }

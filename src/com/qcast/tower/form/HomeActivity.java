@@ -3,16 +3,12 @@ package com.qcast.tower.form;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.easemob.chat.CmdMessageBody;
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMMessage;
-import com.easemob.exceptions.EaseMobException;
 import com.qcast.tower.Program;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.business.Profile;
-import com.qcast.tower.business.structure.Region;
+import com.qcast.tower.business.core.IMeListener;
 import com.qcast.tower.framework.Storage;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
@@ -26,11 +22,10 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
+import com.slfuture.carrie.base.type.core.ITable;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -64,7 +59,7 @@ import android.widget.SimpleAdapter.ViewBinder;
  * 首页
  */
 @ResourceView(id = R.layout.activity_home)
-public class HomeActivity extends FragmentEx {
+public class HomeActivity extends FragmentEx implements IMeListener {
 	public class GridViewAdapter extends BaseAdapter {
 		public class ViewHolder {
 			ImageView image;
@@ -144,10 +139,6 @@ public class HomeActivity extends FragmentEx {
 	 * 当前资讯列表
 	 */
 	protected ArrayList<HashMap<String, Object>> newsList = new ArrayList<HashMap<String, Object>>();
-    /**
-     * 命令接收器
-     */
-    private BroadcastReceiver commandReceiver = null;
     
 	/**
 	 * 顶部浏览器
@@ -216,18 +207,12 @@ public class HomeActivity extends FragmentEx {
 		else {
 			stopBell();
 		}
-		//
-		dealData();
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
 		stopBell();
-        if(null != commandReceiver) {
-        	this.getActivity().unregisterReceiver(commandReceiver);
-        }
-        commandReceiver = null;
 	}
 
 	/**
@@ -320,16 +305,14 @@ public class HomeActivity extends FragmentEx {
 	 * 处理区域按钮
 	 */
 	public void dealRegion() {
-		final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
-		regionButton.setOnClickListener(new View.OnClickListener() {
+		btnRegion.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
-				HomeActivity.this.startActivityForResult(intent, 2);
+				HomeActivity.this.startActivityForResult(intent, MESSAGE_REGION);
 			}
 		});
-		final ImageView home_button_notify = (ImageView) this.getActivity().findViewById(R.id.home_button_notify);
-		home_button_notify.setOnClickListener(new View.OnClickListener() {
+		btnBell.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
@@ -339,7 +322,10 @@ public class HomeActivity extends FragmentEx {
 		});
 		if(null == Profile.instance().region) {
 			Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
-			HomeActivity.this.startActivityForResult(intent, 2);
+			HomeActivity.this.startActivityForResult(intent, MESSAGE_REGION);
+		}
+		else {
+			btnRegion.setText(fetchRegionName());
 		}
 	}
 
@@ -366,7 +352,8 @@ public class HomeActivity extends FragmentEx {
 		gridEntry.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// TODO:
+				Intent intent = new Intent(HomeActivity.this.getActivity(), SiriActivity.class);
+				HomeActivity.this.startActivity(intent);
 			}
 		});
 	}
@@ -382,53 +369,6 @@ public class HomeActivity extends FragmentEx {
 				HomeActivity.this.getActivity().startActivity(intent);
 			}
 		});
-	}
-	
-	/**
-	 */
-	private void dealData() {
-		commandReceiver = new BroadcastReceiver() {
-    		@Override
-    		public void onReceive(Context context, Intent intent) {
-    			String msgId = intent.getStringExtra("msgid");
-    			EMMessage message = intent.getParcelableExtra("message");
-    			CmdMessageBody cmdMsgBody = (CmdMessageBody) message.getBody();
-    			String aciton = cmdMsgBody.action;
-    			Log.d("tower", "command message " + aciton + " receive:" + msgId);
-    			if("notify".equalsIgnoreCase(aciton)) {
-    				// 通知消息
-    				int type = 0;
-    				String title = null;
-        			try {
-        				type = message.getIntAttribute("type");
-        				title = message.getStringAttribute("title");
-    				}
-        			catch (EaseMobException e) {
-        				Log.e("tower", "command message parse failed", e);
-    				}
-    				if(!Text.isBlank(title)) {
-        				Toast.makeText(HomeActivity.this.getActivity(), title, Toast.LENGTH_LONG).show();
-    				}
-        			switch(type) {
-        			case 1:
-        				// 添加好友消息
-        				break;
-        			case 2:
-        				// 好友接受消息
-        				break;
-        			case 3:
-        				// 好友拒绝消息
-        				break;
-        			case 4:
-        				// 系统通知消息
-        				break;
-        			}
-        			Logic.hasMessage = true;
-        			shakeBell();
-    			}
-    		}
-    	};
-    	this.getActivity().registerReceiver(commandReceiver, new IntentFilter(EMChatManager.getInstance().getCmdMessageBroadcastAction()));
 	}
 	
 	/**
@@ -505,13 +445,11 @@ public class HomeActivity extends FragmentEx {
 		if(resultCode == RadioActivity.RESULT_CANCEL) {
 			return;
 		}
-		if(1 == requestCode) {
+		if(MESSAGE_REGION == requestCode) {
 			int regionId = data.getIntExtra("regionId", 0);
 			if(0 == regionId) {
 				return;
 			}
-			String regionName = data.getStringExtra("regionName");
-			Profile.instance().region = new Region(regionId, regionName);
 			btnRegion.setText(fetchRegionName());
 		}
 	}
@@ -572,5 +510,17 @@ public class HomeActivity extends FragmentEx {
 	public void stopBell() {
 		btnBell.clearAnimation();
 		btnBell.setImageResource(R.drawable.bell_normal);
+	}
+
+	@Override
+	public void onConflict() {
+		
+	}
+
+	@Override
+	public void onCommand(String from, String action, ITable<String, Object> data) {
+		if("notify".equalsIgnoreCase(action)) {
+			shakeBell();
+		}
 	}
 }

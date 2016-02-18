@@ -32,6 +32,7 @@ public class Storage {
 	public final static String STORAGE_ROOT = SDCard.root() + ROOT_NAME + "/";
 	public final static String IMAGE_ROOT = STORAGE_ROOT + "image/";
 	public final static String DATA_ROOT = STORAGE_ROOT + "data/";
+	public final static String VOICE_ROOT = STORAGE_ROOT + "voice/";
 
 	/**
 	 * 用户相关信息

@@ -19,4 +19,8 @@
     <color name="blue">#ff4278a7</color>
     <color name="lightblue">#FF3A61A6</color>
     <color name="voip_interface_text_color">#bababa</color>
+    
+    
+    <color name="main">#ff4278a7</color>
+    <color name="sub">#ff4278a7</color>
 </resources>

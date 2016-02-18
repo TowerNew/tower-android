@@ -1,8 +1,10 @@
 package com.qcast.tower.form;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.qcast.tower.R;
+import com.qcast.tower.business.Profile;
 import com.qcast.tower.business.structure.City;
 import com.qcast.tower.business.structure.Region;
 import com.slfuture.pluto.communication.Host;
@@ -149,9 +151,17 @@ public class RegionActivity extends ActivityEx {
 						return;
 					}
 					else if(i + 1 + city.regions.size() > index) {
+						int regionId = city.regions.get(index - i - 1).id;
+						String regionName = city.regions.get(index - i - 1).name;
+						Profile.instance().region = new Region(regionId, regionName);
+						try {
+							Profile.instance().save();
+						}
+						catch (IOException e) { }
+						//
 						Intent intent = new Intent();
-						intent.putExtra("regionId", city.regions.get(index - i - 1).id);
-						intent.putExtra("regionName", city.regions.get(index - i - 1).name);
+						intent.putExtra("regionId", regionId);
+						intent.putExtra("regionName", regionName);
 						RegionActivity.this.setResult(RESULT_UPDATED, intent);
 						RegionActivity.this.finish();
 						return;

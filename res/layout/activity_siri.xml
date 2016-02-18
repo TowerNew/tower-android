@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+	<TextView
+	     android:id="@+id/siri_label_title"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_centerHorizontal="true"
+	     android:layout_alignParentTop="true"
+	     android:layout_marginTop="50dp"
+	     android:text="你好，需要什么帮助吗"
+	     android:textColor="@color/white"
+	     android:textSize="20sp" />
+    <ImageView
+        android:id="@+id/siri_image_microphone"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerInside"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/icon_microphone">
+	</ImageView>
+</RelativeLayout>

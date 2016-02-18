@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
-import com.qcast.tower.business.structure.City;
 import com.qcast.tower.business.structure.Region;
 import com.qcast.tower.framework.Storage;
 import com.slfuture.carrie.base.etc.Serial;
@@ -20,10 +19,6 @@ public class Profile implements Serializable {
 	 */
 	private static Profile instance = null;
 	
-	/**
-	 * 当前城市
-	 */
-	public City city = null;
 	/**
 	 * 当前小区
 	 */

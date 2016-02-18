@@ -2,8 +2,6 @@ package com.qcast.tower.form;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import com.easemob.chat.CmdMessageBody;
 import com.easemob.chat.EMChatManager;
@@ -12,18 +10,22 @@ import com.easemob.exceptions.EaseMobException;
 import com.qcast.tower.Program;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
+import com.qcast.tower.business.Me;
+import com.qcast.tower.business.Profile;
+import com.qcast.tower.business.structure.Region;
 import com.qcast.tower.framework.Storage;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
+import com.slfuture.pluto.view.annotation.ResourceView;
+import com.slfuture.pluto.view.component.FragmentEx;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
-import com.slfuture.carrie.base.type.Table;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -31,11 +33,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,223 +42,167 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.Animation.AnimationListener;
+import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.Gallery;
+import android.widget.GridView;
 import android.widget.HeaderViewListAdapter;
-import android.widget.ImageButton;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Gallery.LayoutParams;
-import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.SimpleAdapter.ViewBinder;
 
 /**
  * 首页
  */
-public class HomeActivity extends Fragment {
-	/**
-	 * 横栏适配器
-	 */
-	public class BannerAdapter extends BaseAdapter {
+@ResourceView(id = R.layout.activity_home)
+public class HomeActivity extends FragmentEx {
+	public class GridViewAdapter extends BaseAdapter {
+		public class ViewHolder {
+			ImageView image;
+			TextView text;
+		}
+
 		/**
-		 * 图片缓存
+		 * 上下文
 		 */
-		protected Table<Integer, ImageView> imageCache = new Table<Integer, ImageView>();
-		
-		
+		private Context context = null;
+
+		public GridViewAdapter(Context context) {
+			this.context = context;
+		}
 		@Override
 		public int getCount() {
-			if(null == adList) {
-				return 0;
-			}
-			return adList.size();
+			return 6;
 		}
-
 		@Override
-		public Object getItem(int arg0) {
-			return arg0;
+		public Object getItem(int position) {
+			return null;
 		}
-
 		@Override
 		public long getItemId(int position) {
 			return position;
 		}
-
-		@SuppressWarnings("deprecation")
 		@Override
-		public View getView(int index, View arg1, ViewGroup arg2) {
-			ImageView imageView = imageCache.get(index);
-			if(null == imageView) {
-				imageView = new ImageView(HomeActivity.this.getActivity());
-				if(adList != null && index >= adList.size()) {
-					imageView.setImageResource(R.drawable.image_loading);
-					imageView.setAdjustViewBounds(true);
-					imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-					imageView.setScaleType(ScaleType.CENTER_CROP);
-					// i.setBackgroundResource(R.drawable.e);
-					return imageView;
-				}
-				if(null == adList) {
-					return imageView;
-				}
-				HashMap<String, Object> adMap = (HashMap<String, Object>) adList.get(index);
-				if(null == adMap.get("image")) {
-					imageView.setBackgroundResource(R.drawable.image_loading);
-				}
-				else if(adMap.get("image") instanceof String) {
-					imageView.setBackgroundResource(R.drawable.image_loading);
-				}
-				else if(adMap.get("image") instanceof Bitmap) {
-					imageView.setImageBitmap((Bitmap)(adMap.get("image")));
-				}
-				imageView.setAdjustViewBounds(true);
-				imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-				imageView.setScaleType(ScaleType.CENTER_CROP);
-				imageCache.put(index, imageView);
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder holder = null;
+			if(null == convertView) {
+				holder = new ViewHolder();
+				convertView = LayoutInflater.from(context).inflate(R.layout.listitem_entry, null);
+				holder.image = (ImageView) convertView.findViewById(R.id.entry_image_icon);
+				holder.text = (TextView) convertView.findViewById(R.id.entry_label_title);
+				convertView.setTag(holder);
 			}
 			else {
-				if(adList.get(index).get("image") instanceof Bitmap) {
-					imageView.setImageBitmap((Bitmap)(adList.get(index).get("image")));
-				}
+				holder = (ViewHolder) convertView.getTag();
 			}
-			return imageView;
+			switch(position) {
+			case 0:
+				holder.image.setImageResource(R.drawable.icon_entry_1);
+				holder.text.setText("私人医生");
+				break;
+			case 1:
+				holder.image.setImageResource(R.drawable.icon_entry_2);
+				holder.text.setText("预约体检");
+				break;
+			case 2:
+				holder.image.setImageResource(R.drawable.icon_entry_3);
+				holder.text.setText("预约理疗");
+				break;
+			case 3:
+				holder.image.setImageResource(R.drawable.icon_entry_4);
+				holder.text.setText("预约挂号");
+				break;
+			case 4:
+				holder.image.setImageResource(R.drawable.icon_entry_5);
+				holder.text.setText("自我诊断");
+				break;
+			case 5:
+				holder.image.setImageResource(R.drawable.icon_entry_6);
+				holder.text.setText("私人医生");
+				break;
+			}
+			return convertView;
 		}
-	}
-	
-	/**
-	 * 横栏滚动句柄
-	 */
-	private class BannerRollHandler extends Handler {
-		@Override
-		public void handleMessage(Message msg) {
-            switch (msg.what) {
-            case 1:
-            	if(null == HomeActivity.this.getActivity()) {
-            		return;
-            	}
-            	if(null == gallery) {
-            		gallery = ((Gallery) HomeActivity.this.getActivity().findViewById(R.id.home_gallery_ad));
-            		gallery.setAdapter(new BannerAdapter());
-            		gallery.setOnItemClickListener(new OnItemClickListener() {
-						@Override
-						public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-							String url = (String) adList.get(position).get("url");
-							if(null == url) {
-								return;
-							}
-							Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
-							intent.putExtra("url", url);
-							HomeActivity.this.startActivity(intent);
-						}
-					});
-            	}
-            	if(0 == adList.size()) {
-            		return;
-            	}
-            	if(gallery.getSelectedItemPosition() >= adList.size() - 1) {
-            		gallery.setSelection(0);
-            	}
-            	else {
-            		gallery.setSelection(gallery.getSelectedItemPosition() + 1);
-            	}
-                break;
-            }
-            super.handleMessage(msg);
-        }
 	}
 
-	/**
-	 * 横栏滚动任务
-	 */
-	private class BannerRollTask extends TimerTask {
-		@Override
-		public void run() {
-			Message message = new Message();
-			message.what = 1;
-			if(null == timer) {
-				cancel();
-				return;
-			}
-			if(null != handler) {
-				handler.sendMessage(message);
-			}
-		}
-	}
 
 	/**
 	 * 消息ID
 	 */
 	public final static int MESSAGE_REGION = 1;
-	
-	
-	/**
-	 * 广告列表
-	 */
-	protected ArrayList<HashMap<String, Object>> adList = new ArrayList<HashMap<String, Object>>();
+
 	/**
 	 * 当前资讯列表
 	 */
 	protected ArrayList<HashMap<String, Object>> newsList = new ArrayList<HashMap<String, Object>>();
-	/**
-	 * 定时器
-	 */
-	protected static Timer timer = null;
     /**
      * 命令接收器
      */
     private BroadcastReceiver commandReceiver = null;
+    
 	/**
-	 * 横栏句柄
+	 * 顶部浏览器
 	 */
-	protected static BannerRollHandler handler = null;
+	@ResourceView(id = R.id.home_browser)
+	public WebView browser;
 	/**
-	 * 滚动栏
+	 * 小区选择按钮
 	 */
-	protected Gallery gallery = null;
+	@ResourceView(id = R.id.home_button_region)
+	public Button btnRegion;
 	/**
-	 * 区域ID列表
+	 * 铃铛
 	 */
-	protected int[] regionIds = null;
+	@ResourceView(id = R.id.home_button_notify)
+	public ImageView btnBell;
+	/**
+	 * 搜索按钮
+	 */
+	@ResourceView(id = R.id.home_button_search)
+	public Button btnSearch;
+	/**
+	 * 入口滚动条
+	 */
+	@ResourceView(id = R.id.home_scroll_entry)
+	public HorizontalScrollView scrollEntry;
+	/**
+	 * 入口表格
+	 */
+	@ResourceView(id = R.id.home_grid_entry)
+	public GridView gridEntry;
+	/**
+	 * 新闻列表
+	 */
+	@ResourceView(id = R.id.home_list_news)
+	public ListView listNews;
 	/**
 	 * 当前页面索引
 	 */
 	protected int page = 1;
-	/**
-	 * 是否启动
-	 */
-	protected boolean isStarted = false;
-	
+
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.activity_home, container, true);
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		//
-		if(isStarted) {
-			return;
-		}
-		isStarted = true;
+    public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		prepare();
 		dealNews();
 		dealRegion();
 		dealSearch();
 		dealEntry();
 		//
 		loadVersion();
-		loadAd();
 		loadNews();
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -285,16 +228,6 @@ public class HomeActivity extends Fragment {
         	this.getActivity().unregisterReceiver(commandReceiver);
         }
         commandReceiver = null;
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-		if(null == timer) {
-			return;
-		}
-		timer.cancel();
-		timer = null;
 	}
 
 	/**
@@ -323,52 +256,6 @@ public class HomeActivity extends Fragment {
 				HomeActivity.this.startActivity(intent);
 			}
 		});
-	}
-
-	/**
-	 * 加载广告列表
-	 */
-	private void loadAd() {
-		Host.doCommand("banner", new CommonResponse<String>() {
-			@Override
-			public void onFinished(String content) {
-				if(Response.CODE_SUCCESS != code()) {
-					Toast.makeText(HomeActivity.this.getActivity(), "访问网络失败", Toast.LENGTH_LONG).show();
-					return;
-				}
-				timer = new Timer();
-				timer.schedule(new BannerRollTask(), 500, 5000);
-				handler = new BannerRollHandler();
-				//
-				JSONObject resultObject = JSONObject.convert(content);
-				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-					// Toast.makeText(HomeActivity.this.getActivity(), ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
-					return;
-				}
-				JSONArray result = (JSONArray) resultObject.get("data");
-				adList.clear();
-				for(IJSON newJSON : result) {
-					JSONObject jsonObject = (JSONObject) newJSON;
-					HashMap<String, Object> newsMap = new HashMap<String, Object>();
-					String imageURL = ((JSONString)(jsonObject.get("image"))).getValue();
-					String imageName = Storage.getImageName(imageURL);
-					newsMap.put("image", imageName);
-					newsMap.put("url", ((JSONString)(jsonObject.get("url"))).getValue());
-					adList.add(newsMap);
-		            if(Text.isBlank(imageName)) {
-		            	continue;
-		            }
-		            // 加载图片
-		            Host.doImage("image", new ImageResponse(imageName, adList.size() - 1) {
-						@Override
-						public void onFinished(Bitmap content) {
-							HashMap<String, Object> map = adList.get((Integer) tag);
-							map.put("image", content);
-						}
-		            }, imageURL);
-				}
-			}
-		}, Logic.regionId);
 	}
 
 	/**
@@ -437,11 +324,8 @@ public class HomeActivity extends Fragment {
 		regionButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(null == Logic.regionName) {
-					selectRegion(RegionActivity.REGION_CITYID);
-				} else {
-					selectRegion(RegionActivity.REGION_REGION);
-				}
+				Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
+				HomeActivity.this.startActivityForResult(intent, 2);
 			}
 		});
 		final ImageView home_button_notify = (ImageView) this.getActivity().findViewById(R.id.home_button_notify);
@@ -453,8 +337,9 @@ public class HomeActivity extends Fragment {
 				HomeActivity.this.getActivity().startActivity(intent);
 			}
 		});
-		if(null == Logic.regionName) {
-			selectRegion(RegionActivity.REGION_CITYID);
+		if(null == Profile.instance().region) {
+			Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
+			HomeActivity.this.startActivityForResult(intent, 2);
 		}
 	}
 
@@ -462,51 +347,34 @@ public class HomeActivity extends Fragment {
 	 * 处理入口按钮
 	 */
 	public void dealEntry() {
-		ImageButton button = (ImageButton) this.getActivity().findViewById(R.id.home_button_free_inquiry);
-		button.setOnClickListener(new View.OnClickListener() {
+		if(null == Me.instance) {
+			browser.loadUrl(Host.fetchURL("home", ""));
+		}
+		else {
+			browser.loadUrl(Host.fetchURL("home", Me.instance.token));
+		}
+		scrollEntry.setHorizontalScrollBarEnabled(false);
+		DisplayMetrics metrics = new DisplayMetrics();
+		this.getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		GridViewAdapter adapter = new GridViewAdapter(this.getActivity());
+		gridEntry.setAdapter(adapter);
+		LayoutParams params = new LayoutParams(adapter.getCount() * metrics.widthPixels / 4, LayoutParams.WRAP_CONTENT);
+		gridEntry.setLayoutParams(params);
+		gridEntry.setColumnWidth(metrics.widthPixels / 4);
+		gridEntry.setStretchMode(GridView.NO_STRETCH);
+		gridEntry.setNumColumns(adapter.getCount());
+		gridEntry.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
-				intent.putExtra("services", "inquiry");
-				intent.putExtra("docLevel", 0);
-				HomeActivity.this.startActivity(intent);
-			}
-		});
-		button = (ImageButton) this.getActivity().findViewById(R.id.home_button_healthy_archive);
-		button.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), HealthManageActivity.class);
-				HomeActivity.this.startActivity(intent);
-			}
-		});
-
-		button = (ImageButton) this.getActivity().findViewById(R.id.home_button_reserve);
-		button.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), InquiryDoctorActivity.class);
-				intent.putExtra("services", "inquiry");
-				intent.putExtra("docLevel", 2);
-				HomeActivity.this.startActivity(intent);
-			}
-		});
-
-		button = (ImageButton) this.getActivity().findViewById(R.id.home_button_family_fastview);
-		button.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), FamilyActivity.class);
-				HomeActivity.this.startActivity(intent);
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				// TODO:
 			}
 		});
 	}
-	
+
 	/**
 	 * 处理搜索按钮
 	 */
 	public void dealSearch() {
-		Button btnSearch = (Button) this.getActivity().findViewById(R.id.home_button_search);
 		btnSearch.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -562,17 +430,27 @@ public class HomeActivity extends Fragment {
     	};
     	this.getActivity().registerReceiver(commandReceiver, new IntentFilter(EMChatManager.getInstance().getCmdMessageBroadcastAction()));
 	}
+	
+	/**
+	 * 界面预设
+	 */
+	private void prepare() {
+		if(listNews.getHeaderViewsCount() > 0) {
+			return;
+		}
+		View viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_home_head, null);
+		listNews.addHeaderView(viewHead);
+		scrollEntry = (HorizontalScrollView) viewHead.findViewById(R.id.home_scroll_entry);
+		gridEntry = (GridView) viewHead.findViewById(R.id.home_grid_entry);
+		btnRegion.getBackground().setAlpha(200);
+		btnSearch.getBackground().setAlpha(200);
+		btnBell.setImageAlpha(200);
+	}
 
 	/**
 	 * 处理资讯
 	 */
 	private void dealNews() {
-		ListView listview = (ListView) this.getActivity().findViewById(R.id.home_list_news);
-		if(listview.getHeaderViewsCount() > 0) {
-			return;
-		}
-		View viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_home_head, null);
-		listview.addHeaderView(viewHead);
 		//
 		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), newsList, R.layout.listview_news,
 			new String[]{"photo", "title", "publisher", "date"}, 
@@ -588,8 +466,8 @@ public class HomeActivity extends Fragment {
                 return false;
             }
         });
-		listview.setAdapter(listItemAdapter);
-		listview.setOnItemClickListener(new OnItemClickListener() {
+		listNews.setAdapter(listItemAdapter);
+		listNews.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
 				index = index - 1;
@@ -599,7 +477,7 @@ public class HomeActivity extends Fragment {
 				HomeActivity.this.startActivity(intent);
             }
 		});
-		listview.setOnScrollListener(new OnScrollListener() {    
+		listNews.setOnScrollListener(new OnScrollListener() {    
 	        boolean isLastRow = false;
 
 			@Override
@@ -617,16 +495,6 @@ public class HomeActivity extends Fragment {
 			}
 		});
 	}
-	
-	/**
-	 * 选择小区
-	 */
-	public void selectRegion(int regionLevel) {
-		Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
-		intent.putExtra(RegionActivity.REGION_LEVEL, regionLevel);
-		intent.putExtra(RegionActivity.STRING_CITY_ID, Logic.cityId);
-		HomeActivity.this.startActivityForResult(intent, 2);
-	}
 
 	/**
 	 * 回调
@@ -634,38 +502,17 @@ public class HomeActivity extends Fragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		//
 		if(resultCode == RadioActivity.RESULT_CANCEL) {
 			return;
 		}
 		if(1 == requestCode) {
-			int current = -1;
-			current = data.getIntExtra("index", current);
-			if(-1 == current) {
+			int regionId = data.getIntExtra("regionId", 0);
+			if(0 == regionId) {
 				return;
 			}
-			Logic.regionId = regionIds[current];
-			Logic.regionName = Logic.regions.get(Logic.regionId);
-			if(null != Logic.regionName) {
-				final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
-				regionButton.setText(fetchRegionName());
-			}
-			Storage.setUser("regionId", Logic.regionId);
-			Storage.setUser("regionName", Logic.regionName);
-		}
-		else if(2 == requestCode) {
-			Logic.cityId = data.getIntExtra("cityId", 0);
-			Logic.cityName = data.getStringExtra("cityName");
-			Logic.regionId = data.getIntExtra("regionId", 0);
-			Logic.regionName = data.getStringExtra("regionName");
-			if(null != Logic.regionName) {
-				final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
-				regionButton.setText(fetchRegionName());
-			}
-			Storage.setUser("cityId", Logic.cityId);
-			Storage.setUser("cityName", Logic.cityName);
-			Storage.setUser("regionId", Logic.regionId);
-			Storage.setUser("regionName", Logic.regionName);
+			String regionName = data.getStringExtra("regionName");
+			Profile.instance().region = new Region(regionId, regionName);
+			btnRegion.setText(fetchRegionName());
 		}
 	}
 
@@ -675,20 +522,16 @@ public class HomeActivity extends Fragment {
 	 * @return 处理后的区域名称
 	 */
 	public String fetchRegionName() {
-		if(null == Logic.regionName) {
+		if(null == Profile.instance().region) {
 			return "选择小区";
 		}
-		if(Logic.regionName.length() <= 4) {
-			return Logic.regionName;
-		}
-		return Logic.regionName.substring(Logic.regionName.length() - 4);
+		return Profile.instance().region.getShortName();
 	}
-	
+
 	/**
 	 * 摇晃铃铛
 	 */
 	public void shakeBell() {
-		final ImageView btnBell = (ImageView) this.getActivity().findViewById(R.id.home_button_notify);
 		btnBell.clearAnimation();
 		btnBell.setImageResource(R.drawable.bell_active);
 		//
@@ -727,7 +570,6 @@ public class HomeActivity extends Fragment {
 	 * 停止摇晃铃铛
 	 */
 	public void stopBell() {
-		final ImageView btnBell = (ImageView) this.getActivity().findViewById(R.id.home_button_notify);
 		btnBell.clearAnimation();
 		btnBell.setImageResource(R.drawable.bell_normal);
 	}

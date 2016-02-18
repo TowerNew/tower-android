@@ -3,61 +3,83 @@
 	android:layout_height="wrap_content" 
 	android:orientation="vertical"
 	android:background="@color/white">
+    <HorizontalScrollView
+		android:id="@+id/home_scroll_entry"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <GridView
+                android:id="@+id/home_grid_entry"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </GridView>
+        </LinearLayout>
+    </HorizontalScrollView>
+	<View 
+        android:id="@+id/home_line_1"
+	    android:layout_height="1dp"
+	    android:layout_width="match_parent"
+	    android:background="@color/grey_line" />
 	<LinearLayout
-		android:id="@+id/home_layout_entry"
+		android:id="@+id/home_layout_activity"
 		android:layout_width="match_parent"
 		android:layout_height="100dp"
 		android:orientation="horizontal">
-		<ImageButton
-			android:id="@+id/home_button_free_inquiry"
-			android:layout_width="80dp"
-			android:layout_height="90dp"
-			android:layout_gravity="center_vertical"
-			android:layout_marginBottom="4dp"
-			android:layout_marginTop="4dp"
-			android:layout_weight="1"
-			android:background="@color/white"
-			android:src="@drawable/home_free_inquiry" />
-		<ImageButton
-			android:id="@+id/home_button_healthy_archive"
-			android:layout_width="80dp"
-			android:layout_height="90dp"
-			android:layout_gravity="center_vertical"
-			android:layout_marginBottom="4dp"
-			android:layout_marginTop="4dp"
-			android:layout_weight="1"
-			android:background="@color/white"
-			android:src="@drawable/home_healthy_archive" />
-		<ImageButton
-			android:id="@+id/home_button_reserve"
-			android:layout_width="80dp"
-			android:layout_height="90dp"
-			android:layout_gravity="center_vertical"
-			android:layout_marginBottom="4dp"
-			android:layout_marginTop="4dp"
-			android:layout_weight="1"
-			android:background="@color/white"
-			android:src="@drawable/home_reverse" />
-		<ImageButton
-			android:id="@+id/home_button_family_fastview"
-			android:layout_width="80dp"
-			android:layout_height="90dp"
-			android:layout_gravity="center_vertical"
-			android:layout_marginBottom="4dp"
-			android:layout_marginTop="4dp"
-			android:layout_weight="1"
-			android:background="@color/white"
-			android:src="@drawable/home_family_fastview" />
+		<RelativeLayout
+			android:id="@+id/home_layout_left"
+		    android:layout_width="match_parent"
+    		android:layout_height="match_parent"
+    		android:layout_weight="1">
+			<ImageView
+				android:id="@+id/home_image_left"
+				android:layout_width="80dp"
+				android:layout_height="80dp"
+				android:layout_alignParentLeft="true"
+				android:layout_marginLeft="10dp"
+				android:layout_centerVertical="true"
+				android:scaleType="fitXY"
+				android:src="@drawable/icon_activity_left" />			
+			<TextView
+				android:id="@+id/home_label_left"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/home_image_left"
+				android:layout_marginLeft="10dp"
+				android:layout_centerVertical="true"
+				android:textColor="@color/black"
+				android:text="精美礼物" />
+    	</RelativeLayout>
+    	<View 
+	    	android:layout_height="match_parent"
+	    	android:layout_width="1dp"
+	    	android:background="@color/grey_bg"/>
+		<RelativeLayout
+			android:id="@+id/home_layout_right"
+		    android:layout_width="match_parent"
+    		android:layout_height="match_parent"
+    		android:layout_weight="1">
+			<ImageView
+				android:id="@+id/home_image_right"
+				android:layout_width="80dp"
+				android:layout_height="80dp"
+				android:layout_alignParentLeft="true"
+				android:layout_marginLeft="10dp"
+				android:layout_centerVertical="true"
+				android:scaleType="fitXY"
+				android:src="@drawable/icon_activity_right" />			
+			<TextView
+				android:id="@+id/home_label_right"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/home_image_right"
+				android:layout_marginLeft="10dp"
+				android:layout_centerVertical="true"
+				android:textColor="@color/black"
+				android:text="幸运转盘" />
+    	</RelativeLayout>
 	</LinearLayout>
-	<View 
-	    android:layout_height="10dp"
-	    android:layout_width="match_parent"
-	    android:background="@color/lightgrey"/>
-	<Gallery
-	    android:id="@+id/home_gallery_ad"
-	    android:layout_width="fill_parent"
-	    android:layout_height="100dp"
-	    android:background="@color/white" />
 	<TextView
 		android:id="@+id/home_lable_news"
 		android:layout_width="fill_parent"
@@ -66,7 +88,7 @@
 		android:paddingTop="2dp"
 		android:paddingBottom="2dp"
 		android:text="@string/hot_recommend"
-		android:background="@color/lightgrey"
-		android:textColor="@color/black"
+		android:background="@color/grey_bg"
+		android:textColor="@color/grey_text"
 		android:textSize="15sp" />
 </LinearLayout>

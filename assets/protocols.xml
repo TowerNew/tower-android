@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="service.wehop.cn" mock="false" storage="tower/image/">
+<protocols domain="beta.service.wehop.cn" mock="false" storage="tower/image/">
 	<protocol name="gethospital">
 		<path>
 		<![CDATA[
@@ -49,7 +49,7 @@ user-platform-web/rest/cityList
     <protocol name="regionlist">
         <path>
         <![CDATA[
-user-platform-web/rest/regionList?cityId=[1]
+/user-platform-web/rest/regionMap
         ]]>
         </path>
     <mock>
@@ -57,16 +57,122 @@ user-platform-web/rest/regionList?cityId=[1]
 {
     "code": 1,
     "msg": null,
-    "data": [
-        {
-            "id": 1,
-            "name": "广州-金碧花园",
-            "cityId": 1,
-            "latitude": "abc",
-            "longitude": "abc",
-            "scope": 1000
-        }
-    ]
+    "data": {
+        "长沙": [
+            {
+                "id": 10,
+                "name": "长沙恒大雅苑",
+                "cityId": 6,
+                "latitude": "28.250753",
+                "longitude": "113.048993",
+                "scope": 1000
+            }
+        ],
+        "沈阳": [
+            {
+                "id": 9,
+                "name": "沈阳恒大绿洲",
+                "cityId": 5,
+                "latitude": "41.750372",
+                "longitude": "123.339782",
+                "scope": 1000
+            }
+        ],
+        "广州": [
+            {
+                "id": 1,
+                "name": "广州-金碧花园",
+                "cityId": 1,
+                "latitude": "23.182087",
+                "longitude": "113.216206",
+                "scope": 1000
+            },
+            {
+                "id": 2,
+                "name": "广州御景半岛",
+                "cityId": 1,
+                "latitude": "23.182087",
+                "longitude": "113.216206",
+                "scope": 1000
+            },
+            {
+                "id": 3,
+                "name": "广州金碧雅苑",
+                "cityId": 1,
+                "latitude": "23.230187",
+                "longitude": "113.2968",
+                "scope": 1000
+            }
+        ],
+        "天津": [
+            {
+                "id": 8,
+                "name": "石家庄恒大御景半岛",
+                "cityId": 4,
+                "latitude": "38.093066",
+                "longitude": "114.570091",
+                "scope": 1000
+            }
+        ],
+        "洛阳": [
+            {
+                "id": 7,
+                "name": "洛阳恒大绿洲",
+                "cityId": 3,
+                "latitude": "34.694386",
+                "longitude": "112.524694",
+                "scope": 1000
+            }
+        ],
+        "成都": [
+            {
+                "id": 13,
+                "name": "成都恒大城",
+                "cityId": 9,
+                "latitude": "103.8559320000",
+                "longitude": "30.6847910000",
+                "scope": 1000
+            }
+        ],
+        "武汉": [
+            {
+                "id": 12,
+                "name": "武汉恒大首府",
+                "cityId": 8,
+                "latitude": "30.579949",
+                "longitude": "114.327359",
+                "scope": 1000
+            }
+        ],
+        "南昌": [
+            {
+                "id": 11,
+                "name": "南昌恒大城",
+                "cityId": 7,
+                "latitude": "28.575839",
+                "longitude": "115.874829",
+                "scope": 1000
+            }
+        ],
+        "济南": [
+            {
+                "id": 5,
+                "name": "济南恒大城",
+                "cityId": 2,
+                "latitude": "36.724082",
+                "longitude": "117.147752",
+                "scope": 1000
+            },
+            {
+                "id": 6,
+                "name": "济南恒大绿洲",
+                "cityId": 2,
+                "latitude": "36.566187",
+                "longitude": "116.787207",
+                "scope": 1000
+            }
+        ]
+    }
 }
         ]]>
         </mock>
@@ -1136,7 +1242,7 @@ user-platform-web/rest/hotKeyword
 user-platform-web/rest/user/comment#doctorId=[1]&attitude=[2]&score1=[3]&score2=[4]&score3=[5]&content=[6]&token=[7]
         ]]>
         </path>
-    <mock>
+		<mock>
         <![CDATA[
 {
     "code": 1,
@@ -1144,5 +1250,13 @@ user-platform-web/rest/user/comment#doctorId=[1]&attitude=[2]&score1=[3]&score2=
 }
         ]]>
         </mock>
+    </protocol>
+	<protocol name="home">
+        <url>
+        <![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/banner-index.html?token=[1]
+        ]]>
+        </url>
+    	<mock></mock>
     </protocol>
 </protocols>

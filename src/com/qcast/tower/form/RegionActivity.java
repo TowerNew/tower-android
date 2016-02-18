@@ -1,39 +1,93 @@
 package com.qcast.tower.form;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.qcast.tower.R;
+import com.qcast.tower.business.structure.City;
+import com.qcast.tower.business.structure.Region;
 import com.slfuture.pluto.communication.Host;
-import com.slfuture.pluto.communication.response.CommonResponse;
-import com.slfuture.pluto.communication.response.Response;
-import com.slfuture.carrie.base.json.JSONArray;
-import com.slfuture.carrie.base.json.JSONNumber;
-import com.slfuture.carrie.base.json.JSONObject;
-import com.slfuture.carrie.base.json.JSONString;
-import com.slfuture.carrie.base.json.core.IJSON;
+import com.slfuture.pluto.communication.response.JSONResponse;
+import com.slfuture.pluto.view.annotation.ResourceView;
+import com.slfuture.pluto.view.component.ActivityEx;
+import com.slfuture.carrie.base.json.JSONVisitor;
+import com.slfuture.carrie.base.type.core.ILink;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.TextView;
 
 /**
  * 城市选择页
  */
-public class RegionActivity extends Activity {
+@ResourceView(id = R.layout.activity_region)
+public class RegionActivity extends ActivityEx {
+	/**
+	 * 列表适配器
+	 */
+	public class MessagesAdapter extends BaseAdapter {
+		/**
+		 * 渲染器
+		 */
+        private LayoutInflater inflater;
+        
+        
+        public MessagesAdapter(Context context) {
+            this.inflater = LayoutInflater.from(context);
+        }
+
+		@Override
+		public int getCount() {
+			int result = 0;
+			for(City city : cityList) {
+				result += 1 + city.regions.size();
+			}
+			return result;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return 0;
+		}
+
+		@SuppressLint("InflateParams")
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			int i = 0;
+			for(City city : cityList) {
+				if(i == position) {
+					convertView = inflater.inflate(R.layout.listitem_city, null);
+					TextView text = (TextView) convertView.findViewById(R.id.listitem_city_label_name);
+					text.setText(city.name);
+					return convertView;
+				}
+				else if(i + 1 + city.regions.size() > position) {
+					convertView = inflater.inflate(R.layout.listitem_region, null);
+					TextView text = (TextView) convertView.findViewById(R.id.listitem_region_label_name);
+					text.setText(city.regions.get(position - i - 1).name);
+					return convertView;
+				}
+				i += 1 + city.regions.size();
+			}
+			return null;
+		}
+	}
+
+
 	/**
 	 * 放弃修改
 	 */
@@ -42,50 +96,25 @@ public class RegionActivity extends Activity {
 	 * 已更新
 	 */
 	public final static int RESULT_UPDATED = 1;
-	/**
-	 * 区域省份
-	 */
-	public final static int REGION_CITYID = 1;
-	/**
-	 * 区域城市
-	 */
-	public final static int REGION_REGION = 2;
-	
-	/**
-	 * 区域级别
-	 */
-	public final static String REGION_LEVEL = "region_level";
 
 	/**
-	 * 省份/城市 ID
+	 * 关闭按钮
 	 */
-	public final static String STRING_CITY_ID = "region_cityId";
-
+	@ResourceView(id = R.id.region_button_return)
+	public ImageButton btnClose;
 	/**
-	 * 区域 ID
+	 * 区域列表
 	 */
-	public final static String STRING_REGION_ID = "region_regionId";
-
+	@ResourceView(id = R.id.region_list)
+	public ListView list;
 	/**
-	 * 当前区域级别
+	 * 适配器
 	 */
-	protected int regionLevel = REGION_CITYID;
+	private MessagesAdapter messagesAdapter = null;
 	/**
-	 * 当前省份ID
+	 * 城市列表
 	 */
-	protected int currentCityId = 0;
-	/**
-	 * 当前省份名字
-	 */
-	protected String currentCityName = null;
-	/**
-	 * 当前城市ID
-	 */
-	protected int currentRegionId = 0;
-	/**
-	 * 数据列表
-	 */
-	protected ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
+	protected ArrayList<City> cityList = new ArrayList<City>();
 
 
 	/**
@@ -93,19 +122,7 @@ public class RegionActivity extends Activity {
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i("Angel", "CityActivity.onCreate() execute");
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_region);
-
-		Intent intent = getIntent();
-		if(intent != null) {
-			regionLevel = intent.getIntExtra(REGION_LEVEL, REGION_CITYID);
-			currentCityId = intent.getIntExtra(STRING_CITY_ID, 0);
-		}
-
-		// 参数处理
-		currentRegionId = this.getIntent().getIntExtra("regionId", 0);
 		// 界面处理
 		prepare();
 		// 加载数据
@@ -116,126 +133,65 @@ public class RegionActivity extends Activity {
 	 * 处理列表
 	 */
 	private void prepare() {
-		ImageButton button = (ImageButton) this.findViewById(R.id.region_button_return);
-		button.setOnClickListener(new View.OnClickListener() {
+		btnClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(REGION_CITYID == regionLevel) {
-					Intent intent = new Intent();
-					RegionActivity.this.setResult(RESULT_CANCEL, intent);
-					RegionActivity.this.finish();
-				} else {
-					regionLevel = REGION_CITYID;
-					load();
-				}
+				RegionActivity.this.setResult(RESULT_CANCEL, new Intent());
+				RegionActivity.this.finish();
 			}
 		});
-		//
-		ListView listview = (ListView) this.findViewById(R.id.region_list);
-		SimpleAdapter simpleAdapter = new SimpleAdapter(this, dataList, R.layout.listview_radio, new String[]{"name", "status"}, new int[]{R.id.radiolist_label_caption, R.id.radiolist_image_status});
-		simpleAdapter.setViewBinder(new ViewBinder() {
-			@SuppressWarnings("deprecation")
-			public boolean setViewValue(View view, Object data, String textRepresentation) {
-                if(view instanceof ImageView && data instanceof Bitmap) {
-                    ImageView imageView = (ImageView)view;
-                    Bitmap bitmap = (Bitmap) data;
-                    imageView.setImageDrawable(new BitmapDrawable(bitmap));
-                    return true;
-                }
-                return false;
-            }
-        });
-		listview.setAdapter(simpleAdapter);
-		listview.setOnItemClickListener(new OnItemClickListener() {
+		list.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
-				if(REGION_CITYID == regionLevel) {
-					regionLevel = REGION_REGION;
-					currentCityId = (Integer) dataList.get(index).get("id");
-					currentCityName = (String) dataList.get(index).get("name");
-					load();
-				}
-				else if(REGION_REGION == regionLevel) {
-					currentRegionId = (Integer) dataList.get(index).get("id");
-					Intent intent = new Intent();
-					intent.putExtra("cityId", currentCityId);
-					intent.putExtra("cityName", currentCityName);
-					intent.putExtra("regionId", currentRegionId);
-					intent.putExtra("regionName", (String) dataList.get(index).get("name"));
-					RegionActivity.this.setResult(RESULT_UPDATED, intent);
-					RegionActivity.this.finish();
+				int i = 0;
+				for(City city : cityList) {
+					if(i == index) {
+						return;
+					}
+					else if(i + 1 + city.regions.size() > index) {
+						Intent intent = new Intent();
+						intent.putExtra("regionId", city.regions.get(index - i - 1).id);
+						intent.putExtra("regionName", city.regions.get(index - i - 1).name);
+						RegionActivity.this.setResult(RESULT_UPDATED, intent);
+						RegionActivity.this.finish();
+						return;
+					}
+					i += 1 + city.regions.size();
 				}
             }
 		});
+		messagesAdapter = new MessagesAdapter(this);
+		list.setAdapter(messagesAdapter);
+		messagesAdapter.notifyDataSetChanged();
 	}
 
 	/**
 	 * 加载数据
 	 */
 	public void load() {
-		if(REGION_CITYID == regionLevel) {
-			TextView labTitle = (TextView) this.findViewById(R.id.region_label_title);
-			labTitle.setText("城市");
-			Host.doCommand("citylist", new CommonResponse<String>() {
-				@Override
-				public void onFinished(String content) {
-					if(Response.CODE_SUCCESS != code()) {
-						return;
-					}
-					JSONObject resultObject = JSONObject.convert(content);
-					if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-						return;
-					}
-					JSONArray jsonArray = (JSONArray) resultObject.get("data");
-					if(null == jsonArray) {
-						return;
-					}
-					dataList.clear();
-					for(IJSON object : jsonArray) {
-						JSONObject jsonObject = (JSONObject) object;
-						//
-						HashMap<String, Object> map = new HashMap<String, Object>();
-						map.put("id", ((JSONNumber) (jsonObject.get("id"))).intValue());
-						map.put("name", ((JSONString) (jsonObject.get("name"))).getValue());
-						dataList.add(map);
-					}
-					ListView listview = (ListView) findViewById(R.id.region_list);
-					SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
-					adapter.notifyDataSetChanged();
+		Host.doCommand("regionlist", new JSONResponse(RegionActivity.this) {
+			@Override
+			public void onFinished(JSONVisitor content) {
+				if(null == content || content.getInteger("code", 0) < 0) {
+					return;
 				}
-			});
-		}
-		else if(REGION_REGION == regionLevel) {
-			TextView labTitle = (TextView) this.findViewById(R.id.region_label_title);
-			labTitle.setText("小区");
-			Host.doCommand("regionlist", new CommonResponse<String>() {
-				@Override
-				public void onFinished(String content) {
-					if(Response.CODE_SUCCESS != code()) {
-						return;
-					}
-					JSONObject resultObject = JSONObject.convert(content);
-					if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-						return;
-					}
-					JSONArray jsonArray = (JSONArray) resultObject.get("data");
-					if(null == jsonArray) {
-						return;
-					}
-					dataList.clear();
-					for(IJSON object : jsonArray) {
-						JSONObject jsonObject = (JSONObject) object;
-						//
-						HashMap<String, Object> map = new HashMap<String, Object>();
-						map.put("id", ((JSONNumber) (jsonObject.get("id"))).intValue());
-						map.put("name", ((JSONString) (jsonObject.get("name"))).getValue());
-						dataList.add(map);
-					}
-					ListView listview = (ListView) findViewById(R.id.region_list);
-					SimpleAdapter adapter = (SimpleAdapter) listview.getAdapter();
-					adapter.notifyDataSetChanged();
+				content = content.getVisitor("data");
+				if(null == content) {
+					return;
 				}
-			}, currentCityId);
-		}
+				cityList.clear();
+				for(ILink<String, JSONVisitor> link : content.toVisitorMap()) {
+					City city = new City();
+					city.name = link.origin();
+					for(JSONVisitor visitor : link.destination().toVisitors()) {
+						city.id = visitor.getInteger("cityId", 0);
+						city.regions.add(new Region(visitor.getInteger("id", 0), visitor.getString("name")));
+					}
+					cityList.add(city);
+				}
+				BaseAdapter adapter = (BaseAdapter) list.getAdapter();
+				adapter.notifyDataSetChanged();
+			}
+		});
 	}
 }

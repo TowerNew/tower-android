@@ -78,7 +78,7 @@ public class Me extends User implements Serializable, IReactor {
 	/**
 	 * 实例
 	 */
-	public  static Me instance = null;
+	public static Me instance = null;
 
 
 	/**

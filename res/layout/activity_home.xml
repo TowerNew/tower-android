@@ -2,35 +2,48 @@
 	xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+    <WebView
+        android:id="@+id/home_browser"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true" />
+	<View 
+        android:id="@+id/home_line_1"
+	    android:layout_height="1dp"
+	    android:layout_width="match_parent"
+	    android:background="@color/grey_line"
+	    android:layout_below="@id/home_browser" />
     <RelativeLayout
 		android:id="@+id/home_layout_head"
 		android:layout_width="match_parent"
 		android:layout_height="48dp"
-		android:layout_alignParentTop="true" 
-		android:background="@drawable/topbar" 
+		android:layout_alignParentTop="true"
 		android:focusable="true"
 		android:focusableInTouchMode="true">
 		<Button
             android:id="@+id/home_button_region"
             android:layout_width="wrap_content"
-            android:layout_height="34dp"
+            android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="6dp"
-            android:background="@drawable/button_home_region"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:background="@drawable/button_region"
             android:text="@string/home_region_default"
             android:ellipsize="start"
             android:singleLine="true"
-            android:textColor="#ffffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
         <ImageView
             android:id="@+id/home_button_notify"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
-            android:scaleType="fitXY"
+            android:scaleType="centerInside"
             android:src="@drawable/bell_normal" />
         <Button
             android:id="@+id/home_button_search"
@@ -40,13 +53,13 @@
             android:layout_toRightOf="@id/home_button_region"
             android:layout_toLeftOf="@id/home_button_notify"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/button_search"
             android:gravity="left|center_vertical"
             android:paddingLeft="15dp"
             android:singleLine="true"
             android:text="@string/search_tip"
-            android:textColor="@color/grey"
+            android:textColor="@color/white"
             android:textSize="15sp" />
         <ImageView 
             android:layout_width="20dp"
@@ -62,7 +75,7 @@
         android:id="@+id/home_list_news"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below ="@+id/home_layout_head"
+        android:layout_below ="@+id/home_line_1"
         android:background="@color/hot_bg"
         android:divider="@drawable/divider" />
 </RelativeLayout>

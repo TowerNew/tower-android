@@ -1,6 +1,5 @@
 package com.qcast.tower;
 
-import com.qcast.tower.business.Logic;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.config.Configuration;
 import com.slfuture.pretty.im.Module;

@@ -315,6 +315,9 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		btnBell.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if(null == Me.instance) {
+					return;
+				}
 				Intent intent = new Intent();
 				intent.setClass(HomeActivity.this.getActivity(), MyMessageActivity.class);
 				HomeActivity.this.getActivity().startActivity(intent);
@@ -352,8 +355,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		gridEntry.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), SiriActivity.class);
-				HomeActivity.this.startActivity(intent);
+
 			}
 		});
 	}
@@ -385,13 +387,16 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		btnRegion.getBackground().setAlpha(200);
 		btnSearch.getBackground().setAlpha(200);
 		btnBell.setImageAlpha(200);
+		browser = (WebView) viewHead.findViewById(R.id.home_browser);
+		browser.getSettings().setJavaScriptEnabled(true);
+		//
+		this.getActivity().findViewById(R.id.home_layout_head).bringToFront();
 	}
 
 	/**
 	 * 处理资讯
 	 */
 	private void dealNews() {
-		//
 		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), newsList, R.layout.listview_news,
 			new String[]{"photo", "title", "publisher", "date"}, 
 	        new int[]{R.id.news_image_photo, R.id.news_label_title, R.id.news_label_publisher, R.id.news_label_date});

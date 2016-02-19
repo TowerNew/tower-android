@@ -30,7 +30,7 @@
 			android:id="@+id/conversation_image_photo"
 			android:layout_width="50dp"
 			android:layout_height="50dp"
-			android:src="@drawable/conversation_icon_doctor"
+			android:src="@drawable/icon_doctor_default"
 			android:layout_alignParentLeft="true"
 			android:layout_centerVertical="true"
 			android:layout_margin="10dp" />
@@ -38,24 +38,30 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:text="私人医生"
-		    android:textColor="@color/black"
+		    android:textColor="@color/grey_text"
 			android:layout_toRightOf="@id/conversation_image_photo"
 			android:layout_centerVertical="true"
-		    android:textSize="20sp" />
+		    android:textSize="18sp" />
+		<ImageView
+			android:layout_width="20dp"
+			android:layout_height="20dp"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="10dp"
+			android:src="@drawable/arrow" />
 	</RelativeLayout>
 	<TextView
-	    android:id="@+id/conversation_label_family"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:text="我的家庭"
-	    android:textColor="@color/white"
-	    android:background="@color/grey"
-	    android:paddingLeft="4dp"
-	    android:paddingTop="2dp"
-	    android:paddingBottom="2dp"
+		android:id="@+id/conversation_label_family"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:paddingLeft="6dp"
+		android:paddingTop="2dp"
+		android:paddingBottom="2dp"
+		android:text="家庭成员"
 		android:layout_below="@id/conversation_layout_doctor"
-		android:layout_centerVertical="true"
-	    android:textSize="14sp" />
+		android:background="@color/grey_bg"
+		android:textColor="@color/grey_text"
+		android:textSize="15sp" />
     <ListView
         android:id="@+id/conversation_list_family"
         android:layout_width="fill_parent"

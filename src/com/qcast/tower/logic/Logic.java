@@ -125,19 +125,6 @@ public class Logic {
 	 * 初始化
 	 */
 	public static boolean initialize() {
-		phone = Storage.user("phone", String.class);
-		token = Storage.user("token", String.class);
-		userId = Storage.user("userId", String.class);
-		name = Storage.user("name", String.class);
-		imUsername = Storage.user("imUsername", String.class);
-		if(null != Storage.user("cityId", Integer.class)) {
-			cityId = (int) (double) (Double) Storage.user("cityId", Double.class);
-		}
-		cityName = Storage.user("cityName", String.class);
-		if(null != Storage.user("regionId", Integer.class)) {
-			regionId = (int) (double) (Double) Storage.user("regionId", Double.class);
-		}
-		regionName = Storage.user("regionName", String.class);
 		return true;
 	}
 	

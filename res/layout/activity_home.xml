@@ -2,18 +2,6 @@
 	xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    <WebView
-        android:id="@+id/home_browser"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentLeft="true"
-		android:layout_alignParentTop="true" />
-	<View 
-        android:id="@+id/home_line_1"
-	    android:layout_height="1px"
-	    android:layout_width="match_parent"
-	    android:background="@color/grey_line"
-	    android:layout_below="@id/home_browser" />
     <RelativeLayout
 		android:id="@+id/home_layout_head"
 		android:layout_width="match_parent"
@@ -53,7 +41,7 @@
             android:layout_toRightOf="@id/home_button_region"
             android:layout_toLeftOf="@id/home_button_notify"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="40dp"
             android:background="@drawable/button_search"
             android:gravity="left|center_vertical"
             android:paddingLeft="15dp"
@@ -65,7 +53,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_toLeftOf="@id/home_button_notify"
-            android:layout_marginRight="17dp"
+            android:layout_marginRight="47dp"
             android:layout_centerVertical="true"
             android:src="@drawable/icon_search"
             android:scaleType="fitXY"

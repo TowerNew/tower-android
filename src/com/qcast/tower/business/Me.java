@@ -3,9 +3,12 @@ package com.qcast.tower.business;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 
 import com.qcast.tower.Program;
+import com.qcast.tower.R;
 import com.qcast.tower.business.core.IMeListener;
+import com.qcast.tower.business.structure.Doctor;
 import com.qcast.tower.business.user.Friend;
 import com.qcast.tower.business.user.Relative;
 import com.qcast.tower.business.user.User;
@@ -13,6 +16,7 @@ import com.qcast.tower.framework.Storage;
 import com.slfuture.carrie.base.etc.Serial;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
+import com.slfuture.carrie.base.time.Date;
 import com.slfuture.carrie.base.type.List;
 import com.slfuture.carrie.base.type.core.ITable;
 import com.slfuture.carrie.base.type.safe.Table;
@@ -62,6 +66,10 @@ public class Me extends User implements Serializable, IReactor {
 	 * 口令
 	 */
 	public String token = null;
+	/**
+	 * 私人医生
+	 */
+	public Doctor doctor = null;
 	/**
 	 * 注册好友列表
 	 */
@@ -114,35 +122,68 @@ public class Me extends User implements Serializable, IReactor {
 				me.imId = content.getString("imUsername");
 				me.token = content.getString("token");
 				for(JSONVisitor visitor : content.getVisitors("userList")) {
-					if(1 == visitor.getInteger("type", 1)) {
-						// 注册好友
-						Friend friend = new Friend();
-						friend.id = visitor.getString("userGlobalId");
-						friend.phone = visitor.getString("phone");
-						friend.imId = visitor.getString("imUsername");
-						friend.nickName = visitor.getString("relation");
-						if(null == friend.nickName) {
-							// 容错
-							friend.nickName = visitor.getString("name");
+					if(me.id.equals(visitor.getString("userGlobalId"))) {
+						me.gender = visitor.getInteger("gender", 0);
+						try {
+							if(null != visitor.getString("birthday")) {
+								me.birthday = Date.parse(visitor.getString("birthday"));
+							}
 						}
-						me.friends.add(friend);
+						catch (ParseException e) { }
+						continue;
 					}
-					else {
-						// 非注册亲戚
-						Relative relative = new Relative();
-						relative.id = visitor.getString("userGlobalId");
-						relative.name = visitor.getString("name");
-						relative.idNumber = visitor.getString("idnumber");
-						relative.nickName = visitor.getString("relation");
-						if(null == relative.nickName) {
-							// 容错
-							relative.nickName = visitor.getString("name");
+					// 非注册亲戚
+					Relative relative = new Relative();
+					relative.id = visitor.getString("userGlobalId");
+					relative.name = visitor.getString("name");
+					relative.idNumber = visitor.getString("idnumber");
+					relative.nickName = visitor.getString("relation");
+					if(null == relative.nickName) {
+						// 容错
+						relative.nickName = visitor.getString("name");
+					}
+					relative.gender = visitor.getInteger("gender", 0);
+					try {
+						if(null != visitor.getString("birthday")) {
+							relative.birthday = Date.parse(visitor.getString("birthday"));
 						}
-						me.relatives.add(relative);
 					}
+					catch (ParseException e) { }
+					me.relatives.add(relative);
+				}
+				for(JSONVisitor visitor : content.getVisitors("familyList")) {
+					// 注册好友
+					Friend friend = new Friend();
+					friend.id = visitor.getString("userGlobalId");
+					friend.phone = visitor.getString("phone");
+					friend.imId = visitor.getString("imUsername");
+					friend.nickName = visitor.getString("relation");
+					if(null == friend.nickName) {
+						// 容错
+						friend.nickName = visitor.getString("name");
+					}
+					friend.gender = visitor.getInteger("gender", 0);
+					try {
+						if(null != visitor.getString("birthday")) {
+							friend.birthday = Date.parse(visitor.getString("birthday"));
+						}
+					}
+					catch (ParseException e) { }
+					me.friends.add(friend);
 				}
 				for(JSONVisitor visitor : content.getVisitors("tvList")) {
 					me.contacts.put(visitor.getString("imUsername"), new Contact(null, visitor.getString("name")));
+				}
+				if(null != content.getVisitor("privateDoctor")) {
+					JSONVisitor visitor = content.getVisitor("privateDoctor");
+					Doctor doctor = new Doctor();
+					doctor.id = visitor.getString("userGlobalId");
+					doctor.name = visitor.getString("name");
+					doctor.title = visitor.getString("title");
+					doctor.resume = visitor.getString("resume");
+					doctor.description = visitor.getString("description");
+					doctor.imId = visitor.getString("imUsername");
+					me.doctor = doctor;
 				}
 				instance = me;
 				try {
@@ -331,7 +372,7 @@ public class Me extends User implements Serializable, IReactor {
 	 * @return 存储文件
 	 */
 	public static File file() {
-		return new File(Storage.DATA_ROOT + "me.dat");
+		return new File(Storage.dataFolder() + "me.dat");
 	}
 
 	/**
@@ -365,6 +406,9 @@ public class Me extends User implements Serializable, IReactor {
 		if(null == contact || null == contact.photo) {
 			return null;
 		}
+		if(null != doctor && userId.equals(doctor.imId)) {
+			return GraphicsHelper.decodeResource(Program.application, R.drawable.icon_doctor_default);
+		}
 		return GraphicsHelper.decodeFile(new File(contact.photo));
 	}
 
@@ -397,6 +441,7 @@ public class Me extends User implements Serializable, IReactor {
 
 	@Override
 	public void onConflict() {
+		logout();
 		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onConflict();
 	}
 

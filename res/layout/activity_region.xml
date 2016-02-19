@@ -6,9 +6,9 @@
     <RelativeLayout
 		android:id="@+id/region_layout_head"
 		android:layout_width="match_parent"
-		android:layout_height="48dp"
+		android:layout_height="40dp"
 		android:layout_alignParentTop="true" 
-		android:background="@color/blue" 
+		android:background="@color/main" 
 		android:focusable="true"
 		android:focusableInTouchMode="true">
 		<ImageButton
@@ -17,7 +17,7 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="6dp"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/button_return" />
         <TextView
             android:id="@+id/region_label_title"

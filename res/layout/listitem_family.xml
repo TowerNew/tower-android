@@ -8,19 +8,19 @@
 		android:id="@+id/family_image_photo"
 		android:layout_width="50dp"
 		android:layout_height="50dp"
-		android:src="@drawable/conversation_icon_family"
+		android:src="@drawable/icon_user_default"
 		android:layout_alignParentLeft="true"
 		android:layout_centerVertical="true"
 		android:layout_margin="10dp" />
 	<TextView
-		android:id="@+id/family_label_relation"
+		android:id="@+id/family_label_name"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:text="父亲"
-	    android:textColor="@color/black"
+	    android:text="姓名"
+	    android:textColor="@color/grey_text"
 		android:layout_toRightOf="@id/family_image_photo"
 		android:layout_centerVertical="true"
-	    android:textSize="20sp" />
+	    android:textSize="18sp" />
 	<ImageView
 		android:layout_width="20dp"
 		android:layout_height="20dp"

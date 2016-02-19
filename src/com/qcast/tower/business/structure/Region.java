@@ -2,9 +2,6 @@ package com.qcast.tower.business.structure;
 
 import java.io.Serializable;
 
-import com.qcast.tower.business.Logic;
-import com.qcast.tower.business.Profile;
-
 /**
  * 小区类
  */

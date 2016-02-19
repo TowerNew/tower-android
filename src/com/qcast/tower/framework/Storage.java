@@ -44,6 +44,43 @@ public class Storage {
 	 * 构造函数
 	 */
 	private Storage() { }
+	
+	/**
+	 * 获取图片目录
+	 * 
+	 * @return 图片目录
+	 */
+	public static String imageFolder() {
+		File file = new File(IMAGE_ROOT);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		return IMAGE_ROOT;
+	}
+	/**
+	 * 获取数据目录
+	 * 
+	 * @return 数据目录
+	 */
+	public static String dataFolder() {
+		File file = new File(DATA_ROOT);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		return DATA_ROOT;
+	}
+	/**
+	 * 获取语音目录
+	 * 
+	 * @return 语音目录
+	 */
+	public static String voiceFolder() {
+		File file = new File(VOICE_ROOT);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		return VOICE_ROOT;
+	}
 
 	/**
 	 * 获取文件后缀名

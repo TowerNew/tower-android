@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,19 +43,18 @@ public class MyMessageActivity extends Activity {
     private ArrayList<NotifyModel> dataList;
     private MyMessageAdapter adapter;
     private ListView messageListView;
-    private Button return_btn;
+    private ImageButton return_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_my_message);
         messageListView = (ListView) this.findViewById(R.id.my_message_list);
-        return_btn = (Button) this.findViewById(R.id.mymessage_return_btn);
+        return_btn = (ImageButton) this.findViewById(R.id.mymessage_button_return);
         dataList = new ArrayList<NotifyModel>();
         adapter = new MyMessageAdapter(this, dataList);
         messageListView.setAdapter(adapter);
         return_btn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 MyMessageActivity.this.finish();

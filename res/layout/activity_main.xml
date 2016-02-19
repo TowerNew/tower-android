@@ -17,11 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
             <fragment android:name="com.qcast.tower.form.ConversationActivity"
-                android:id="@+id/main_fragment_inquiry"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-            <fragment android:name="com.qcast.tower.form.ReserveActivity"
-                android:id="@+id/main_fragment_reserve"
+                android:id="@+id/main_fragment_conversation"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
             <fragment android:name="com.qcast.tower.form.UserActivity"
@@ -40,40 +36,58 @@
     		android:orientation="horizontal"
     		android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
-    		android:gravity="center_vertical"
-    		android:layout_gravity="bottom">
+    		android:gravity="bottom"
+    		android:layout_gravity="bottom"
+    		android:background="@color/grey_bg">
     		<RadioButton 
     			android:id="@+id/main_tab_home"
     			android:text="@string/main_tab_home"
-				android:textColor="@color/black"
+				android:textColor="@color/grey_text"
     			android:layout_marginTop="0dip"
-    			android:background="@drawable/button_main_tab"
-    			android:drawableTop="@drawable/main_tab_home"
+    			android:background="@color/grey_bg"
+    			android:drawableTop="@drawable/selector_main_home"
     			style="@style/main_tab" />
     		<RadioButton
-    			android:id="@+id/main_tab_inquiry"
-				android:text="@string/main_tab_inquiry"
-				android:textColor="@color/black"
+    			android:id="@+id/main_tab_conversation"
+				android:text=""
+				android:textColor="@color/grey_text"
     			android:layout_marginTop="0dip"
-    			android:background="@drawable/button_main_tab"
-    			android:drawableTop="@drawable/main_tab_inquiry"
-    			style="@style/main_tab" />
-    		<RadioButton
-    			android:id="@+id/main_tab_reserve"
-				android:text="@string/main_tab_reserve"
-				android:textColor="@color/black"
-    			android:layout_marginTop="0dip"
-    			android:background="@drawable/button_main_tab"
-    			android:drawableTop="@drawable/main_tab_reserve"
+    			android:background="@color/grey_bg"
+    			android:drawableTop="@drawable/dot"
     			style="@style/main_tab" />
     		<RadioButton
     			android:id="@+id/main_tab_user"
 				android:text="@string/main_tab_user"
-				android:textColor="@color/black"
+				android:textColor="@color/grey_text"
     			android:layout_marginTop="0dip"
-    			android:background="@drawable/button_main_tab"
-    			android:drawableTop="@drawable/main_tab_user"
+    			android:background="@color/grey_bg"
+    			android:drawableTop="@drawable/selector_main_user"
     			style="@style/main_tab" />
     	</RadioGroup>
     </LinearLayout>
+	<RelativeLayout
+	    android:id="@+id/main_conversation"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal|bottom"
+		android:background="@android:color/transparent">"
+		<ImageView
+			android:id="@+id/main_image_conversation"
+			android:layout_width="60dp"
+			android:layout_height="60dp"
+	   		android:layout_alignParentTop="true"
+	   		android:layout_centerHorizontal="true"
+	   		android:padding="10dp"
+			android:src="@drawable/main_conversation_normal"
+			android:background="@drawable/button_conversation"/>
+		<TextView
+			android:id="@+id/main_label_conversation"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/main_image_conversation"
+			android:layout_centerHorizontal="true"
+			android:text="@string/main_tab_conversation"
+			android:textColor="@color/grey_text"
+			android:textSize="12dip" />
+	</RelativeLayout>
 </TabHost>

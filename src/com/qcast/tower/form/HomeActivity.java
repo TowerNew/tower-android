@@ -38,6 +38,7 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.Animation.AnimationListener;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -319,7 +320,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					return;
 				}
 				Intent intent = new Intent();
-				intent.setClass(HomeActivity.this.getActivity(), MyMessageActivity.class);
+				intent.setClass(HomeActivity.this.getActivity(), MyMessagesActivity.class);
 				HomeActivity.this.getActivity().startActivity(intent);
 			}
 		});
@@ -389,7 +390,17 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		btnBell.setImageAlpha(200);
 		browser = (WebView) viewHead.findViewById(R.id.home_browser);
 		browser.getSettings().setJavaScriptEnabled(true);
-		//
+		browser.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+		browser.setWebViewClient(new WebViewClient() {
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
+				intent.putExtra("url", url);
+				startActivity(intent);
+                browser.pauseTimers();
+                return true;
+			}
+		});
 		this.getActivity().findViewById(R.id.home_layout_head).bringToFront();
 	}
 

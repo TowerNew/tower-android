@@ -3,12 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     <RelativeLayout
-		android:id="@+id/user_layout_bar"
+		android:id="@+id/user_layout_header"
 		android:layout_width="match_parent"
 		android:layout_height="160dp"
 		android:layout_alignParentTop="true" 
 		android:background="@drawable/user_bg" >
-
 		<ImageButton
 		    android:id="@+id/user_button_photo"
 		    android:layout_width="70dp"
@@ -46,7 +45,7 @@
         android:id="@+id/user_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below ="@+id/user_layout_bar"
+        android:layout_below ="@+id/user_layout_header"
         android:background="@color/white"
         android:divider="@drawable/divider" />
 </RelativeLayout>

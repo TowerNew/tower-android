@@ -1,13 +1,13 @@
-package com.qcast.tower.model;
+package com.qcast.tower.business.structure;
 
 import java.io.Serializable;
 
 /**
  * 通知数据
  */
-public class NotifyModel implements Serializable{
+public class Notify implements Serializable{
 	private static final long serialVersionUID = 407956137132437798L;
-	
+
 	// 添加好友通知
 	public final static int TYPE_1 = 1;
 	// 红包
@@ -39,7 +39,7 @@ public class NotifyModel implements Serializable{
     public String requestId;
     public String relation;
     public String url;
-    public String imUsername;
+    public String imId;
     public String imGroupId;
     public String remotePhoto;
 }

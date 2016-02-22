@@ -414,7 +414,7 @@ user-platform-web/rest/login#phone=[1]&code=[2]
 	<protocol name="check">
 	    <path>
 		<![CDATA[
-user-platform-web/rest/validateToken#phone=[1]&token=[2]
+user-platform-web/rest/user/validateToken?phone=[1]&token=[2]
 		]]>
         </path>
 	    <mock>

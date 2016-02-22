@@ -9,6 +9,7 @@ import com.qcast.tower.Program;
 import com.qcast.tower.R;
 import com.qcast.tower.business.core.IMeListener;
 import com.qcast.tower.business.structure.Doctor;
+import com.qcast.tower.business.structure.Notify;
 import com.qcast.tower.business.user.Friend;
 import com.qcast.tower.business.user.Relative;
 import com.qcast.tower.business.user.User;
@@ -238,6 +239,7 @@ public class Me extends User implements Serializable, IReactor {
 						}
 						else {
 							if(1 == content.getInteger("code", 0)) {
+								Module.reactor = instance;
 								Module.login(new IEventable<Boolean>() {
 									@Override
 									public void on(Boolean arg0) {
@@ -447,6 +449,17 @@ public class Me extends User implements Serializable, IReactor {
 
 	@Override
 	public void onCommand(String from, String action, ITable<String, Object> data) {
+		Integer type = (Integer) data.get("type");
+		if(null == type) {
+			return;
+		}
+		if(Notify.TYPE_5 == type || Notify.TYPE_9 == type) {
+			Me.instance.refresh(Program.application, new IEventable<Boolean>() {
+				@Override
+				public void on(Boolean data) {
+				}
+			});
+		}
 		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
 	}
 }

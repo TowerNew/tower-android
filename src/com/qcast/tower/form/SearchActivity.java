@@ -77,8 +77,9 @@ public class SearchActivity extends ActivityEx {
 				SearchActivity.this.finish();
 			}
 		});
+		txtKeyword.getBackground().setAlpha(100);
 	}
-	
+
 	/**
 	 * 准备确认按钮
 	 */

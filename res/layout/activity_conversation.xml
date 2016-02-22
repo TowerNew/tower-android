@@ -19,6 +19,15 @@
 			android:text="联系人"
 			android:textColor="#ffffffff"
 			android:textSize="18sp" />
+		<ImageView
+		    android:id="@+id/conversation_image_add"
+			android:layout_width="20dp"
+			android:layout_height="20dp"
+			android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+			android:layout_centerVertical="true"
+			android:scaleType="fitXY"
+			android:src="@drawable/add" />
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/conversation_layout_doctor"

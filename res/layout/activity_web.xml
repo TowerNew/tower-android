@@ -7,7 +7,7 @@
     <RelativeLayout
 		android:id="@+id/web_layout_head"
 		android:layout_width="match_parent"
-		android:layout_height="48dp"
+		android:layout_height="40dp"
 		android:layout_alignParentTop="true" 
 		android:background="@drawable/topbar" 
 		android:focusable="true"
@@ -20,7 +20,6 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="6dp"
             android:background="@drawable/button_return" />
-
         <TextView
             android:id="@+id/web_text_caption"
             android:layout_width="wrap_content"
@@ -28,11 +27,10 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:maxLength="15"
+            android:maxLength="10"
             android:text="正在加载..."
             android:textColor="#ffffffff"
             android:textSize="18sp" />
-
         <TextView
             android:id="@+id/web_text_close"
             android:layout_width="wrap_content"

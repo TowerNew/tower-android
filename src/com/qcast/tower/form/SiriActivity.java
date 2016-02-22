@@ -7,10 +7,17 @@ import com.slfuture.pluto.view.component.ActivityEx;
 
 import java.io.File;
 
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMMessage;
+import com.easemob.chat.VoiceMessageBody;
+import com.easemob.exceptions.EaseMobException;
 import com.qcast.tower.R;
+import com.qcast.tower.business.Me;
 import com.qcast.tower.framework.Storage;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 /**
@@ -44,8 +51,9 @@ public class SiriActivity extends ActivityEx {
 					}
 					if(sentry > 5 * 2) {
 						File file = recorder.stop();
+						send(file, (int) recorder.duration());
 						recorder = null;
-						// TODO:
+						Me.instance.doChat(SiriActivity.this, null, Me.instance.doctor.imId);
 						SiriActivity.this.finish();
 						return;
 					}
@@ -84,5 +92,26 @@ public class SiriActivity extends ActivityEx {
 			recorder.discard();
 		}
 		recorder = null;
+	}
+
+    /**
+     * 发送消息
+     * 
+     * @param file 语音文件
+     * @param length 语音长度
+     */
+	private void send(File file, int length) {
+		EMConversation conversation = EMChatManager.getInstance().getConversation(Me.instance.doctor.imId);
+        EMMessage message = EMMessage.createSendMessage(EMMessage.Type.VOICE);
+		VoiceMessageBody body = new VoiceMessageBody(file, length);
+		message.addBody(body);
+		message.setReceipt(Me.instance.doctor.imId);
+		conversation.addMessage(message);
+        try {
+			EMChatManager.getInstance().sendMessage(message);
+		}
+        catch (EaseMobException e) {
+        	Log.e("TOWER", "call send(?) failed", e);
+        }
 	}
 }

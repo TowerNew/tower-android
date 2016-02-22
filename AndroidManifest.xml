@@ -101,14 +101,6 @@
             android:name="com.qcast.tower.form.MyWalletActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
-        <activity
-            android:name="com.qcast.tower.form.MyMessageActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name="com.qcast.tower.form.MyFriendMessageActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"></activity>
 		<activity
             android:name="com.qcast.tower.form.AboutActivity"
             android:screenOrientation="portrait"
@@ -163,7 +155,11 @@
             android:screenOrientation="portrait"></activity>
 
 		<activity android:name="com.qcast.tower.form.SiriActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-
+		<activity android:name="com.qcast.tower.form.AddFriendActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.form.AddRelativeActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.form.AddRequestActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.form.MyMessagesActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		
         <!-- Pretty所需注册窗口 -->
         <activity android:name="com.slfuture.pretty.im.view.form.SingleChatActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 		<activity android:name="com.slfuture.pretty.im.view.form.AudioActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />

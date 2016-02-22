@@ -12,19 +12,28 @@ import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.business.user.Friend;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.SimpleAdapter.ViewBinder;
 
 @ResourceView(id = R.layout.activity_conversation)
 public class ConversationActivity extends FragmentEx {
+	@ResourceView(id = R.id.conversation_image_add)
+	public ImageView imgAdd;
 	@ResourceView(id = R.id.conversation_layout_doctor)
 	public ViewGroup viewDoctor;
 	@ResourceView(id = R.id.conversation_list_family)
@@ -40,6 +49,44 @@ public class ConversationActivity extends FragmentEx {
     public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		//
+		imgAdd.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				final AlertDialog alertDialog = new AlertDialog.Builder(ConversationActivity.this.getActivity()).create();
+				alertDialog.show();
+				Window window = alertDialog.getWindow();
+				WindowManager.LayoutParams layoutParams = window.getAttributes();
+				layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+				window.setGravity(Gravity.BOTTOM);
+				window.setAttributes(layoutParams);
+				window.setContentView(R.layout.dialog_addcontact);
+				TextView labelCancel = (TextView) window.findViewById(R.id.addcontact_label_cancel);
+				labelCancel.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						alertDialog.cancel();
+					}
+				});
+				TextView labRelative = (TextView) window.findViewById(R.id.addcontact_label_relative);
+				labRelative.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(ConversationActivity.this.getActivity(), AddRelativeActivity.class);
+						ConversationActivity.this.getActivity().startActivity(intent);
+						alertDialog.hide();
+					}
+				});
+				TextView labFriend = (TextView) window.findViewById(R.id.addcontact_label_friend);
+				labFriend.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(ConversationActivity.this.getActivity(), AddFriendActivity.class);
+						ConversationActivity.this.getActivity().startActivity(intent);
+						alertDialog.hide();
+					}
+				});
+			}
+		});
 		viewDoctor.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

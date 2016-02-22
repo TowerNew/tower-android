@@ -25,7 +25,7 @@ public class InquiryActivity extends Fragment {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
-				intent.setClass(InquiryActivity.this.getActivity(), MyMessageActivity.class);
+				intent.setClass(InquiryActivity.this.getActivity(), MyMessagesActivity.class);
 				InquiryActivity.this.getActivity().startActivity(intent);
 			}
 		});

@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+	android:background="@color/white" >
+    <RelativeLayout
+		android:id="@+id/suggest_layout_header"
+		android:layout_width="match_parent"
+		android:layout_height="40dp"
+		android:layout_alignParentTop="true" 
+		android:background="@color/main" 
+		android:focusable="true"
+		android:focusableInTouchMode="true">
+		<ImageButton
+            android:id="@+id/suggest_button_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/button_return" />
+        <TextView
+            android:id="@+id/suggest_label_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="意见反馈"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/suggest_label_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+	</RelativeLayout>
+    <TextView
+	    android:id="@+id/suggest_label_tip"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/suggest_layout_header"
+	    android:layout_margin="10dp"
+	    android:text="聚健康的每一步都离不开您的意见和建议，被采纳后可奖励积分"
+	    android:textColor="@color/grey_text"
+	    android:textSize="16sp" />
+    <EditText
+	    android:id="@+id/suggest_text_content"
+	    android:layout_width="fill_parent"
+	    android:layout_height="200dp"
+	    android:layout_below="@id/suggest_label_tip"
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginRight="10dp"
+	    android:text=""
+	    android:textColor="@color/grey_text"
+	    android:textSize="16sp"
+	    android:background="@drawable/text_bg" />
+</RelativeLayout>

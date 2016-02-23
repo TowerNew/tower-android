@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <protocols domain="beta.service.wehop.cn" mock="false" storage="tower/image/">
+	<protocol name="contact">
+		<path>
+		<![CDATA[
+user-platform-web/rest/user/contact
+		]]>
+		</path>
+		<mock></mock>
+	</protocol>
+	<protocol name="suggest">
+		<path>
+		<![CDATA[
+user-platform-web/rest/user/suggest#token=[1]&content=[2]
+		]]>
+		</path>
+	<mock>
+        <![CDATA[
+{
+    "code": 1
+}
+	    ]]>
+	    </mock>
+	</protocol>
 	<protocol name="gethospital">
 		<path>
 		<![CDATA[

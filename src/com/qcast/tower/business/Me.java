@@ -320,6 +320,10 @@ public class Me extends User implements Serializable, IReactor {
 						relatives.add(relative);
 					}
 				 }
+				 try {
+					save();
+				 }
+				 catch (IOException e) {}
 				 callback.on(true);
 			}
 		}, token);

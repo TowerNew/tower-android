@@ -7,6 +7,7 @@ import com.qcast.tower.Program;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.Me;
+import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
 
@@ -159,18 +160,19 @@ public class UserActivity extends FragmentEx {
 					UserActivity.this.startActivity(intent);
 					return;
 				}
-				else if(3 == index) {
-                    Intent intent = new Intent(UserActivity.this.getActivity(), MyInquiryDoctorActivity.class);
-                    UserActivity.this.startActivity(intent);
-                    return;
-                }
 				else if(4 == index) {
-					Intent intent = new Intent(UserActivity.this.getActivity(), MyReserveHistoryActivity.class);
+                    Intent intent = new Intent(UserActivity.this.getActivity(), WebActivity.class);
+                    intent.putExtra("url", Host.fetchURL("contact"));
                     UserActivity.this.startActivity(intent);
                     return;
                 }
 				else if(5 == index) {
-					Intent intent = new Intent(UserActivity.this.getActivity(), AboutActivity.class);
+					Intent intent = new Intent(UserActivity.this.getActivity(), SuggestActivity.class);
+                    UserActivity.this.startActivity(intent);
+                    return;
+                }
+				else if(6 == index) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), ConfigActivity.class);
 					UserActivity.this.startActivity(intent);
                     return;
                 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:orientation="horizontal"
+    android:background="@color/white">
+    <ImageView
+		android:id="@+id/selectdoctor_image_photo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+		android:layout_alignParentLeft="true"
+		android:layout_centerVertical="true"
+		android:scaleType="centerInside"
+        android:src="@drawable/icon_doctor_default" />
+    <ImageView
+        android:id="@+id/selectdoctor_image_control"
+        android:layout_width="80dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_selected">
+    </ImageView>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_toRightOf="@id/selectdoctor_image_photo"
+        android:layout_toLeftOf="@id/selectdoctor_image_control"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/selectdoctor_label_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="2dp"
+            android:singleLine="false"
+            android:text="医生姓名"
+            android:textColor="@color/grey_text"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/selectdoctor_label_office"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/selectdoctor_label_name"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="10dp"
+            android:padding="2dp"
+            android:singleLine="false"
+            android:text="头衔"
+            android:textColor="@color/grey_text"
+            android:textSize="13sp"
+            android:background="@drawable/button_green" />
+        <TextView
+            android:id="@+id/selectdoctor_label_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="2dp"
+            android:textSize="13sp"
+            android:textColor="@color/grey"
+            android:text="医生头衔" />
+        <TextView
+            android:id="@+id/selectdoctor_label_address"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/selectdoctor_label_name"
+            android:layout_above="@id/selectdoctor_label_title"
+            android:layout_marginTop="5dp"
+            android:textSize="13sp"
+            android:textColor="@color/grey"
+            android:text="医生所在地址" />
+	</RelativeLayout>
+</RelativeLayout>

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/grey_bg">
     <RelativeLayout
-		android:id="@+id/region_layout_head"
+		android:id="@+id/region_layout_header"
 		android:layout_width="match_parent"
 		android:layout_height="40dp"
 		android:layout_alignParentTop="true" 
@@ -34,7 +34,7 @@
         android:id="@+id/region_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/region_layout_head"
+        android:layout_below="@id/region_layout_header"
         android:background="@color/white"
         android:divider="@drawable/divider" />
 </RelativeLayout>

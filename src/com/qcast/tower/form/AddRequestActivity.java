@@ -77,7 +77,7 @@ public class AddRequestActivity extends ActivityEx {
 						if(null == content) {
 							return;
 						}
-						Me.instance.refresh(AddRequestActivity.this, new IEventable<Boolean>() {
+						Me.instance.refreshMember(AddRequestActivity.this, new IEventable<Boolean>() {
 							@Override
 							public void on(Boolean data) {
 								AddRequestActivity.this.finish();

@@ -91,6 +91,8 @@ public class ConversationActivity extends FragmentEx {
 			@Override
 			public void onClick(View v) {
 				if(null == Me.instance || null == Me.instance.doctor) {
+					Intent intent = new Intent(ConversationActivity.this.getActivity(), SelectDoctorActivity.class);
+					ConversationActivity.this.getActivity().startActivity(intent);
 					return;
 				}
 				Me.instance.doChat(ConversationActivity.this.getActivity(), null, Me.instance.doctor.imId);

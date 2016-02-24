@@ -14,7 +14,7 @@
 		android:scaleType="centerInside"
         android:src="@drawable/icon_doctor_default" />
     <ImageView
-        android:id="@+id/selectdoctor_image_control"
+        android:id="@+id/selectdoctor_image_status"
         android:layout_width="80dp"
         android:layout_height="fill_parent"
         android:layout_alignParentRight="true"
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_toRightOf="@id/selectdoctor_image_photo"
-        android:layout_toLeftOf="@id/selectdoctor_image_control"
+        android:layout_toLeftOf="@id/selectdoctor_image_status"
         android:orientation="vertical">
         <TextView
             android:id="@+id/selectdoctor_label_name"
@@ -39,7 +39,7 @@
             android:textColor="@color/grey_text"
             android:textSize="15sp" />
         <TextView
-            android:id="@+id/selectdoctor_label_office"
+            android:id="@+id/selectdoctor_label_department"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/selectdoctor_label_name"
@@ -47,8 +47,8 @@
             android:layout_marginLeft="10dp"
             android:padding="2dp"
             android:singleLine="false"
-            android:text="头衔"
-            android:textColor="@color/grey_text"
+            android:text="科室"
+            android:textColor="@color/white"
             android:textSize="13sp"
             android:background="@drawable/button_green" />
         <TextView
@@ -63,7 +63,7 @@
             android:textColor="@color/grey"
             android:text="医生头衔" />
         <TextView
-            android:id="@+id/selectdoctor_label_address"
+            android:id="@+id/selectdoctor_label_resume"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -73,6 +73,6 @@
             android:layout_marginTop="5dp"
             android:textSize="13sp"
             android:textColor="@color/grey"
-            android:text="医生所在地址" />
+            android:text="医生简历" />
 	</RelativeLayout>
 </RelativeLayout>

@@ -1,7 +1,9 @@
 package com.qcast.tower.business.user;
 
 import java.io.Serializable;
+import java.text.ParseException;
 
+import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.time.Date;
 
 /**
@@ -17,7 +19,7 @@ public class Relative implements Serializable {
 	/**
 	 * 称呼
 	 */
-	public String nickName = null;
+	public String nickname = null;
 	/**
 	 * 姓名
 	 */
@@ -34,4 +36,24 @@ public class Relative implements Serializable {
 	 * 出生年月
 	 */
 	public Date birthday;
+
+
+	/**
+	 * 解析数据生成用户对象
+	 * 
+	 * @param visitor 数据
+	 * @return 解析结果
+	 */
+	public boolean parse(JSONVisitor visitor) {
+		id = visitor.getString("userGlobalId");
+		nickname = visitor.getString("nickname");
+		name = visitor.getString("name");
+		idNumber = visitor.getString("idnumber");
+		try {
+			birthday = Date.parse(visitor.getString("birthday"));
+		}
+		catch (ParseException e) { }
+		gender = visitor.getInteger("gender", 0);
+		return true;
+	}
 }

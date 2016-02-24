@@ -22,6 +22,59 @@ user-platform-web/rest/user/suggest#token=[1]&content=[2]
 	    ]]>
 	    </mock>
 	</protocol>
+	<protocol name="selectDoctor">
+		<path>
+		<![CDATA[
+user-platform-web/rest/user/chooseMyDoctor#doctorGlobalId=[1]&token=[2]
+		]]>
+		</path>
+	<mock>
+        <![CDATA[
+{
+    "code": 1
+}
+	    ]]>
+	    </mock>
+	</protocol>
+	<protocol name="privateDoctor">
+		<path>
+		<![CDATA[
+user-platform-web/rest/user/myDoctor?token=[1]
+		]]>
+		</path>
+		<mock>
+        <![CDATA[
+{
+    "code": 0,
+    "msg": null,
+    "data": {
+        "userGlobalId": "b197e518-fdd9-4c8e-b386-ecc4925ca6f3",
+        "name": "黄新稿",
+        "imUsername": "appdoctor_1",
+        "photo": null,
+        "department": null,
+        "level": 2,
+        "title": "全科医学 外科主治医师 啦啦啦",
+        "services": [
+            "inquiry",
+            "reserve",
+            "privateDoctor",
+            "verificate",
+            "inquiry",
+            "reserve",
+            "privateDoctor",
+            "verificate"
+        ],
+        "description": "测试测试",
+        "resume": "研究成果",
+        "good": 1,
+        "bad": 0,
+        "memo": null
+    }
+}
+	    ]]>
+	    </mock>
+	</protocol>
 	<protocol name="gethospital">
 		<path>
 		<![CDATA[
@@ -1277,7 +1330,7 @@ user-platform-web/rest/user/comment#doctorId=[1]&attitude=[2]&score1=[3]&score2=
         <url>
         <![CDATA[
 http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/banner-index.html?token=[1]
-        ]]>
+       ]]>
         </url>
     	<mock></mock>
     </protocol>

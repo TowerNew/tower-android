@@ -22,6 +22,20 @@ user-platform-web/rest/user/suggest#token=[1]&content=[2]
 	    ]]>
 	    </mock>
 	</protocol>
+	<protocol name="alertUserInfo">
+		<path>
+		<![CDATA[
+user-platform-web/rest/user/alertUserInfo#token=[1]&field=[2]&value=[3]
+		]]>
+		</path>
+	<mock>
+        <![CDATA[
+{
+    "code": 1
+}
+	    ]]>
+	    </mock>
+	</protocol>
 	<protocol name="selectDoctor">
 		<path>
 		<![CDATA[

@@ -34,6 +34,8 @@ import android.widget.TextView;
 public class UserInfoActivity extends ActivityEx {
 	@ResourceView(id = R.id.userinfo_image_close)
 	public ImageView imgClose;
+	@ResourceView(id = R.id.userinfo_label_logout)
+	public TextView labLogout;
 	@ResourceView(id = R.id.userinfo_image_photo)
 	public ImageView imgPhoto;
 	@ResourceView(id = R.id.userinfo_layout_phone)
@@ -127,6 +129,13 @@ public class UserInfoActivity extends ActivityEx {
 		imgClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				UserInfoActivity.this.finish();
+			}
+		});
+		labLogout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Me.instance.logout();
 				UserInfoActivity.this.finish();
 			}
 		});
@@ -243,6 +252,6 @@ public class UserInfoActivity extends ActivityEx {
 				}
 				catch (IOException e) { }
 			}
-		}, field, value);
+		}, Me.instance.token, field, value);
 	}
 }

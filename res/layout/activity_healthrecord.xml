@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eff0f0" >
-
     <RelativeLayout
         android:id="@+id/health_record_bar"
         android:layout_width="fill_parent"
@@ -40,8 +39,6 @@
         android:layout_height="66dp"
         android:layout_centerVertical="true"
         android:background="#ffffff" >
-
-
         <Button
             android:id="@+id/health_report"
             android:layout_width="40dp"
@@ -51,8 +48,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:layout_marginStart="12dp"
-            android:background="@drawable/health_examination_report" />
-
+            android:background="@drawable/icon_user_document" />
         <TextView
             android:id="@+id/text_collection"
             android:layout_width="wrap_content"
@@ -89,8 +85,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:layout_marginStart="12dp"
-            android:background="@drawable/electronic_medical_record" />
-
+            android:background="@drawable/icon_user_suggest" />
         <TextView
             android:id="@+id/text_register"
             android:layout_width="wrap_content"
@@ -100,7 +95,6 @@
             android:layout_marginStart="62dp"
             android:text="电子病历"
             android:textSize="14.0sp" />
-
         <ImageButton
             android:id="@+id/btn_register_content"
             android:layout_width="wrap_content"
@@ -111,7 +105,6 @@
             android:layout_alignParentEnd="true" 
             android:background="@drawable/ic_right_arrow"/>
     </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/third_line"
         android:layout_width="fill_parent"
@@ -119,7 +112,6 @@
         android:layout_below="@+id/second_line"
         android:layout_marginTop="1dp"
         android:background="#ffffff" >
-
         <Button
             android:id="@+id/btn_wearables_data"
             android:layout_width="40dp"
@@ -127,8 +119,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:layout_marginStart="12dp"
-            android:background="@drawable/health_wearables_data" />
-
+            android:background="@drawable/icon_entry_6" />
         <TextView
             android:id="@+id/text_wearables_data"
             android:layout_width="wrap_content"

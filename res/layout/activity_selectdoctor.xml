@@ -10,14 +10,15 @@
 		android:background="@color/main" 
 		android:focusable="true"
 		android:focusableInTouchMode="true">
-		<ImageButton
-            android:id="@+id/selectdoctor_button_close"
+		<ImageView
+            android:id="@+id/selectdoctor_image_close"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="6dp"
-            android:background="@drawable/button_return" />
+            android:scaleType="centerInside"
+            android:src="@drawable/button_return" />
         <TextView
             android:id="@+id/selectdoctor_text_title"
             android:layout_width="wrap_content"

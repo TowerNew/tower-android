@@ -9,7 +9,13 @@ import com.slfuture.carrie.base.json.JSONVisitor;
  */
 public class Friend extends User implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
+	/**
+	 * 关系&备注
+	 */
+	public String relation;
+
+
 	/**
 	 * 解析数据生成用户对象
 	 * 
@@ -20,6 +26,7 @@ public class Friend extends User implements Serializable {
 		if(!super.parse(visitor)) {
 			return false;
 		}
+		relation = visitor.getString("relation");
 		return true;
 	}
 }

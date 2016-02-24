@@ -49,16 +49,15 @@ public class Doctor implements Serializable {
 	 * 
 	 * @param visitor
 	 */
-	public static Doctor build(JSONVisitor visitor) {
-		Doctor result = new Doctor();
-		result.id = visitor.getString("userGlobalId");
-		result.name = visitor.getString("name");
-		result.photoUrl = visitor.getString("photo");
-		result.department = visitor.getString("department");
-		result.resume = visitor.getString("resume");
-		result.title = visitor.getString("title");
-		result.description = visitor.getString("description");
-		result.imId = visitor.getString("imUsername");
-		return result;
+	public boolean parse(JSONVisitor visitor) {
+		id = visitor.getString("userGlobalId");
+		name = visitor.getString("name");
+		photoUrl = visitor.getString("photo");
+		department = visitor.getString("department");
+		resume = visitor.getString("resume");
+		title = visitor.getString("title");
+		description = visitor.getString("description");
+		imId = visitor.getString("imUsername");
+		return true;
 	}
 }

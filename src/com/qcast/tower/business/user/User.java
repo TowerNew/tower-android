@@ -24,21 +24,17 @@ public class User implements Serializable {
 	 */
 	public String id;
 	/**
-	 * 昵称
-	 */
-	public String nickname;
-	/**
 	 * 手机号码
 	 */
 	public String phone;
 	/**
+	 * 昵称
+	 */
+	public String nickname;
+	/**
 	 * 头像
 	 */
 	public String photo;
-	/**
-	 * 通信ID
-	 */
-	public String imId;
 	/**
 	 * 出生年月
 	 */
@@ -47,6 +43,10 @@ public class User implements Serializable {
 	 * 性别
 	 */
 	public int gender = GENDER_UNKNOWN;
+	/**
+	 * 通信ID
+	 */
+	public String imId;
 
 
 	/**
@@ -57,15 +57,17 @@ public class User implements Serializable {
 	 */
 	public boolean parse(JSONVisitor visitor) {
 		id = visitor.getString("userGlobalId");
-		nickname = visitor.getString("nickname");
 		phone = visitor.getString("phone");
+		nickname = visitor.getString("nickname");
 		photo = visitor.getString("photo");
-		try {
-			birthday = Date.parse(visitor.getString("birthday"));
+		if(null != visitor.getString("birthday")) {
+			try {
+				birthday = Date.parse(visitor.getString("birthday"));
+			}
+			catch (ParseException e) { }
 		}
-		catch (ParseException e) { }
-		imId = visitor.getString("imUsername");
 		gender = visitor.getInteger("gender", 0);
+		imId = visitor.getString("imUsername");
 		return true;
 	}
 }

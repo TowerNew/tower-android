@@ -136,7 +136,12 @@ public class ConversationActivity extends FragmentEx {
     	for(Friend friend : Me.instance.friends) {
     		Map<String, Object> map = new HashMap<String, Object>();
     		map.put("id", friend.id);
-    		map.put("name", friend.nickName);
+    		if(null != friend.relation) {
+        		map.put("name", friend.relation);
+    		}
+    		else if(null != friend.nickname) {
+        		map.put("name", friend.nickname);
+    		}
     		map.put("imId", friend.imId);
     		conversationList.add(map);
     	}

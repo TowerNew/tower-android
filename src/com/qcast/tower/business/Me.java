@@ -68,13 +68,13 @@ public class Me extends User implements Serializable, IReactor {
 	 */
 	public String token = null;
 	/**
-	 * 姓名
-	 */
-	public String name = null;
-	/**
 	 * 地址
 	 */
 	public String address = null;
+	/**
+	 * 姓名
+	 */
+	public String name = null;
 	/**
 	 * 身份证
 	 */
@@ -147,28 +147,16 @@ public class Me extends User implements Serializable, IReactor {
 					}
 					// 非注册亲戚
 					Relative relative = new Relative();
-					relative.id = visitor.getString("userGlobalId");
-					relative.name = visitor.getString("name");
-					relative.idNumber = visitor.getString("idnumber");
-					relative.nickName = visitor.getString("relation");
-					if(null == relative.nickName) {
-						// 容错
-						relative.nickName = visitor.getString("name");
+					if(relative.parse(visitor)) {
+						me.relatives.add(relative);
 					}
-					relative.gender = visitor.getInteger("gender", 0);
-					try {
-						if(null != visitor.getString("birthday")) {
-							relative.birthday = Date.parse(visitor.getString("birthday"));
-						}
-					}
-					catch (ParseException e) { }
-					me.relatives.add(relative);
 				}
 				for(JSONVisitor visitor : content.getVisitors("familyList")) {
 					// 注册好友
 					Friend friend = new Friend();
-					friend.parse(visitor);
-					me.friends.add(friend);
+					if(friend.parse(visitor)) {
+						me.friends.add(friend);
+					}
 				}
 				for(JSONVisitor visitor : content.getVisitors("tvList")) {
 					me.contacts.put(visitor.getString("imUsername"), new Contact(null, visitor.getString("name")));
@@ -176,13 +164,9 @@ public class Me extends User implements Serializable, IReactor {
 				if(null != content.getVisitor("privateDoctor")) {
 					JSONVisitor visitor = content.getVisitor("privateDoctor");
 					Doctor doctor = new Doctor();
-					doctor.id = visitor.getString("userGlobalId");
-					doctor.name = visitor.getString("name");
-					doctor.title = visitor.getString("title");
-					doctor.resume = visitor.getString("resume");
-					doctor.description = visitor.getString("description");
-					doctor.imId = visitor.getString("imUsername");
-					me.doctor = doctor;
+					if(doctor.parse(visitor)) {
+						me.doctor = doctor;
+					}
 				}
 				instance = me;
 				try {
@@ -271,7 +255,7 @@ public class Me extends User implements Serializable, IReactor {
 		instance = null;
 		delete();
 	}
-	
+
 	/**
 	 * 刷新私人成员
 	 * 
@@ -291,7 +275,8 @@ public class Me extends User implements Serializable, IReactor {
 				 if(null == content.getVisitor("data")) {
 					 return;
 				 }
-				 doctor = Doctor.build(content.getVisitor("data"));
+				 doctor = new Doctor();
+				 doctor.parse(content.getVisitor("data"));
 				 try {
 					save();
 				 }
@@ -323,28 +308,16 @@ public class Me extends User implements Serializable, IReactor {
 					 if(1 == visitor.getInteger("type", 1)) {
 						 // 注册好友
 						Friend friend = new Friend();
-						friend.id = visitor.getString("userGlobalId");
-						friend.phone = visitor.getString("phone");
-						friend.imId = visitor.getString("imUsername");
-						friend.nickName = visitor.getString("relation");
-						if(null == friend.nickName) {
-							// 容错
-							friend.nickName = visitor.getString("name");
+						if(friend.parse(visitor)) {
+							friends.add(friend);
 						}
-						friends.add(friend);
 					}
 					else {
 						// 非注册亲戚
 						Relative relative = new Relative();
-						relative.id = visitor.getString("userGlobalId");
-						relative.name = visitor.getString("name");
-						relative.idNumber = visitor.getString("idnumber");
-						relative.nickName = visitor.getString("relation");
-						if(null == relative.nickName) {
-							// 容错
-							relative.nickName = visitor.getString("name");
+						if(relative.parse(visitor)) {
+							relatives.add(relative);
 						}
-						relatives.add(relative);
 					}
 				 }
 				 try {

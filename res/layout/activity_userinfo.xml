@@ -29,6 +29,17 @@
                 android:text="我的信息"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
+			<TextView
+			    android:id="@+id/userinfo_label_logout"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentRight="true"
+			    android:layout_centerVertical="true"
+			    android:layout_marginRight="6dp"
+			    android:gravity="center"
+	            android:textColor="@color/white"
+			    android:text="注销"
+	            android:textSize="18sp" />
 		</RelativeLayout>
 		<RelativeLayout
 			android:id="@+id/userinfo_layout_photo"

@@ -203,8 +203,8 @@ public class FamilyActivity extends Activity {
 		for(Friend friend : Me.instance.friends) {
 			HashMap<String, Object> memberMap = new HashMap<String, Object>();
 			memberMap.put("userId", friend.id);
-			if(!Text.isBlank(friend.nickName)) {
-				memberMap.put("caption", friend.nickName);
+			if(!Text.isBlank(friend.nickname)) {
+				memberMap.put("caption", friend.nickname);
 			}
 			else {
 				memberMap.put("caption", friend.phone);
@@ -213,8 +213,8 @@ public class FamilyActivity extends Activity {
 			if(Module.getUnreadMessageCount(friend.imId) > 0) {
 				memberMap.put("hasmessage", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_hasmessage));
 			}
-			if(null == friend.nickName) {
-				memberMap.put("remoteNickName", friend.nickName);
+			if(null == friend.nickname) {
+				memberMap.put("remoteNickName", friend.nickname);
 			}
 			else {
 				memberMap.put("remoteNickName", friend.phone);
@@ -225,8 +225,8 @@ public class FamilyActivity extends Activity {
 		for(Relative relative : Me.instance.relatives) {
 			HashMap<String, Object> memberMap = new HashMap<String, Object>();
 			memberMap.put("userId", relative.id);
-			if(!Text.isBlank(relative.nickName)) {
-				memberMap.put("caption", relative.nickName);
+			if(!Text.isBlank(relative.relation)) {
+				memberMap.put("caption", relative.relation);
 			}
 			else {
 				memberMap.put("caption", relative.name);

@@ -42,7 +42,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
             android:layout_marginStart="14dp"
-            android:background="@drawable/my_icon_collection"/>
+            android:background="@drawable/icon_entry_5" />
  
         <TextView
             android:id="@+id/text_collection"
@@ -85,7 +85,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
             android:layout_marginStart="14dp"
-            android:background="@drawable/my_icon_register"/>
+            android:background="@drawable/icon_entry_3"/>
  
         <TextView
             android:id="@+id/text_register"
@@ -127,7 +127,7 @@
              android:layout_centerVertical="true"
              android:layout_marginLeft="14dp"
              android:layout_marginStart="14dp"
-             android:background="@drawable/my_icon_liliao" />
+             android:background="@drawable/icon_entry_4" />
 
          <TextView
              android:id="@+id/text_liliao"

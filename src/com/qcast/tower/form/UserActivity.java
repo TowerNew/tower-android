@@ -5,7 +5,6 @@ import java.util.LinkedList;
 
 import com.qcast.tower.Program;
 import com.qcast.tower.R;
-import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.Me;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -78,7 +77,7 @@ public class UserActivity extends FragmentEx {
 		btnPhoto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(null != Logic.token) {
+				if(null != Me.instance) {
 					Intent intent = new Intent(UserActivity.this.getActivity(), UserInfoActivity.class);
 					UserActivity.this.startActivity(intent);
 					return;

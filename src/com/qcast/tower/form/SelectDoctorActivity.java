@@ -3,6 +3,7 @@ package com.qcast.tower.form;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -31,6 +32,8 @@ import com.slfuture.pluto.view.component.ActivityEx;
  */
 @ResourceView(id = R.layout.activity_selectdoctor)
 public class SelectDoctorActivity extends ActivityEx {
+	@ResourceView(id = R.id.selectdoctor_image_close)
+	public ImageView imgClose;
 	@ResourceView(id = R.id.selectdoctor_list)
 	public ListView listDoctor;
 
@@ -54,6 +57,12 @@ public class SelectDoctorActivity extends ActivityEx {
 			this.finish();
 			return;
 		}
+		imgClose.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				SelectDoctorActivity.this.finish();
+			}
+		});
 		SimpleAdapter listItemAdapter = new SimpleAdapter(SelectDoctorActivity.this, doctorList, R.layout.listitem_selectdoctor,
 				new String[]{"name", "photo", "department", "resume", "title", "status"}, 
 				new int[]{R.id.selectdoctor_label_name, R.id.selectdoctor_image_photo, R.id.selectdoctor_label_department, R.id.selectdoctor_label_resume, R.id.selectdoctor_label_title, R.id.selectdoctor_image_status});

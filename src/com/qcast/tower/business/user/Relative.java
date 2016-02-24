@@ -17,9 +17,13 @@ public class Relative implements Serializable {
 	 */
 	public String id;
 	/**
-	 * 称呼
+	 * 出生年月
 	 */
-	public String nickname = null;
+	public Date birthday;
+	/**
+	 * 性别
+	 */
+	public int gender = User.GENDER_UNKNOWN;
 	/**
 	 * 姓名
 	 */
@@ -29,13 +33,9 @@ public class Relative implements Serializable {
 	 */
 	public String idNumber = null;
 	/**
-	 * 性别
+	 * 关系&备注
 	 */
-	public int gender = User.GENDER_UNKNOWN;
-	/**
-	 * 出生年月
-	 */
-	public Date birthday;
+	public String relation;
 
 
 	/**
@@ -46,14 +46,16 @@ public class Relative implements Serializable {
 	 */
 	public boolean parse(JSONVisitor visitor) {
 		id = visitor.getString("userGlobalId");
-		nickname = visitor.getString("nickname");
+		if(null != visitor.getString("birthday")) {
+			try {
+				birthday = Date.parse(visitor.getString("birthday"));
+			}
+			catch (ParseException e) { }
+		}
+		gender = visitor.getInteger("gender", 0);
 		name = visitor.getString("name");
 		idNumber = visitor.getString("idnumber");
-		try {
-			birthday = Date.parse(visitor.getString("birthday"));
-		}
-		catch (ParseException e) { }
-		gender = visitor.getInteger("gender", 0);
+		relation = visitor.getString("relation");
 		return true;
 	}
 }

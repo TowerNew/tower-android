@@ -1,0 +1,161 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eff0f0" >
+
+    <RelativeLayout
+        android:id="@+id/health_record_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:background="#6fc6cf" 
+        android:layout_alignParentTop="true" >
+
+        <Button
+            android:id="@+id/health_button_close"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/arrow_left" />
+        <TextView
+            android:id="@+id/heath_record_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="健康档案"
+            android:textColor="#ffffff"
+            android:textSize="20.0sp" />
+        
+    </RelativeLayout>
+    
+    
+    
+    
+    <RelativeLayout
+        android:id="@+id/first_line"
+        android:layout_width="fill_parent"
+        android:layout_height="66dp"
+        android:layout_centerVertical="true"
+        android:background="#ffffff" >
+
+
+        <Button
+            android:id="@+id/health_report"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/health_examination_report" />
+
+        <TextView
+            android:id="@+id/text_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="62dp"
+            android:layout_marginStart="62dp"
+            android:text="体检报告"
+            android:textSize="14.0sp" />
+         <ImageButton
+            android:id="@+id/btn_health_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/ic_right_arrow"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/second_line"
+        android:layout_width="fill_parent"
+        android:layout_height="66dp"
+        android:layout_below="@+id/first_line"
+        android:background="#ffffff" 
+        android:layout_marginTop="1dp">
+
+        <Button
+            android:id="@+id/button_icon_register"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/electronic_medical_record" />
+
+        <TextView
+            android:id="@+id/text_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="62dp"
+            android:layout_marginStart="62dp"
+            android:text="电子病历"
+            android:textSize="14.0sp" />
+
+        <ImageButton
+            android:id="@+id/btn_register_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentRight="true" 
+            android:layout_alignParentEnd="true" 
+            android:background="@drawable/ic_right_arrow"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/third_line"
+        android:layout_width="fill_parent"
+        android:layout_height="66dp"
+        android:layout_below="@+id/second_line"
+        android:layout_marginTop="1dp"
+        android:background="#ffffff" >
+
+        <Button
+            android:id="@+id/btn_wearables_data"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/health_wearables_data" />
+
+        <TextView
+            android:id="@+id/text_wearables_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="62dp"
+            android:layout_marginStart="62dp"
+            android:text="穿戴数据"
+            android:textSize="14.0sp" />
+
+        <ImageButton
+            android:id="@+id/imgbtn_wearables_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/ic_right_arrow" 
+            android:layout_alignParentRight="true" 
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/webView1"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_above="@+id/first_line"
+        android:layout_below="@+id/health_record_bar" 
+        android:layout_marginBottom="15dp"/>
+
+</RelativeLayout>

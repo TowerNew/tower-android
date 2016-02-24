@@ -1,0 +1,160 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eff0f0" >
+
+    <RelativeLayout
+        android:id="@+id/top_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:background="#6fc6cf"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/zone_button_close"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/arrow_left"/>          
+        <TextView
+            android:id="@+id/my_zone_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的空间"
+            android:textColor="#ffffff"
+            android:textSize="20.0sp" />   
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/first_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/top_bar"
+        android:background="#ffffff" >
+        <ImageButton
+            android:id="@+id/button_icon_collection"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
+            android:background="@drawable/my_icon_collection"/>
+ 
+        <TextView
+            android:id="@+id/text_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_toRightOf="@+id/button_icon_collection"
+            android:layout_toEndOf="@+id/button_icon_collection"
+            android:text="收藏"
+            android:textSize="16.0sp"/>
+
+        <Button
+            android:id="@+id/btn_collection_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/ic_right_arrow" />
+
+    </RelativeLayout>
+     <RelativeLayout
+        android:id="@+id/second_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/first_bar"
+        android:layout_marginTop="2dp"
+        android:background="#fff" 
+        >
+
+        <ImageButton
+            android:id="@+id/button_icon_register"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
+            android:background="@drawable/my_icon_register"/>
+ 
+        <TextView
+            android:id="@+id/text_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_toRightOf="@+id/button_icon_register"
+            android:layout_toEndOf="@+id/button_icon_register"
+            android:text="挂号"
+            android:textSize="16.0sp"/>
+
+        <Button
+            android:id="@+id/btn_register_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/ic_right_arrow" />
+
+    </RelativeLayout>
+     <RelativeLayout
+         android:id="@+id/third_bar"
+         android:layout_width="fill_parent"
+         android:layout_height="50dp"
+         android:layout_marginTop="2dp"
+         android:layout_alignParentLeft="true"
+         android:layout_alignParentStart="true"
+         android:layout_below="@+id/second_bar"
+         android:background="#ffffff" >
+         <ImageButton
+             android:id="@+id/button_icon_liliao"
+             android:layout_width="40dp"
+             android:layout_height="40dp"
+             android:layout_alignParentLeft="true"
+             android:layout_alignParentStart="true"
+             android:layout_centerVertical="true"
+             android:layout_marginLeft="14dp"
+             android:layout_marginStart="14dp"
+             android:background="@drawable/my_icon_liliao" />
+
+         <TextView
+             android:id="@+id/text_liliao"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:layout_marginLeft="14dp"
+             android:layout_marginStart="14dp"
+             android:layout_toRightOf="@+id/button_icon_liliao"
+             android:layout_toEndOf="@+id/button_icon_liliao"
+             android:text="理疗"
+             android:textSize="16.0sp" />
+
+         <Button
+             android:id="@+id/btn_liliao_content"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentEnd="true"
+             android:layout_centerVertical="true"
+             android:layout_marginRight="15dp"
+             android:layout_marginEnd="15dp"
+             android:background="@drawable/ic_right_arrow" />
+     </RelativeLayout>
+
+  </RelativeLayout>

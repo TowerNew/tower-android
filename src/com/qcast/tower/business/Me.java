@@ -68,6 +68,18 @@ public class Me extends User implements Serializable, IReactor {
 	 */
 	public String token = null;
 	/**
+	 * 姓名
+	 */
+	public String name = null;
+	/**
+	 * 地址
+	 */
+	public String address = null;
+	/**
+	 * 身份证
+	 */
+	public String idNumber = null;
+	/**
 	 * 私人医生
 	 */
 	public Doctor doctor = null;
@@ -155,21 +167,7 @@ public class Me extends User implements Serializable, IReactor {
 				for(JSONVisitor visitor : content.getVisitors("familyList")) {
 					// 注册好友
 					Friend friend = new Friend();
-					friend.id = visitor.getString("userGlobalId");
-					friend.phone = visitor.getString("phone");
-					friend.imId = visitor.getString("imUsername");
-					friend.nickName = visitor.getString("relation");
-					if(null == friend.nickName) {
-						// 容错
-						friend.nickName = visitor.getString("name");
-					}
-					friend.gender = visitor.getInteger("gender", 0);
-					try {
-						if(null != visitor.getString("birthday")) {
-							friend.birthday = Date.parse(visitor.getString("birthday"));
-						}
-					}
-					catch (ParseException e) { }
+					friend.parse(visitor);
 					me.friends.add(friend);
 				}
 				for(JSONVisitor visitor : content.getVisitors("tvList")) {
@@ -273,14 +271,43 @@ public class Me extends User implements Serializable, IReactor {
 		instance = null;
 		delete();
 	}
-
+	
 	/**
-	 * 加载成员
+	 * 刷新私人成员
 	 * 
 	 * @param context 上下文 
 	 * @param callback 结果
 	 */
-	public void refresh(Context context, IEventable<Boolean> callback) {
+	public void refreshDoctor(Context context, IEventable<Boolean> callback) {
+		Host.doCommand("privateDoctor", new JSONResponse(context, callback) {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void onFinished(JSONVisitor content) {
+				 IEventable<Boolean> callback = (IEventable<Boolean>) tag;
+				 if(null == content || content.getInteger("code", 1) < 0) {
+					 callback.on(false);
+					 return;
+				 }
+				 if(null == content.getVisitor("data")) {
+					 return;
+				 }
+				 doctor = Doctor.build(content.getVisitor("data"));
+				 try {
+					save();
+				 }
+				 catch (IOException e) {}
+				 callback.on(true);
+			}
+		}, token);
+	}
+
+	/**
+	 * 刷新成员
+	 * 
+	 * @param context 上下文 
+	 * @param callback 结果
+	 */
+	public void refreshMember(Context context, IEventable<Boolean> callback) {
 		Host.doCommand("member", new JSONResponse(context, callback) {
 			@SuppressWarnings("unchecked")
 			@Override
@@ -371,6 +398,23 @@ public class Me extends User implements Serializable, IReactor {
 			contacts.put(imId, contact);
 		}
 	}
+	
+	/**
+	 * 解析数据生成用户对象
+	 * 
+	 * @param visitor 数据
+	 * @return 解析结果
+	 */
+	public boolean parse(JSONVisitor visitor) {
+		if(!super.parse(visitor)) {
+			return false;
+		}
+		token = visitor.getString("token");
+		name = visitor.getString("name");
+		address = visitor.getString("address");
+		idNumber = visitor.getString("idNumber");
+		return true;
+	}
 
 	/**
 	 * 获取存储文件
@@ -425,7 +469,7 @@ public class Me extends User implements Serializable, IReactor {
 		}
 		for(Friend friend : friends) {
 			if(userId.equals(friend.imId)) {
-				return friend.nickName;
+				return friend.nickname;
 			}
 		}
 		Contact contact = contacts.get(userId);
@@ -458,7 +502,7 @@ public class Me extends User implements Serializable, IReactor {
 			return;
 		}
 		if(Notify.TYPE_5 == type || Notify.TYPE_9 == type) {
-			Me.instance.refresh(Program.application, new IEventable<Boolean>() {
+			Me.instance.refreshMember(Program.application, new IEventable<Boolean>() {
 				@Override
 				public void on(Boolean data) {
 				}

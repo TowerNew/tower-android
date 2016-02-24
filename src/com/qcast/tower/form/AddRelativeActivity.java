@@ -62,7 +62,7 @@ public class AddRelativeActivity extends ActivityEx {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null != content && content.getInteger("code") > 0) {
-							Me.instance.refresh(AddRelativeActivity.this, new IEventable<Boolean>() {
+							Me.instance.refreshMember(AddRelativeActivity.this, new IEventable<Boolean>() {
 								@Override
 								public void on(Boolean data) {
 									AddRelativeActivity.this.finish();

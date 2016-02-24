@@ -1,412 +1,266 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" 
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:scrollbars="vertical"
-    android:background="@color/white">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
-    <RelativeLayout
-		android:id="@+id/userinfo_layout_head"
-		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:layout_alignParentTop="true" 
-		android:background="@drawable/topbar" 
-		android:focusable="true"
-		android:focusableInTouchMode="true">
-		<ImageButton
-            android:id="@+id/userinfo_button_return"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="6dp"
-            android:background="@drawable/button_return" />
-        <TextView
-            android:id="@+id/userinfo_label_caption"
-            android:layout_width="wrap_content"
+    android:background="@color/grey_bg"
+    android:scrollbars="vertical" >
+	<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_bg" >
+		<RelativeLayout
+            android:id="@+id/userinfo_layout_header"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/main">
+			<ImageView
+                android:id="@+id/userinfo_image_close"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/button_return" />
+			<TextView
+                android:id="@+id/userinfo_label_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="我的信息"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+		</RelativeLayout>
+		<RelativeLayout
+			android:id="@+id/userinfo_layout_photo"
+			android:layout_width="match_parent"
+			android:layout_height="100dp"
+	        android:layout_below ="@+id/userinfo_layout_header"
+			android:background="@color/main">
+			<ImageView
+			    android:id="@+id/userinfo_image_photo"
+			    android:layout_width="80dp"
+			    android:layout_height="80dp"
+                android:layout_centerInParent="true"
+			    android:layout_gravity="center"
+			    android:scaleType="centerInside"
+			    android:adjustViewBounds="true"
+			    android:src="@drawable/user_photo_default"
+			    android:padding="0dip" />
+		</RelativeLayout>
+		<RelativeLayout
+            android:id="@+id/userinfo_layout_phone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+	        android:layout_below ="@+id/userinfo_layout_photo"
+            android:background="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true" >
+			<TextView
+                android:id="@+id/userinfo_label_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="手机号码"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+			<TextView
+			    android:id="@+id/userinfo_text_photo"
+			    android:layout_width="wrap_content"
+			    android:layout_height="40dp"
+			    android:layout_centerVertical="true"
+			    android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+			    android:gravity="right|center"
+			    android:text="15000000000"
+			    android:textColor="@color/grey_text"
+			    android:textSize="16sp" />
+		</RelativeLayout>
+		<ImageView
+            android:id="@+id/userinfo_divide1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/userinfo_layout_phone"
             android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:text="我的信息"
-            android:textColor="#ffffffff"
-            android:textSize="18sp" />
-	</RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/userinfo_layout_phone"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/userinfo_layout_head"
-        android:background="@color/white"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <TextView
-            android:id="@+id/userinfo_label_photo"
-            android:layout_width="wrap_content"
+            android:background="@drawable/divider" >
+		</ImageView>
+		<RelativeLayout
+            android:id="@+id/userinfo_layout_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/userinfo_divide1"
+            android:background="@color/white"
+	        android:clickable="true">
+			<TextView
+                android:id="@+id/userinfo_label_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="false"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="昵  称"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+			<ImageView
+				android:id="@+id/userinfo_image_nickname"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+                android:layout_marginRight="6dp"
+				android:background="@drawable/arrow_right" />
+			<TextView
+			    android:id="@+id/userinfo_text_nickname"
+			    android:layout_width="wrap_content"
+			    android:layout_height="40dp"
+			    android:layout_centerVertical="true"
+			    android:layout_marginRight="10dp"
+			    android:layout_toLeftOf="@id/userinfo_image_nickname"
+			    android:gravity="right|center"
+			    android:text="一个用户"
+			    android:textColor="@color/grey_text"
+			    android:textSize="16sp" />
+		</RelativeLayout>
+		<ImageView
+            android:id="@+id/userinfo_divide2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerHorizontal="false"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="手机号码"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-		<EditText
-			android:id="@+id/userinfo_text_photo"
-			android:layout_width="150dp"
-		    android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
-		    android:layout_marginRight="10dp"
-			android:ems="15"
-			android:inputType="phone"
-		    android:singleLine="true"
-		    android:text=""
-		    android:textSize="16sp"
-			android:textColor="@color/midgrey" >
-		</EditText>
-	</RelativeLayout>
-	<ImageView 
-        android:id="@+id/userinfo_divide7"
-		android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/userinfo_layout_phone"
-		android:background="@drawable/divider">
-	</ImageView>
-	<RelativeLayout
-        android:id="@+id/userinfo_layout_name"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/userinfo_divide7"
-        android:background="@color/white"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <TextView
-            android:id="@+id/userinfo_label_name"
-            android:layout_width="wrap_content"
+            android:layout_below="@id/userinfo_layout_nickname"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/divider" />
+		<RelativeLayout
+            android:id="@+id/userinfo_layout_address"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/userinfo_divide2"
+            android:background="@color/white">
+			<TextView
+                android:id="@+id/userinfo_label_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="false"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="地  址"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+			<ImageView
+				android:id="@+id/userinfo_image_address"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+                android:layout_marginRight="6dp"
+				android:background="@drawable/arrow_right" />
+			<TextView
+			    android:id="@+id/userinfo_text_address"
+			    android:layout_width="wrap_content"
+			    android:layout_height="40dp"
+			    android:layout_centerVertical="true"
+			    android:layout_marginRight="10dp"
+			    android:layout_toLeftOf="@id/userinfo_image_address"
+			    android:gravity="right|center"
+			    android:text="上海"
+			    android:textColor="@color/grey_text"
+			    android:textSize="16sp" />
+		</RelativeLayout>
+		<ImageView
+            android:id="@+id/userinfo_divide3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerHorizontal="false"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="姓 名"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-		<EditText
-			android:id="@+id/userinfo_text_name"
-			android:layout_width="150dp"
-		    android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
-		    android:layout_marginRight="10dp"
-			android:ems="10"
-		    android:inputType="text"
-		    android:singleLine="true"
-		    android:text=""
-		    android:textSize="16sp"
-			android:textColor="@color/black" >
-		</EditText>
-	</RelativeLayout>
-	<ImageView 
-        android:id="@+id/userinfo_divide6"
-		android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/userinfo_layout_name"
-		android:background="@drawable/divider">
-	</ImageView>
-	<RelativeLayout
-        android:id="@+id/userinfo_layout_idnumber"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/userinfo_divide6"
-        android:background="@color/white"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <TextView
-            android:id="@+id/userinfo_label_idnumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerHorizontal="false"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="身份证号"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-		<EditText
-			android:id="@+id/userinfo_text_idnumber"
-			android:layout_width="150dp"
-		    android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
-		    android:layout_marginRight="10dp"
-            android:maxLength="20"
-			android:ems="10"
-		    android:inputType="text"
-		    android:singleLine="true"
-		    android:text=""
-		    android:textSize="16sp"
-			android:textColor="@color/black" >
-		</EditText>
-	</RelativeLayout>
-	<ImageView 
-        android:id="@+id/userinfo_divide5"
-		android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/userinfo_layout_idnumber"
-		android:background="@drawable/divider">
-	</ImageView>
-	<RelativeLayout
-        android:id="@+id/userinfo_layout_bankname"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/userinfo_divide5"
-        android:background="@color/white"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <TextView
-            android:id="@+id/userinfo_label_bankname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerHorizontal="false"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="银  行"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-		<TextView
-		    android:id="@+id/userinfo_text_bankname"
-		    android:layout_width="150dp"
-		    android:layout_height="40dp"
-		    android:layout_alignParentRight="true"
-		    android:layout_centerVertical="true"
-		    android:layout_marginRight="10dp"
-		    android:gravity="center_vertical"
-		    android:text="点击选择"
-		    android:textColor="@color/black"
-		    android:textSize="16sp" >
-
-		</TextView>
-	</RelativeLayout>
-	<ImageView 
-        android:id="@+id/userinfo_divide4"
-		android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/userinfo_layout_bankname"
-		android:background="@drawable/divider">
-	</ImageView>
-	<RelativeLayout
-        android:id="@+id/userinfo_layout_bankregion"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/userinfo_divide4"
-        android:background="@color/white"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <TextView
-            android:id="@+id/userinfo_label_bankregion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerHorizontal="false"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="开户支行"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-		<EditText
-		    android:id="@+id/userinfo_text_bankregion"
-		    android:layout_width="150dp"
-		    android:layout_height="40dp"
-		    android:layout_alignParentRight="true"
-		    android:layout_centerVertical="true"
-		    android:layout_marginRight="10dp"
-		    android:cursorVisible="true"
-		    android:ems="10"
-		    android:inputType="text"
-		    android:singleLine="true"
-		    android:text=""
-		    android:textSize="16sp"
-		    android:textColor="@color/black" >
-		</EditText>
-	</RelativeLayout>
-	<ImageView 
-        android:id="@+id/userinfo_divide3"
-		android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/userinfo_layout_bankregion"
-		android:background="@drawable/divider">
-	</ImageView>
-	<RelativeLayout
-        android:id="@+id/userinfo_layout_banknumber"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/userinfo_divide3"
-        android:background="@color/white"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <TextView
-            android:id="@+id/userinfo_label_banknumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerHorizontal="false"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="银行卡号"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-		<EditText
-		    android:id="@+id/userinfo_text_banknumber"
-		    android:layout_width="150dp"
-		    android:layout_height="40dp"
-		    android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
-		    android:layout_marginRight="10dp"
-		    android:cursorVisible="true"
-		    android:ems="10"
-            android:maxLength="20"
-		    android:inputType="number"
-		    android:singleLine="true"
-		    android:text=""
-		    android:textSize="16sp"
-		    android:textColor="@color/black" >
-		</EditText>
-	</RelativeLayout>
-	<ImageView 
-        android:id="@+id/userinfo_divide2"
-		android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/userinfo_layout_banknumber"
-		android:background="@drawable/divider">
-	</ImageView>
-	<RelativeLayout
-        android:id="@+id/userinfo_layout_idcardfront"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/userinfo_divide2"
-        android:background="@color/white"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <TextView
-            android:id="@+id/userinfo_label_idcardfront"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerHorizontal="false"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="身份证正面"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-		<ImageButton
-            android:id="@+id/userinfo_image_idcardfront"
-			android:layout_width="150dp"
+            android:layout_below="@id/userinfo_layout_address"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/divider" >
+		</ImageView>
+		<RelativeLayout
+		    android:id="@+id/userinfo_layout_name"
+		    android:layout_width="match_parent"
 		    android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
-		    android:layout_marginTop="10dp"
-		    android:layout_marginBottom="10dp"
-		    android:layout_marginRight="10dp"
-			android:background="@color/grey" />
-	</RelativeLayout>
-	<ImageView 
-        android:id="@+id/userinfo_divide1"
-		android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/userinfo_layout_idcardfront"
-		android:background="@drawable/divider">
-	</ImageView>
-	<RelativeLayout
-        android:id="@+id/userinfo_layout_idcardback"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/userinfo_divide1"
-        android:background="@color/white"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <TextView
-            android:id="@+id/userinfo_label_idcardback"
-            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+		    android:layout_below="@id/userinfo_divide3"
+            android:background="@color/white">
+			<TextView
+                android:id="@+id/userinfo_label_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="false"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="姓  名"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+			<ImageView
+				android:id="@+id/userinfo_image_name"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+                android:layout_marginRight="6dp"
+				android:background="@drawable/arrow_right" />
+			<TextView
+			    android:id="@+id/userinfo_text_name"
+			    android:layout_width="wrap_content"
+			    android:layout_height="40dp"
+			    android:layout_centerVertical="true"
+			    android:layout_marginRight="10dp"
+			    android:layout_toLeftOf="@id/userinfo_image_name"
+			    android:gravity="right|center"
+			    android:text="柳君"
+			    android:textColor="@color/grey_text"
+			    android:textSize="16sp" />
+		</RelativeLayout>
+		<ImageView
+            android:id="@+id/userinfo_divide4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerHorizontal="false"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="身份证反面"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-		<ImageButton
-            android:id="@+id/userinfo_image_idcardback"
-			android:layout_width="150dp"
-		    android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
-		    android:layout_marginTop="10dp"
-		    android:layout_marginBottom="10dp"
-		    android:layout_marginRight="10dp"
-			android:background="@color/grey" />
+            android:layout_below="@id/userinfo_layout_name"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/divider" >
+		</ImageView>
+		<RelativeLayout
+            android:id="@+id/userinfo_layout_idnumber"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/userinfo_divide4"
+            android:background="@color/white">
+			<TextView
+                android:id="@+id/userinfo_label_idnumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="false"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="身份证号"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+			<ImageView
+				android:id="@+id/userinfo_image_idnumber"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+                android:layout_marginRight="6dp"
+				android:background="@drawable/arrow_right" />
+			<TextView
+			    android:id="@+id/userinfo_text_idnumber"
+			    android:layout_width="wrap_content"
+			    android:layout_height="40dp"
+			    android:layout_centerVertical="true"
+			    android:layout_marginRight="10dp"
+			    android:layout_toLeftOf="@id/userinfo_image_idnumber"
+			    android:gravity="right|center"
+			    android:text="340221198601191234"
+			    android:textColor="@color/grey_text"
+			    android:textSize="16sp" />
+		</RelativeLayout>
 	</RelativeLayout>
-	<ImageView
-        android:id="@+id/userinfo_divide0"
-		android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/userinfo_layout_idcardback"
-		android:background="@drawable/divider">
-	</ImageView>
-	<LinearLayout
-		android:id="@+id/userinfo_layout_operation"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content" 
-		android:layout_below ="@+id/userinfo_divide0"
-		android:orientation="horizontal">
-		<Button
-		    android:id="@+id/userinfo_button_confirm"
-		    android:layout_width="80dp"
-		    android:layout_height="50dp"
-		    android:layout_below="@id/userinfo_layout_idcardback"
-		    android:layout_centerHorizontal="true"
-			android:layout_marginTop="20dp"
-			android:layout_marginLeft="20dp"
-			android:layout_marginRight="20dp"
-		    android:background="@drawable/button_common"
-		    android:text="保 存"
-		    android:textColor="#ffffffff"
-			android:layout_weight="1"
-		    android:textSize="15sp" />
-		<Button
-		    android:id="@+id/userinfo_button_exit"
-		    android:layout_width="80dp"
-		    android:layout_height="50dp"
-		    android:layout_below="@id/userinfo_button_confirm"
-		    android:layout_centerHorizontal="true"
-			android:layout_marginTop="20dp"
-			android:layout_marginBottom="20dp"
-			android:layout_marginLeft="20dp"
-			android:layout_marginRight="20dp"
-		    android:background="@drawable/button_common"
-		    android:text="注 销"
-		    android:textColor="#ffffffff"
-			android:layout_weight="1"
-		    android:textSize="15sp" />
-	</LinearLayout>
-</RelativeLayout>
 </ScrollView>

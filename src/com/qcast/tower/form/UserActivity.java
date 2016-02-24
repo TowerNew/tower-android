@@ -155,8 +155,8 @@ public class UserActivity extends FragmentEx {
 					UserActivity.this.startActivity(intent);
 					return;
 				}
-				else if(2 == index) {
-					Intent intent = new Intent(UserActivity.this.getActivity(), FamilyActivity.class);
+				else if(3 == index) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), SelectDoctorActivity.class);
 					UserActivity.this.startActivity(intent);
 					return;
 				}

@@ -184,7 +184,7 @@ public class FamilyActivity extends Activity {
 	 * 加载成员
 	 */
 	public void loadMember() {
-		Me.instance.refresh(FamilyActivity.this, new IEventable<Boolean>() {
+		Me.instance.refreshMember(FamilyActivity.this, new IEventable<Boolean>() {
 			@Override
 			public void on(Boolean result) {
 				if(!result) {

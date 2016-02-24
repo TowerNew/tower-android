@@ -33,7 +33,7 @@
         android:id="@+id/selectdoctor_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/selectdoctor_layout_header"
+        android:layout_below="@id/selectdoctor_layout_header"
         android:background="@color/white"
         android:divider="@drawable/divider" />
 </RelativeLayout>

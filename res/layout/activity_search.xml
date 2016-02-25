@@ -16,7 +16,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/button_return" />
+            android:background="@drawable/arrow_left" />
 		<ImageButton
             android:id="@+id/search_button_confirm"
             android:layout_width="25dp"

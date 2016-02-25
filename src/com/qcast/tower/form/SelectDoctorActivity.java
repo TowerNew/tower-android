@@ -3,7 +3,6 @@ package com.qcast.tower.form;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -103,6 +102,7 @@ public class SelectDoctorActivity extends ActivityEx {
 						});
 					}
 				}, map.get("id"), Me.instance.token);
+				((SimpleAdapter) listDoctor.getAdapter()).notifyDataSetChanged();
 			}
 		});
 		Host.doCommand("doctorlist", new JSONResponse(SelectDoctorActivity.this) {
@@ -133,7 +133,7 @@ public class SelectDoctorActivity extends ActivityEx {
 							map.put("status", GraphicsHelper.decodeResource(SelectDoctorActivity.this, R.drawable.icon_selected));
 						}
 					}
-					doctorList.push(map);
+					doctorList.add(map);
 					// 加载图片
 		            Host.doImage("image", new ImageResponse(doctor.getString("photo"), i) {
 						@Override

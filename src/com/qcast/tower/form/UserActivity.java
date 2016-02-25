@@ -150,7 +150,12 @@ public class UserActivity extends FragmentEx {
 					return;
 				}
 				if(1 == index) {
-					Intent intent = new Intent(UserActivity.this.getActivity(), HealthManageActivity.class);
+					Intent intent = new Intent(UserActivity.this.getActivity(), MyZoneActivity.class);
+					UserActivity.this.startActivity(intent);
+					return;
+				}
+				else if(2 == index) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), ArchiveActivity.class);
 					UserActivity.this.startActivity(intent);
 					return;
 				}

@@ -18,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="6dp"
             android:scaleType="centerInside"
-            android:src="@drawable/button_return" />
+            android:src="@drawable/arrow_left" />
         <TextView
             android:id="@+id/selectdoctor_text_title"
             android:layout_width="wrap_content"

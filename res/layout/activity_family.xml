@@ -16,7 +16,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="6dp"
-            android:background="@drawable/button_return" />
+            android:background="@drawable/arrow_left" />
         <Button
             android:id="@+id/family_button_add"
             android:layout_width="36dp"

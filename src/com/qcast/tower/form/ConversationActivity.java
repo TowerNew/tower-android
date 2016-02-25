@@ -1,7 +1,9 @@
 package com.qcast.tower.form;
 
+import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
+import com.slfuture.pretty.general.utility.GeneralHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +12,9 @@ import java.util.Map;
 
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
+import com.qcast.tower.business.structure.IM;
 import com.qcast.tower.business.user.Friend;
+import com.qcast.tower.business.user.User;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -107,10 +111,13 @@ public class ConversationActivity extends FragmentEx {
 		listFamily.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if(Me.instance.friends.size() <= position) {
+				if(0 == position) {
+					pop(Me.instance);
+				}
+				else if(Me.instance.friends.size() < position) {
 					return;
 				}
-				Me.instance.doChat(ConversationActivity.this.getActivity(), null, Me.instance.friends.get(position).imId);
+				pop(Me.instance.friends.get(position - 1));
 			}
 		});
 		adapter.setViewBinder(new ViewBinder() {
@@ -133,8 +140,12 @@ public class ConversationActivity extends FragmentEx {
 			return;
 		}
 		conversationList.clear();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", Me.instance.id);
+		map.put("name", "我");
+		conversationList.add(map);
     	for(Friend friend : Me.instance.friends) {
-    		Map<String, Object> map = new HashMap<String, Object>();
+    		map = new HashMap<String, Object>();
     		map.put("id", friend.id);
     		if(null != friend.relation) {
         		map.put("name", friend.relation);
@@ -142,9 +153,43 @@ public class ConversationActivity extends FragmentEx {
     		else if(null != friend.nickname) {
         		map.put("name", friend.nickname);
     		}
-    		map.put("imId", friend.imId);
     		conversationList.add(map);
     	}
     	((SimpleAdapter) listFamily.getAdapter()).notifyDataSetChanged();
     }
+
+	/**
+	 * 弹出菜单
+	 * 
+	 * @param user 用户
+	 */
+	private void pop(final User user) {
+		ArrayList<String> list = new ArrayList<String>();
+		for(IM item : user.im) {
+			if(item.type.equals(IM.TYPE_PHONE)) {
+				continue;
+			}
+			list.add(item.title);
+		}
+		if(0 == list.size()) {
+			return;
+		}
+		list.add(null);
+		list.add("取  消");
+		GeneralHelper.showSelector(ConversationActivity.this.getActivity(), new IEventable<Integer>() {
+			@Override
+			public void on(Integer index) {
+				int i = -1;
+				for(IM item : user.im) {
+					if(item.type.equals(IM.TYPE_PHONE)) {
+						continue;
+					}
+					i++;
+					if(index == i) {
+						Me.instance.doChat(ConversationActivity.this.getActivity(), null, item.imId);
+					}
+				}
+			}
+		}, list.toArray(new String[0]));
+	}
 }

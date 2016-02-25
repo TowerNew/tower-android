@@ -29,4 +29,16 @@ public class Friend extends User implements Serializable {
 		relation = visitor.getString("relation");
 		return true;
 	}
+	
+	/**
+	 * 获取有效称呼
+	 * 
+	 * @return 有效称呼
+	 */
+	public String nickname() {
+		if(null != relation) {
+			return relation;
+		}
+		return super.nickname();
+	}
 }

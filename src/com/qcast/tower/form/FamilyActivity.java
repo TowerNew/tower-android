@@ -12,7 +12,6 @@ import com.qcast.tower.business.user.Relative;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
-import com.slfuture.pretty.im.Module;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
@@ -209,10 +208,14 @@ public class FamilyActivity extends Activity {
 			else {
 				memberMap.put("caption", friend.phone);
 			}
-			memberMap.put("remoteId", friend.imId);
-			if(Module.getUnreadMessageCount(friend.imId) > 0) {
-				memberMap.put("hasmessage", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_hasmessage));
-			}
+			// TODO:
+			// memberMap.put("remoteId", friend.imId);
+			// TODO:
+			// if(Module.getUnreadMessageCount(friend.imId) > 0) {
+			// TODO:
+			// 	memberMap.put("hasmessage", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_hasmessage));
+			// TODO:
+			// }
 			if(null == friend.nickname) {
 				memberMap.put("remoteNickName", friend.nickname);
 			}

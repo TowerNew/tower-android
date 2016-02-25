@@ -9,6 +9,7 @@ import com.qcast.tower.Program;
 import com.qcast.tower.R;
 import com.qcast.tower.business.core.IMeListener;
 import com.qcast.tower.business.structure.Doctor;
+import com.qcast.tower.business.structure.IM;
 import com.qcast.tower.business.structure.Notify;
 import com.qcast.tower.business.user.Friend;
 import com.qcast.tower.business.user.Relative;
@@ -130,44 +131,7 @@ public class Me extends User implements Serializable, IReactor {
 				}
 				content = content.getVisitor("data");
 				Me me = new Me();
-				me.id = content.getString("userGlobalId");
-				me.phone = content.getString("username");
-				me.imId = content.getString("imUsername");
-				me.token = content.getString("token");
-				for(JSONVisitor visitor : content.getVisitors("userList")) {
-					if(me.id.equals(visitor.getString("userGlobalId"))) {
-						me.gender = visitor.getInteger("gender", 0);
-						try {
-							if(null != visitor.getString("birthday")) {
-								me.birthday = Date.parse(visitor.getString("birthday"));
-							}
-						}
-						catch (ParseException e) { }
-						continue;
-					}
-					// 非注册亲戚
-					Relative relative = new Relative();
-					if(relative.parse(visitor)) {
-						me.relatives.add(relative);
-					}
-				}
-				for(JSONVisitor visitor : content.getVisitors("familyList")) {
-					// 注册好友
-					Friend friend = new Friend();
-					if(friend.parse(visitor)) {
-						me.friends.add(friend);
-					}
-				}
-				for(JSONVisitor visitor : content.getVisitors("tvList")) {
-					me.contacts.put(visitor.getString("imUsername"), new Contact(null, visitor.getString("name")));
-				}
-				if(null != content.getVisitor("privateDoctor")) {
-					JSONVisitor visitor = content.getVisitor("privateDoctor");
-					Doctor doctor = new Doctor();
-					if(doctor.parse(visitor)) {
-						me.doctor = doctor;
-					}
-				}
+				me.parse(content);
 				instance = me;
 				try {
 					instance.save();
@@ -338,7 +302,7 @@ public class Me extends User implements Serializable, IReactor {
 	 */
 	public void doChat(Context context, String groupId, String remoteId) {
 		Intent intent = new Intent(context, SingleChatActivity.class);
-		intent.putExtra("selfId", imId);
+		intent.putExtra("selfId", fetchIMId(IM.TYPE_PHONE));
 		intent.putExtra("groupId", groupId);
 		intent.putExtra("remoteId", remoteId);
 		context.startActivity(intent);
@@ -382,10 +346,42 @@ public class Me extends User implements Serializable, IReactor {
 		if(!super.parse(visitor)) {
 			return false;
 		}
-		token = visitor.getString("token");
-		name = visitor.getString("name");
 		address = visitor.getString("address");
-		idNumber = visitor.getString("idNumber");
+		token = visitor.getString("token");
+		relatives.clear();
+		for(JSONVisitor item : visitor.getVisitors("userList")) {
+			if(id.equals(item.getString("userGlobalId"))) {
+				try {
+					if(null != item.getString("birthday")) {
+						birthday = Date.parse(item.getString("birthday"));
+					}
+				}
+				catch (ParseException e) { }
+				gender = item.getInteger("gender", 0);
+				name = item.getString("name");
+				idNumber = item.getString("idnumber");
+				continue;
+			}
+			// 非注册亲戚
+			Relative relative = new Relative();
+			if(relative.parse(item)) {
+				relatives.add(relative);
+			}
+		}
+		friends.clear();
+		for(JSONVisitor item : visitor.getVisitors("familyList")) {
+			// 注册好友
+			Friend friend = new Friend();
+			if(friend.parse(item)) {
+				friends.add(friend);
+			}
+		}
+		if(null != visitor.getVisitor("privateDoctor")) {
+			Doctor doctor = new Doctor();
+			if(doctor.parse(visitor.getVisitor("privateDoctor"))) {
+				this.doctor = doctor;
+			}
+		}
 		return true;
 	}
 
@@ -437,12 +433,16 @@ public class Me extends User implements Serializable, IReactor {
 
 	@Override
 	public String getName(String userId) {
-		if(userId.equals(imId)) {
-			return "我";
+		for(IM item : im) {
+			if(userId.equals(item.imId)) {
+				return item.title;
+			}
 		}
 		for(Friend friend : friends) {
-			if(userId.equals(friend.imId)) {
-				return friend.nickname;
+			for(IM item : friend.im) {
+				if(userId.equals(item.imId)) {
+					return item.title;
+				}
 			}
 		}
 		Contact contact = contacts.get(userId);
@@ -454,7 +454,7 @@ public class Me extends User implements Serializable, IReactor {
 
 	@Override
 	public String getUserId() {
-		return imId;
+		return fetchIMId(IM.TYPE_PHONE);
 	}
 
 	@Override

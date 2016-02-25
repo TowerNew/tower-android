@@ -3,8 +3,10 @@ package com.qcast.tower.business.user;
 import java.io.Serializable;
 import java.text.ParseException;
 
+import com.qcast.tower.business.structure.IM;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.time.Date;
+import com.slfuture.carrie.base.type.List;
 
 /**
  * 用户类
@@ -44,9 +46,9 @@ public class User implements Serializable {
 	 */
 	public int gender = GENDER_UNKNOWN;
 	/**
-	 * 通信ID
+	 * 即时通信集合
 	 */
-	public String imId;
+	public List<IM> im = new List<IM>();
 
 
 	/**
@@ -67,7 +69,42 @@ public class User implements Serializable {
 			catch (ParseException e) { }
 		}
 		gender = visitor.getInteger("gender", 0);
-		imId = visitor.getString("imUsername");
+		im.clear();
+		if(null != visitor.getVisitors("im")) {
+			for(JSONVisitor item : visitor.getVisitors("im")) {
+				IM im = new IM();
+				if(im.parse(item)) {
+					this.im.add(im);
+				}
+			}
+		}
 		return true;
+	}
+
+	/**
+	 * 获取即时通信ID
+	 * 
+	 * @param type 即时通信类型
+	 * @return 即时通信ID
+	 */
+	public String fetchIMId(String type) {
+		for(IM item : im) {
+			if(type.equals(item.type)) {
+				return item.imId;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 获取有效称呼
+	 * 
+	 * @return 有效称呼
+	 */
+	public String nickname() {
+		if(null != nickname) {
+			return nickname;
+		}
+		return phone;
 	}
 }

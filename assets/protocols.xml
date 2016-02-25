@@ -469,32 +469,73 @@ user-platform-web/rest/login#phone=[1]&code=[2]
     "data": {
         "userGlobalId": "c2d7daac-49eb-4fca-bfb3-a6785570d17e",
         "username": "15021819287",
-        "name": "15021819287",
-        "photo": null,
-        "imUsername": "appuser_2879",
+        "nickname": "昵称",
+        "photo": null
+        "address": "居住地址",
+        "token": "06001978-2aa4-4ad4-bc77-c583cd0b684e",
+        "im": [
+            {
+                "type": "phone",
+                "title": "手机",
+                "imUsername": "appUser_1"
+            },
+            {
+                "type": "tv",
+                "title": "电视机",
+                "imUsername": "appUser_2"
+            }
+        ],
         "userList": [
             {
                 "userGlobalId": "c2d7daac-49eb-4fca-bfb3-a6785570d17e",
-                "imUsername": "appuser_2879",
-                "gender": 0,
-                "category": 2,
-                "status": 1,
-                "type": 1,
-                "phone": "15021819287",
-                "relation": null,
-                "name": "15021819287",
-                "idnumber": null,
-                "birthday": null,
-                "bankName": null,
-                "bankRegion": null,
-                "bankNumber": null,
-                "idcardfront": null,
-                "idcardback": null
+                "relation": "父亲",
+                "birthday": "1986-01-19",
+                "gender": 1,
+                "name": "柳君",
+                "idnumber": "340221198601191234"
+            },
+            {
+                "userGlobalId": "c2d7daac-49eb-4fca-bfb3-a6785570d172",
+                "relation": "母亲",
+                "birthday": "1986-11-25",
+                "gender": 2,
+                "name": "张琪",
+                "idnumber": "340221198611251234"
             }
         ],
-        "tvList": [],
-        "privateDoctor": null,
-        "token": "06001978-2aa4-4ad4-bc77-c583cd0b684e"
+        "fimalyList": [
+            {
+                "relation": "好友",
+            	"userGlobalId": "c2d7daac-49eb-4fca-bfb3-a6785570d17e",
+                "username": "15021819288",
+                "nickname": "昵称",
+                "photo": null,
+                "birthday": "1986-01-19",
+                "gender": 0,
+                "im": [
+                    {
+                        "type": "phone",
+                        "title": "手机",
+                        "imUsername": "appUser_1"
+                    },
+                    {
+                        "type": "tv",
+                        "title": "电视机",
+                        "imUsername": "appUser_2"
+                    }
+                ]
+            }
+        ],
+        "privateDoctor": {
+            "userGlobalId": "c2d7daac-49eb-4fca-bfb3-a6785570d17e",
+            "name": "王医生",
+            "photo": null,
+            "department": "全科",
+            "resume": "医生简历",
+            "title": "全科医生",
+            "description": "基本信息",
+            "imUsername": "appUser_2"
+        }
     }
 }
         ]]>

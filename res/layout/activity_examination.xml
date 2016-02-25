@@ -98,8 +98,7 @@
         android:textColor="@color/blue"
         android:textSize="18sp"
         android:visibility="invisible" />
-
-	<com.qcast.tower.adapter.MatrixImageView 
+	<com.qcast.tower.view.control.MatrixImageView 
         android:id="@+id/examination_image_description"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -110,9 +109,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/white">
-	</com.qcast.tower.adapter.MatrixImageView>
-	
+        android:background="@color/white" />
     <TextView
         android:id="@+id/examination_text_description"
         android:layout_width="fill_parent"

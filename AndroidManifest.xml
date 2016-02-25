@@ -31,7 +31,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar">
         <activity
-            android:name="com.qcast.tower.form.LoadActivity"
+            android:name="com.qcast.tower.view.form.LoadActivity"
             android:icon="@drawable/program_icon"
             android:label="@string/app_name">
             <intent-filter>
@@ -40,127 +40,127 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.qcast.tower.form.MainActivity"
+            android:name="com.qcast.tower.view.form.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity
-            android:name="com.qcast.tower.form.WebActivity"
+            android:name="com.qcast.tower.view.form.WebActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.FamilyActivity"
+            android:name="com.qcast.tower.view.form.FamilyActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.FamilyEditActivity"
+            android:name="com.qcast.tower.view.form.FamilyEditActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.LoginActivity"
+            android:name="com.qcast.tower.view.form.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.SelfDiagnosticActivity"
+            android:name="com.qcast.tower.view.form.SelfDiagnosticActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.DiseaseListActivity"
+            android:name="com.qcast.tower.view.form.DiseaseListActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.InquiryDoctorChatActivity"
+            android:name="com.qcast.tower.view.form.InquiryDoctorChatActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"></activity>
         <activity
-            android:name="com.qcast.tower.form.InquiryDoctorActivity"
+            android:name="com.qcast.tower.view.form.InquiryDoctorActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.InquiryDoctorDetailActivity"
+            android:name="com.qcast.tower.view.form.InquiryDoctorDetailActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.ExaminationActivity"
+            android:name="com.qcast.tower.view.form.ExaminationActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.RadioActivity"
+            android:name="com.qcast.tower.view.form.RadioActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name"></activity>
 		<activity
-            android:name="com.qcast.tower.form.RegionActivity"
+            android:name="com.qcast.tower.view.form.RegionActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name"></activity>
         <activity
-            android:name="com.qcast.tower.form.MyInquiryDoctorActivity"
+            android:name="com.qcast.tower.view.form.MyInquiryDoctorActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.MyWalletActivity"
+            android:name="com.qcast.tower.view.form.MyWalletActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
 		<activity
-            android:name="com.qcast.tower.form.AboutActivity"
+            android:name="com.qcast.tower.view.form.AboutActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name"></activity>
         <activity
-            android:name="com.qcast.tower.form.ReserveDoctorActivity"
+            android:name="com.qcast.tower.view.form.ReserveDoctorActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.HealthManageActivity"
+            android:name="com.qcast.tower.view.form.HealthManageActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.PrescriptionActivity"
+            android:name="com.qcast.tower.view.form.PrescriptionActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.MyReserveHistoryActivity"
+            android:name="com.qcast.tower.view.form.MyReserveHistoryActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.MyCommentsActivity"
+            android:name="com.qcast.tower.view.form.MyCommentsActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.BodyActivity"
+            android:name="com.qcast.tower.view.form.BodyActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.ExamSelectActivity"
+            android:name="com.qcast.tower.view.form.ExamSelectActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.TopicActivity"
+            android:name="com.qcast.tower.view.form.TopicActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.SearchActivity"
+            android:name="com.qcast.tower.view.form.SearchActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.TextActivity"
+            android:name="com.qcast.tower.view.form.TextActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.qcast.tower.form.CommentActivity"
+            android:name="com.qcast.tower.view.form.CommentActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
 
-		<activity android:name="com.qcast.tower.form.SiriActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		<activity android:name="com.qcast.tower.form.AddFriendActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		<activity android:name="com.qcast.tower.form.AddRelativeActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		<activity android:name="com.qcast.tower.form.AddRequestActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		<activity android:name="com.qcast.tower.form.MyMessagesActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		<activity android:name="com.qcast.tower.form.SuggestActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		<activity android:name="com.qcast.tower.form.ConfigActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		<activity android:name="com.qcast.tower.form.SelectDoctorActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		<activity android:name="com.qcast.tower.form.UserInfoActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		<activity android:name="com.qcast.tower.form.ArchiveActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		<activity android:name="com.qcast.tower.form.MyZoneActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.view.form.SiriActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.view.form.AddFriendActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.view.form.AddRelativeActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.view.form.AddRequestActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.view.form.MyMessagesActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.view.form.SuggestActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.view.form.ConfigActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.view.form.SelectDoctorActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.view.form.UserInfoActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.view.form.ArchiveActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.qcast.tower.view.form.MyZoneActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
         <!-- Pretty所需注册窗口 -->
         <activity android:name="com.slfuture.pretty.im.view.form.SingleChatActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />

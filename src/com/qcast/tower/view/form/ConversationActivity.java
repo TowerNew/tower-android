@@ -1,9 +1,11 @@
 package com.qcast.tower.view.form;
 
+import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.type.Table;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.ImageResponse;
+import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
@@ -33,6 +35,7 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -124,6 +127,44 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 					return;
 				}
 				pop(Me.instance.friends.get(position - 1));
+			}
+		});
+		listFamily.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+				if(0 == position) {
+					return true;
+				}
+				GeneralHelper.showSelector(ConversationActivity.this.getActivity(), new IEventable<Integer>() {
+					@Override
+					public void on(Integer index) {
+						if(0 == index) {
+							Intent intent = new Intent(ConversationActivity.this.getActivity(), AddFriendActivity.class);
+							intent.putExtra("userId", Me.instance.friends.get(position - 1).id);
+							ConversationActivity.this.getActivity().startActivity(intent);
+						}
+						else if(1 == index) {
+							Host.doCommand("removefamily", new JSONResponse(ConversationActivity.this.getActivity()) {
+								@Override
+								public void onFinished(JSONVisitor content) {
+									if(null == content || content.getInteger("code", 0) <= 0) {
+										return;
+									}
+									Me.instance.refreshMember(ConversationActivity.this.getActivity(),  new IEventable<Boolean>() {
+										@Override
+										public void on(Boolean result) {
+											if(!result) {
+												return;
+											}
+											ConversationActivity.this.refreshList();
+										}
+									});
+								}
+							}, Me.instance.token, Me.instance.friends.get(position - 1).id);
+						}
+					}
+				}, "编  辑", "删  除", "", "取  消");
+				return true;
 			}
 		});
 		adapter.setViewBinder(new ViewBinder() {

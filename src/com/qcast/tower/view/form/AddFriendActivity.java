@@ -8,7 +8,10 @@ import android.widget.TextView;
 
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
+import com.qcast.tower.business.user.Friend;
 import com.slfuture.carrie.base.json.JSONVisitor;
+import com.slfuture.carrie.base.model.core.IEventable;
+import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -27,7 +30,11 @@ public class AddFriendActivity extends ActivityEx {
 	public EditText txtPhone;
 	@ResourceView(id = R.id.addfriend_text_relation)
 	public EditText txtRelation;
-
+	
+	/**
+	 * 带编辑的成员ID
+	 */
+	private String userId = "";
 
 	/**
 	 * 界面创建
@@ -36,6 +43,21 @@ public class AddFriendActivity extends ActivityEx {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//
+		userId = this.getIntent().getStringExtra("userId");
+		if(Text.isBlank(userId)) {
+			userId = "";
+		}
+		else {
+			Friend friend = Me.instance.fetchFriendById(userId);
+			if(null == friend) {
+				AddFriendActivity.this.finish();
+				return;
+			}
+			txtPhone.setText("***");
+			if(null != friend.relation) {
+				txtRelation.setText(friend.relation);
+			}
+		}
 		btnClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -45,14 +67,24 @@ public class AddFriendActivity extends ActivityEx {
 		labConfirm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				int mode = 1;
+				if(Text.isBlank(userId)) {
+					mode = 0;
+				}
 				Host.doCommand("editrelation", new JSONResponse(AddFriendActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null != content && content.getInteger("code") > 0) {
-							AddFriendActivity.this.finish();
+							Me.instance.refreshMember(AddFriendActivity.this, new IEventable<Boolean>() {
+								@Override
+								public void on(Boolean data) {
+									AddFriendActivity.this.finish();
+								}
+							});
+							return;
 						}
 					}
-				}, Me.instance.token, "", txtRelation.getText().toString(), txtPhone.getText().toString());
+				}, Me.instance.token, userId, mode, txtRelation.getText().toString(), txtPhone.getText().toString());
 			}
 		});
 	}

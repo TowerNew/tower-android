@@ -388,7 +388,7 @@ user-platform-web/rest/user/editowner#token=[1]&userGlobalId=[2]&mode=[3]&relati
     <protocol name="editrelation">
         <path>
         <![CDATA[
-user-platform-web/rest/user/editrelation#token=[1]&userGlobalId=[2]&relation=[3]&phone=[4]
+user-platform-web/rest/user/editrelation#token=[1]&userGlobalId=[2]&mode=[3]&relation=[4]&phone=[5]
         ]]>
         </path>
     <mock>

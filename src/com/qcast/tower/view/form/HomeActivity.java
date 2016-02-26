@@ -183,6 +183,30 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	/**
 	 * 动画
 	 */
+	private AnimationListener listener = new AnimationListener() {
+		@Override
+		public void onAnimationStart(Animation animation) {
+			Log.d("tower", "onAnimationStart()");
+		}
+		@Override
+		public void onAnimationRepeat(Animation animation) { }
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			if(1 == shakeDirection) {
+				Log.d("tower", "onAnimationEnd(Right)");
+				btnBell.startAnimation(animLeft);
+				shakeDirection = -1;
+			}
+			else if(-1 == shakeDirection) {
+				Log.d("tower", "onAnimationEnd(Left)");
+				btnBell.startAnimation(animRight);
+				shakeDirection = 1;
+			}
+			else {
+				btnBell.clearAnimation();
+			}
+		}
+    };
 	protected int shakeDirection = 1;
 	protected RotateAnimation animRight = null; 
 	protected RotateAnimation animLeft = null; 
@@ -394,8 +418,10 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		}
 		animRight = new RotateAnimation(-30, 30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
 		animRight.setDuration(1000);
+        animRight.setAnimationListener(listener);
 		animLeft = new RotateAnimation(30f, -30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
 		animLeft.setDuration(1000);
+		animLeft.setAnimationListener(listener);
 		View viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_home_head, null);
 		listNews.addHeaderView(viewHead);
 		scrollEntry = (HorizontalScrollView) viewHead.findViewById(R.id.home_scroll_entry);
@@ -506,45 +532,18 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 * 摇晃铃铛
 	 */
 	public void shakeBell() {
-		btnBell.clearAnimation();
 		btnBell.setImageResource(R.drawable.bell_active);
 		//
-		final AnimationListener listener = new AnimationListener() {
-			@Override
-			public void onAnimationStart(Animation animation) {
-				Log.d("tower", "onAnimationStart()");
-			}
-			@Override
-			public void onAnimationRepeat(Animation animation) { }
-			@Override
-			public void onAnimationEnd(Animation animation) {
-				btnBell.clearAnimation();
-				animation.setAnimationListener(null);
-				if(1 == shakeDirection) {
-					Log.d("tower", "onAnimationEnd(Right)");
-			        animLeft.setAnimationListener(this);
-					btnBell.startAnimation(animLeft);
-					shakeDirection = -1;
-				}
-				else if(-1 == shakeDirection) {
-					Log.d("tower", "onAnimationEnd(Left)");
-					animRight.setAnimationListener(this);
-					btnBell.startAnimation(animRight);
-					shakeDirection = 1;
-				}
-			}
-        };
-        animRight.setAnimationListener(listener);
-        //
-        btnBell.startAnimation(animRight);
-        shakeDirection = 1;
+		if(0 == shakeDirection) {
+	        btnBell.startAnimation(animRight);
+	        shakeDirection = 1;
+		}
 	}
 
 	/**
 	 * 停止摇晃铃铛
 	 */
 	public void stopBell() {
-		btnBell.clearAnimation();
 		btnBell.setImageResource(R.drawable.bell_normal);
 		shakeDirection = 0;
 	}

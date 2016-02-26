@@ -368,7 +368,37 @@ public class Me extends User implements Serializable, IReactor {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * 通过用户ID获取好友
+	 * 
+	 * @param userId 用户ID
+	 * @return 好友对象
+	 */
+	public Friend fetchFriendById(String userId) {
+		for(Friend friend : friends) {
+			if(friend.id.equals(userId)) {
+				return friend;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 通过用户ID获取亲人
+	 * 
+	 * @param userId 用户ID
+	 * @return 亲人对象
+	 */
+	public Relative fetchRelativeById(String userId) {
+		for(Relative relative : relatives) {
+			if(relative.id.equals(userId)) {
+				return relative;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * 解析数据生成用户对象
 	 * 
@@ -504,18 +534,21 @@ public class Me extends User implements Serializable, IReactor {
 	}
 
 	@Override
-	public void onCommand(String from, String action, com.slfuture.carrie.base.type.Table<String, Object> data) {
+	public void onCommand(final String from, final String action, final com.slfuture.carrie.base.type.Table<String, Object> data) {
 		Reminder.ringtone(Program.application);
 		Integer type = (Integer) data.get("type");
-		if(null != type) {
-			if(Notify.TYPE_5 == type || Notify.TYPE_9 == type) {
-				Me.instance.refreshMember(Program.application, new IEventable<Boolean>() {
-					@Override
-					public void on(Boolean data) {
+		if(null != type && (Notify.TYPE_5 == type || Notify.TYPE_9 == type)) {
+			Me.instance.refreshMember(Program.application, new IEventable<Boolean>() {
+				@Override
+				public void on(Boolean result) {
+					if(!result) {
+						return;
 					}
-				});
-			}
+					Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
+				}
+			});
 			Reminder.vibrate(Program.application);
+			return;
 		}
 		if("message".equals(action)) {
 			Logic.hasUnreadMessage = true;

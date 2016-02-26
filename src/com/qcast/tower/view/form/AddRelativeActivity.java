@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
+import com.qcast.tower.business.user.Relative;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
@@ -45,6 +46,26 @@ public class AddRelativeActivity extends ActivityEx {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//
+		userId = this.getIntent().getStringExtra("userId");
+		if(Text.isBlank(userId)) {
+			userId = "";
+		}
+		else {
+			Relative relative = Me.instance.fetchRelativeById(userId);
+			if(null == relative) {
+				AddRelativeActivity.this.finish();
+				return;
+			}
+			if(null != relative.relation) {
+				txtRelation.setText(relative.relation);
+			}
+			if(null != relative.name) {
+				txtName.setText(relative.name);
+			}
+			if(null != relative.idNumber) {
+				txtIdNumber.setText(relative.idNumber);
+			}
+		}
 		btnClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

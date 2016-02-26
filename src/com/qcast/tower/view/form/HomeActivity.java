@@ -14,6 +14,7 @@ import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
+import com.slfuture.pluto.etc.Controller;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
 import com.slfuture.carrie.base.json.JSONArray;
@@ -22,7 +23,6 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
-import com.slfuture.carrie.base.type.core.ITable;
 
 import android.content.Context;
 import android.content.Intent;
@@ -180,6 +180,12 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 * 当前页面索引
 	 */
 	protected int page = 1;
+	/**
+	 * 动画
+	 */
+	protected int shakeDirection = 1;
+	protected RotateAnimation animRight = null; 
+	protected RotateAnimation animLeft = null; 
 
 
 	@Override
@@ -202,8 +208,13 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		if(null != Logic.regionName) {
 			regionButton.setText(fetchRegionName());
 		}
-		if(Logic.hasMessage) {
-			shakeBell();
+		if(Logic.hasUnreadMessage) {
+			Controller.doDelay(new Runnable() {
+				@Override
+				public void run() {
+					shakeBell();
+				}
+			}, 1000);
 		}
 		else {
 			stopBell();
@@ -381,6 +392,10 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		if(listNews.getHeaderViewsCount() > 0) {
 			return;
 		}
+		animRight = new RotateAnimation(-30, 30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
+		animRight.setDuration(1000);
+		animLeft = new RotateAnimation(30f, -30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
+		animLeft.setDuration(1000);
 		View viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_home_head, null);
 		listNews.addHeaderView(viewHead);
 		scrollEntry = (HorizontalScrollView) viewHead.findViewById(R.id.home_scroll_entry);
@@ -399,6 +414,11 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				startActivity(intent);
                 browser.pauseTimers();
                 return true;
+			}
+			@Override
+			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+				super.onReceivedError(view, errorCode, description, failingUrl);
+				browser.loadUrl("about:blank");
 			}
 		});
 		this.getActivity().findViewById(R.id.home_layout_head).bringToFront();
@@ -489,15 +509,10 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		btnBell.clearAnimation();
 		btnBell.setImageResource(R.drawable.bell_active);
 		//
-		final RotateAnimation animRight = new RotateAnimation(-30, 30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
-		animRight.setDuration(1000);
-		final RotateAnimation animLeft = new RotateAnimation(30f, -30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
-		animLeft.setDuration(1000);
-		//
 		final AnimationListener listener = new AnimationListener() {
 			@Override
 			public void onAnimationStart(Animation animation) {
-				Log.d("tower", "");
+				Log.d("tower", "onAnimationStart()");
 			}
 			@Override
 			public void onAnimationRepeat(Animation animation) { }
@@ -505,19 +520,24 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			public void onAnimationEnd(Animation animation) {
 				btnBell.clearAnimation();
 				animation.setAnimationListener(null);
-				if(animation == animRight) {
+				if(1 == shakeDirection) {
+					Log.d("tower", "onAnimationEnd(Right)");
 			        animLeft.setAnimationListener(this);
 					btnBell.startAnimation(animLeft);
+					shakeDirection = -1;
 				}
-				else if(animation == animLeft) {
+				else if(-1 == shakeDirection) {
+					Log.d("tower", "onAnimationEnd(Left)");
 					animRight.setAnimationListener(this);
 					btnBell.startAnimation(animRight);
+					shakeDirection = 1;
 				}
 			}
         };
         animRight.setAnimationListener(listener);
         //
         btnBell.startAnimation(animRight);
+        shakeDirection = 1;
 	}
 
 	/**
@@ -526,6 +546,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	public void stopBell() {
 		btnBell.clearAnimation();
 		btnBell.setImageResource(R.drawable.bell_normal);
+		shakeDirection = 0;
 	}
 
 	@Override
@@ -534,9 +555,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	}
 
 	@Override
-	public void onCommand(String from, String action, ITable<String, Object> data) {
-		if("notify".equalsIgnoreCase(action)) {
-			shakeBell();
-		}
+	public void onCommand(String from, String action, com.slfuture.carrie.base.type.Table<String, Object> data) {
+		shakeBell();
 	}
 }

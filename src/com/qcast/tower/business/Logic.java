@@ -8,8 +8,10 @@ import com.slfuture.carrie.base.type.safe.Table;
  * 当前运行时
  */
 public class Logic {
-	
-	
+	/**
+	 * 是否有未读消息
+	 */
+	public static boolean hasUnreadMessage = false;
 	
 	
 	/**

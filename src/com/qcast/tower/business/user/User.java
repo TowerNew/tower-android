@@ -7,6 +7,7 @@ import com.qcast.tower.business.structure.IM;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.time.Date;
 import com.slfuture.carrie.base.type.List;
+import com.slfuture.pretty.im.Module;
 
 /**
  * 用户类
@@ -25,10 +26,6 @@ public class User implements Serializable {
 	 * 用户ID
 	 */
 	public String id;
-	/**
-	 * 手机号码
-	 */
-	public String phone;
 	/**
 	 * 昵称
 	 */
@@ -59,7 +56,6 @@ public class User implements Serializable {
 	 */
 	public boolean parse(JSONVisitor visitor) {
 		id = visitor.getString("userGlobalId");
-		phone = visitor.getString("phone");
 		nickname = visitor.getString("nickname");
 		photo = visitor.getString("photo");
 		if(null != visitor.getString("birthday")) {
@@ -95,6 +91,32 @@ public class User implements Serializable {
 		}
 		return null;
 	}
+	
+	/**
+	 * 获取即时通信ID
+	 * 
+	 * @param type 即时通信ID
+	 * @return 即时通信类型
+	 */
+	public String fetchTypeByIM(String imId) {
+		for(IM item : im) {
+			if(imId.equals(item.imId)) {
+				return item.type;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 获取未读消息个数
+	 */
+	public int unreadMessageCount() {
+		String imId = fetchIMId(IM.TYPE_PHONE);
+		if(null == imId) {
+			return 0;
+		}
+		return Module.getUnreadMessageCount(imId);
+	}
 
 	/**
 	 * 获取有效称呼
@@ -102,9 +124,6 @@ public class User implements Serializable {
 	 * @return 有效称呼
 	 */
 	public String nickname() {
-		if(null != nickname) {
-			return nickname;
-		}
-		return phone;
+		return nickname;
 	}
 }

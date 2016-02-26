@@ -30,6 +30,7 @@ import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
+import com.slfuture.carrie.base.time.Time;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -135,6 +136,7 @@ public class MyMessagesActivity extends ActivityEx {
                     Toast.makeText(MyMessagesActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
                     return;
                 }
+                dataList.clear();
                 JSONArray result = (JSONArray) resultObject.get("data");
                 if (null == result) {
                 	dataList.clear();
@@ -142,7 +144,6 @@ public class MyMessagesActivity extends ActivityEx {
                     adapter.notifyDataSetChanged();
                     return;
                 }
-                dataList.clear();
                 SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
                 for(IJSON item : result) {
                     JSONObject newJSONObject = (JSONObject) item;
@@ -259,11 +260,18 @@ public class MyMessagesActivity extends ActivityEx {
     }
 
     private Notify fetchFriendConversation(String imUsername) {
-    	return null;
+    	Notify result = new Notify();
+    	result.type = Notify.TYPE_8;
+    	result.imId = imUsername;
+    	result.title = "好友消息";
+    	result.time = Time.now().toString();
+    	result.description = Me.instance.fetchFriendByIM(imUsername).nickname;
+    	return result;
     }
 
     private Notify fetchDoctorConversation(String doctorIMUsername) {
-    	return null;
+    	Notify result = new Notify();
+    	return result;
     }
 
     class MyMessageAdapter extends BaseAdapter {

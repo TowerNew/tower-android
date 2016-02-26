@@ -202,12 +202,7 @@ public class FamilyActivity extends Activity {
 		for(Friend friend : Me.instance.friends) {
 			HashMap<String, Object> memberMap = new HashMap<String, Object>();
 			memberMap.put("userId", friend.id);
-			if(!Text.isBlank(friend.nickname)) {
-				memberMap.put("caption", friend.nickname);
-			}
-			else {
-				memberMap.put("caption", friend.phone);
-			}
+			memberMap.put("caption", friend.nickname);
 			// TODO:
 			// memberMap.put("remoteId", friend.imId);
 			// TODO:
@@ -216,12 +211,7 @@ public class FamilyActivity extends Activity {
 			// 	memberMap.put("hasmessage", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_hasmessage));
 			// TODO:
 			// }
-			if(null == friend.nickname) {
-				memberMap.put("remoteNickName", friend.nickname);
-			}
-			else {
-				memberMap.put("remoteNickName", friend.phone);
-			}
+			memberMap.put("remoteNickName", friend.nickname);
 			memberMap.put("delete", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.button_delete));
 			memberList.add(memberMap);
 		}

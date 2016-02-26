@@ -14,7 +14,7 @@ public class IM implements Serializable {
 	 * 即时通信种类
 	 */
 	public final static String TYPE_PHONE = "phone";
-	public final static String TYPE_BOX = "tv";
+	public final static String TYPE_TV = "tv";
 	
 	/**
 	 * 标题
@@ -37,8 +37,16 @@ public class IM implements Serializable {
 	 * @return 解析结果
 	 */
 	public boolean parse(JSONVisitor visitor) {
-		title = visitor.getString("title");
 		type = visitor.getString("type");
+		title = visitor.getString("title");
+		if(null == title) {
+			if(IM.TYPE_TV.equals(type)) {
+				title = "电视";
+			}
+			else {
+				title = "手机";
+			}
+		}
 		imId = visitor.getString("imUsername");
 		return true;
 	}

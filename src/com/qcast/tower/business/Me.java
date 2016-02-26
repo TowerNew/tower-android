@@ -20,12 +20,12 @@ import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.time.Date;
 import com.slfuture.carrie.base.type.List;
-import com.slfuture.carrie.base.type.core.ITable;
 import com.slfuture.carrie.base.type.safe.Table;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.framework.Broadcaster;
+import com.slfuture.pluto.sensor.Reminder;
 import com.slfuture.pretty.im.Module;
 import com.slfuture.pretty.im.core.IReactor;
 import com.slfuture.pretty.im.view.form.SingleChatActivity;
@@ -64,6 +64,10 @@ public class Me extends User implements Serializable, IReactor {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 手机号码
+	 */
+	public String phone;
 	/**
 	 * 口令
 	 */
@@ -123,13 +127,19 @@ public class Me extends User implements Serializable, IReactor {
 					}
 					return;
 				}
-				if(content.getInteger("code", 0) < 0) {
+				if(content.getInteger("code", 0) <= 0) {
 					if(null != callback) {
 						callback.on(false);
 					}
 					return;
 				}
 				content = content.getVisitor("data");
+				if(null == content) {
+					if(null != callback) {
+						callback.on(false);
+					}
+					return;
+				}
 				Me me = new Me();
 				me.parse(content);
 				instance = me;
@@ -184,7 +194,15 @@ public class Me extends User implements Serializable, IReactor {
 							callback.on(false);
 						}
 						else {
-							if(1 == content.getInteger("code", 0)) {
+							if(0 < content.getInteger("code", 0)) {
+								if(instance.parse(content.getVisitor("data"))) {
+									try {
+										instance.save();
+									}
+									catch (IOException e) {
+										throw new RuntimeException("存储用户信息失败", e);
+									}
+								}
 								Module.reactor = instance;
 								Module.login(new IEventable<Boolean>() {
 									@Override
@@ -337,6 +355,21 @@ public class Me extends User implements Serializable, IReactor {
 	}
 	
 	/**
+	 * 通过通信ID获取好友
+	 * 
+	 * @param imId 通信ID
+	 * @return 好友对象
+	 */
+	public Friend fetchFriendByIM(String imId) {
+		for(Friend friend : friends) {
+			if(null != friend.fetchTypeByIM(imId)) {
+				return friend;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * 解析数据生成用户对象
 	 * 
 	 * @param visitor 数据
@@ -346,6 +379,7 @@ public class Me extends User implements Serializable, IReactor {
 		if(!super.parse(visitor)) {
 			return false;
 		}
+		phone = visitor.getString("username");
 		address = visitor.getString("address");
 		token = visitor.getString("token");
 		relatives.clear();
@@ -376,6 +410,7 @@ public class Me extends User implements Serializable, IReactor {
 				friends.add(friend);
 			}
 		}
+		this.doctor = null;
 		if(null != visitor.getVisitor("privateDoctor")) {
 			Doctor doctor = new Doctor();
 			if(doctor.parse(visitor.getVisitor("privateDoctor"))) {
@@ -469,17 +504,21 @@ public class Me extends User implements Serializable, IReactor {
 	}
 
 	@Override
-	public void onCommand(String from, String action, ITable<String, Object> data) {
+	public void onCommand(String from, String action, com.slfuture.carrie.base.type.Table<String, Object> data) {
+		Reminder.ringtone(Program.application);
 		Integer type = (Integer) data.get("type");
-		if(null == type) {
-			return;
+		if(null != type) {
+			if(Notify.TYPE_5 == type || Notify.TYPE_9 == type) {
+				Me.instance.refreshMember(Program.application, new IEventable<Boolean>() {
+					@Override
+					public void on(Boolean data) {
+					}
+				});
+			}
+			Reminder.vibrate(Program.application);
 		}
-		if(Notify.TYPE_5 == type || Notify.TYPE_9 == type) {
-			Me.instance.refreshMember(Program.application, new IEventable<Boolean>() {
-				@Override
-				public void on(Boolean data) {
-				}
-			});
+		if("message".equals(action)) {
+			Logic.hasUnreadMessage = true;
 		}
 		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
 	}

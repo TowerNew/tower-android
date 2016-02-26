@@ -1,6 +1,10 @@
 package com.qcast.tower.view.form;
 
 import com.slfuture.carrie.base.model.core.IEventable;
+import com.slfuture.carrie.base.type.Table;
+import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.response.ImageResponse;
+import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
 import com.slfuture.pretty.general.utility.GeneralHelper;
@@ -12,6 +16,7 @@ import java.util.Map;
 
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
+import com.qcast.tower.business.core.IMeListener;
 import com.qcast.tower.business.structure.IM;
 import com.qcast.tower.business.user.Friend;
 import com.qcast.tower.business.user.User;
@@ -35,7 +40,7 @@ import android.widget.TextView;
 import android.widget.SimpleAdapter.ViewBinder;
 
 @ResourceView(id = R.layout.activity_conversation)
-public class ConversationActivity extends FragmentEx {
+public class ConversationActivity extends FragmentEx implements IMeListener {
 	@ResourceView(id = R.id.conversation_image_add)
 	public ImageView imgAdd;
 	@ResourceView(id = R.id.conversation_layout_doctor)
@@ -104,15 +109,16 @@ public class ConversationActivity extends FragmentEx {
 		});
 		SimpleAdapter adapter = new SimpleAdapter(this.getActivity(), 
 				conversationList,
-                R.layout.listitem_family,
-                new String[] {"name"},
-                new int[] { R.id.family_label_name});
+                R.layout.listitem_conversation,
+                new String[] {"photo", "name", "tip", "hasphone", "hastv"},
+                new int[] {R.id.listitem_conversation_image_photo, R.id.listitem_conversation_label_name, R.id.listitem_conversation_label_tip, R.id.listitem_conversation_image_hasphone, R.id.listitem_conversation_image_hastv});
 		listFamily.setAdapter(adapter);
 		listFamily.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				if(0 == position) {
 					pop(Me.instance);
+					return;
 				}
 				else if(Me.instance.friends.size() < position) {
 					return;
@@ -123,8 +129,31 @@ public class ConversationActivity extends FragmentEx {
 		adapter.setViewBinder(new ViewBinder() {
 			@Override
 			public boolean setViewValue(View view, Object data, String textRepresentation) {  
-			    if(view instanceof ImageView && data instanceof Bitmap) {
-			        ((ImageView) view).setImageBitmap((Bitmap) data);
+			    if(view instanceof ImageView) {
+			    	if(null ==  data) {
+			    		((ImageView) view).setImageResource(R.drawable.drawable_null);
+			    	}
+			    	else if(data instanceof Bitmap) {
+			    		((ImageView) view).setImageBitmap((Bitmap) data);
+			    	}
+			        return true;
+			    }
+			    if(view instanceof TextView) {
+			    	TextView text = (TextView) view;
+			    	if(text.getId() == R.id.listitem_conversation_label_tip) {
+				    	if(null == data || 0 == (Integer) data) {
+				    		text.setVisibility(View.GONE);
+				    	}
+				    	else {
+				    		text.setVisibility(View.VISIBLE);
+				    		text.setText(String.valueOf(data));
+				    	}
+			    	}
+			    	else {
+			    		if(null != data) {
+				    		text.setText(String.valueOf(data));
+			    		}
+			    	}
 			        return true;
 			    }
 		        return false;
@@ -135,28 +164,71 @@ public class ConversationActivity extends FragmentEx {
 	@Override
     public void onResume() {
 		super.onResume();
+		refreshList();
+   }
+
+	/**
+	 * 刷新列表
+	 */
+	private void refreshList() {		
 		if(null == Me.instance) {
+			conversationList.clear();
 			((SimpleAdapter) listFamily.getAdapter()).notifyDataSetChanged();
 			return;
 		}
 		conversationList.clear();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", Me.instance.id);
+		if(null == Me.instance.photo) {
+			map.put("photo", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_user_default));
+		}
+		else {
+			Host.doImage("image", new ImageResponse(Me.instance.photo, map) {
+				@SuppressWarnings("unchecked")
+				@Override
+				public void onFinished(Bitmap content) {
+					((Map<String, Object>) tag).put("photo", content);
+					((SimpleAdapter) listFamily.getAdapter()).notifyDataSetChanged();
+				}
+			}, Me.instance.photo);
+		}
 		map.put("name", "我");
+		map.put("tip", Me.instance.unreadMessageCount());
+		if(null != Me.instance.fetchIMId(IM.TYPE_PHONE)) {
+			map.put("hasphone", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_phone));
+		}
+		if(null != Me.instance.fetchIMId(IM.TYPE_TV)) {
+			map.put("hastv", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_tv));
+		}
 		conversationList.add(map);
-    	for(Friend friend : Me.instance.friends) {
-    		map = new HashMap<String, Object>();
-    		map.put("id", friend.id);
-    		if(null != friend.relation) {
-        		map.put("name", friend.relation);
-    		}
-    		else if(null != friend.nickname) {
-        		map.put("name", friend.nickname);
-    		}
-    		conversationList.add(map);
-    	}
-    	((SimpleAdapter) listFamily.getAdapter()).notifyDataSetChanged();
-    }
+		for(Friend friend : Me.instance.friends) {
+			map = new HashMap<String, Object>();
+			map.put("id", friend.id);
+			if(null == friend.photo) {
+				map.put("photo", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_user_default));
+			}
+			else {
+				Host.doImage("image", new ImageResponse(friend.photo, map) {
+					@SuppressWarnings("unchecked")
+					@Override
+					public void onFinished(Bitmap content) {
+						((Map<String, Object>) tag).put("photo", content);
+						((SimpleAdapter) listFamily.getAdapter()).notifyDataSetChanged();
+					}
+				}, friend.photo);
+			}
+			map.put("name", friend.nickname());
+			map.put("tip", friend.unreadMessageCount());
+			if(null != friend.fetchIMId(IM.TYPE_PHONE)) {
+				map.put("hasphone", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_phone));
+			}
+			if(null != friend.fetchIMId(IM.TYPE_TV)) {
+				map.put("hastv", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_tv));
+			}
+			conversationList.add(map);
+		}
+		((SimpleAdapter) listFamily.getAdapter()).notifyDataSetChanged();
+	}
 
 	/**
 	 * 弹出菜单
@@ -164,11 +236,15 @@ public class ConversationActivity extends FragmentEx {
 	 * @param user 用户
 	 */
 	private void pop(final User user) {
+		if(0 == user.im.size()) {
+			return;
+		}
+		else if(1 == user.im.size()) {
+			Me.instance.doChat(ConversationActivity.this.getActivity(), null, user.im.get(0).imId);
+			return;
+		}
 		ArrayList<String> list = new ArrayList<String>();
 		for(IM item : user.im) {
-			if(item.type.equals(IM.TYPE_PHONE)) {
-				continue;
-			}
 			list.add(item.title);
 		}
 		if(0 == list.size()) {
@@ -181,9 +257,6 @@ public class ConversationActivity extends FragmentEx {
 			public void on(Integer index) {
 				int i = -1;
 				for(IM item : user.im) {
-					if(item.type.equals(IM.TYPE_PHONE)) {
-						continue;
-					}
 					i++;
 					if(index == i) {
 						Me.instance.doChat(ConversationActivity.this.getActivity(), null, item.imId);
@@ -191,5 +264,16 @@ public class ConversationActivity extends FragmentEx {
 				}
 			}
 		}, list.toArray(new String[0]));
+	}
+
+	@Override
+	public void onConflict() {
+		conversationList.clear();
+		((SimpleAdapter) listFamily.getAdapter()).notifyDataSetChanged();
+	}
+
+	@Override
+	public void onCommand(String from, String action, Table<String, Object> data) {
+		refreshList();
 	}
 }

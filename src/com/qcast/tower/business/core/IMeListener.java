@@ -1,6 +1,5 @@
 package com.qcast.tower.business.core;
 
-import com.slfuture.carrie.base.type.core.ITable;
 import com.slfuture.pluto.framework.annotation.ListenerInterface;
 
 /**
@@ -20,5 +19,5 @@ public interface IMeListener {
 	 * @param action 动作
 	 * @param data 属性
 	 */
-	public void onCommand(String from, String action, ITable<String, Object> data);
+	public void onCommand(String from, String action, com.slfuture.carrie.base.type.Table<String, Object> data);
 }

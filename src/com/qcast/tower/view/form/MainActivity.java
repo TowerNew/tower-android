@@ -15,7 +15,6 @@ import android.widget.TabHost;
 
 import com.qcast.tower.R;
 import com.qcast.tower.business.core.IMeListener;
-import com.slfuture.carrie.base.type.core.ITable;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentActivityEx;
 
@@ -65,6 +64,7 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
                         break;
                     case R.id.main_tab_conversation:
                         tabhost.setCurrentTabByTag("main_tab_conversation");
+                        imgConversation.setImageResource(R.drawable.main_conversation_selected);
                         break;
                     case R.id.main_tab_user:
                         tabhost.setCurrentTabByTag("main_tab_user");
@@ -77,7 +77,6 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
 			@Override
 			public void onClick(View v) {
 				group.check(R.id.main_tab_conversation);
-				imgConversation.setImageResource(R.drawable.main_conversation_selected);
 			}
 		});
         imgConversation.setOnLongClickListener(new OnLongClickListener() {
@@ -108,7 +107,7 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
 	}
 
 	@Override
-	public void onCommand(String from, String action, ITable<String, Object> data) {
+	public void onCommand(String from, String action, com.slfuture.carrie.base.type.Table<String, Object> data) {
 		
 	}
 }

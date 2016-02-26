@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/grey_bg">
 	<RelativeLayout
 		android:id="@+id/conversation_layout_header"
         android:layout_width="match_parent"
@@ -34,7 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_below="@id/conversation_layout_header"
-        android:clickable="true">
+        android:clickable="true"
+        android:background="@color/white">
         <ImageView
 			android:id="@+id/conversation_image_photo"
 			android:layout_width="50dp"

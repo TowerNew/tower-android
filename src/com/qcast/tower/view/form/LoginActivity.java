@@ -129,7 +129,7 @@ public class LoginActivity extends Activity {
 						if(!result) {
 							return;
 						}
-						Intent intent = (Intent) LoginActivity.this.getIntent().getExtras().getParcelable("intent");
+						Intent intent = (Intent) LoginActivity.this.getIntent().getParcelableExtra("intent");
 						if(null == intent) {
 							intent = new Intent();
 							intent.putExtra("RESULT", "SUCCESS");

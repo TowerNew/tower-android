@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/image_avatar"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+         >
+    </ImageView>
+
+    <LinearLayout
+        android:id="@+id/avatar_layout_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_avatar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" >
+
+        <EditText
+            android:id="@+id/first_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="2"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/second_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="2"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/third_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="2"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/four_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="2"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/five_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="2"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/sixth_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="2"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/forget_password_lable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/avatar_layout_login"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="20dp"
+        android:text="忘记登录密码"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/gesture_password_lable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/forget_password_lable"
+        android:layout_alignRight="@+id/avatar_layout_login"
+        android:text="切换手势密码"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/confirm_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cancle_btn"
+        android:layout_alignBottom="@+id/cancle_btn"
+        android:layout_alignLeft="@+id/gesture_password_lable"
+        android:background="#000000"
+        android:text="确认" 
+        android:textSize="18sp"
+        android:textColor="#ffffff"
+        />
+
+    <Button
+        android:id="@+id/cancle_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/forget_password_lable"
+        android:layout_marginBottom="110dp"
+        android:background="#000000"
+        android:text="取消"
+        android:textSize="18sp"
+        android:textColor="#ffffff" />
+    
+</RelativeLayout>

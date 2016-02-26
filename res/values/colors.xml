@@ -23,4 +23,5 @@
     
     <color name="main">#ff4278a7</color>
     <color name="sub">#ff4278a7</color>
+    <color name="grey_tab">#b4b4b4</color>
 </resources>

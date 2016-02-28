@@ -281,11 +281,17 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 			return;
 		}
 		else if(1 == user.im.size()) {
+			if(user == Me.instance) {
+				return;
+			}
 			Me.instance.doChat(ConversationActivity.this.getActivity(), null, user.im.get(0).imId);
 			return;
 		}
 		ArrayList<String> list = new ArrayList<String>();
 		for(IM item : user.im) {
+			if(Me.instance.fetchIMId(IM.TYPE_PHONE).equals(item.imId)) {
+				continue;
+			}
 			list.add(item.title);
 		}
 		if(0 == list.size()) {

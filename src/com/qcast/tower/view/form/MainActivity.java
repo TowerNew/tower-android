@@ -14,6 +14,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 
 import com.qcast.tower.R;
+import com.qcast.tower.business.Me;
 import com.qcast.tower.business.core.IMeListener;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentActivityEx;
@@ -82,6 +83,9 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
         imgConversation.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
+				if(null == Me.instance) {
+					return false;
+				}
 				Intent intent = new Intent(MainActivity.this, SiriActivity.class);
 				MainActivity.this.startActivity(intent);
 				return false;

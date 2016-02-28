@@ -5,6 +5,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
@@ -15,13 +19,12 @@ import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
-import com.slfuture.pluto.view.component.ActivityEx;
 
 /**
  * 添加朋友
  */
 @ResourceView(id = R.layout.activity_addrelative)
-public class AddRelativeActivity extends ActivityEx {
+public class AddRelativeActivity extends OnlyUserActivity {
 	@ResourceView(id = R.id.addrelative_button_close)
 	public ImageButton btnClose;
 	@ResourceView(id = R.id.addrelative_label_confirm)
@@ -78,6 +81,16 @@ public class AddRelativeActivity extends ActivityEx {
 				int mode = 1;
 				if(Text.isBlank(userId)) {
 					mode = 0;
+				}
+				if(Text.isBlank(txtName.getText().toString())) {
+					Toast.makeText(AddRelativeActivity.this, "姓名不能为空", Toast.LENGTH_LONG).show();
+					return;
+				}
+				Pattern pattern = Pattern.compile("^(^\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$");
+				Matcher matcher = pattern.matcher(txtIdNumber.getText().toString());
+				if(!matcher.matches()) {
+					Toast.makeText(AddRelativeActivity.this, "身份证号码格式不正确", Toast.LENGTH_LONG).show();
+					return;
 				}
 				Host.doCommand("editowner", new JSONResponse(AddRelativeActivity.this) {
 					@Override

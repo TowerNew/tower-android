@@ -5,6 +5,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
@@ -70,6 +74,12 @@ public class AddFriendActivity extends ActivityEx {
 				int mode = 1;
 				if(Text.isBlank(userId)) {
 					mode = 0;
+					Pattern pattern = Pattern.compile("^[1][358][0-9]{9}$");
+					Matcher matcher = pattern.matcher(txtPhone.getText().toString());
+					if(!matcher.matches()) {
+						Toast.makeText(AddFriendActivity.this, "手机号码格式不正确", Toast.LENGTH_LONG).show();
+						return;
+					}
 				}
 				Host.doCommand("editrelation", new JSONResponse(AddFriendActivity.this) {
 					@Override

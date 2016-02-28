@@ -14,14 +14,13 @@ import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
-import com.slfuture.pluto.view.component.ActivityEx;
 
 
 /**
  * 好友添加请求
  */
 @ResourceView(id = R.layout.activity_addrequest)
-public class AddRequestActivity extends ActivityEx {
+public class AddRequestActivity extends OnlyUserActivity {
 	@ResourceView(id = R.id.addrequest_button_close)
 	public ImageButton btnClose;
 	@ResourceView(id = R.id.addrequest_label_name)

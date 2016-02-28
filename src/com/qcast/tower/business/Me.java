@@ -33,6 +33,7 @@ import com.slfuture.pretty.im.view.form.SingleChatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
 /**
  * 当前登录用户类
@@ -234,6 +235,7 @@ public class Me extends User implements Serializable, IReactor {
 	 * 退出登录
 	 */
 	public void logout() {
+		Module.logout(null);
 		instance = null;
 		delete();
 	}
@@ -530,6 +532,7 @@ public class Me extends User implements Serializable, IReactor {
 	@Override
 	public void onConflict() {
 		logout();
+		Toast.makeText(Program.application, "账号在其他设备上登录", Toast.LENGTH_LONG).show();
 		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onConflict();
 	}
 

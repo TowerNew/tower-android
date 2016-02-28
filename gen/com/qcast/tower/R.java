@@ -870,7 +870,7 @@ public final class R {
         public static final int test_image_control1=0x7f07019d;
         public static final int test_listview_test=0x7f07019e;
         public static final int testitem_label_title=0x7f070246;
-        public static final int text_button_return=0x7f0701a0;
+        public static final int text_button_close=0x7f0701a0;
         public static final int text_layout_head=0x7f07019f;
         public static final int text_text_content=0x7f0701a2;
         public static final int text_text_title=0x7f0701a1;

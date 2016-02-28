@@ -12,8 +12,8 @@
 		android:background="@drawable/topbar" 
 		android:focusable="true"
 		android:focusableInTouchMode="true">
-		<ImageButton
-            android:id="@+id/text_button_return"
+		<ImageView
+            android:id="@+id/text_button_close"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"

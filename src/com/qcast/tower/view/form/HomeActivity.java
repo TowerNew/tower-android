@@ -111,11 +111,11 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				break;
 			case 2:
 				holder.image.setImageResource(R.drawable.icon_entry_3);
-				holder.text.setText("健康档案");
+				holder.text.setText("预约理疗");
 				break;
 			case 3:
 				holder.image.setImageResource(R.drawable.icon_entry_4);
-				holder.text.setText("预约理疗");
+				holder.text.setText("健康档案");
 				break;
 			case 4:
 				holder.image.setImageResource(R.drawable.icon_entry_5);

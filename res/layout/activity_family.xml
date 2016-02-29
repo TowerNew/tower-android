@@ -2,29 +2,21 @@
 	xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:background="@color/lightgrey">
+	android:background="@color/grey_bg">
     <RelativeLayout
-		android:id="@+id/family_layout_head"
+		android:id="@+id/family_layout_header"
 		android:layout_width="match_parent"
-		android:layout_height="48dp"
+		android:layout_height="40dp"
 		android:layout_alignParentTop="true" 
-		android:background="@drawable/topbar" >
-		<ImageButton
-            android:id="@+id/family_button_return"
+		android:background="@color/main" >
+		<ImageView
+            android:id="@+id/family_image_close"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="6dp"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/arrow_left" />
-        <Button
-            android:id="@+id/family_button_add"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="6dp"
-            android:background="@drawable/button_add" />
         <TextView
             android:id="@+id/family_text_caption"
             android:layout_width="wrap_content"
@@ -32,15 +24,15 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:text="@string/home_caption"
-            android:textColor="#ffffffff"
+            android:text="我的家庭"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 	</RelativeLayout>
     <ListView
         android:id="@+id/family_list_member"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below ="@+id/family_layout_head"
+        android:layout_below ="@+id/family_layout_header"
         android:background="@color/white"
         android:divider="@drawable/divider" />
 </RelativeLayout>

@@ -46,7 +46,9 @@ public class ConfigActivity extends ActivityEx {
 		viewPassword.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				Intent intent = new Intent(ConfigActivity.this, PasswordActivity.class);
+				intent.putExtra("mode", PasswordActivity.MODE_MODIFY);
+				ConfigActivity.this.startActivity(intent);
 			}
 		});
 		viewAbout.setOnClickListener(new View.OnClickListener() {

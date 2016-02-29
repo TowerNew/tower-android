@@ -54,8 +54,6 @@ public class Me extends User implements Serializable, IReactor {
 		 */
 		public String name = null;
 		
-		
-		public Contact() { }
 		public Contact(String photo, String name) {
 			this.photo = photo;
 			this.name = name;
@@ -73,6 +71,10 @@ public class Me extends User implements Serializable, IReactor {
 	 * 口令
 	 */
 	public String token = null;
+	/**
+	 * 安全密码
+	 */
+	public String password = null;
 	/**
 	 * 地址
 	 */
@@ -349,9 +351,7 @@ public class Me extends User implements Serializable, IReactor {
 			contact.name = name;
 		}
 		else {
-			contact = new Contact();
-			contact.photo = photo;
-			contact.name = name;
+			contact = new Contact(photo, name);
 			contacts.put(imId, contact);
 		}
 	}
@@ -414,6 +414,7 @@ public class Me extends User implements Serializable, IReactor {
 		phone = visitor.getString("username");
 		address = visitor.getString("address");
 		token = visitor.getString("token");
+		password = visitor.getString("password");
 		relatives.clear();
 		for(JSONVisitor item : visitor.getVisitors("userList")) {
 			if(id.equals(item.getString("userGlobalId"))) {

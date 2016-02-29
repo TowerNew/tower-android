@@ -19,13 +19,12 @@ import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
-import com.slfuture.pluto.view.component.ActivityEx;
 
 /**
  * 添加朋友
  */
 @ResourceView(id = R.layout.activity_addfriend)
-public class AddFriendActivity extends ActivityEx {
+public class AddFriendActivity extends OnlyUserActivity {
 	@ResourceView(id = R.id.addfriend_button_close)
 	public ImageButton btnClose;
 	@ResourceView(id = R.id.addfriend_label_confirm)

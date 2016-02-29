@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <protocols domain="beta.service.wehop.cn" mock="false" storage="tower/image/">
+	<protocol name="setPassword">
+		<path>
+		<![CDATA[
+user-platform-web/rest/user/setPassword#token=[1]&password=[2]
+		]]>
+		</path>
+	<mock>
+        <![CDATA[
+{
+    "code": 1
+}
+	    ]]>
+	    </mock>
+	</protocol>
 	<protocol name="contact">
 		<path>
 		<![CDATA[
@@ -1224,22 +1238,7 @@ user-platform-web/rest/user/myMessage?token=[1]
         ]]>
         </mock>
     </protocol>
-         <protocol name="removeFamily">
-        <path>
-        <![CDATA[
-user-platform-web/rest/user/removefamily#token=[1]&userGlobalId=[2]
-        ]]>
-        </path>
-    <mock>
-        <![CDATA[
-{
-    "code": 200,
-    "msg": ""
-}
-        ]]>
-        </mock>
-    </protocol>
-             <protocol name="hasMessage">
+	<protocol name="hasMessage">
         <path>
         <![CDATA[
 user-platform-web/rest/user/hasMessage?token=[1]
@@ -1254,7 +1253,7 @@ user-platform-web/rest/user/hasMessage?token=[1]
         ]]>
         </mock>
     </protocol>
-                 <protocol name="responseFamily">
+	<protocol name="responseFamily">
         <path>
         <![CDATA[
 user-platform-web/rest/user/responseFamily#token=[1]&isResponse=[2]&requestId=[3]

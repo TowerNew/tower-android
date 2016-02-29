@@ -107,7 +107,7 @@
 			    android:layout_marginRight="10dp"
 			    android:layout_toRightOf="@id/addrelative_label_idnumber"
 			    android:cursorVisible="true"
-			    android:inputType="phone"
+			    android:inputType="text"
 			    android:singleLine="true"
 			    android:textColor="@color/black"
 			    android:textSize="18sp" />

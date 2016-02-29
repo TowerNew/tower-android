@@ -33,9 +33,16 @@ public class Relative implements Serializable {
 	 */
 	public String idNumber = null;
 	/**
+	 * 身份证截图
+	 */
+	public String snapshot = null;
+	/**
 	 * 关系&备注
 	 */
 	public String relation;
+
+
+	public boolean 
 
 
 	/**

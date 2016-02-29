@@ -58,6 +58,8 @@ public class UserInfoActivity extends ActivityEx {
 	public View viewIdNumber;
 	@ResourceView(id = R.id.userinfo_text_idnumber)
 	public TextView labIdNumber;
+	@ResourceView(id = R.id.userinfo_image_snapshot)
+	public ImageView imgSnapshot;
 
 
 	/**

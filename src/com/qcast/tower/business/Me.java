@@ -88,6 +88,10 @@ public class Me extends User implements Serializable, IReactor {
 	 */
 	public String idNumber = null;
 	/**
+	 * 身份证截图
+	 */
+	public String snapshot = null;
+	/**
 	 * 私人医生
 	 */
 	public Doctor doctor = null;

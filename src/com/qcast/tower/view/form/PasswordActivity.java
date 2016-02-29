@@ -12,7 +12,8 @@ import com.slfuture.pluto.view.annotation.ResourceView;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -20,7 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.TextView.OnEditorActionListener;
 
 /**
  * 安全密码页面
@@ -84,10 +84,14 @@ public class PasswordActivity extends OnlyUserActivity {
 				PasswordActivity.this.finish();
 			}
 		});
-		txtPassword.setOnEditorActionListener(new OnEditorActionListener() {
+		txtPassword.addTextChangedListener(new TextWatcher() {
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				String text = v.getText().toString();
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) { }
+			@Override
+			public void afterTextChanged(Editable s) {
+				String text = txtPassword.getText().toString();
 				if(text.length() >= 6) {
 					if(null == password) {
 						password = text.substring(0, 6);
@@ -127,7 +131,6 @@ public class PasswordActivity extends OnlyUserActivity {
 				else {
 					refresh();
 				}
-				return false;
 			}
 		});
 	}
@@ -170,7 +173,7 @@ public class PasswordActivity extends OnlyUserActivity {
 		}
 		for(int i = 0; i < txtPassword.getText().length(); i++) {
 			TextView lab = (TextView) this.findViewById(PASSWORD_CONTROL[i]);
-			lab.setText("*");
+			lab.setText("●");
 		}
 	}
 }

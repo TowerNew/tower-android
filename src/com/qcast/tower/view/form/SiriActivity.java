@@ -3,7 +3,6 @@ package com.qcast.tower.view.form;
 import com.slfuture.pluto.etc.Controller;
 import com.slfuture.pluto.sensor.SoundRecorder;
 import com.slfuture.pluto.view.annotation.ResourceView;
-import com.slfuture.pluto.view.component.ActivityEx;
 
 import java.io.File;
 
@@ -24,7 +23,7 @@ import android.widget.ImageView;
  * 仿Siri的对话界面
  */
 @ResourceView(id = R.layout.activity_siri)
-public class SiriActivity extends ActivityEx {
+public class SiriActivity extends OnlyUserActivity {
 	@ResourceView(id = R.id.siri_image_microphone)
 	public ImageView imgMicrophone;
 	/**

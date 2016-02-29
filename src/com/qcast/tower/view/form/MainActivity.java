@@ -83,7 +83,7 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
         imgConversation.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
-				if(null == Me.instance) {
+				if(null == Me.instance || null == Me.instance.doctor) {
 					return false;
 				}
 				Intent intent = new Intent(MainActivity.this, SiriActivity.class);

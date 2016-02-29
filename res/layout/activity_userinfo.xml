@@ -273,5 +273,42 @@
 			    android:textColor="@color/grey_text"
 			    android:textSize="16sp" />
 		</RelativeLayout>
+		<ImageView
+            android:id="@+id/userinfo_divide5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userinfo_layout_idnumber"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/divider" >
+		</ImageView>
+		<RelativeLayout
+            android:id="@+id/userinfo_layout_snapshot"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@id/userinfo_divide5"
+            android:background="@color/white">
+			<TextView
+                android:id="@+id/userinfo_label_snapshot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="false"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="身份证拍照"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+			<ImageView
+				android:id="@+id/userinfo_image_snapshot"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+				android:background="@drawable/chat_picture" />
+		</RelativeLayout>
 	</RelativeLayout>
 </ScrollView>

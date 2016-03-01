@@ -64,9 +64,11 @@ public class AddRelativeActivity extends OnlyUserActivity {
 			}
 			if(null != relative.name) {
 				txtName.setText(relative.name);
+				txtName.setEnabled(false);
 			}
 			if(null != relative.idNumber) {
 				txtIdNumber.setText(relative.idNumber);
+				txtIdNumber.setEnabled(false);
 			}
 		}
 		btnClose.setOnClickListener(new View.OnClickListener() {

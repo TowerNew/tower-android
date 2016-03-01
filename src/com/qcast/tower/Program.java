@@ -12,10 +12,6 @@ import android.util.Log;
  */
 public class Program extends Application {
 	/**
-	 * 版本号
-	 */
-	public final static String VERSION = "3.0.0";
-	/**
 	 * 程序引用
 	 */
 	public static Application application = null;

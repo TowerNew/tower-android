@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
+import com.qcast.tower.Program;
 import com.qcast.tower.business.structure.Region;
 import com.qcast.tower.framework.Storage;
 import com.slfuture.carrie.base.etc.Serial;
+import com.slfuture.carrie.base.type.List;
+import com.slfuture.pluto.etc.Version;
 
 /**
  * 个人设置
@@ -27,6 +30,10 @@ public class Profile implements Serializable {
 	 * 启动页图片名
 	 */
 	public String poster = null;
+	/**
+	 * 搜索过的关键词
+	 */
+	public List<String> keywords = null;
 
 
 	/**
@@ -45,6 +52,9 @@ public class Profile implements Serializable {
 				}
 			}
 			catch (IOException e) { }
+			if(null == instance.keywords) {
+				instance.keywords = new List<String>();
+			}
 		}
 		return instance;
 	}
@@ -55,7 +65,7 @@ public class Profile implements Serializable {
 	 * @return 存储文件
 	 */
 	public static File file() {
-		return new File(Storage.DATA_ROOT + "profile.dat");
+		return new File(Storage.DATA_ROOT + "profile." + Version.fetchVersion(Program.application).toString() + ".dat");
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package com.qcast.tower.view.form;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -14,11 +15,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleAdapter.ViewBinder;
 
 import com.qcast.tower.R;
+import com.qcast.tower.business.Profile;
 import com.slfuture.carrie.base.json.JSONVisitor;
+import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -77,7 +81,7 @@ public class SearchActivity extends ActivityEx {
 				SearchActivity.this.finish();
 			}
 		});
-		txtKeyword.getBackground().setAlpha(50);
+		txtKeyword.getBackground().setAlpha(200);
 	}
 
 	/**
@@ -121,6 +125,16 @@ public class SearchActivity extends ActivityEx {
 		listHot.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
+				if(hotList.size() == index + 1) {
+					Profile.instance().keywords.clear();
+					try {
+						Profile.instance().save();
+					}
+					catch (IOException e) { }
+					load();
+					Toast.makeText(SearchActivity.this, "清空搜索记录完毕", Toast.LENGTH_LONG).show();
+					return;
+				}
 				HashMap<String, Object> map = hotList.get(index);
 				doSearch((String) map.get("text"));
             }
@@ -143,6 +157,14 @@ public class SearchActivity extends ActivityEx {
 					map.put("text", item.toString());
 					hotList.add(map);
 				}
+				for(String keyword : Profile.instance().keywords) {
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("text", keyword);
+					hotList.add(map);
+				}
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("text", "清空搜索记录");
+				hotList.add(map);
 				SimpleAdapter adapter = (SimpleAdapter) listHot.getAdapter();
 				adapter.notifyDataSetChanged();
 			}
@@ -155,6 +177,15 @@ public class SearchActivity extends ActivityEx {
 	 * @param keyword 关键词
 	 */
 	public void doSearch(String keyword) {
+		if(!Text.isBlank(keyword)) {
+			if(!Profile.instance().keywords.contains(keyword)) {
+				Profile.instance().keywords.add(keyword);
+				try {
+					Profile.instance().save();
+				}
+				catch (IOException e) { }
+			}
+		}
 		Intent intent = new Intent(SearchActivity.this, WebActivity.class);
 		intent.putExtra("url", Host.fetchURL("search", keyword));
 		SearchActivity.this.startActivity(intent);

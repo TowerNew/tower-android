@@ -10,12 +10,14 @@ import com.qcast.tower.business.Me;
 import com.qcast.tower.business.Profile;
 import com.qcast.tower.business.core.IMeListener;
 import com.qcast.tower.framework.Storage;
+import com.qcast.tower.view.control.HorizontalScrollViewEx;
 import com.qcast.tower.view.control.ScrollWebView;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.pluto.etc.Controller;
+import com.slfuture.pluto.etc.Version;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
 import com.slfuture.carrie.base.json.JSONArray;
@@ -25,6 +27,7 @@ import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
 
+import android.R.color;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,9 +36,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -49,7 +50,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.HeaderViewListAdapter;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -129,6 +129,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				holder.text.setText("自我诊断");
 				break;
 			}
+			convertView.setBackgroundColor(color.white);
 			return convertView;
 		}
 	}
@@ -168,12 +169,22 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 * 入口滚动条
 	 */
 	@ResourceView(id = R.id.home_scroll_entry)
-	public HorizontalScrollView scrollEntry;
+	public HorizontalScrollViewEx scrollEntry;
 	/**
 	 * 入口表格
 	 */
 	@ResourceView(id = R.id.home_grid_entry)
 	public GridView gridEntry;
+	/**
+	 * 铃铛
+	 */
+	@ResourceView(id = R.id.home_image_dot1)
+	public ImageView imgDot1;
+	/**
+	 * 铃铛
+	 */
+	@ResourceView(id = R.id.home_image_dot2)
+	public ImageView imgDot2;
 	/**
 	 * 新闻列表
 	 */
@@ -271,9 +282,13 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				JSONObject result = (JSONObject) resultObject.get("data");
 				String version = ((JSONString) (result.get("appVersion"))).getValue();
 				String url = ((JSONString) (result.get("downloadUrl"))).getValue();
-				int v = Integer.parseInt(version.replace(".", ""));
-				if(v <= Integer.valueOf(Program.VERSION.replace(".", ""))) {
+				Version current = Version.fetchVersion(Program.application);
+				Version server = Version.build(version);
+				if(null == server) {
 					return;
+				}
+				if(current.compareTo(server) >= 0) {
+					 return;
 				}
 				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
 				intent.putExtra("url", url);
@@ -394,7 +409,26 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		gridEntry.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+				switch(position) {
+				case 0:
+					Intent intent0 = new Intent(HomeActivity.this.getActivity(), SelectDoctorActivity.class);
+					HomeActivity.this.startActivity(intent0);
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					Intent intent3 = new Intent(HomeActivity.this.getActivity(), ArchiveActivity.class);
+					HomeActivity.this.startActivity(intent3);
+					break;
+				case 4:
+					break;
+				case 5:
+					Intent intent5 = new Intent(HomeActivity.this.getActivity(), SelfDiagnosticActivity.class);
+					HomeActivity.this.startActivity(intent5);
+					break;
+				}
 			}
 		});
 	}
@@ -427,11 +461,26 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		animLeft.setAnimationListener(listener);
 		View viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_home_head, null);
 		listNews.addHeaderView(viewHead);
-		scrollEntry = (HorizontalScrollView) viewHead.findViewById(R.id.home_scroll_entry);
+		scrollEntry = (HorizontalScrollViewEx) viewHead.findViewById(R.id.home_scroll_entry);
+		scrollEntry.setHorizontalScrollViewListenner(new HorizontalScrollViewEx.HorizontalScrollViewListenner() {
+			@Override
+			public void onScrollChanged(int x, int y, int oldx, int oldy) {
+				if(x > oldx && x > 50) {
+					imgDot1.setImageResource(R.drawable.icon_dot_unselected);
+					imgDot2.setImageResource(R.drawable.icon_dot_selected);
+				}
+				else if(x < oldx && x < 50) {
+					imgDot1.setImageResource(R.drawable.icon_dot_selected);
+					imgDot2.setImageResource(R.drawable.icon_dot_unselected);
+				}
+			}
+		});
 		gridEntry = (GridView) viewHead.findViewById(R.id.home_grid_entry);
 		btnRegion.getBackground().setAlpha(200);
 		btnSearch.getBackground().setAlpha(200);
 		btnBell.setImageAlpha(200);
+		imgDot1 = (ImageView) viewHead.findViewById(R.id.home_image_dot1);
+		imgDot2 = (ImageView) viewHead.findViewById(R.id.home_image_dot2);
 		browser = (ScrollWebView) viewHead.findViewById(R.id.home_browser);
 		browser.getSettings().setJavaScriptEnabled(true);
 		browser.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
@@ -441,7 +490,8 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
 				intent.putExtra("url", url);
 				startActivity(intent);
-                browser.pauseTimers();
+				browser.pauseTimers();
+				browser.resumeTimers();
                 return true;
 			}
 			@Override

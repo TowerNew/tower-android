@@ -57,6 +57,7 @@ public class AddFriendActivity extends OnlyUserActivity {
 				return;
 			}
 			txtPhone.setText("***");
+			txtPhone.setEnabled(false);
 			if(null != friend.relation) {
 				txtRelation.setText(friend.relation);
 			}

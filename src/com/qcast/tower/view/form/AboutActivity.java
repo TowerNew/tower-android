@@ -2,6 +2,7 @@ package com.qcast.tower.view.form;
 
 import com.qcast.tower.Program;
 import com.qcast.tower.R;
+import com.slfuture.pluto.etc.Version;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -36,7 +37,7 @@ public class AboutActivity extends Activity {
 		dealReturn();
 		//
 		TextView labVersion = (TextView) this.findViewById(R.id.about_text_content);
-		labVersion.setText("当前版本：" + Program.VERSION);
+		labVersion.setText("当前版本：" + Version.fetchVersion(Program.application).toString());
 	}
 
 	/**

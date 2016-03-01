@@ -43,7 +43,7 @@
             android:layout_toLeftOf="@id/home_button_notify"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="40dp"
-            android:background="@drawable/button_search"
+            android:background="@drawable/button_search_grey"
             android:gravity="left|center_vertical"
             android:paddingLeft="15dp"
             android:singleLine="true"

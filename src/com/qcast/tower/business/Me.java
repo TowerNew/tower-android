@@ -24,6 +24,7 @@ import com.slfuture.carrie.base.type.safe.Table;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
+import com.slfuture.pluto.etc.Version;
 import com.slfuture.pluto.framework.Broadcaster;
 import com.slfuture.pluto.sensor.Reminder;
 import com.slfuture.pretty.im.Module;
@@ -475,7 +476,7 @@ public class Me extends User implements Serializable, IReactor {
 	 * @return 存储文件
 	 */
 	public static File file() {
-		return new File(Storage.dataFolder() + "me.dat");
+		return new File(Storage.dataFolder() + "me." + Version.fetchVersion(Program.application).toString() + ".dat");
 	}
 
 	/**

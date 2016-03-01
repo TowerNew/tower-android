@@ -10,6 +10,7 @@ import com.qcast.tower.business.Me;
 import com.qcast.tower.business.Profile;
 import com.qcast.tower.business.core.IMeListener;
 import com.qcast.tower.framework.Storage;
+import com.qcast.tower.view.control.ScrollWebView;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
@@ -32,7 +33,9 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -145,7 +148,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 * 顶部浏览器
 	 */
 	@ResourceView(id = R.id.home_browser)
-	public WebView browser;
+	public ScrollWebView browser;
 	/**
 	 * 小区选择按钮
 	 */
@@ -429,7 +432,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		btnRegion.getBackground().setAlpha(200);
 		btnSearch.getBackground().setAlpha(200);
 		btnBell.setImageAlpha(200);
-		browser = (WebView) viewHead.findViewById(R.id.home_browser);
+		browser = (ScrollWebView) viewHead.findViewById(R.id.home_browser);
 		browser.getSettings().setJavaScriptEnabled(true);
 		browser.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		browser.setWebViewClient(new WebViewClient() {
@@ -555,6 +558,8 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 
 	@Override
 	public void onCommand(String from, String action, com.slfuture.carrie.base.type.Table<String, Object> data) {
-		shakeBell();
+		if("notify".equals(action)) {
+			shakeBell();
+		}
 	}
 }

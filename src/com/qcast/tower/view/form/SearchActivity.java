@@ -77,7 +77,7 @@ public class SearchActivity extends ActivityEx {
 				SearchActivity.this.finish();
 			}
 		});
-		txtKeyword.getBackground().setAlpha(100);
+		txtKeyword.getBackground().setAlpha(50);
 	}
 
 	/**

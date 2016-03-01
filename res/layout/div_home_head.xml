@@ -3,15 +3,16 @@
 	android:layout_height="match_parent" 
 	android:orientation="vertical"
 	android:background="@color/white">
-    <WebView
+    <com.qcast.tower.view.control.ScrollWebView
         android:id="@+id/home_browser"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_alignParentLeft="true"
-		android:layout_alignParentTop="true" />
+		android:layout_alignParentTop="true"
+		android:scrollbars="none" />
 	<View 
         android:id="@+id/home_line_1"
-	    android:layout_height="1px"
+	    android:layout_height="1dp"
 	    android:layout_width="match_parent"
 	    android:background="@color/grey_line"
 	    android:layout_below="@id/home_browser" />
@@ -30,7 +31,7 @@
         </LinearLayout>
     </HorizontalScrollView>
 	<View
-	    android:layout_height="1px"
+	    android:layout_height="1dp"
 	    android:layout_width="match_parent"
 	    android:background="@color/grey_line" />
 	<LinearLayout
@@ -65,7 +66,7 @@
     	</RelativeLayout>
     	<View 
 	    	android:layout_height="match_parent"
-	    	android:layout_width="1px"
+	    	android:layout_width="1dp"
 	    	android:background="@color/grey_line"/>
 		<RelativeLayout
 			android:id="@+id/home_layout_right"

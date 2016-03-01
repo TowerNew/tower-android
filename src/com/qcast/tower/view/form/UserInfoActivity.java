@@ -61,6 +61,10 @@ public class UserInfoActivity extends ActivityEx {
 	public TextView labIdNumber;
 	@ResourceView(id = R.id.userinfo_image_snapshot)
 	public ImageView imgSnapshot;
+	@ResourceView(id = R.id.userinfo_label_status)
+	public TextView labStatus;
+	
+	
 
 	private boolean isAlteringIdCard = false;
 
@@ -248,12 +252,14 @@ public class UserInfoActivity extends ActivityEx {
 				UserInfoActivity.this.startActivityForResult(intent, 3);
 			}
 		});
-		if(Me.instance.isAuthenticated) {
-			labIdNumber.setTextColor(Color.BLACK);
-		}
-		else {
-			labIdNumber.setTextColor(Color.RED);
-		}
+    	if(Me.instance.isAuthenticated) {
+    		labStatus.setBackgroundResource(R.drawable.button_green);
+    		labStatus.setText("已认证");
+    	}
+    	else {
+    		labStatus.setBackgroundResource(R.drawable.button_red);
+        	labStatus.setText("未认证");
+    	}
 		labIdNumber.setText(Me.instance.idNumber);
 		viewIdNumber.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -317,12 +323,6 @@ public class UserInfoActivity extends ActivityEx {
 				else if("idnumber".equals(field)) {
 					Me.instance.idNumber = value;
 					labIdNumber.setText(Me.instance.idNumber);
-					if(Me.instance.isAuthenticated) {
-						labIdNumber.setTextColor(Color.BLACK);
-					}
-					else {
-						labIdNumber.setTextColor(Color.RED);
-					}
 				}
 				else if("photo".equals(field)) {
 					imgPhoto.setImageBitmap(GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(BitmapFactory.decodeFile(value), 200, 200), Color.WHITE, 4));

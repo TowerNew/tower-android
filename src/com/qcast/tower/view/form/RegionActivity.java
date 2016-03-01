@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
@@ -81,6 +82,18 @@ public class RegionActivity extends ActivityEx {
 					convertView = inflater.inflate(R.layout.listitem_region, null);
 					TextView text = (TextView) convertView.findViewById(R.id.listitem_region_label_name);
 					text.setText(city.regions.get(position - i - 1).name);
+					ImageView image = (ImageView) convertView.findViewById(R.id.listitem_region_image_status);
+					if(null != Profile.instance().region) {
+						if(city.regions.get(position - i - 1).id == Profile.instance().region.id) {
+							image.setVisibility(View.VISIBLE);
+						}
+						else {
+							image.setVisibility(View.GONE);
+						}
+					}
+					else {
+						image.setVisibility(View.GONE);
+					}
 					return convertView;
 				}
 				i += 1 + city.regions.size();

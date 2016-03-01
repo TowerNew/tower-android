@@ -21,6 +21,17 @@
 		android:layout_toRightOf="@id/listitem_family_image_photo"
 		android:layout_centerVertical="true"
 	    android:textSize="18sp" />
+	<TextView
+		android:id="@+id/listitem_family_label_status"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_margin="10dp"
+	    android:padding="2dp"
+	    android:text="未认证"
+	    android:textColor="@color/white"
+		android:layout_toRightOf="@id/listitem_family_label_name"
+		android:layout_centerVertical="true"
+	    android:textSize="12sp" />
 	<ImageView
 		android:layout_width="20dp"
 		android:layout_height="20dp"

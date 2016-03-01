@@ -299,6 +299,17 @@
                 android:text="身份证拍照"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
+			<TextView
+				android:id="@+id/userinfo_label_status"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_margin="10dp"
+			    android:padding="2dp"
+			    android:text="未认证"
+			    android:textColor="@color/white"
+				android:layout_toRightOf="@id/userinfo_label_snapshot"
+				android:layout_centerVertical="true"
+			    android:textSize="12sp" />
 			<ImageView
 				android:id="@+id/userinfo_image_snapshot"
                 android:layout_width="50dp"

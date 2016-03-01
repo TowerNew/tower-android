@@ -9,6 +9,7 @@ import com.qcast.tower.business.Me;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.core.IResponse;
+import com.slfuture.pretty.general.utility.GeneralHelper;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
@@ -16,6 +17,7 @@ import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +34,10 @@ public class LoginActivity extends Activity {
 	 * 最近一次时间
 	 */
 	private long lastTick = 1;
+	/**
+	 * 等待对话框
+	 */
+	private AlertDialog dialog = null;
 
 
 	/**
@@ -123,9 +129,14 @@ public class LoginActivity extends Activity {
 				if(Text.isBlank(code)) {
 					return;
 				}
+				dialog = GeneralHelper.showWaiting(LoginActivity.this);
 				Me.login(LoginActivity.this, phone, code, new IEventable<Boolean>() {
 					@Override
 					public void on(Boolean result) {
+						if(null != dialog) {
+							dialog.cancel();
+						}
+						dialog = null;
 						if(!result) {
 							return;
 						}

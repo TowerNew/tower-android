@@ -1,36 +1,51 @@
 package com.qcast.tower.view.form;
 
 import com.qcast.tower.R;
+import com.slfuture.pluto.view.annotation.ResourceView;
+import com.slfuture.pluto.view.component.ActivityEx;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
-import android.view.Window;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 /**
  * 浏览器页
  */
-public class WebActivity extends Activity {
+@ResourceView(id = R.layout.activity_web)
+public class WebActivity extends ActivityEx {
+	/**
+	 * 回退
+	 */
+	@ResourceView(id = R.id.web_image_return)
+	public ImageView imgReturn;
+	/**
+	 * 标题
+	 */
+	@ResourceView(id = R.id.web_text_caption)
+	public TextView labTitle;
+	/**
+	 * 关闭
+	 */
+	@ResourceView(id = R.id.web_label_close)
+	public TextView labClose;
 	/**
 	 * 浏览器对象
 	 */
-	protected WebView browser = null;
+	@ResourceView(id = R.id.web_browser)
+	public WebView browser;
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_web);
 		browser = (WebView) this.findViewById(R.id.web_browser);
 		browser.getSettings().setJavaScriptEnabled(true);
 		browser.requestFocus();
@@ -75,16 +90,13 @@ public class WebActivity extends Activity {
 	            startActivity(intent);  
 	        }
 		});
-		ImageButton button = (ImageButton) this.findViewById(R.id.web_button_return);
-		button.setOnClickListener(new View.OnClickListener() {
+		imgReturn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				WebActivity.this.finish();
-				// browser.goBack();
+				browser.goBack();
 			}
 		});
-		TextView closeButton = (TextView) this.findViewById(R.id.web_text_close);
-		closeButton.setOnClickListener(new View.OnClickListener() {
+		labClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				WebActivity.this.finish();
@@ -102,7 +114,7 @@ public class WebActivity extends Activity {
 		browser.loadUrl("about:blank");
 		browser.loadUrl(url);
 	}
-	
+
 	@Override
 	public void onStop() {
 		browser.loadUrl("about:blank");

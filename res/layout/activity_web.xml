@@ -12,8 +12,8 @@
 		android:background="@color/main"
 		android:focusable="true"
 		android:focusableInTouchMode="true">
-		<ImageButton
-            android:id="@+id/web_button_return"
+		<ImageView
+            android:id="@+id/web_image_return"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
@@ -32,7 +32,7 @@
             android:textColor="#ffffffff"
             android:textSize="18sp" />
         <TextView
-            android:id="@+id/web_text_close"
+            android:id="@+id/web_label_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -42,12 +42,10 @@
             android:textColor="#ffffffff"
             android:textSize="18sp" />
 	</RelativeLayout>
-
     <WebView
         android:id="@+id/web_browser"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/web_layout_head"
         android:visibility="invisible" />
-
 </RelativeLayout>

@@ -302,6 +302,9 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 		GeneralHelper.showSelector(ConversationActivity.this.getActivity(), new IEventable<Integer>() {
 			@Override
 			public void on(Integer index) {
+				if(Me.instance == user) {
+					index++;
+				}
 				int i = -1;
 				for(IM item : user.im) {
 					i++;

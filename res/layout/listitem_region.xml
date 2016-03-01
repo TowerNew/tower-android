@@ -17,4 +17,14 @@
 	    android:textSize="18sp"
 	    android:paddingTop="12dp" 
 	    android:paddingBottom="12dp" />
+	<ImageView
+	    android:id="@+id/listitem_region_image_status"
+	    android:layout_width="20dp"
+	    android:layout_height="20dp"
+	    android:layout_alignParentRight="true"
+	    android:layout_marginRight="10dp"
+	    android:layout_centerVertical="true"
+	    android:scaleType="centerInside"
+	    android:src="@drawable/yes"
+	    android:visibility="gone" />
 </RelativeLayout>

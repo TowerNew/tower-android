@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleAdapter.ViewBinder;
+import android.widget.TextView;
 
 /**
  * 家庭界面
@@ -82,13 +83,25 @@ public class FamilyActivity extends OnlyUserActivity {
 	private void dealMember() {
 		ListView listview = (ListView) FamilyActivity.this.findViewById(R.id.family_list_member);
 		SimpleAdapter listItemAdapter = new SimpleAdapter(FamilyActivity.this, memberList, R.layout.listitem_family,
-			new String[]{"name"}, 
-	        new int[]{R.id.listitem_family_label_name});
+			new String[]{"name", "status"}, 
+	        new int[]{R.id.listitem_family_label_name, R.id.listitem_family_label_status});
 		listItemAdapter.setViewBinder(new ViewBinder() {
 			public boolean setViewValue(View view, Object data, String textRepresentation) {
                 if(view instanceof ImageView && data instanceof Bitmap) {
                     ImageView imageView = (ImageView) view;
                     imageView.setImageBitmap((Bitmap) data);
+                    return true;
+                }
+                else if(view instanceof TextView && data instanceof Boolean) {
+                	TextView textView = (TextView) view;
+                	if((Boolean) data) {
+                    	textView.setBackgroundResource(R.drawable.button_green);
+                    	textView.setText("已认证");
+                	}
+                	else {
+                    	textView.setBackgroundResource(R.drawable.button_red);
+                    	textView.setText("未认证");
+                	}
                     return true;
                 }
                 return false;
@@ -145,6 +158,7 @@ public class FamilyActivity extends OnlyUserActivity {
 			HashMap<String, Object> memberMap = new HashMap<String, Object>();
 			memberMap.put("userId", relative.id);
 			memberMap.put("name", relative.nickname());
+			memberMap.put("status", relative.isAuthenticated);
 			memberList.add(memberMap);
 		}
 		SimpleAdapter adapter = (SimpleAdapter) listFamily.getAdapter();

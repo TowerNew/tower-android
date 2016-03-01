@@ -92,6 +92,10 @@ public class Me extends User implements Serializable, IReactor {
 	 */
 	public String snapshot = null;
 	/**
+	 * 是否认证
+	 */
+	public boolean isAuthenticated;
+	/**
 	 * 私人医生
 	 */
 	public Doctor doctor = null;
@@ -419,6 +423,14 @@ public class Me extends User implements Serializable, IReactor {
 		address = visitor.getString("address");
 		token = visitor.getString("token");
 		password = visitor.getString("password");
+		idNumber = visitor.getString("idnumber");
+		snapshot = visitor.getString("idcardfront");
+		if(3 == visitor.getInteger("type", 1)) {
+			isAuthenticated = true;
+		}
+		else {
+			isAuthenticated = false;
+		}
 		relatives.clear();
 		for(JSONVisitor item : visitor.getVisitors("userList")) {
 			if(id.equals(item.getString("userGlobalId"))) {

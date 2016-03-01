@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 首页
@@ -61,7 +62,9 @@ public class UserInfoActivity extends ActivityEx {
 	@ResourceView(id = R.id.userinfo_image_snapshot)
 	public ImageView imgSnapshot;
 
+	private boolean isAlteringIdCard = false;
 
+	
 	/**
 	 * 界面创建
 	 */
@@ -88,13 +91,57 @@ public class UserInfoActivity extends ActivityEx {
 				if(null == uri) {
 					return;
 				}
-				alter("photo", new File(Storage.getPathFromURI(UserInfoActivity.this, uri)));
+				if(isAlteringIdCard) {
+					Host.doCommand("idcardfront", new JSONResponse(UserInfoActivity.this) {
+						@Override
+						public void onFinished(JSONVisitor content) {
+							if(null == content || content.getInteger("code", 0) <= 0) {
+								return;
+							}
+							String url = content.getString("data");
+							if(null == url) {
+								return;
+							}
+							Host.doImage("image", new ImageResponse(url) {
+								@Override
+								public void onFinished(Bitmap content) {
+									imgSnapshot.setImageBitmap(content);
+								}
+							}, url);
+						}
+					}, Me.instance.token, new File(Storage.getPathFromURI(UserInfoActivity.this, uri)));
+				}
+				else {
+					alter("photo", new File(Storage.getPathFromURI(UserInfoActivity.this, uri)));
+				}
 				break;
 			case GeneralHelper.INTENT_REQUEST_CAMERA:
 				if(RESULT_OK != resultCode || null == data) {
 					return;
 				}
-				alter("photo", Storage.saveCamera(data));
+				if(isAlteringIdCard) {
+					Host.doCommand("idcardfront", new JSONResponse(UserInfoActivity.this) {
+						@Override
+						public void onFinished(JSONVisitor content) {
+							if(null == content || content.getInteger("code", 0) <= 0) {
+								return;
+							}
+							String url = content.getString("data");
+							if(null == url) {
+								return;
+							}
+							Host.doImage("image", new ImageResponse(url) {
+								@Override
+								public void onFinished(Bitmap content) {
+									imgSnapshot.setImageBitmap(content);
+								}
+							}, url);
+						}
+					}, Me.instance.token, Storage.saveCamera(data));
+				}
+				else {
+					alter("photo", Storage.saveCamera(data));
+				}
 				break;
 			case 1:
 				if(TextEditActivity.RESULT_CANCEL == resultCode) {
@@ -159,6 +206,7 @@ public class UserInfoActivity extends ActivityEx {
 		imgPhoto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				isAlteringIdCard = false;
 				GeneralHelper.selectImage(UserInfoActivity.this);
 			}
 		});
@@ -189,6 +237,10 @@ public class UserInfoActivity extends ActivityEx {
 		viewName.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if(Me.instance.isAuthenticated) {
+					Toast.makeText(UserInfoActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
+					return;
+				}
 				Intent intent = new Intent(UserInfoActivity.this, TextEditActivity.class);
 				intent.putExtra("title", "编辑姓名");
 				intent.putExtra("default", Me.instance.name);
@@ -196,15 +248,36 @@ public class UserInfoActivity extends ActivityEx {
 				UserInfoActivity.this.startActivityForResult(intent, 3);
 			}
 		});
+		if(Me.instance.isAuthenticated) {
+			labIdNumber.setTextColor(Color.BLACK);
+		}
+		else {
+			labIdNumber.setTextColor(Color.RED);
+		}
 		labIdNumber.setText(Me.instance.idNumber);
 		viewIdNumber.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if(Me.instance.isAuthenticated) {
+					Toast.makeText(UserInfoActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
+					return;
+				}
 				Intent intent = new Intent(UserInfoActivity.this, TextEditActivity.class);
 				intent.putExtra("title", "编辑身份证号");
 				intent.putExtra("default", Me.instance.idNumber);
 				intent.putExtra("description", "请务必填写真实身份证号");
 				UserInfoActivity.this.startActivityForResult(intent, 4);
+			}
+		});
+		imgSnapshot.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(Me.instance.isAuthenticated) {
+					Toast.makeText(UserInfoActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
+					return;
+				}
+				isAlteringIdCard = true;
+				GeneralHelper.selectImage(UserInfoActivity.this);
 			}
 		});
 	}
@@ -244,6 +317,12 @@ public class UserInfoActivity extends ActivityEx {
 				else if("idnumber".equals(field)) {
 					Me.instance.idNumber = value;
 					labIdNumber.setText(Me.instance.idNumber);
+					if(Me.instance.isAuthenticated) {
+						labIdNumber.setTextColor(Color.BLACK);
+					}
+					else {
+						labIdNumber.setTextColor(Color.RED);
+					}
 				}
 				else if("photo".equals(field)) {
 					imgPhoto.setImageBitmap(GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(BitmapFactory.decodeFile(value), 200, 200), Color.WHITE, 4));

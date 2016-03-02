@@ -35,7 +35,7 @@
 			    android:layout_height="wrap_content"
 			    android:layout_alignParentRight="true"
 			    android:layout_centerVertical="true"
-			    android:layout_marginRight="6dp"
+			    android:layout_marginRight="10dp"
 			    android:gravity="center"
 	            android:textColor="@color/white"
 			    android:text="注销"
@@ -56,6 +56,19 @@
 			    android:scaleType="centerInside"
 			    android:adjustViewBounds="true"
 			    android:src="@drawable/user_photo_default"
+			    android:padding="0dip" />
+		<ImageView
+			    android:id="@+id/userinfo_image_qcode"
+			    android:layout_width="30dp"
+			    android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+			    android:layout_gravity="center"
+			    android:scaleType="fitXY"
+			    android:adjustViewBounds="true"
+			    android:src="@drawable/icon_qcode"
 			    android:padding="0dip" />
 		</RelativeLayout>
 		<RelativeLayout

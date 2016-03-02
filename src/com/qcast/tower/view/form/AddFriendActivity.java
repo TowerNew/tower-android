@@ -49,6 +49,10 @@ public class AddFriendActivity extends OnlyUserActivity {
 		userId = this.getIntent().getStringExtra("userId");
 		if(Text.isBlank(userId)) {
 			userId = "";
+			if(null != this.getIntent().getStringExtra("phone")) {
+				txtPhone.setText(this.getIntent().getStringExtra("phone"));
+				txtRelation.requestFocus();
+			}
 		}
 		else {
 			Friend friend = Me.instance.fetchFriendById(userId);

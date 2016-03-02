@@ -1,6 +1,7 @@
 package com.qcast.tower.view.form;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import com.qcast.tower.R;
@@ -15,7 +16,9 @@ import com.slfuture.pluto.storage.Storage;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
 import com.slfuture.pretty.general.utility.GeneralHelper;
+import com.slfuture.pretty.general.view.form.ImageActivity;
 import com.slfuture.pretty.general.view.form.TextEditActivity;
+import com.slfuture.pretty.qcode.Module;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,6 +26,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,7 +67,8 @@ public class UserInfoActivity extends ActivityEx {
 	public ImageView imgSnapshot;
 	@ResourceView(id = R.id.userinfo_label_status)
 	public TextView labStatus;
-	
+	@ResourceView(id = R.id.userinfo_image_qcode)
+	public ImageView imgQCode;
 	
 
 	private boolean isAlteringIdCard = false;
@@ -284,6 +289,39 @@ public class UserInfoActivity extends ActivityEx {
 				}
 				isAlteringIdCard = true;
 				GeneralHelper.selectImage(UserInfoActivity.this);
+			}
+		});
+		imgQCode.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String path = com.qcast.tower.framework.Storage.IMAGE_ROOT + "qcode." + Me.instance.phone + ".png";
+				if(!(new File(path)).exists()) {
+					Bitmap bitmap = Module.createQRImage("add://" + Me.instance.phone, 500, 500);
+					if(null == bitmap) {
+						return;
+					}
+					FileOutputStream stream = null;
+					try {
+						stream = new FileOutputStream(new File(path));
+						bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+						stream.flush();
+					}
+					catch(Exception ex) {
+						Log.e("TOWER", "保存二维码失败", ex);
+					}
+					finally {
+						if(null != stream) {
+							try {
+								stream.close();
+							}
+							catch(Exception ex) { }
+						}
+						stream = null;
+					}
+				}
+				Intent intent = new Intent(UserInfoActivity.this, ImageActivity.class);
+				intent.putExtra("path", path);
+				UserInfoActivity.this.startActivity(intent);
 			}
 		});
 	}

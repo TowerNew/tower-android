@@ -10,6 +10,7 @@ import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
 import com.slfuture.pretty.general.utility.GeneralHelper;
+import com.slfuture.pretty.qcode.Module;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import com.qcast.tower.business.user.User;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -41,9 +43,12 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.SimpleAdapter.ViewBinder;
+import android.widget.Toast;
 
 @ResourceView(id = R.layout.activity_conversation)
 public class ConversationActivity extends FragmentEx implements IMeListener {
+	@ResourceView(id = R.id.conversation_image_scan)
+	public ImageView imgScan;
 	@ResourceView(id = R.id.conversation_image_add)
 	public ImageView imgAdd;
 	@ResourceView(id = R.id.conversation_layout_doctor)
@@ -61,6 +66,35 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
     public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		//
+		imgScan.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Me.instance) {
+					Toast.makeText(ConversationActivity.this.getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				Module.capture(ConversationActivity.this.getActivity(), new IEventable<String>() {
+					@Override
+					public void on(String data) {
+						if(null == data) {
+							return;
+						}
+						if(data.startsWith("add://")) {
+							data = data.replace("add://", "");
+							Intent intent = new Intent(ConversationActivity.this.getActivity(), AddFriendActivity.class);
+							intent.putExtra("phone", data);
+							ConversationActivity.this.getActivity().startActivity(intent);
+						}
+						else if(data.startsWith("http://")) {
+							Uri uri = Uri.parse(data);  
+				            Intent intent = new Intent(Intent.ACTION_VIEW, uri);  
+				            startActivity(intent);  
+							return;
+						}
+					}
+				});
+			}
+		});
 		imgAdd.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -106,9 +106,9 @@ public class SearchActivity extends ActivityEx {
 	public void prepareHot() {
 		SimpleAdapter adapter = new SimpleAdapter(this, 
 			hotList, 
-			R.layout.listview_search,
+			R.layout.listitem_search,
 			new String[]{"text"}, 
-	        new int[]{R.id.listview_search_text});
+	        new int[]{R.id.listitem_search_text});
 		adapter.setViewBinder(new ViewBinder() {
 			@SuppressWarnings("deprecation")
 			public boolean setViewValue(View view, Object data, String textRepresentation) {

@@ -507,7 +507,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 * 处理资讯
 	 */
 	private void dealNews() {
-		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), newsList, R.layout.listview_news,
+		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), newsList, R.layout.listitem_news,
 			new String[]{"photo", "title", "publisher", "date"}, 
 	        new int[]{R.id.news_image_photo, R.id.news_label_title, R.id.news_label_publisher, R.id.news_label_date});
 		listItemAdapter.setViewBinder(new ViewBinder() {

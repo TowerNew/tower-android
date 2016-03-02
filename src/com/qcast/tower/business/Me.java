@@ -558,6 +558,9 @@ public class Me extends User implements Serializable, IReactor {
 	public void onCommand(final String from, final String action, final com.slfuture.carrie.base.type.Table<String, Object> data) {
 		Reminder.ringtone(Program.application);
 		Integer type = (Integer) data.get("type");
+		if("notify".equals(action)) {
+			Runtime.hasUnreadMessage = true;
+		}
 		if(null != type && (Notify.TYPE_5 == type || Notify.TYPE_9 == type)) {
 			Me.instance.refreshMember(Program.application, new IEventable<Boolean>() {
 				@Override
@@ -570,9 +573,6 @@ public class Me extends User implements Serializable, IReactor {
 			});
 			Reminder.vibrate(Program.application);
 			return;
-		}
-		if("message".equals(action)) {
-			Logic.hasUnreadMessage = true;
 		}
 		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
 	}

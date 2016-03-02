@@ -246,7 +246,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		if(null != Logic.regionName) {
 			regionButton.setText(fetchRegionName());
 		}
-		if(Logic.hasUnreadMessage) {
+		if(com.qcast.tower.business.Runtime.hasUnreadMessage) {
 			Controller.doDelay(new Runnable() {
 				@Override
 				public void run() {

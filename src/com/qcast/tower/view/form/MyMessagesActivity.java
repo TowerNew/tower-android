@@ -136,6 +136,7 @@ public class MyMessagesActivity extends ActivityEx {
                     Toast.makeText(MyMessagesActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
                     return;
                 }
+                com.qcast.tower.business.Runtime.hasUnreadMessage = false;
                 dataList.clear();
                 JSONArray result = (JSONArray) resultObject.get("data");
                 if (null == result) {

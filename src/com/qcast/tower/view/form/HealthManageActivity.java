@@ -2,6 +2,7 @@ package com.qcast.tower.view.form;
 
 import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
+import com.slfuture.pretty.general.view.form.BrowserActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -92,7 +93,7 @@ public class HealthManageActivity extends Activity {
 	 * @param url 地址
 	 */
 	private void openWeb(String url) {
-		Intent intent = new Intent(HealthManageActivity.this, WebActivity.class);
+		Intent intent = new Intent(HealthManageActivity.this, BrowserActivity.class);
 		intent.putExtra("url", url);
 		HealthManageActivity.this.startActivity(intent);
 	}

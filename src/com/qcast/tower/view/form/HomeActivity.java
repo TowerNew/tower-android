@@ -20,6 +20,7 @@ import com.slfuture.pluto.etc.Controller;
 import com.slfuture.pluto.etc.Version;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
+import com.slfuture.pretty.general.view.form.BrowserActivity;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -290,7 +291,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				if(current.compareTo(server) >= 0) {
 					 return;
 				}
-				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
+				Intent intent = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
 				intent.putExtra("url", url);
 				HomeActivity.this.startActivity(intent);
 			}
@@ -391,10 +392,10 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 */
 	public void dealEntry() {
 		if(null == Me.instance) {
-			browser.loadUrl(Host.fetchURL("home", ""));
+			browser.loadUrl(Host.fetchURL("HomePage", ""));
 		}
 		else {
-			browser.loadUrl(Host.fetchURL("home", Me.instance.token));
+			browser.loadUrl(Host.fetchURL("HomePage", Me.instance.token));
 		}
 		scrollEntry.setHorizontalScrollBarEnabled(false);
 		DisplayMetrics metrics = new DisplayMetrics();
@@ -417,12 +418,28 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				case 1:
 					break;
 				case 2:
+					if(null != Profile.instance().region || null != Me.instance) {
+						Intent intent2 = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
+						intent2.putExtra("url", Host.fetchURL("yuyueliliao", Profile.instance().region.id, Me.instance.token));
+						HomeActivity.this.startActivity(intent2);
+					}
+					else {
+						Toast.makeText(HomeActivity.this.getActivity(), "请登录并设置所在小区", Toast.LENGTH_LONG).show();
+					}
 					break;
 				case 3:
 					Intent intent3 = new Intent(HomeActivity.this.getActivity(), ArchiveActivity.class);
 					HomeActivity.this.startActivity(intent3);
 					break;
 				case 4:
+					if(null != Profile.instance().region || null != Me.instance) {
+						Intent intent4 = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
+						intent4.putExtra("url", Host.fetchURL("yuyueguahao", Profile.instance().region.id, Me.instance.token));
+						HomeActivity.this.startActivity(intent4);
+					}
+					else {
+						Toast.makeText(HomeActivity.this.getActivity(), "请登录并设置所在小区", Toast.LENGTH_LONG).show();
+					}
 					break;
 				case 5:
 					Intent intent5 = new Intent(HomeActivity.this.getActivity(), SelfDiagnosticActivity.class);
@@ -487,7 +504,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		browser.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
+				Intent intent = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
 				intent.putExtra("url", url);
 				startActivity(intent);
 				browser.pauseTimers();
@@ -500,7 +517,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				browser.loadUrl("about:blank");
 			}
 		});
-		this.getActivity().findViewById(R.id.home_layout_head).bringToFront();
+		this.getActivity().findViewById(R.id.home_layout_header).bringToFront();
 	}
 
 	/**
@@ -527,7 +544,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
 				index = index - 1;
 				HashMap<String, Object> newsMap = newsList.get(index);
-				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
+				Intent intent = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
 				intent.putExtra("url", newsMap.get("url").toString());
 				HomeActivity.this.startActivity(intent);
             }

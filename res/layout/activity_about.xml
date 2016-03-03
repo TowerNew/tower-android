@@ -5,15 +5,15 @@
     android:layout_gravity="center"
 	android:background="@color/white" >
     <RelativeLayout
-		android:id="@+id/about_layout_head"
+		android:id="@+id/about_layout_header"
 		android:layout_width="match_parent"
-		android:layout_height="48dp"
+		android:layout_height="40dp"
 		android:layout_alignParentTop="true" 
-		android:background="@drawable/topbar" 
+		android:background="@color/main" 
 		android:focusable="true"
 		android:focusableInTouchMode="true">
-		<ImageButton
-            android:id="@+id/about_button_return"
+		<ImageView
+            android:id="@+id/about_image_close"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
@@ -31,12 +31,11 @@
             android:textColor="#ffffffff"
             android:textSize="18sp" />
 	</RelativeLayout>
-
     <TextView
-        android:id="@+id/about_text_content"
+        android:id="@+id/about_label_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/about_layout_head"
+        android:layout_below="@id/about_layout_header"
         android:text=""
 		android:layout_marginLeft="10dp"
 		android:layout_marginTop="10dp"

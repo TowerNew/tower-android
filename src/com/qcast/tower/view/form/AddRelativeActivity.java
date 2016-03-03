@@ -1,12 +1,17 @@
 package com.qcast.tower.view.form;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,10 +20,14 @@ import com.qcast.tower.business.Me;
 import com.qcast.tower.business.user.Relative;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
+import com.slfuture.carrie.base.model.core.ITargetEventable;
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
+import com.slfuture.pluto.etc.GraphicsHelper;
+import com.slfuture.pluto.storage.Storage;
 import com.slfuture.pluto.view.annotation.ResourceView;
+import com.slfuture.pretty.general.utility.GeneralHelper;
 
 /**
  * 添加朋友
@@ -35,11 +44,17 @@ public class AddRelativeActivity extends OnlyUserActivity {
 	public EditText txtIdNumber;
 	@ResourceView(id = R.id.addrelative_text_relation)
 	public EditText txtRelation;
+	@ResourceView(id = R.id.addrelative_image_snapshot)
+	public ImageView imgSnapshot;
 
 	/**
 	 * 带编辑的成员ID
 	 */
 	private String userId = "";
+	/**
+	 * 身份证快照
+	 */
+	private File snapshot = null;
 
 
 	/**
@@ -70,6 +85,14 @@ public class AddRelativeActivity extends OnlyUserActivity {
 				txtIdNumber.setText(relative.idNumber);
 				txtIdNumber.setEnabled(false);
 			}
+			if(null != relative.snapshot) {
+				Host.doImage("image", imgSnapshot, new ITargetEventable<ImageView, Bitmap>() {
+					@Override
+					public void on(ImageView target, Bitmap event) {
+						target.setImageBitmap(event);
+					}
+				}, relative.snapshot);
+			}
 		}
 		btnClose.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -94,6 +117,10 @@ public class AddRelativeActivity extends OnlyUserActivity {
 					Toast.makeText(AddRelativeActivity.this, "身份证号码格式不正确", Toast.LENGTH_LONG).show();
 					return;
 				}
+				if(null == snapshot || !snapshot.exists()) {
+					Toast.makeText(AddRelativeActivity.this, "请上传身份证正面照片", Toast.LENGTH_LONG).show();
+					return;
+				}
 				Host.doCommand("editowner", new JSONResponse(AddRelativeActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
@@ -107,8 +134,51 @@ public class AddRelativeActivity extends OnlyUserActivity {
 							return;
 						}
 					}
-				}, Me.instance.token, userId, mode, txtRelation.getText().toString(), txtName.getText().toString(), txtIdNumber.getText().toString());
+				}, Me.instance.token, userId, mode, txtRelation.getText().toString(), txtName.getText().toString(), txtIdNumber.getText().toString(), snapshot);
 			}
 		});
+		imgSnapshot.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(!Text.isBlank(userId)) {
+					Relative relative = Me.instance.fetchRelativeById(userId);
+					if(null == relative) {
+						AddRelativeActivity.this.finish();
+						return;
+					}
+					if(relative.isAuthenticated) {
+						Toast.makeText(AddRelativeActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
+						return;
+					}
+				}
+				GeneralHelper.selectImage(AddRelativeActivity.this);
+			}
+		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case GeneralHelper.INTENT_REQUEST_PHONE:
+				if(RESULT_OK != resultCode || null == data) {
+					return;
+				}
+				Uri uri = (data == null || resultCode != -1 ? null : data.getData());
+				if(null == uri) {
+					return;
+				}
+				snapshot = new File(Storage.getPathFromURI(AddRelativeActivity.this, uri));
+				break;
+			case GeneralHelper.INTENT_REQUEST_CAMERA:
+				if(RESULT_OK != resultCode || null == data) {
+					return;
+				}
+				snapshot = Storage.saveCamera(data);
+				break;
+		}
+		if(null != snapshot && snapshot.exists()) {
+			imgSnapshot.setImageBitmap(GraphicsHelper.decodeFile(snapshot));
+		}
+	    super.onActivityResult(requestCode, resultCode, data);
 	}
 }

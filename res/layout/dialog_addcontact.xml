@@ -10,7 +10,7 @@
         android:layout_height="45dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="添加家人"
+        android:text="添加家庭成员"
         android:textColor="@color/black"
         android:textSize="18sp"
     	android:background="@color/white" />
@@ -21,7 +21,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="1dp"
         android:gravity="center"
-        android:text="添加好友"
+        android:text="添加联系人"
         android:textColor="@color/black"
         android:textSize="18sp"
     	android:background="@color/white"/>

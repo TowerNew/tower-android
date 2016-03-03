@@ -8,6 +8,7 @@ import com.qcast.tower.business.Logic;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
+import com.slfuture.pretty.general.view.form.BrowserActivity;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -148,7 +149,7 @@ public class PrescriptionActivity extends Activity {
 	 * @param url 地址
 	 */
 	private void openWeb(String url) {
-		Intent intent = new Intent(PrescriptionActivity.this, WebActivity.class);
+		Intent intent = new Intent(PrescriptionActivity.this, BrowserActivity.class);
 		intent.putExtra("url", url);
 		PrescriptionActivity.this.startActivity(intent);
 	}

@@ -24,6 +24,7 @@ import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
+import com.slfuture.pretty.general.view.form.BrowserActivity;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONBoolean;
 import com.slfuture.carrie.base.json.JSONNumber;
@@ -96,7 +97,7 @@ public class MyMessagesActivity extends ActivityEx {
                     MyMessagesActivity.this.startActivity(intent3);
                 	break;
                 case Notify.TYPE_3:
-                	Intent intent4 = new Intent(MyMessagesActivity.this, WebActivity.class);
+                	Intent intent4 = new Intent(MyMessagesActivity.this, BrowserActivity.class);
                 	intent4.putExtra("url", notifyModel.url);
                     MyMessagesActivity.this.startActivity(intent4);
                 	break;

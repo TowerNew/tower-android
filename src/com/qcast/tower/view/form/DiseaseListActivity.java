@@ -8,6 +8,7 @@ import com.qcast.tower.R;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
+import com.slfuture.pretty.general.view.form.BrowserActivity;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -107,7 +108,7 @@ public class DiseaseListActivity extends Activity {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
-				Intent intent = new Intent(DiseaseListActivity.this, WebActivity.class);
+				Intent intent = new Intent(DiseaseListActivity.this, BrowserActivity.class);
 				String caption = (String) diseaseList.get(index).get("caption");
 				try {
 					caption = URLEncoder.encode(caption, "UTF-8");

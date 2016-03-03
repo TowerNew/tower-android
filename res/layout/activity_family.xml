@@ -27,6 +27,15 @@
             android:text="我的家庭"
             android:textColor="@color/white"
             android:textSize="18sp" />
+		<ImageView
+		    android:id="@+id/family_image_add"
+			android:layout_width="20dp"
+			android:layout_height="20dp"
+			android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+			android:layout_centerVertical="true"
+			android:scaleType="fitXY"
+			android:src="@drawable/add" />
 	</RelativeLayout>
     <ListView
         android:id="@+id/family_list_member"

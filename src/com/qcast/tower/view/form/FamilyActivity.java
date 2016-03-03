@@ -33,6 +33,8 @@ import android.widget.TextView;
 public class FamilyActivity extends OnlyUserActivity {
 	@ResourceView(id = R.id.family_image_close)
 	public ImageView imgClose;
+	@ResourceView(id = R.id.family_image_add)
+	public ImageView imgAdd;
 	@ResourceView(id = R.id.family_list_member)
 	public ListView listFamily;
 
@@ -73,6 +75,13 @@ public class FamilyActivity extends OnlyUserActivity {
 			@Override
 			public void onClick(View v) {
 				FamilyActivity.this.finish();
+			}
+		});
+		imgAdd.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(FamilyActivity.this, AddRelativeActivity.class);
+				FamilyActivity.this.startActivity(intent);
 			}
 		});
 	}

@@ -24,17 +24,12 @@ import com.qcast.tower.business.structure.IM;
 import com.qcast.tower.business.user.Friend;
 import com.qcast.tower.business.user.User;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -98,39 +93,8 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 		imgAdd.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				final AlertDialog alertDialog = new AlertDialog.Builder(ConversationActivity.this.getActivity()).create();
-				alertDialog.show();
-				Window window = alertDialog.getWindow();
-				WindowManager.LayoutParams layoutParams = window.getAttributes();
-				layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-				window.setGravity(Gravity.BOTTOM);
-				window.setAttributes(layoutParams);
-				window.setContentView(R.layout.dialog_addcontact);
-				TextView labelCancel = (TextView) window.findViewById(R.id.addcontact_label_cancel);
-				labelCancel.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						alertDialog.cancel();
-					}
-				});
-				TextView labRelative = (TextView) window.findViewById(R.id.addcontact_label_relative);
-				labRelative.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent intent = new Intent(ConversationActivity.this.getActivity(), AddRelativeActivity.class);
-						ConversationActivity.this.getActivity().startActivity(intent);
-						alertDialog.hide();
-					}
-				});
-				TextView labFriend = (TextView) window.findViewById(R.id.addcontact_label_friend);
-				labFriend.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent intent = new Intent(ConversationActivity.this.getActivity(), AddFriendActivity.class);
-						ConversationActivity.this.getActivity().startActivity(intent);
-						alertDialog.hide();
-					}
-				});
+				Intent intent = new Intent(ConversationActivity.this.getActivity(), AddFriendActivity.class);
+				ConversationActivity.this.getActivity().startActivity(intent);
 			}
 		});
 		viewDoctor.setOnClickListener(new View.OnClickListener() {

@@ -118,7 +118,7 @@ public class UserInfoActivity extends ActivityEx {
 								}
 							}, url);
 						}
-					}, Me.instance.token, new File(Storage.getPathFromURI(UserInfoActivity.this, uri)));
+					}, Me.instance.token, com.qcast.tower.framework.Storage.compressImageFile(new File(Storage.getPathFromURI(UserInfoActivity.this, uri)), 500, 500));
 				}
 				else {
 					alter("photo", new File(Storage.getPathFromURI(UserInfoActivity.this, uri)));
@@ -146,7 +146,7 @@ public class UserInfoActivity extends ActivityEx {
 								}
 							}, url);
 						}
-					}, Me.instance.token, Storage.saveCamera(data));
+					}, Me.instance.token, com.qcast.tower.framework.Storage.compressImageFile(Storage.saveCamera(data), 500, 500));
 				}
 				else {
 					alter("photo", Storage.saveCamera(data));

@@ -86,6 +86,7 @@ public class AddRelativeActivity extends OnlyUserActivity {
 				txtIdNumber.setEnabled(false);
 			}
 			if(null != relative.snapshot) {
+				snapshot = new File(com.qcast.tower.framework.Storage.imagePath(Host.parseFileNameWithURL(relative.snapshot)));
 				Host.doImage("image", imgSnapshot, new ITargetEventable<ImageView, Bitmap>() {
 					@Override
 					public void on(ImageView target, Bitmap event) {
@@ -177,6 +178,7 @@ public class AddRelativeActivity extends OnlyUserActivity {
 				break;
 		}
 		if(null != snapshot && snapshot.exists()) {
+			snapshot = com.qcast.tower.framework.Storage.compressImageFile(snapshot, 500, 500);
 			imgSnapshot.setImageBitmap(GraphicsHelper.decodeFile(snapshot));
 		}
 	    super.onActivityResult(requestCode, resultCode, data);

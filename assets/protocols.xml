@@ -65,18 +65,19 @@ user-platform-web/rest/user/suggest#token=[1]&content=[2]
 	    </mock>
 	</protocol>
 	<protocol name="alertUserInfo">
+	    <!-- 支持修改的字段：nickname,address,name,idnumber,photo，其中photo上传的是文件对象 -->
 		<path>
 		<![CDATA[
 user-platform-web/rest/user/alertUserInfo#token=[1]&field=[2]&value=[3]
 		]]>
 		</path>
-	<mock>
-        <![CDATA[
+		<mock>
+		<![CDATA[
 {
     "code": 1
 }
 	    ]]>
-	    </mock>
+		</mock>
 	</protocol>
 	<protocol name="selectDoctor">
 		<path>
@@ -413,6 +414,7 @@ user-platform-web/rest/user/member?token=[1]
         </mock>
     </protocol>
      <protocol name="editowner">
+         <!-- 修改家人信息，其中image为上传的身份证正面File对象 -->
         <path>
         <![CDATA[
 user-platform-web/rest/user/editowner#token=[1]&userGlobalId=[2]&mode=[3]&relation=[4]&name=[5]&idnumber=[6]&image=[7]
@@ -1226,7 +1228,7 @@ user-platform-web/rest/user/myWallet?token=[1]
         ]]>
         </mock>
     </protocol>
-     <protocol name="myMessage">
+	<protocol name="myMessage">
         <path>
         <![CDATA[
 user-platform-web/rest/user/myMessage?token=[1]

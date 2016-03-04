@@ -13,12 +13,14 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.slfuture.carrie.base.character.Encoding;
+import com.slfuture.carrie.base.etc.Serial;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.type.core.ILink;
+import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.storage.SDCard;
 
 /**
@@ -107,6 +109,43 @@ public class Storage {
 			dir.mkdirs();
 		}
 		return IMAGE_ROOT + fileName;
+	}
+	
+	/**
+	 * 获取指定图片码的路径
+	 * 
+	 * @param code 图片码
+	 * @return 图片文件
+	 */
+	public static File makeTemplateImageFile() {
+		File dir = new File(IMAGE_ROOT);
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
+		return new File(IMAGE_ROOT + Serial.makeSerialString() + ".jpg");
+	}
+
+	/**
+	 * 裁剪文件
+	 * 
+	 * @param source 文件方法
+	 * @param width 文件宽度
+	 * @param height 文件高度
+	 * @return 裁剪文件
+	 */
+	public static File compressImageFile(File source, int width, int height) {
+		if(null == source || !source.exists()) {
+			return null;
+		}
+		Bitmap bitmap = GraphicsHelper.decodeFile(source, width, height);
+		File result = makeTemplateImageFile();
+		try {
+			GraphicsHelper.saveFile(bitmap, result, 0, 0);
+		}
+		catch (IOException e) {
+			return null;
+		}
+		return result;
 	}
 
 	/**

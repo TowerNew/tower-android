@@ -1,18 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <protocols domain="beta.service.wehop.cn" mock="false" storage="tower/image/">
+	<protocol name="PayNotify">
+		<url>
+		<![CDATA[
+http://beta.service.wehop.cn/pay-platform-web/rest/alipay/notify
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+	<protocol name="wodeshoucang">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/favorate.html?token=[1]
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+    <protocol name="guahaodingdan">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=1
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+	<protocol name="liliaodingdan">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=2
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+	<protocol name="tijiandingdan">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=3
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+	<protocol name="tijianbaogao">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+	<protocol name="dianzibingli">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+	<protocol name="chuandaishuju">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+	<!-- 健康档案顶部滚动视图 -->
+	<protocol name="jiankangdangan">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthscoreentry.html?token=[1]
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+	<protocol name="yuyuetijian">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/physical.html?regionId=[1]&token=[2]
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
 	<protocol name="yuyueguahao">
 		<url>
 		<![CDATA[
 http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/registration.html?regionId=[1]&token=[2]
 		]]>
 		</url>
-		<mock>
-        <![CDATA[
-{
-    "code": 1
-}
-	    ]]>
-	    </mock>
+		<mock></mock>
 	</protocol>
 	<protocol name="yuyueliliao">
 		<url>
@@ -20,13 +95,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/registration.h
 http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/therapy.html?regionId=[1]&token=[2]
 		]]>
 		</url>
-		<mock>
-        <![CDATA[
-{
-    "code": 1
-}
-	    ]]>
-	    </mock>
+		<mock></mock>
 	</protocol>
 	<protocol name="setPassword">
 		<path>
@@ -64,11 +133,11 @@ user-platform-web/rest/user/suggest#token=[1]&content=[2]
 	    ]]>
 	    </mock>
 	</protocol>
-	<protocol name="alertUserInfo">
+	<protocol name="alterUserInfo">
 	    <!-- 支持修改的字段：nickname,address,name,idnumber,photo，其中photo上传的是文件对象 -->
 		<path>
 		<![CDATA[
-user-platform-web/rest/user/alertUserInfo#token=[1]&field=[2]&value=[3]
+user-platform-web/rest/user/alterUserInfo#token=[1]&field=[2]&value=[3]
 		]]>
 		</path>
 		<mock>
@@ -413,7 +482,7 @@ user-platform-web/rest/user/member?token=[1]
         ]]>
         </mock>
     </protocol>
-     <protocol name="editowner">
+	<protocol name="editowner">
          <!-- 修改家人信息，其中image为上传的身份证正面File对象 -->
         <path>
         <![CDATA[

@@ -2,14 +2,29 @@ package com.qcast.tower.view.form;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
+import com.qcast.tower.business.Profile;
+import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.view.annotation.ResourceView;
+import com.slfuture.pretty.general.view.form.BrowserActivity;
 
 @ResourceView(id = R.layout.activity_archive)
 public class ArchiveActivity extends OnlyUserActivity {
+	@ResourceView(id = R.id.archive_web_data)
+	public WebView webData;
+	@ResourceView(id = R.id.archive_layout_examination)
+	public View viewExamination;
+	@ResourceView(id = R.id.archive_layout_medical)
+	public View viewMedical;
+	@ResourceView(id = R.id.archive_layout_wearables)
+	public View viewWearables;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,5 +42,30 @@ public class ArchiveActivity extends OnlyUserActivity {
 			this.finish();
 			return;
 		}
+		webData.loadUrl(Host.fetchURL("jiankangdangan", Me.instance.token));
+		viewExamination.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ArchiveActivity.this, BrowserActivity.class);
+				intent.putExtra("url", Host.fetchURL("tijianbaogao", Profile.instance().region.id, Me.instance.token));
+				ArchiveActivity.this.startActivity(intent);
+			}
+		});
+		viewMedical.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ArchiveActivity.this, BrowserActivity.class);
+				intent.putExtra("url", Host.fetchURL("dianzibingli", Profile.instance().region.id, Me.instance.token));
+				ArchiveActivity.this.startActivity(intent);
+			}
+		});
+		viewWearables.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ArchiveActivity.this, BrowserActivity.class);
+				intent.putExtra("url", Host.fetchURL("chuandaishuju", Profile.instance().region.id, Me.instance.token));
+				ArchiveActivity.this.startActivity(intent);
+			}
+		});
 	}
 }

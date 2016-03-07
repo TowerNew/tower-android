@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import com.qcast.tower.Program;
 import com.qcast.tower.R;
-import com.qcast.tower.business.Logic;
 
 import android.app.Activity;
 import android.content.Intent;

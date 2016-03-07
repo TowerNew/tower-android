@@ -416,6 +416,14 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					HomeActivity.this.startActivity(intent0);
 					break;
 				case 1:
+					if(null != Profile.instance().region || null != Me.instance) {
+						Intent intent2 = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
+						intent2.putExtra("url", Host.fetchURL("yuyuetijian", Profile.instance().region.id, Me.instance.token));
+						HomeActivity.this.startActivity(intent2);
+					}
+					else {
+						Toast.makeText(HomeActivity.this.getActivity(), "请登录并设置所在小区", Toast.LENGTH_LONG).show();
+					}
 					break;
 				case 2:
 					if(null != Profile.instance().region || null != Me.instance) {

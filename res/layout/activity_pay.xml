@@ -1,0 +1,140 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:background="@color/grey_bg">
+	<ImageView
+	    android:id="@+id/pay_image_icon"
+		android:layout_width="fill_parent"
+		android:layout_height="200dp"
+		android:layout_alignParentTop="true"
+		android:scaleType="centerInside"
+		android:src="@drawable/icon_alipay"
+		android:background="@color/white" />
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/pay_image_icon"
+		android:orientation="vertical"
+		android:background="@color/white">
+		<ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/divider" >
+		</ImageView>
+		<LinearLayout
+			android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_margin="10dp"
+	        android:gravity="center_vertical"
+	        android:orientation="horizontal">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="10dp"
+				android:text="商品名称:"
+				android:textColor="@color/grey_text"
+				tools:ignore="HardcodedText" />
+			<TextView
+			    android:id="@+id/pay_label_name"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="right"
+	            android:text="商品名称"
+	            android:textColor="@color/black"
+	            tools:ignore="HardcodedText" />
+		</LinearLayout>
+		<ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/divider" >
+		</ImageView>
+		<LinearLayout
+			android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_margin="10dp"
+	        android:gravity="center_vertical"
+	        android:orientation="horizontal">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="10dp"
+				android:text="商品描述:"
+				android:textColor="@color/grey_text"
+				tools:ignore="HardcodedText" />
+			<TextView
+			    android:id="@+id/pay_label_description"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="right"
+	            android:text="商品描述"
+	            android:textColor="@color/black"
+	            tools:ignore="HardcodedText" />
+		</LinearLayout>
+		<ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/divider" >
+		</ImageView>
+		<LinearLayout
+			android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_margin="10dp"
+	        android:gravity="center_vertical"
+	        android:orientation="horizontal">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="10dp"
+				android:text="商品价格:"
+				android:textColor="@color/grey_text"
+				tools:ignore="HardcodedText" />
+			<TextView
+			    android:id="@+id/pay_label_price"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="right"
+	            android:text="0.00元"
+	            android:textColor="@color/black"
+	            tools:ignore="HardcodedText" />
+		</LinearLayout>
+		<ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/divider" >
+		</ImageView>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+		android:orientation="horizontal"
+		android:background="@color/white">
+		<Button
+		    android:id="@+id/pay_button_confirm"
+		    android:layout_width="fill_parent"
+		    android:layout_height="40dp"
+		    android:layout_weight="1"
+		    android:layout_margin="10dp"
+		    android:onClick="pay"
+		    android:text="开始支付"
+		    android:textColor="@color/white"
+		    tools:ignore="HardcodedText"
+		    android:background="@drawable/button_green" />
+		<Button
+		    android:id="@+id/pay_button_cancel"
+		    android:layout_width="fill_parent"
+		    android:layout_height="40dp"
+		    android:layout_weight="1"
+		    android:layout_margin="10dp"
+		    android:onClick="pay"
+		    android:text="取消支付"
+		    android:textColor="@color/white"
+		    tools:ignore="HardcodedText"
+		    android:background="@drawable/button_red" />
+	</LinearLayout>
+</RelativeLayout>

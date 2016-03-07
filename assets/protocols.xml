@@ -687,17 +687,93 @@ user-platform-web/rest/user/logout#token=[1]
      <protocol name="loadBody">
         <path>
         <![CDATA[
-user-platform-web/rest/loadBody
+user-platform-web/rest/loadPart
         ]]>
         </path>
     <mock>
         <![CDATA[
 {
     "code": 1,
+    "msg": null,
     "data": [
-        "头部",
-        "四肢",
-        "颈椎"
+        {
+            "id": 1,
+            "name": "头部",
+            "image":"icon_toubu.png",
+            "image_selected":"icon_toubu_selected.png"
+        },
+        {
+            "id": 2,
+            "name": "颈部",
+            "image":"icon_jingbu.png",
+            "image_selected":"icon_jingbu_selected.png"
+        },
+        {
+            "id": 3,
+            "name": "胸部",
+            "image":"icon_xiongbu.png",
+            "image_selected":"icon_xiongbu_selected.png"
+        },
+        {
+            "id": 4,
+            "name": "腹部",
+            "image":"icon_fubu.png",
+            "image_selected":"icon_fubu_selected.png"
+        },
+        {
+            "id": 5,
+            "name": "四肢",
+            "image":"icon_sizhi.png",
+            "image_selected":"icon_sizhi_selected.png"
+        },
+        {
+            "id": 6,
+            "name": "皮肤",
+            "image":"icon_pifu.png",
+            "image_selected":"icon_pifu_selected.png"
+        },
+        {
+            "id": 7,
+            "name": "生殖器",
+            "image":"icon_shengzhiqi.png",
+            "image_selected":"icon_shengzhiqi_selected.png"
+        },
+        {
+            "id": 8,
+            "name": "排泄部",
+            "image":"icon_paixiebu.png",
+            "image_selected":"icon_paixiebu_selected.png"
+        },
+        {
+            "id": 9,
+            "name": "背部",
+            "image":"icon_beibu.png",
+            "image_selected":"icon_beibu_selected.png"
+        },
+        {
+            "id": 10,
+            "name": "耳眼口鼻",
+            "image":"icon_eryanhoubi.png",
+            "image_selected":"icon_eryanhoubi_selected.png"
+        },
+        {
+            "id": 11,
+            "name": "上肢",
+            "image":"icon_shangzhi.png",
+            "image_selected":"icon_shangzhi_selected.png"
+        },
+        {
+            "id": 12,
+            "name": "下肢",
+            "image":"icon_xiazhi.png",
+            "image_selected":"icon_xiazhi_selected.png"
+        },
+        {
+            "id": 13,
+            "name": "其他",
+            "image":"icon_qita.png",
+            "image_selected":"icon_qita_selected.png"
+        }
     ]
 }
         ]]>

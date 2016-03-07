@@ -1,59 +1,70 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white">
     <RelativeLayout
-		android:id="@+id/selfdiagnostic_layout_head"
+		android:id="@+id/selfdiagnostic_layout_header"
 		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:layout_alignParentTop="true" 
-		android:background="@drawable/topbar" 
-		android:focusable="true"
-		android:focusableInTouchMode="true">
-		<ImageButton
-            android:id="@+id/selfdiagnostic_button_return"
+		android:layout_height="40dp"
+		android:background="@color/main">
+		<ImageView
+            android:id="@+id/selfdiagnostic_image_close"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="6dp"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/arrow_left" />
         <TextView
-            android:id="@+id/selfdiagnostic_text_caption"
+            android:id="@+id/selfdiagnostic_text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
             android:text="自我诊断"
-            android:textColor="#ffffffff"
+            android:textColor="@color/white"
             android:textSize="18sp" />
-        <TextView
-            android:id="@+id/selfdiagnostic_text_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="6dp"
-            android:text="肢体视图"
-            android:textColor="@color/grey"
-            android:textSize="16sp" />
 	</RelativeLayout>
-	
-    <ListView
-        android:id="@+id/selfdiagnostic_list_body"
-        android:layout_width="100dp"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/selfdiagnostic_layout_head"
-        android:background="@color/lightgrey"
-        android:divider="@drawable/divider" />
-	<ListView
-	    android:id="@+id/selfdiagnostic_list_symptom"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-        android:layout_below="@id/selfdiagnostic_layout_head"
-	    android:layout_toRightOf="@id/selfdiagnostic_list_body"
-	    android:background="@color/white"
-	    android:divider="@drawable/divider" />
-</RelativeLayout>
+	<LinearLayout
+		android:id="@+id/selfdiagnostic_layout_tab"
+		android:layout_width="fill_parent"
+		android:layout_height="50dp"
+		android:orientation="horizontal">
+		<Button 
+			android:id="@+id/selfdiagnostic_button_graph"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+	        android:layout_weight="1"
+	        android:text="人体" />
+		<Button 
+			android:id="@+id/selfdiagnostic_button_list"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+	        android:layout_weight="1"
+	        android:text="列表" />
+	</LinearLayout>
+    <RelativeLayout
+		android:id="@+id/selfdiagnostic_layout_list"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/white">
+	    <ListView
+	        android:id="@+id/selfdiagnostic_list_body"
+	        android:layout_width="100dp"
+	        android:layout_height="fill_parent"
+	        android:divider="@drawable/divider" />
+		<ListView
+		    android:id="@+id/selfdiagnostic_list_symptom"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:layout_toRightOf="@id/selfdiagnostic_list_body"
+		    android:divider="@drawable/divider" />
+    </RelativeLayout>
+    <RelativeLayout
+		android:id="@+id/selfdiagnostic_layout_graph"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/white">
+    </RelativeLayout>
+</LinearLayout>

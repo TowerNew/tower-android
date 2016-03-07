@@ -684,6 +684,7 @@ user-platform-web/rest/user/logout#token=[1]
         ]]>
         </mock>
     </protocol>
+    <!-- 获取自我诊断中所有的身体部位，此接口应该设置为本地调用，无需从服务器获取 -->
      <protocol name="loadBody">
         <path>
         <![CDATA[
@@ -699,130 +700,168 @@ user-platform-web/rest/loadPart
         {
             "id": 1,
             "name": "头部",
-            "image":"icon_toubu.png",
-            "image_selected":"icon_toubu_selected.png"
+            "icon":"icon_body_toubu",
+            "icon_selected":"icon_body_toubu_selected",
+            "images":[1, 2]
         },
         {
             "id": 2,
             "name": "颈部",
-            "image":"icon_jingbu.png",
-            "image_selected":"icon_jingbu_selected.png"
+            "icon":"icon_body_jingbu",
+            "icon_selected":"icon_body_jingbu_selected"
         },
         {
             "id": 3,
             "name": "胸部",
-            "image":"icon_xiongbu.png",
-            "image_selected":"icon_xiongbu_selected.png"
+            "icon":"icon_body_xiongbu",
+            "icon_selected":"icon_body_xiongbu_selected"
         },
         {
             "id": 4,
             "name": "腹部",
-            "image":"icon_fubu.png",
-            "image_selected":"icon_fubu_selected.png"
+            "icon":"icon_body_fubu",
+            "icon_selected":"icon_body_fubu_selected"
         },
         {
             "id": 5,
             "name": "四肢",
-            "image":"icon_sizhi.png",
-            "image_selected":"icon_sizhi_selected.png"
+            "icon":"icon_body_sizhi",
+            "icon_selected":"icon_body_sizhi_selected"
         },
         {
             "id": 6,
             "name": "皮肤",
-            "image":"icon_pifu.png",
-            "image_selected":"icon_pifu_selected.png"
+            "icon":"icon_body_pifu",
+            "icon_selected":"icon_body_pifu_selected"
         },
         {
             "id": 7,
             "name": "生殖器",
-            "image":"icon_shengzhiqi.png",
-            "image_selected":"icon_shengzhiqi_selected.png"
+            "icon":"icon_body_shengzhiqi",
+            "icon_selected":"icon_body_shengzhiqi_selected"
         },
         {
             "id": 8,
             "name": "排泄部",
-            "image":"icon_paixiebu.png",
-            "image_selected":"icon_paixiebu_selected.png"
+            "icon":"icon_body_paixiebu",
+            "icon_selected":"icon_body_paixiebu_selected"
         },
         {
             "id": 9,
             "name": "背部",
-            "image":"icon_beibu.png",
-            "image_selected":"icon_beibu_selected.png"
+            "icon":"icon_body_beibu",
+            "icon_selected":"icon_body_beibu_selected"
         },
         {
             "id": 10,
             "name": "耳眼口鼻",
-            "image":"icon_eryanhoubi.png",
-            "image_selected":"icon_eryanhoubi_selected.png"
+            "icon":"icon_body_eryanhoubi",
+            "icon_selected":"icon_body_eryanhoubi_selected"
         },
         {
             "id": 11,
             "name": "上肢",
-            "image":"icon_shangzhi.png",
-            "image_selected":"icon_shangzhi_selected.png"
+            "icon":"icon_body_shangzhi",
+            "icon_selected":"icon_body_shangzhi_selected"
         },
         {
             "id": 12,
             "name": "下肢",
-            "image":"icon_xiazhi.png",
-            "image_selected":"icon_xiazhi_selected.png"
+            "icon":"icon_body_xiazhi",
+            "icon_selected":"icon_body_xiazhi_selected"
         },
         {
             "id": 13,
             "name": "其他",
-            "image":"icon_qita.png",
-            "image_selected":"icon_qita_selected.png"
+            "icon":"icon_body_qita",
+            "icon_selected":"icon_body_qita_selected"
         }
     ]
 }
         ]]>
         </mock>
     </protocol>
-     <protocol name="loadSymptom">
+    <!-- 获取自我诊断中指定部位和性别的症状列表 -->
+     <protocol name="loadSymptoms">
         <path>
         <![CDATA[
-user-platform-web/rest/loadSymptom?body=[1]
+user-platform-web/rest/loadSymptoms#partId=[1]&sex=[2]
         ]]>
         </path>
-    <mock>
+		<mock>
         <![CDATA[
 {
     "code": 1,
+    "msg": null,
     "data": [
-        "头晕",
-        "心慌",
-        "嗜睡",
-        "头疼"
+        {
+            "id": 1,
+            "name": "腮腺肿大",
+            "partId": 1,
+            "addTime": 1447405311000,
+            "updateTime": 1447405311000,
+            "sexId": 1,
+            "uuid": "E0563F46AB17F8ABE040007F01006DEB"
+        },
+        {
+            "id": 2,
+            "name": "语言障碍",
+            "partId": 1,
+            "addTime": 1447405312000,
+            "updateTime": 1447405312000,
+            "sexId": 1,
+            "uuid": "DE6248C363729660E040007F01003606"
+        },
+        {
+            "id": 3,
+            "name": "头痛",
+            "partId": 1,
+            "addTime": 1447405314000,
+            "updateTime": 1447405314000,
+            "sexId": 1,
+            "uuid": "DE3B0BEC4BB44F42E040007F010065F7"
+        },
+        {
+            "id": 4,
+            "name": "面部疼痛",
+            "partId": 1,
+            "addTime": 1447405316000,
+            "updateTime": 1447405316000,
+            "sexId": 1,
+            "uuid": "E055F103DE4ACADDE040007F01005422"
+        },
+        {
+            "id": 5,
+            "name": "头晕",
+            "partId": 1,
+            "addTime": 1447405317000,
+            "updateTime": 1447405317000,
+            "sexId": 1,
+            "uuid": "DE4BA76C1E942685E040007F01000C62"
+        },
+        {
+            "id": 6,
+            "name": "耳痛",
+            "partId": 1,
+            "addTime": 1447405318000,
+            "updateTime": 1447405318000,
+            "sexId": 1,
+            "uuid": "E05675FC7C4B104CE040007F0100583D"
+        }
     ]
 }
         ]]>
-        </mock>
+		</mock>
     </protocol>
+    <!-- 获取自我诊断中指定症状的搜索URL，为H5展示 -->
      <protocol name="loadDisease">
         <path>
         <![CDATA[
 user-platform-web/rest/loadDisease?symptom=[1]
         ]]>
         </path>
-    <mock>
-        <![CDATA[
-{
-    "code": 1,
-    "data": [
-        {
-            "caption": "感冒",
-            "description": "伴有头晕，发烧等症状"
-        },
-        {
-            "caption": "颈椎病",
-            "description": "伴有头晕，走路漂浮等症状"
-        }
-    ]
-}
-        ]]>
-        </mock>
-    </protocol>
+	<mock></mock>
+	</protocol>
      <protocol name="searchDisease">
         <path>
         <![CDATA[

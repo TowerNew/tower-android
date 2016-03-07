@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:background="@color/grey_bg">
+	<ImageView
+	    android:id="@+id/listitem_body_image_icon"
+	    android:layout_width="50dp"
+	    android:layout_height="50dp"
+	    android:layout_gravity="center_horizontal"
+	    android:layout_marginTop="5dp"
+	    android:layout_marginBottom="5dp"
+	    android:scaleType="fitXY" />
+	<TextView
+	    android:id="@+id/listitem_body_label_name"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_horizontal"
+	    android:layout_marginBottom="5dp"
+	    android:text="部位名称"
+	    android:textColor="@color/black"
+	    android:textSize="13sp" />
+</LinearLayout>

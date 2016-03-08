@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import com.qcast.tower.Program;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
+import com.qcast.tower.framework.Helper;
+import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
 
@@ -37,6 +39,8 @@ import android.widget.TextView;
 public class UserActivity extends FragmentEx {
 	@ResourceView(id = R.id.user_button_photo)
 	public ImageButton btnPhoto;
+	@ResourceView(id = R.id.user_layout_order)
+	public View viewOrder;
 
 	/**
 	 * 用户面板列表
@@ -94,15 +98,15 @@ public class UserActivity extends FragmentEx {
 		HashMap<String, Object> map = null;
 		//
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_family));
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_notify_1));
 		map.put("caption", "家庭成员");
 		itemList.add(map);
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_myzone));
-		map.put("caption", "我的空间");
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_collection));
+		map.put("caption", "我的收藏");
 		itemList.add(map);
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_document));
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_entry_4));
 		map.put("caption", "健康档案");
 		itemList.add(map);
         map = new HashMap<String, Object>();
@@ -149,8 +153,8 @@ public class UserActivity extends FragmentEx {
 					return;
 				}
 				else if(2 == index) {
-					Intent intent = new Intent(UserActivity.this.getActivity(), MyZoneActivity.class);
-					UserActivity.this.startActivity(intent);
+					String url = Host.fetchURL("MyCollection", Me.instance.token);
+					Helper.openBrowser(UserActivity.this.getActivity(), url);
 					return;
 				}
 				else if(3 == index) {
@@ -174,6 +178,19 @@ public class UserActivity extends FragmentEx {
                     return;
                 }
             }
+		});
+		viewOrder = viewHead.findViewById(R.id.user_layout_order);
+		viewOrder.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Me.instance) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);
+					UserActivity.this.getActivity().startActivity(intent);
+					return;
+				}
+				String url = Host.fetchURL("MyOrder", Me.instance.token);
+				Helper.openBrowser(UserActivity.this.getActivity(), url);
+			}
 		});
 	}
 

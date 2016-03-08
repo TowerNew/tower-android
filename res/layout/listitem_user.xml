@@ -9,32 +9,22 @@
         android:layout_height="34dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="6dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginTop="6dp" />
-	<RelativeLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:layout_gravity="center_vertical"
+        android:layout_marginLeft="20dp" />
+	<TextView
+	    android:id="@+id/listitem_user_label_caption"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
 	    android:layout_toRightOf="@id/listitem_user_image_icon"
-	    android:orientation="horizontal" >
-		<TextView
-		    android:id="@+id/listitem_user_label_caption"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentLeft="true"
-		    android:layout_centerVertical="true"
-		    android:layout_gravity="center_vertical"
-            android:textSize="16sp"
-		    android:paddingLeft="4dp" />
-	    <ImageView
-			android:id="@+id/listitem_user_label_arrow"
-        	android:layout_width="20dp"
-        	android:layout_height="20dp"
-		    android:layout_centerVertical="true"
-			android:layout_alignParentRight="true"
-        	android:layout_marginRight="20dp"
-		    android:src="@drawable/arrow" />
-	</RelativeLayout>
+	    android:layout_centerVertical="true"
+	    android:layout_gravity="center_vertical"
+		android:textSize="16sp"
+	    android:layout_marginLeft="10dp" />
+    <ImageView
+		android:id="@+id/listitem_user_image_arrow"
+       	android:layout_width="20dp"
+       	android:layout_height="20dp"
+	    android:layout_centerVertical="true"
+		android:layout_alignParentRight="true"
+       	android:layout_marginRight="10dp"
+	    android:src="@drawable/arrow" />
 </RelativeLayout>

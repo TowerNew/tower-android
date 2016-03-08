@@ -530,6 +530,9 @@ public class Me extends User implements Serializable, IReactor {
 				}
 			}
 		}
+		if(null != doctor && userId.equals(doctor.imId)) {
+			return doctor.name;
+		}
 		Contact contact = contacts.get(userId);
 		if(null == contact || null == contact.name) {
 			return "未知";
@@ -558,7 +561,7 @@ public class Me extends User implements Serializable, IReactor {
 	public void onCommand(final String from, final String action, final com.slfuture.carrie.base.type.Table<String, Object> data) {
 		Reminder.ringtone(Program.application);
 		Integer type = (Integer) data.get("type");
-		if("notify".equals(action)) {
+		if("systemMessage".equals(action)) {
 			Runtime.hasUnreadMessage = true;
 		}
 		if(null != type && (Notify.TYPE_5 == type || Notify.TYPE_9 == type)) {

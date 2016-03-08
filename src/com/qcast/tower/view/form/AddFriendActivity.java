@@ -60,7 +60,7 @@ public class AddFriendActivity extends OnlyUserActivity {
 				AddFriendActivity.this.finish();
 				return;
 			}
-			txtPhone.setText("***");
+			txtPhone.setText("●●●●●●●●●●●");
 			txtPhone.setEnabled(false);
 			if(null != friend.relation) {
 				txtRelation.setText(friend.relation);

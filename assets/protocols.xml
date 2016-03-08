@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <protocols domain="beta.service.wehop.cn" mock="false" storage="tower/image/">
+	<protocol name="UserProtocol">
+		<url>
+		<![CDATA[
+http://m.dianping.com
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
 	<protocol name="PayNotify">
 		<url>
 		<![CDATA[
@@ -498,6 +506,7 @@ user-platform-web/rest/user/editowner#token=[1]&userGlobalId=[2]&mode=[3]&relati
         ]]>
         </mock>
     </protocol>
+    <!-- 新增和修改联系人，mode：0新增，1编辑。编辑时服务端使用userGlobalId忽略phone。 -->
     <protocol name="editrelation">
         <path>
         <![CDATA[
@@ -702,79 +711,91 @@ user-platform-web/rest/loadPart
             "name": "头部",
             "icon":"icon_body_toubu",
             "icon_selected":"icon_body_toubu_selected",
-            "images":[1, 2]
+            "images":[1, 2, 3, 4]
         },
         {
             "id": 2,
             "name": "颈部",
             "icon":"icon_body_jingbu",
-            "icon_selected":"icon_body_jingbu_selected"
+            "icon_selected":"icon_body_jingbu_selected",
+            "images":[1, 2, 3, 4]
         },
         {
             "id": 3,
             "name": "胸部",
             "icon":"icon_body_xiongbu",
-            "icon_selected":"icon_body_xiongbu_selected"
+            "icon_selected":"icon_body_xiongbu_selected",
+            "images":[1, 2, 3, 4]
         },
         {
             "id": 4,
             "name": "腹部",
             "icon":"icon_body_fubu",
-            "icon_selected":"icon_body_fubu_selected"
+            "icon_selected":"icon_body_fubu_selected",
+            "images":[1, 2, 3, 4]
         },
         {
             "id": 5,
             "name": "四肢",
             "icon":"icon_body_sizhi",
-            "icon_selected":"icon_body_sizhi_selected"
+            "icon_selected":"icon_body_sizhi_selected",
+            "images":[1, 2, 3, 4]
         },
         {
             "id": 6,
             "name": "皮肤",
             "icon":"icon_body_pifu",
-            "icon_selected":"icon_body_pifu_selected"
+            "icon_selected":"icon_body_pifu_selected",
+            "images":[1, 2, 3, 4]
         },
         {
             "id": 7,
             "name": "生殖器",
             "icon":"icon_body_shengzhiqi",
-            "icon_selected":"icon_body_shengzhiqi_selected"
+            "icon_selected":"icon_body_shengzhiqi_selected",
+            "images":[1, 2, 3, 4]
         },
         {
             "id": 8,
             "name": "排泄部",
             "icon":"icon_body_paixiebu",
-            "icon_selected":"icon_body_paixiebu_selected"
+            "icon_selected":"icon_body_paixiebu_selected",
+            "images":[1, 2, 3, 4]
         },
         {
             "id": 9,
             "name": "背部",
             "icon":"icon_body_beibu",
-            "icon_selected":"icon_body_beibu_selected"
+            "icon_selected":"icon_body_beibu_selected",
+            "images":[1, 2, 3, 4]
         },
         {
             "id": 10,
             "name": "耳眼口鼻",
             "icon":"icon_body_eryanhoubi",
-            "icon_selected":"icon_body_eryanhoubi_selected"
+            "icon_selected":"icon_body_eryanhoubi_selected",
+            "images":[1, 2, 3, 4]
         },
         {
             "id": 11,
             "name": "上肢",
             "icon":"icon_body_shangzhi",
-            "icon_selected":"icon_body_shangzhi_selected"
+            "icon_selected":"icon_body_shangzhi_selected",
+            "images":[1, 2, 3, 4]
         },
         {
             "id": 12,
             "name": "下肢",
             "icon":"icon_body_xiazhi",
-            "icon_selected":"icon_body_xiazhi_selected"
+            "icon_selected":"icon_body_xiazhi_selected",
+            "images":[1, 2, 3, 4]
         },
         {
             "id": 13,
             "name": "其他",
             "icon":"icon_body_qita",
-            "icon_selected":"icon_body_qita_selected"
+            "icon_selected":"icon_body_qita_selected",
+            "images":[1, 2, 3, 4]
         }
     ]
 }
@@ -855,38 +876,14 @@ user-platform-web/rest/loadSymptoms#partId=[1]&sex=[2]
     </protocol>
     <!-- 获取自我诊断中指定症状的搜索URL，为H5展示 -->
      <protocol name="loadDisease">
-        <path>
+        <url>
         <![CDATA[
-user-platform-web/rest/loadDisease?symptom=[1]
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/sites/common/v-1/selfDiagDiagnose.html?uuid=[1]
         ]]>
-        </path>
+        </url>
 	<mock></mock>
 	</protocol>
-     <protocol name="searchDisease">
-        <path>
-        <![CDATA[
-user-platform-web/rest/search?disease=[1]
-        ]]>
-        </path>
-    <mock>
-        <![CDATA[
-{
-    "code": 1,
-    "data": [
-        {
-            "caption": "感冒",
-            "description": "伴有头晕，发烧等症状"
-        },
-        {
-            "caption": "颈椎病",
-            "description": "伴有头晕，走路漂浮等症状"
-        }
-    ]
-}
-        ]]>
-        </mock>
-    </protocol>
-     <protocol name="commentlist">
+	<protocol name="commentlist">
         <path>
         <![CDATA[
 user-platform-web/rest/commentList?id=[1]&page=[2]

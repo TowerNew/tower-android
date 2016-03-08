@@ -211,7 +211,7 @@ public class SelfDiagnosticActivity extends ActivityEx {
 		listSymptom.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
-				String url = Host.fetchURL("loadDisease", symptomList.get(index).get("id"));
+				String url = Host.fetchURL("loadDisease", symptomList.get(index).get("uuid"));
 				Intent intent = new Intent(SelfDiagnosticActivity.this, BrowserActivity.class);
 				intent.putExtra("url", url);
 				SelfDiagnosticActivity.this.startActivity(intent);
@@ -288,6 +288,7 @@ public class SelfDiagnosticActivity extends ActivityEx {
 					HashMap<String, Object> map = new HashMap<String, Object>();
 					map.put("id", item.getInteger("id", 0));
 					map.put("name", item.getString("name"));
+					map.put("uuid", item.getString("uuid"));
 					symptomList.add(map);
 				}
 				((SimpleAdapter) listSymptom.getAdapter()).notifyDataSetChanged();
@@ -347,7 +348,9 @@ public class SelfDiagnosticActivity extends ActivityEx {
 				try {
 					image.setImageResource(R.drawable.class.getField("image_body_" + map.get("id") + "_" + sentry).getInt(null));
 				}
-				catch (Exception e) { }
+				catch (Exception e) {
+					continue;
+				}
 				image.setTag(map.get("id"));
 				container.addView(image);
 				currentImages.add(image);

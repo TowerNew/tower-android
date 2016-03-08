@@ -83,7 +83,14 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
         imgConversation.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
-				if(null == Me.instance || null == Me.instance.doctor) {
+				if(null == Me.instance) {
+					Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+					MainActivity.this.startActivity(intent);
+					return false;
+				}
+				if(null == Me.instance.doctor) {
+					Intent intent = new Intent(MainActivity.this, SelectDoctorActivity.class);
+					MainActivity.this.startActivity(intent);
 					return false;
 				}
 				Intent intent = new Intent(MainActivity.this, SiriActivity.class);

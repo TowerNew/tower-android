@@ -6,9 +6,13 @@ import java.util.regex.Pattern;
 
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
+import com.qcast.tower.framework.Helper;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.core.IResponse;
+import com.slfuture.pluto.etc.Controller;
+import com.slfuture.pluto.view.annotation.ResourceView;
+import com.slfuture.pluto.view.component.ActivityEx;
 import com.slfuture.pretty.general.utility.GeneralHelper;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -16,20 +20,35 @@ import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
  * 引导界面
  */
-public class LoginActivity extends Activity {
+@ResourceView(id = R.layout.activity_login)
+public class LoginActivity extends ActivityEx {
+	@ResourceView(id = R.id.login_image_close)
+	public ImageView imgClose;
+	@ResourceView(id = R.id.login_text_phone)
+	public EditText txtPhone;
+	@ResourceView(id = R.id.login_text_code)
+	public EditText txtCode;
+	@ResourceView(id = R.id.login_button_phone)
+	public Button btnPhone;
+	@ResourceView(id = R.id.login_button_code)
+	public Button btnCode;
+	@ResourceView(id = R.id.login_label_memo)
+	public TextView labMemo;
+	
+
 	/**
 	 * 最近一次时间
 	 */
@@ -46,8 +65,6 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_login);
 		prepare();
 	}
 
@@ -55,7 +72,18 @@ public class LoginActivity extends Activity {
 	 * 界面预处理
 	 */
 	public void prepare() {
-		final EditText txtPhone = (EditText) findViewById(R.id.login_text_phone);
+		imgClose.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				LoginActivity.this.finish();
+			}
+		});
+		labMemo.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Helper.openBrowser(LoginActivity.this, Host.fetchURL("UserProtocol"));
+			}
+		});
 		txtPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
@@ -67,7 +95,6 @@ public class LoginActivity extends Activity {
 				}
 			}
 		});
-		final EditText txtCode = (EditText) findViewById(R.id.login_text_code);
 		txtCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
@@ -79,7 +106,6 @@ public class LoginActivity extends Activity {
 				}
 			}
 		});
-		Button btnPhone = (Button) findViewById(R.id.login_button_phone);
 		btnPhone.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -113,11 +139,23 @@ public class LoginActivity extends Activity {
 						txtCode.setFocusableInTouchMode(true);
 						txtCode.requestFocus();
 						txtCode.findFocus();
+						//
+						Controller.doDelay(new Runnable() {
+							@Override
+							public void run() {
+								if((new Date()).getTime() > 30 * 1000 + lastTick) {
+									btnPhone.setText("验证码");
+									return;
+								}
+								long remain = 30 - ((new Date()).getTime() - lastTick) / 1000;
+								btnPhone.setText(remain + " 秒");
+								Controller.doDelay(this, 1000);
+							}
+						}, 1000);
 					}
 				}, phone);
 			}
 		});
-		Button btnCode = (Button) findViewById(R.id.login_button_code);
 		btnCode.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

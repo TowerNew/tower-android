@@ -11,6 +11,14 @@
 		android:background="@color/main" 
 		android:focusable="true"
 		android:focusableInTouchMode="true">
+		<ImageView
+            android:id="@+id/login_image_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/arrow_left" />
 		<TextView
             android:id="@+id/login_text_caption"
             android:layout_width="wrap_content"
@@ -115,4 +123,15 @@
 			android:textColor="@color/white"
             android:background="@drawable/button_common" />
     </RelativeLayout>
+	<TextView
+	    android:id="@+id/login_label_memo"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+		android:layout_below ="@+id/login_layout_code"
+	    android:text="查看《聚健康用户协议》"
+	    android:layout_marginTop="10dp"
+	    android:layout_marginRight="10dp"
+	    android:textColor="@color/grey_text"
+	    android:textSize="15sp" />
 </RelativeLayout>

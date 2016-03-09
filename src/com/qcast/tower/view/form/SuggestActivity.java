@@ -57,7 +57,7 @@ public class SuggestActivity extends OnlyUserActivity {
 						}
 						SuggestActivity.this.finish();
 					}
-				}, Me.instance.token, txtContent.getText().toString());
+				}, Me.instance.phone, txtContent.getText().toString());
 			}
 		});
 	}

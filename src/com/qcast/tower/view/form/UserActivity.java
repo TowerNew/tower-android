@@ -155,12 +155,18 @@ public class UserActivity extends FragmentEx {
 					return;
 				}
 				else if(2 == index) {
+					if(null == Me.instance) {
+						Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);
+						UserActivity.this.startActivity(intent);
+						return;
+					}
 					String url = Host.fetchURL("MyCollection", Me.instance.token);
 					Helper.openBrowser(UserActivity.this.getActivity(), url);
 					return;
 				}
 				else if(3 == index) {
 					Intent intent = new Intent(UserActivity.this.getActivity(), ArchiveActivity.class);
+					intent.putExtra("password", 0);
 					UserActivity.this.startActivity(intent);
 					return;
 				}

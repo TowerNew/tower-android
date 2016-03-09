@@ -35,13 +35,6 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 			this.finish();
 			return;
 		}
-		if(null == Me.instance.password) {
-			Toast.makeText(this, "请先设置安全密码", Toast.LENGTH_LONG).show();
-			Intent intent = new Intent(ArchiveActivity.this, PasswordActivity.class);
-			this.startActivity(intent);
-			this.finish();
-			return;
-		}
 		webData.loadUrl(Host.fetchURL("jiankangdangan", Me.instance.token));
 		viewExamination.setOnClickListener(new View.OnClickListener() {
 			@Override

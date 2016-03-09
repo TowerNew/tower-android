@@ -10,14 +10,19 @@ public class OnlyPasswordActivity extends OnlyUserActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if(this.getIntent().getBooleanExtra("password", false)) {
-			return;
+		switch(this.getIntent().getIntExtra("password", -1)) {
+		case -1:
+			finish();
+			break;
+		case 0:
+			Intent intent = new Intent(OnlyPasswordActivity.this, PasswordActivity.class);
+			intent.putExtra("mode", PasswordActivity.MODE_VERIFY);
+			intent.putExtra("intent", this.getIntent());
+			this.startActivity(intent);
+			finish();
+			break;
+		case 1:
+			break;
 		}
-		Intent intent = new Intent(OnlyPasswordActivity.this, PasswordActivity.class);
-		intent.putExtra("mode", PasswordActivity.MODE_VERIFY);
-		intent.putExtra("xx", 9527);
-		intent.putExtra("intent", this.getIntent());
-		this.startActivity(intent);
-		finish();
 	}
 }

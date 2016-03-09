@@ -79,12 +79,12 @@ public class PasswordActivity extends OnlyUserActivity {
 		if(null == Me.instance) {
 			return;
 		}
-		int i = this.getIntent().getIntExtra("xx", 0);
 		mode = this.getIntent().getIntExtra("mode", MODE_VERIFY);
 		Host.doCommand("CheckPassword", new JSONResponse(PasswordActivity.this) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content || content.getInteger("code", 0) <= 0) {
+					refresh();
 					return;
 				}
 				if(MODE_VERIFY == mode || MODE_MODIFY_CHECK == mode) {
@@ -118,12 +118,12 @@ public class PasswordActivity extends OnlyUserActivity {
 								}
 								Intent intent = (Intent) PasswordActivity.this.getIntent().getParcelableExtra("intent");
 								if(null != intent) {
-									intent.putExtra("password", true);
+									intent.putExtra("password", 1);
 									PasswordActivity.this.startActivity(intent);
 								}
 								else {
 									intent = new Intent(PasswordActivity.this, ArchiveActivity.class);
-									intent.putExtra("password", true);
+									intent.putExtra("password", 1);
 									PasswordActivity.this.startActivity(intent);
 								}
 								PasswordActivity.this.finish();
@@ -161,12 +161,12 @@ public class PasswordActivity extends OnlyUserActivity {
 									}
 									Intent intent = (Intent) PasswordActivity.this.getIntent().getParcelableExtra("intent");
 									if(null != intent) {
-										intent.putExtra("pasword", true);
+										intent.putExtra("pasword", 1);
 										PasswordActivity.this.startActivity(intent);
 									}
 									else {
 										intent = new Intent(PasswordActivity.this, ArchiveActivity.class);
-										intent.putExtra("password", true);
+										intent.putExtra("password", 1);
 										PasswordActivity.this.startActivity(intent);
 									}
 									PasswordActivity.this.finish();

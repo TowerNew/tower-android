@@ -168,16 +168,16 @@ user-platform-web/rest/user/contact
 	</protocol>
 	<protocol name="suggest">
 		<path>
-		<![CDATA[
-user-platform-web/rest/user/suggest#token=[1]&content=[2]
-		]]>
+<![CDATA[
+user-platform-web/rest/user/submitSuggestion#phone=[1]&content=[2]
+]]>
 		</path>
 	<mock>
-        <![CDATA[
+<![CDATA[
 {
     "code": 1
 }
-	    ]]>
+]]>
 	    </mock>
 	</protocol>
 	<protocol name="AlterUserInfo">

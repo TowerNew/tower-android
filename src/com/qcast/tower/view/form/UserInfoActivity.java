@@ -333,7 +333,14 @@ public class UserInfoActivity extends ActivityEx {
 	 * @param value 值
 	 */
 	public void alter(String field, Object value) {
-		Host.doCommand("AlterUserInfo", new JSONResponse(this) {
+		Object tag = null;
+		if(value instanceof File) {
+			tag = field + "=" + ((File) value).getAbsolutePath();
+		}
+		else {
+			tag = field + "=" + value;
+		}
+		Host.doCommand("AlterUserInfo", new JSONResponse(this, tag) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content) {

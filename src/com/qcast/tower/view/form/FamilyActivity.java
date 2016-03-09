@@ -14,6 +14,8 @@ import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pretty.general.utility.GeneralHelper;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -134,23 +136,33 @@ public class FamilyActivity extends OnlyUserActivity {
 							FamilyActivity.this.startActivity(intent);
 						}
 						else if(1 == position) {
-							Host.doCommand("RemoveOwner", new JSONResponse(FamilyActivity.this) {
-								@Override
-								public void onFinished(JSONVisitor content) {
-									if(null == content || content.getInteger("code", 0) <= 0) {
-										return;
-									}
-									Me.instance.refreshMember(FamilyActivity.this, new IEventable<Boolean>() {
-										@Override
-										public void on(Boolean result) {
-											if(!result) {
-												return;
+							new AlertDialog.Builder(FamilyActivity.this).setTitle("确认删除吗？")  
+							.setIcon(android.R.drawable.ic_dialog_info)
+							.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+									@Override  
+									public void onClick(DialogInterface dialog, int which) {
+										Host.doCommand("RemoveOwner", new JSONResponse(FamilyActivity.this) {
+											@Override
+											public void onFinished(JSONVisitor content) {
+												if(null == content || content.getInteger("code", 0) <= 0) {
+													return;
+												}
+												Me.instance.refreshMember(FamilyActivity.this, new IEventable<Boolean>() {
+													@Override
+													public void on(Boolean result) {
+														if(!result) {
+															return;
+														}
+														FamilyActivity.this.refreshList();
+													}
+												});
 											}
-											FamilyActivity.this.refreshList();
-										}
-									});
-								}
-							}, Me.instance.token, Me.instance.relatives.get(index).id);
+										}, Me.instance.token, Me.instance.relatives.get(index).id);
+									}
+							}).setNegativeButton("返回", new DialogInterface.OnClickListener() {
+						        @Override  
+						        public void onClick(DialogInterface dialog, int which) {}  
+							}).show();
 						}
 					}
 				}, list.toArray(new String[0]));

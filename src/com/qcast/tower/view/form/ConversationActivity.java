@@ -24,6 +24,8 @@ import com.qcast.tower.business.structure.IM;
 import com.qcast.tower.business.user.Friend;
 import com.qcast.tower.business.user.User;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -142,23 +144,33 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 							ConversationActivity.this.getActivity().startActivity(intent);
 						}
 						else if(1 == index) {
-							Host.doCommand("RemoveFamily", new JSONResponse(ConversationActivity.this.getActivity()) {
-								@Override
-								public void onFinished(JSONVisitor content) {
-									if(null == content || content.getInteger("code", 0) <= 0) {
-										return;
-									}
-									Me.instance.refreshMember(ConversationActivity.this.getActivity(),  new IEventable<Boolean>() {
-										@Override
-										public void on(Boolean result) {
-											if(!result) {
-												return;
-											}
-											ConversationActivity.this.refreshList();
-										}
-									});
-								}
-							}, Me.instance.token, Me.instance.friends.get(position - 1).id);
+							new AlertDialog.Builder(ConversationActivity.this.getActivity()).setTitle("确认删除吗？")  
+								.setIcon(android.R.drawable.ic_dialog_info)  
+								.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+										@Override  
+										public void onClick(DialogInterface dialog, int which) {
+											Host.doCommand("RemoveFamily", new JSONResponse(ConversationActivity.this.getActivity()) {
+												@Override
+												public void onFinished(JSONVisitor content) {
+													if(null == content || content.getInteger("code", 0) <= 0) {
+														return;
+													}
+													Me.instance.refreshMember(ConversationActivity.this.getActivity(),  new IEventable<Boolean>() {
+														@Override
+														public void on(Boolean result) {
+															if(!result) {
+																return;
+															}
+															ConversationActivity.this.refreshList();
+														}
+													});
+												}
+											}, Me.instance.token, Me.instance.friends.get(position - 1).id);
+										}  
+								}).setNegativeButton("返回", new DialogInterface.OnClickListener() {
+							        @Override  
+							        public void onClick(DialogInterface dialog, int which) {}  
+								}).show();
 						}
 					}
 				}, "编  辑", "删  除", "", "取  消");

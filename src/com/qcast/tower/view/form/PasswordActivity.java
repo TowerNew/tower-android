@@ -1,7 +1,5 @@
 package com.qcast.tower.view.form;
 
-import java.io.IOException;
-
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.slfuture.carrie.base.json.JSONVisitor;
@@ -11,6 +9,7 @@ import com.slfuture.pluto.etc.Controller;
 import com.slfuture.pluto.view.annotation.ResourceView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,7 +30,8 @@ public class PasswordActivity extends OnlyUserActivity {
 	 * 模式
 	 */
 	public final static int MODE_VERIFY = 0;
-	public final static int MODE_MODIFY = 1;
+	public final static int MODE_MODIFY_CHECK = 1;
+	public final static int MODE_MODIFY_SET = 2;
 
 	@ResourceView(id = R.id.password_image_close)
 	public ImageView imgClose;
@@ -61,9 +61,14 @@ public class PasswordActivity extends OnlyUserActivity {
 	 */
 	private int mode = MODE_VERIFY;
 	/**
+	 * 当前密码
+	 */
+	public String currentPassword = null;
+	/**
 	 * 当前安全密码
 	 */
 	public String password = null;
+
 
 	/**
 	 * 界面创建
@@ -74,10 +79,21 @@ public class PasswordActivity extends OnlyUserActivity {
 		if(null == Me.instance) {
 			return;
 		}
+		int i = this.getIntent().getIntExtra("xx", 0);
 		mode = this.getIntent().getIntExtra("mode", MODE_VERIFY);
-		if(MODE_VERIFY == mode && null == Me.instance.password) {
-			mode = MODE_MODIFY;
-		}
+		Host.doCommand("CheckPassword", new JSONResponse(PasswordActivity.this) {
+			@Override
+			public void onFinished(JSONVisitor content) {
+				if(null == content || content.getInteger("code", 0) <= 0) {
+					return;
+				}
+				if(MODE_VERIFY == mode || MODE_MODIFY_CHECK == mode) {
+					mode = MODE_MODIFY_SET;
+					reset();
+					refresh();
+				}
+			}
+		}, Me.instance.token, "");
 		imgClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -93,34 +109,69 @@ public class PasswordActivity extends OnlyUserActivity {
 			public void afterTextChanged(Editable s) {
 				String text = txtPassword.getText().toString();
 				if(text.length() >= 6) {
-					if(null == password) {
-						password = text.substring(0, 6);
-						txtPassword.setText("");
-						labPassword1.setText("");
-						labPassword2.setText("");
-						labPassword3.setText("");
-						labPassword4.setText("");
-						labPassword5.setText("");
-						labPassword6.setText("");
-						labTitle.setText("请再次输入");
+					if(MODE_VERIFY == mode) {
+						Host.doCommand("CheckPassword", new JSONResponse(PasswordActivity.this) {
+							@Override
+							public void onFinished(JSONVisitor content) {
+								if(null == content || content.getInteger("code", 0) <= 0) {
+									return;
+								}
+								Intent intent = (Intent) PasswordActivity.this.getIntent().getParcelableExtra("intent");
+								if(null != intent) {
+									intent.putExtra("password", true);
+									PasswordActivity.this.startActivity(intent);
+								}
+								else {
+									intent = new Intent(PasswordActivity.this, ArchiveActivity.class);
+									intent.putExtra("password", true);
+									PasswordActivity.this.startActivity(intent);
+								}
+								PasswordActivity.this.finish();
+							}
+						}, Me.instance.token, text.substring(0, 6));
 					}
-					else {
-						if(password.equals(text.substring(0, 6))) {
-							Host.doCommand("setPassword", new JSONResponse(PasswordActivity.this, password) {
+					else if(MODE_MODIFY_CHECK == mode) {
+						Host.doCommand("CheckPassword", new JSONResponse(PasswordActivity.this) {
+							@Override
+							public void onFinished(JSONVisitor content) {
+								if(null == content || content.getInteger("code", 0) <= 0) {
+									reset();
+									return;
+								}
+								reset();
+								mode = MODE_MODIFY_SET;
+								refresh();
+							}
+						}, Me.instance.token, text.substring(0, 6));
+						currentPassword = text.substring(0, 6);
+					}
+					else if(MODE_MODIFY_SET == mode) {
+						if(null == password) {
+							password = text.substring(0, 6);
+							reset();
+							refresh();
+						}
+						else if(password.equals(text.substring(0, 6))) {
+							Host.doCommand("SetPassword", new JSONResponse(PasswordActivity.this, password) {
 								@Override
 								public void onFinished(JSONVisitor content) {
 									if(null == content || content.getInteger("code", -1) < 0) {
 										reset();
 										return;
 									}
-									Me.instance.password = (String) tag;
-									try {
-										Me.instance.save();
+									Intent intent = (Intent) PasswordActivity.this.getIntent().getParcelableExtra("intent");
+									if(null != intent) {
+										intent.putExtra("pasword", true);
+										PasswordActivity.this.startActivity(intent);
 									}
-									catch (IOException e) { }
+									else {
+										intent = new Intent(PasswordActivity.this, ArchiveActivity.class);
+										intent.putExtra("password", true);
+										PasswordActivity.this.startActivity(intent);
+									}
 									PasswordActivity.this.finish();
 								}
-							}, Me.instance.token, password);
+							}, Me.instance.token, currentPassword, password);
 						}
 						else {
 							Toast.makeText(PasswordActivity.this, "两次输入不一致", Toast.LENGTH_LONG).show();
@@ -152,7 +203,6 @@ public class PasswordActivity extends OnlyUserActivity {
 	 * 重置状态
 	 */
 	public void reset() {
-		password = null;
 		txtPassword.setText("");
 		labPassword1.setText("");
 		labPassword2.setText("");
@@ -160,13 +210,26 @@ public class PasswordActivity extends OnlyUserActivity {
 		labPassword4.setText("");
 		labPassword5.setText("");
 		labPassword6.setText("");
-		labTitle.setText("请设置安全密码");
 	}
 
 	/**
 	 * 刷新密码栏
 	 */
 	public void refresh() {
+		if(MODE_VERIFY == mode) {
+			labTitle.setText("请输入安全密码");
+		}
+		else if(MODE_MODIFY_CHECK == mode) {
+			labTitle.setText("请输入安全密码");
+		}
+		else if(MODE_MODIFY_SET == mode) {
+			if(null == password) {
+				labTitle.setText("请设置安全密码");
+			}
+			else {
+				labTitle.setText("请再次输入密码");
+			}
+		}
 		for(int i = 0; i < PASSWORD_CONTROL.length; i++) {
 			TextView lab = (TextView) this.findViewById(PASSWORD_CONTROL[i]);
 			lab.setText("");

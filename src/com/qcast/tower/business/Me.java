@@ -553,7 +553,6 @@ public class Me extends User implements Serializable, IReactor {
 	@Override
 	public void onConflict() {
 		logout();
-		Toast.makeText(Program.application, "账号在其他设备上登录", Toast.LENGTH_LONG).show();
 		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onConflict();
 	}
 

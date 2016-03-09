@@ -14,7 +14,7 @@ import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pretty.general.view.form.BrowserActivity;
 
 @ResourceView(id = R.layout.activity_archive)
-public class ArchiveActivity extends OnlyUserActivity {
+public class ArchiveActivity extends OnlyPasswordActivity {
 	@ResourceView(id = R.id.archive_web_data)
 	public WebView webData;
 	@ResourceView(id = R.id.archive_layout_examination)

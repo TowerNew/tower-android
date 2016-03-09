@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <protocols domain="beta.service.wehop.cn" mock="false" storage="tower/image/">
+	<protocol name="MyOrder">
+		<url>
+		<![CDATA[
+http://m.dianping.com
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+	<protocol name="MyMoney">
+		<url>
+		<![CDATA[
+http://m.dianping.com
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
 	<protocol name="MyCollection">
 		<url>
 		<![CDATA[
@@ -113,10 +129,25 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/therapy.html?r
 		</url>
 		<mock></mock>
 	</protocol>
-	<protocol name="setPassword">
+	<protocol name="CheckPassword">
+	    <!-- 检查安全密码，如果password为空表示检查是否未设置安全密码，不设置msg，此外错误请设置msg -->
+		<path>
+<![CDATA[
+user-platform-web/rest/user/checkPassword#token=[1]&password=[2]
+]]>
+		</path>
+		<mock>
+<![CDATA[
+{
+    "code": 1
+}
+]]>
+	    </mock>
+	</protocol>
+	<protocol name="SetPassword">
 		<path>
 		<![CDATA[
-user-platform-web/rest/user/setPassword#token=[1]&password=[2]
+user-platform-web/rest/user/setPassword#token=[1]&oldPassword=[2]&newPassword=[3]
 		]]>
 		</path>
 	<mock>
@@ -149,7 +180,7 @@ user-platform-web/rest/user/suggest#token=[1]&content=[2]
 	    ]]>
 	    </mock>
 	</protocol>
-	<protocol name="alterUserInfo">
+	<protocol name="AlterUserInfo">
 	    <!-- 支持修改的字段：nickname,address,name,idnumber,photo，其中photo上传的是文件对象 -->
 		<path>
 		<![CDATA[

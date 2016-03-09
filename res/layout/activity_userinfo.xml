@@ -134,8 +134,9 @@
                 android:layout_height="20dp"
                 android:layout_alignParentRight="true"
 				android:layout_centerVertical="true"
-                android:layout_marginRight="6dp"
-				android:background="@drawable/arrow_right" />
+                android:layout_marginRight="10dp"
+				android:src="@drawable/arrow"
+				android:scaleType="fitXY" />"
 			<TextView
 			    android:id="@+id/userinfo_text_nickname"
 			    android:layout_width="wrap_content"
@@ -179,8 +180,8 @@
                 android:layout_height="20dp"
                 android:layout_alignParentRight="true"
 				android:layout_centerVertical="true"
-                android:layout_marginRight="6dp"
-				android:background="@drawable/arrow_right" />
+                android:layout_marginRight="10dp"
+				android:background="@drawable/arrow" />
 			<TextView
 			    android:id="@+id/userinfo_text_address"
 			    android:layout_width="wrap_content"
@@ -226,8 +227,8 @@
                 android:layout_height="20dp"
                 android:layout_alignParentRight="true"
 				android:layout_centerVertical="true"
-                android:layout_marginRight="6dp"
-				android:background="@drawable/arrow_right" />
+                android:layout_marginRight="10dp"
+				android:background="@drawable/arrow" />
 			<TextView
 			    android:id="@+id/userinfo_text_name"
 			    android:layout_width="wrap_content"
@@ -273,7 +274,7 @@
                 android:layout_alignParentRight="true"
 				android:layout_centerVertical="true"
                 android:layout_marginRight="6dp"
-				android:background="@drawable/arrow_right" />
+				android:background="@drawable/arrow" />
 			<TextView
 			    android:id="@+id/userinfo_text_idnumber"
 			    android:layout_width="wrap_content"

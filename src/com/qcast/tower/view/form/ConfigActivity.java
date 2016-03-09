@@ -47,7 +47,7 @@ public class ConfigActivity extends ActivityEx {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ConfigActivity.this, PasswordActivity.class);
-				intent.putExtra("mode", PasswordActivity.MODE_MODIFY);
+				intent.putExtra("mode", PasswordActivity.MODE_MODIFY_CHECK);
 				ConfigActivity.this.startActivity(intent);
 			}
 		});

@@ -16,9 +16,9 @@ public class OnlyUserActivity extends ActivityEx {
 		if(null != Me.instance) {
 			return;
 		}
-		finish();
 		Intent intent = new Intent(OnlyUserActivity.this, LoginActivity.class);
 		intent.putExtra("intent", this.getIntent());
-		this.startActivityForResult(intent, 1234);
+		this.startActivity(intent);
+		finish();
 	}
 }

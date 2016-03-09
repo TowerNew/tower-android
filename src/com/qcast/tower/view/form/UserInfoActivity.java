@@ -333,7 +333,7 @@ public class UserInfoActivity extends ActivityEx {
 	 * @param value 值
 	 */
 	public void alter(String field, Object value) {
-		Host.doCommand("alertUserInfo", new JSONResponse(this) {
+		Host.doCommand("AlterUserInfo", new JSONResponse(this) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content) {

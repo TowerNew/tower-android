@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 
@@ -102,8 +103,9 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
 
 	@Override
 	public void onConflict() {
+		// Toast.makeText(MainActivity.this, "账号在其他设备上登录", Toast.LENGTH_LONG).show();
 		AlertDialog.Builder builder = new Builder(MainActivity.this);
-		builder.setMessage("帐号在其他设备登录");
+		builder.setMessage("帐号在其他设备登录\n程序即将退出");
 		builder.setTitle("提示");
 		builder.setPositiveButton("确认", new OnClickListener() {
 			@Override

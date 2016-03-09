@@ -41,6 +41,8 @@ public class UserActivity extends FragmentEx {
 	public ImageButton btnPhoto;
 	@ResourceView(id = R.id.user_layout_order)
 	public View viewOrder;
+	@ResourceView(id = R.id.user_layout_money)
+	public View viewMoney;
 
 	/**
 	 * 用户面板列表
@@ -189,6 +191,19 @@ public class UserActivity extends FragmentEx {
 					return;
 				}
 				String url = Host.fetchURL("MyOrder", Me.instance.token);
+				Helper.openBrowser(UserActivity.this.getActivity(), url);
+			}
+		});
+		viewMoney = viewHead.findViewById(R.id.user_layout_money);
+		viewMoney.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Me.instance) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);
+					UserActivity.this.getActivity().startActivity(intent);
+					return;
+				}
+				String url = Host.fetchURL("MyMoney", Me.instance.token);
 				Helper.openBrowser(UserActivity.this.getActivity(), url);
 			}
 		});

@@ -134,7 +134,7 @@ public class FamilyActivity extends OnlyUserActivity {
 							FamilyActivity.this.startActivity(intent);
 						}
 						else if(1 == position) {
-							Host.doCommand("removefamily", new JSONResponse(FamilyActivity.this) {
+							Host.doCommand("RemoveOwner", new JSONResponse(FamilyActivity.this) {
 								@Override
 								public void onFinished(JSONVisitor content) {
 									if(null == content || content.getInteger("code", 0) <= 0) {

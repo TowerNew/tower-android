@@ -142,7 +142,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 							ConversationActivity.this.getActivity().startActivity(intent);
 						}
 						else if(1 == index) {
-							Host.doCommand("removefamily", new JSONResponse(ConversationActivity.this.getActivity()) {
+							Host.doCommand("RemoveFamily", new JSONResponse(ConversationActivity.this.getActivity()) {
 								@Override
 								public void onFinished(JSONVisitor content) {
 									if(null == content || content.getInteger("code", 0) <= 0) {

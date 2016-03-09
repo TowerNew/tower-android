@@ -561,19 +561,36 @@ user-platform-web/rest/user/editrelation#token=[1]&userGlobalId=[2]&mode=[3]&rel
         ]]>
         </mock>
     </protocol>
-    <protocol name="removefamily">
+    <!-- 删除好友 -->
+    <protocol name="RemoveFamily">
         <path>
-        <![CDATA[
+<![CDATA[
 user-platform-web/rest/user/removefamily#token=[1]&userGlobalId=[2]
-        ]]>
+]]>
         </path>
-    <mock>
-        <![CDATA[
+		<mock>
+<![CDATA[
 {
-    "code": 200,
+    "code": 1,
     "data": null
 }
-        ]]>
+]]>
+        </mock>
+    </protocol>
+    <!-- 删除家人 -->
+    <protocol name="RemoveOwner">
+        <path>
+<![CDATA[
+user-platform-web/user/removeOwner#token=[1]&userGlobalId=[2]
+]]>
+        </path>
+		<mock>
+<![CDATA[
+{
+    "code": 1,
+    "data": null
+}
+]]>
         </mock>
     </protocol>
     <protocol name="image">

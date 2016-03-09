@@ -344,7 +344,7 @@ public class SelfDiagnosticActivity extends ActivityEx {
 				params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 				params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 				image.setLayoutParams(params);
-				image.setScaleType(ScaleType.FIT_XY);
+				image.setScaleType(ScaleType.CENTER_INSIDE);
 				try {
 					image.setImageResource(R.drawable.class.getField("image_body_" + map.get("id") + "_" + sentry).getInt(null));
 				}

@@ -39,6 +39,12 @@ import android.widget.TextView;
 public class UserActivity extends FragmentEx {
 	@ResourceView(id = R.id.user_button_photo)
 	public ImageButton btnPhoto;
+	@ResourceView(id = R.id.memo_layout_1)
+	public View viewMemo1;
+	@ResourceView(id = R.id.memo_layout_2)
+	public View viewMemo2;
+	@ResourceView(id = R.id.memo_layout_3)
+	public View viewMemo3;
 	@ResourceView(id = R.id.user_layout_order)
 	public View viewOrder;
 	@ResourceView(id = R.id.user_layout_money)
@@ -186,6 +192,45 @@ public class UserActivity extends FragmentEx {
                     return;
                 }
             }
+		});
+		viewMemo1 = viewHead.findViewById(R.id.memo_layout_1);
+		viewMemo1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Me.instance) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);
+					UserActivity.this.getActivity().startActivity(intent);
+					return;
+				}
+				String url = Host.fetchURL("daipingfen", Me.instance.token);
+				Helper.openBrowser(UserActivity.this.getActivity(), url);
+			}
+		});
+		viewMemo2 = viewHead.findViewById(R.id.memo_layout_2);
+		viewMemo2.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Me.instance) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);
+					UserActivity.this.getActivity().startActivity(intent);
+					return;
+				}
+				String url = Host.fetchURL("daifukuan", Me.instance.token);
+				Helper.openBrowser(UserActivity.this.getActivity(), url);
+			}
+		});
+		viewMemo3 = viewHead.findViewById(R.id.memo_layout_3);
+		viewMemo3.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Me.instance) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);
+					UserActivity.this.getActivity().startActivity(intent);
+					return;
+				}
+				String url = Host.fetchURL("daiyuyue", Me.instance.token);
+				Helper.openBrowser(UserActivity.this.getActivity(), url);
+			}
 		});
 		viewOrder = viewHead.findViewById(R.id.user_layout_order);
 		viewOrder.setOnClickListener(new View.OnClickListener() {

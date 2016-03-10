@@ -69,7 +69,7 @@ public class MyMessagesActivity extends ActivityEx {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Notify notifyModel = dataList.get(position);
-                if(!notifyModel.hasRead) {
+                if(!notifyModel.hasRead && Notify.TYPE_1 != notifyModel.type) {
                     Host.doCommand("readMessage", new CommonResponse<String>() {
                         @Override
                         public void onFinished(String content) { }

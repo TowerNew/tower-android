@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <protocols domain="beta.service.wehop.cn" mock="false" storage="tower/image/">
+	<protocol name="daipingfen">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=4
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+	<protocol name="daifukuan">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=1
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+	<protocol name="daiyuyue">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=2
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
 	<protocol name="MyOrder">
 		<url>
 		<![CDATA[
-http://m.dianping.com
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0
 		]]>
 		</url>
 		<mock></mock>
@@ -19,7 +43,7 @@ http://m.dianping.com
 	<protocol name="MyCollection">
 		<url>
 		<![CDATA[
-http://m.dianping.com
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/favorate.html?token=[1]
 		]]>
 		</url>
 		<mock></mock>
@@ -146,9 +170,9 @@ user-platform-web/rest/user/checkPassword#token=[1]&password=[2]
 	</protocol>
 	<protocol name="SetPassword">
 		<path>
-		<![CDATA[
+<![CDATA[
 user-platform-web/rest/user/setPassword#token=[1]&oldPassword=[2]&newPassword=[3]
-		]]>
+]]>
 		</path>
 	<mock>
         <![CDATA[

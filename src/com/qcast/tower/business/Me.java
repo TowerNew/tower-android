@@ -34,7 +34,6 @@ import com.slfuture.pretty.im.view.form.SingleChatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.widget.Toast;
 
 /**
  * 当前登录用户类
@@ -72,10 +71,6 @@ public class Me extends User implements Serializable, IReactor {
 	 * 口令
 	 */
 	public String token = null;
-	/**
-	 * 安全密码
-	 */
-	public String password = null;
 	/**
 	 * 地址
 	 */
@@ -297,29 +292,40 @@ public class Me extends User implements Serializable, IReactor {
 					 callback.on(false);
 					 return;
 				 }
-				 friends.clear();
+				 content = content.getVisitor("data");
 				 relatives.clear();
-				 for(JSONVisitor visitor : content.getVisitors("data")) {
-					 if(1 == visitor.getInteger("type", 1)) {
-						 // 注册好友
-						Friend friend = new Friend();
-						if(friend.parse(visitor)) {
-							friends.add(friend);
+				 for(JSONVisitor item : content.getVisitors("userList")) {
+					if(id.equals(item.getString("userGlobalId"))) {
+						try {
+							if(null != item.getString("birthday")) {
+								birthday = Date.parse(item.getString("birthday"));
+							}
 						}
+						catch (ParseException e) { }
+						gender = item.getInteger("gender", 0);
+						name = item.getString("name");
+						idNumber = item.getString("idnumber");
+						continue;
 					}
-					else {
-						// 非注册亲戚
-						Relative relative = new Relative();
-						if(relative.parse(visitor)) {
-							relatives.add(relative);
-						}
+					// 非注册亲戚
+					Relative relative = new Relative();
+					if(relative.parse(item)) {
+						relatives.add(relative);
 					}
-				 }
-				 try {
+				}
+				friends.clear();
+				for(JSONVisitor item : content.getVisitors("familyList")) {
+					// 注册好友
+					Friend friend = new Friend();
+					if(friend.parse(item)) {
+						friends.add(friend);
+					}
+				}
+				try {
 					save();
-				 }
-				 catch (IOException e) {}
-				 callback.on(true);
+				}
+				catch (IOException e) {}
+				callback.on(true);
 			}
 		}, token);
 	}
@@ -423,9 +429,6 @@ public class Me extends User implements Serializable, IReactor {
 		phone = visitor.getString("username");
 		address = visitor.getString("address");
 		token = visitor.getString("token");
-		password = visitor.getString("password");
-		idNumber = visitor.getString("idnumber");
-		snapshot = visitor.getString("idcardfront");
 		if(3 == visitor.getInteger("type", 1)) {
 			isAuthenticated = true;
 		}

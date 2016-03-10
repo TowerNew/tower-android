@@ -46,6 +46,10 @@ public class AddRequestActivity extends OnlyUserActivity {
             finish();
             return;
         }
+        if(model.hasRead) {
+        	btnRefuse.setEnabled(false);
+        	btnAccept.setEnabled(false);
+        }
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

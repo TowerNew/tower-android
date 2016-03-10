@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.qcast.tower.R;
@@ -15,6 +16,8 @@ import com.slfuture.pretty.general.view.form.BrowserActivity;
 
 @ResourceView(id = R.layout.activity_archive)
 public class ArchiveActivity extends OnlyPasswordActivity {
+	@ResourceView(id = R.id.archive_image_close)
+	public ImageView imgClose;
 	@ResourceView(id = R.id.archive_web_data)
 	public WebView webData;
 	@ResourceView(id = R.id.archive_layout_examination)
@@ -35,6 +38,12 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 			this.finish();
 			return;
 		}
+		imgClose.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ArchiveActivity.this.finish();
+			}
+		});
 		webData.loadUrl(Host.fetchURL("jiankangdangan", Me.instance.token));
 		viewExamination.setOnClickListener(new View.OnClickListener() {
 			@Override

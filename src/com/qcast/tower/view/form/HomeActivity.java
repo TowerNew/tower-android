@@ -437,6 +437,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					break;
 				case 3:
 					Intent intent3 = new Intent(HomeActivity.this.getActivity(), ArchiveActivity.class);
+					intent3.putExtra("password", 0);
 					HomeActivity.this.startActivity(intent3);
 					break;
 				case 4:

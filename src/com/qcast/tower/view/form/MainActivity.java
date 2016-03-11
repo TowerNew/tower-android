@@ -105,8 +105,18 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
 			@Override
 			public void run() {
 				MainActivity.this.finish();
+				Intent intenn = new Intent();  
+				intenn.setAction("android.intent.action.MAIN");  
+				intenn.addCategory("android.intent.category.HOME");  
+				MainActivity.this.startActivity(intenn);
 				android.os.Process.killProcess(android.os.Process.myPid());
-				System.exit(0);
+//				Intent intent = new Intent(MainActivity.this, TextActivity.class);
+//				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//				intent.putExtra("title", "提示");
+//				intent.putExtra("content", "本设备已被其他设备踢下线");
+//				startActivity(intent);
+//				android.os.Process.killProcess(android.os.Process.myPid());
+//				System.exit(0);
 			}
 		}, 3000);
 //		AlertDialog.Builder builder = new Builder(MainActivity.this);

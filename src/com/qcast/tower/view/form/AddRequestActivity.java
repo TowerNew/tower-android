@@ -47,8 +47,9 @@ public class AddRequestActivity extends OnlyUserActivity {
             return;
         }
         if(model.hasRead) {
+        	btnRefuse.setText("已处理");
         	btnRefuse.setEnabled(false);
-        	btnAccept.setEnabled(false);
+        	btnAccept.setVisibility(View.GONE);
         }
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -104,7 +104,7 @@
 	        android:layout_alignParentLeft="true"
 	        android:layout_centerVertical="true"
 	        android:layout_marginLeft="20dp"
-	        android:src="@drawable/icon_entry_5"
+	        android:src="@drawable/icon_user_myorder"
 	        android:scaleType="centerInside" />"
 		<TextView
 		    android:id="@+id/user_label_order"
@@ -140,7 +140,7 @@
 	        android:layout_alignParentLeft="true"
 	        android:layout_centerVertical="true"
 	        android:layout_marginLeft="20dp"
-	        android:src="@drawable/icon_user_money"
+	        android:src="@drawable/icon_user_mymoney"
 	        android:scaleType="centerInside" />"
 		<TextView
 		    android:id="@+id/user_label_money"

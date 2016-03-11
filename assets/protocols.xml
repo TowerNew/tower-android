@@ -193,7 +193,7 @@ user-platform-web/rest/user/contact
 	<protocol name="suggest">
 		<path>
 <![CDATA[
-user-platform-web/rest/user/submitSuggestion#phone=[1]&content=[2]
+user-platform-web/rest/submitSuggestion#phone=[1]&content=[2]
 ]]>
 		</path>
 	<mock>
@@ -605,7 +605,7 @@ user-platform-web/rest/user/removefamily#token=[1]&userGlobalId=[2]
     <protocol name="RemoveOwner">
         <path>
 <![CDATA[
-user-platform-web/user/removeOwner#token=[1]&userGlobalId=[2]
+user-platform-web/rest/user/removeOwner#token=[1]&userGlobalId=[2]
 ]]>
         </path>
 		<mock>
@@ -1674,7 +1674,7 @@ user-platform-web/rest/user/comment#doctorId=[1]&attitude=[2]&score1=[3]&score2=
 	<protocol name="HomePage">
         <url>
         <![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/banner-index.html?token=[1]
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/banner-index.html?token=[1]&region=[2]
        ]]>
         </url>
     	<mock></mock>

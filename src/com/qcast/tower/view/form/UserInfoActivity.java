@@ -227,6 +227,7 @@ public class UserInfoActivity extends ActivityEx {
 				Intent intent = new Intent(UserInfoActivity.this, TextEditActivity.class);
 				intent.putExtra("title", "编辑昵称");
 				intent.putExtra("default", Me.instance.nickname);
+				intent.putExtra("length", 8);
 				intent.putExtra("description", "最多8个字符");
 				UserInfoActivity.this.startActivityForResult(intent, 1);
 			}
@@ -239,6 +240,7 @@ public class UserInfoActivity extends ActivityEx {
 				intent.putExtra("title", "编辑地址");
 				intent.putExtra("default", Me.instance.address);
 				intent.putExtra("description", "最多30个字符");
+				intent.putExtra("length", 30);
 				UserInfoActivity.this.startActivityForResult(intent, 2);
 			}
 		});
@@ -254,6 +256,7 @@ public class UserInfoActivity extends ActivityEx {
 				intent.putExtra("title", "编辑姓名");
 				intent.putExtra("default", Me.instance.name);
 				intent.putExtra("description", "请填写真实姓名");
+				intent.putExtra("length", 6);
 				UserInfoActivity.this.startActivityForResult(intent, 3);
 			}
 		});
@@ -277,6 +280,7 @@ public class UserInfoActivity extends ActivityEx {
 				intent.putExtra("title", "编辑身份证号");
 				intent.putExtra("default", Me.instance.idNumber);
 				intent.putExtra("description", "请务必填写真实身份证号");
+				intent.putExtra("length", 20);
 				UserInfoActivity.this.startActivityForResult(intent, 4);
 			}
 		});

@@ -21,7 +21,7 @@
     <color name="voip_interface_text_color">#bababa</color>
     
     
-    <color name="main">#ff4278a7</color>
-    <color name="sub">#ff4278a7</color>
+    <color name="main">#ff6fc6cf</color>
+    <color name="sub">#ff6fc600</color>
     <color name="grey_tab">#b4b4b4</color>
 </resources>

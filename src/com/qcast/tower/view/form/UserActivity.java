@@ -106,15 +106,15 @@ public class UserActivity extends FragmentEx {
 		HashMap<String, Object> map = null;
 		//
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_notify_1));
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_myfamily));
 		map.put("caption", "家庭成员");
 		itemList.add(map);
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_collection));
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_mycollection));
 		map.put("caption", "我的收藏");
 		itemList.add(map);
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_entry_4));
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_archive));
 		map.put("caption", "健康档案");
 		itemList.add(map);
         map = new HashMap<String, Object>();

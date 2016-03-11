@@ -196,6 +196,11 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 */
 	protected int page = 1;
 	/**
+	 * 当前信息
+	 */
+	protected int currentRegionId = -1;
+	protected String currentUserId = null;
+	/**
 	 * 动画
 	 */
 	private AnimationListener listener = new AnimationListener() {
@@ -258,6 +263,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		else {
 			stopBell();
 		}
+		loadEntry();
 	}
 
 	@Override
@@ -388,15 +394,38 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	}
 
 	/**
+	 * 加载入口
+	 */
+	public void loadEntry() {
+		boolean sentry = false;
+		if(null == Profile.instance().region && 0 != currentRegionId) {
+			currentRegionId = 0;
+			sentry = true;
+		}
+		else if(null != Profile.instance().region && Profile.instance().region.id != currentRegionId) {
+			currentRegionId = Profile.instance().region.id;
+			sentry = true;
+		}
+		if(null == Me.instance && null != currentUserId) {
+			sentry = true;
+		}
+		else if(null != Me.instance && !Me.instance.id.equals(currentUserId)) {
+			sentry = true;
+		}
+		if(sentry) {
+			if(null == Me.instance) {
+				browser.loadUrl(Host.fetchURL("HomePage", "", currentRegionId));
+			}
+			else {
+				browser.loadUrl(Host.fetchURL("HomePage", Me.instance.token, currentRegionId));
+			}
+		}
+	}
+
+	/**
 	 * 处理入口按钮
 	 */
 	public void dealEntry() {
-		if(null == Me.instance) {
-			browser.loadUrl(Host.fetchURL("HomePage", ""));
-		}
-		else {
-			browser.loadUrl(Host.fetchURL("HomePage", Me.instance.token));
-		}
 		scrollEntry.setHorizontalScrollBarEnabled(false);
 		DisplayMetrics metrics = new DisplayMetrics();
 		this.getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);

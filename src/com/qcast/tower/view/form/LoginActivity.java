@@ -110,7 +110,7 @@ public class LoginActivity extends ActivityEx {
 			@Override
 			public void onClick(View v) {
 				String phone = ((EditText) findViewById(R.id.login_text_phone)).getText().toString();
-				Pattern pattern = Pattern.compile("^[1][35678][0-9]{9}$");
+				Pattern pattern = Pattern.compile("^[1][345678][0-9]{9}$");
 				Matcher matcher = pattern.matcher(phone);
 				if(!matcher.matches()) {
 					Toast.makeText(LoginActivity.this, "手机号码格式不正确", Toast.LENGTH_LONG).show();

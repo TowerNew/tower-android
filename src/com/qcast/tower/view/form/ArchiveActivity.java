@@ -31,6 +31,14 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(null == Me.instance) {
+			this.finish();
+			return;
+		}
+		if(-1 == this.getIntent().getIntExtra("password", -1)) {
+			this.finish();
+			return;
+		}
 		if(Me.instance.isAuthenticated) {
 			Toast.makeText(this, "您的身份证信息尚未认证通过", Toast.LENGTH_LONG).show();
 			Intent intent = new Intent(ArchiveActivity.this, UserInfoActivity.class);

@@ -359,9 +359,19 @@ public class SelfDiagnosticActivity extends ActivityEx {
 					public boolean onTouch(View view, MotionEvent event) {
 						ImageView image = (ImageView) view;
 						Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
-						int x = (int)(event.getX() * bitmap.getWidth() / image.getWidth());
-						int y = (int)(event.getY() * bitmap.getHeight() / image.getHeight());
-						if(0 != bitmap.getPixel(x, y)) {
+						int x = 0;
+						int y = 0;
+						if(bitmap.getWidth() / bitmap.getHeight() > image.getWidth() / image.getHeight()) {
+							x = (int)(bitmap.getWidth() * event.getX() / image.getWidth());
+							y = (int)((event.getY() - (image.getHeight() - image.getWidth() * bitmap.getHeight() / bitmap.getWidth()) / 2) * bitmap.getWidth() / image.getWidth());
+						}
+						else {
+							y = (int)(bitmap.getHeight() * event.getY() / image.getHeight());
+							x = (int)((event.getX() - (image.getWidth() - image.getHeight() * bitmap.getWidth() / bitmap.getHeight()) / 2) * bitmap.getHeight() / image.getHeight());
+						}
+//						int x = (int)(event.getX() * bitmap.getWidth() / image.getWidth());
+//						int y = (int)(event.getY() * bitmap.getHeight() / image.getHeight());
+						if(x > 0 && y > 0 && x < bitmap.getWidth() && y < bitmap.getHeight() & 0 != bitmap.getPixel(x, y)) {
 							Integer id = (Integer) view.getTag();
 							btnGraph.setBackgroundColor(SelfDiagnosticActivity.this.getResources().getColor(R.color.grey_bg));
 							btnList.setBackgroundColor(SelfDiagnosticActivity.this.getResources().getColor(R.color.white));

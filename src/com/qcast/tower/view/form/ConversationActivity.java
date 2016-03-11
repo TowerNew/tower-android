@@ -70,6 +70,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 					Toast.makeText(ConversationActivity.this.getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
 					return;
 				}
+				Toast.makeText(ConversationActivity.this.getActivity(), "正在打开扫描器", Toast.LENGTH_SHORT).show();
 				Module.capture(ConversationActivity.this.getActivity(), new IEventable<String>() {
 					@Override
 					public void on(String data) {

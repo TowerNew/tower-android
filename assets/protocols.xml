@@ -99,7 +99,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html
 	<protocol name="tijianbaogao">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]&regionId=[2]
 		]]>
 		</url>
 		<mock></mock>
@@ -107,7 +107,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.htm
 	<protocol name="dianzibingli">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]&regionId=[2]
 		]]>
 		</url>
 		<mock></mock>

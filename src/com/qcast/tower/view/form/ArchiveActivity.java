@@ -57,7 +57,7 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ArchiveActivity.this, BrowserActivity.class);
-				intent.putExtra("url", Host.fetchURL("tijianbaogao", Profile.instance().region.id, Me.instance.token));
+				intent.putExtra("url", Host.fetchURL("tijianbaogao", Me.instance.token, Profile.instance().region.id));
 				ArchiveActivity.this.startActivity(intent);
 			}
 		});
@@ -65,7 +65,7 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ArchiveActivity.this, BrowserActivity.class);
-				intent.putExtra("url", Host.fetchURL("dianzibingli", Profile.instance().region.id, Me.instance.token));
+				intent.putExtra("url", Host.fetchURL("dianzibingli", Me.instance.token, Profile.instance().region.id));
 				ArchiveActivity.this.startActivity(intent);
 			}
 		});

@@ -37,14 +37,15 @@
     		android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
     		android:gravity="bottom"
+    		android:paddingTop="5dp"
     		android:layout_gravity="bottom"
-    		android:background="@color/grey_bg">
+    		android:background="@color/sub">
     		<RadioButton 
     			android:id="@+id/main_tab_home"
     			android:text="@string/main_tab_home"
 				android:textColor="@color/grey_text"
     			android:layout_marginTop="0dip"
-    			android:background="@color/grey_bg"
+    			android:background="@color/sub"
     			android:drawableTop="@drawable/selector_main_home"
     			style="@style/main_tab" />
     		<RadioButton
@@ -52,7 +53,7 @@
 				android:text=""
 				android:textColor="@color/grey_text"
     			android:layout_marginTop="0dip"
-    			android:background="@color/grey_bg"
+    			android:background="@color/sub"
     			android:drawableTop="@drawable/dot"
     			style="@style/main_tab" />
     		<RadioButton
@@ -60,7 +61,7 @@
 				android:text="@string/main_tab_user"
 				android:textColor="@color/grey_text"
     			android:layout_marginTop="0dip"
-    			android:background="@color/grey_bg"
+    			android:background="@color/sub"
     			android:drawableTop="@drawable/selector_main_user"
     			style="@style/main_tab" />
     	</RadioGroup>

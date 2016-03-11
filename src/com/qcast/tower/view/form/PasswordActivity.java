@@ -100,6 +100,15 @@ public class PasswordActivity extends OnlyUserActivity {
 				PasswordActivity.this.finish();
 			}
 		});
+		View.OnClickListener listener = new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				txtPassword.requestFocus();
+		    	InputMethodManager inputManager = (InputMethodManager) PasswordActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);  
+		    	inputManager.showSoftInput(txtPassword, 0); 
+			}
+		};
+		labPassword1.setOnClickListener(listener);
 		txtPassword.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -114,6 +123,7 @@ public class PasswordActivity extends OnlyUserActivity {
 							@Override
 							public void onFinished(JSONVisitor content) {
 								if(null == content || content.getInteger("code", 0) <= 0) {
+									reset();
 									return;
 								}
 								Intent intent = (Intent) PasswordActivity.this.getIntent().getParcelableExtra("intent");

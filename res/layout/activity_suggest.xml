@@ -14,12 +14,13 @@
 		android:focusableInTouchMode="true">
 		<ImageButton
             android:id="@+id/suggest_button_close"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="6dp"
-            android:background="@drawable/arrow_left" />
+            android:layout_marginLeft="0dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/arrow_left_white_wide" />
         <TextView
             android:id="@+id/suggest_label_title"
             android:layout_width="wrap_content"

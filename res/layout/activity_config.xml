@@ -69,7 +69,7 @@
 			    android:layout_alignParentLeft="true"
 			    android:layout_marginLeft="10dp"
 			    android:gravity="center_vertical"
-			    android:text="私隐密码"
+			    android:text="安全密码"
 			    android:textColor="@color/grey_text"
 			    android:textSize="18sp" />
 			<ImageView

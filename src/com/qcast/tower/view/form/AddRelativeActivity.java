@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,8 +33,8 @@ import com.slfuture.pretty.general.utility.GeneralHelper;
  */
 @ResourceView(id = R.layout.activity_addrelative)
 public class AddRelativeActivity extends OnlyUserActivity {
-	@ResourceView(id = R.id.addrelative_button_close)
-	public ImageButton btnClose;
+	@ResourceView(id = R.id.addrelative_image_close)
+	public ImageView imgClose;
 	@ResourceView(id = R.id.addrelative_label_confirm)
 	public TextView labConfirm;
 	@ResourceView(id = R.id.addrelative_text_name)
@@ -95,7 +94,7 @@ public class AddRelativeActivity extends OnlyUserActivity {
 				}, relative.snapshot);
 			}
 		}
-		btnClose.setOnClickListener(new View.OnClickListener() {
+		imgClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				AddRelativeActivity.this.finish();

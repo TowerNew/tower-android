@@ -11,12 +11,13 @@
         android:background="@color/main">
         <ImageView
             android:id="@+id/myzone_image_close"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:scaleType="centerInside"
-            android:src="@drawable/arrow_left" />
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/arrow_left_white_wide" />
         <TextView
             android:id="@+id/myzone_label_title"
             android:layout_width="wrap_content"

@@ -3,7 +3,7 @@ package com.qcast.tower.view.form;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qcast.tower.R;
@@ -22,8 +22,8 @@ import com.slfuture.pluto.view.annotation.ResourceView;
  */
 @ResourceView(id = R.layout.activity_addrequest)
 public class AddRequestActivity extends OnlyUserActivity {
-	@ResourceView(id = R.id.addrequest_button_close)
-	public ImageButton btnClose;
+	@ResourceView(id = R.id.addrequest_image_close)
+	public ImageView imgClose;
 	@ResourceView(id = R.id.addrequest_label_name)
 	public TextView labName;
 	@ResourceView(id = R.id.addrequest_label_description)
@@ -51,7 +51,7 @@ public class AddRequestActivity extends OnlyUserActivity {
         	btnRefuse.setEnabled(false);
         	btnAccept.setVisibility(View.GONE);
         }
-        btnClose.setOnClickListener(new View.OnClickListener() {
+        imgClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddRequestActivity.this.finish();

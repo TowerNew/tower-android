@@ -3,7 +3,7 @@ package com.qcast.tower.view.form;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +25,8 @@ import com.slfuture.pluto.view.annotation.ResourceView;
  */
 @ResourceView(id = R.layout.activity_addfriend)
 public class AddFriendActivity extends OnlyUserActivity {
-	@ResourceView(id = R.id.addfriend_button_close)
-	public ImageButton btnClose;
+	@ResourceView(id = R.id.addfriend_image_close)
+	public ImageView imgClose;
 	@ResourceView(id = R.id.addfriend_label_confirm)
 	public TextView labConfirm;
 	@ResourceView(id = R.id.addfriend_text_phone)
@@ -66,7 +66,7 @@ public class AddFriendActivity extends OnlyUserActivity {
 				txtRelation.setText(friend.relation);
 			}
 		}
-		btnClose.setOnClickListener(new View.OnClickListener() {
+		imgClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				AddFriendActivity.this.finish();

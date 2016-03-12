@@ -10,13 +10,14 @@
 		android:layout_alignParentTop="true"
 		android:background="@color/main" >
 		<ImageButton
-            android:id="@+id/addrelative_button_close"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:id="@+id/addrelative_image_close"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/arrow_left" />
+            android:scaleType="fitXY"
+            android:background="@drawable/arrow_left_white_wide" />
         <TextView
             android:id="@+id/addrelative_label_caption"
             android:layout_width="wrap_content"

@@ -1,5 +1,6 @@
 package com.qcast.tower.framework;
 
+import com.qcast.tower.Program;
 import com.qcast.tower.view.form.PayActivity;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONVisitor;
@@ -21,11 +22,11 @@ public class Helper {
 	 * 
 	 * @param url 页面地址
 	 */
-	public static void openBrowser(final Context context, final String url) {
+	public static void openBrowser(Context context, final String url) {
 		Intent intent = new Intent(context, BrowserActivity.class);
 		intent.putExtra("url", url);
 		Bundle bundle = new Bundle();
-		bundle.putSerializable("1", new IBrowserHandler() {
+		bundle.putSerializable("0", new IBrowserHandler() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -50,15 +51,16 @@ public class Helper {
 						}
 					}
 				});
-				//
-				Intent intent = new Intent(context, PayActivity.class);
+				Intent intent = new Intent(Program.application, PayActivity.class);
 				intent.putExtra("commandId", 9527);
 				intent.putExtra("name", name);
 				intent.putExtra("description", description);
 				intent.putExtra("price", price);
-				context.startActivity(intent);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
+				Program.application.startActivity(intent);
 			}
 		});
+		intent.putExtra("handler", bundle);
 		context.startActivity(intent);
 	}
 }

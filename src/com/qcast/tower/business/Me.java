@@ -566,6 +566,9 @@ public class Me extends User implements Serializable, IReactor {
 		if("systemMessage".equals(action)) {
 			Runtime.hasUnreadMessage = true;
 		}
+		else if("send".equals(action)) {
+			
+		}
 		if(null != type && (Notify.TYPE_5 == type || Notify.TYPE_9 == type)) {
 			Me.instance.refreshMember(Program.application, new IEventable<Boolean>() {
 				@Override

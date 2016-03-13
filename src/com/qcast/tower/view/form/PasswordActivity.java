@@ -15,7 +15,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,8 +50,6 @@ public class PasswordActivity extends OnlyUserActivity {
 	public TextView labPassword5;
 	@ResourceView(id = R.id.password_label_password6)
 	public TextView labPassword6;
-	@ResourceView(id = R.id.password_button_confirm)
-	public Button btnConfirm;
 	
 	private final static int[] PASSWORD_CONTROL = {R.id.password_label_password1, R.id.password_label_password2, R.id.password_label_password3, R.id.password_label_password4, R.id.password_label_password5, R.id.password_label_password6};
 	
@@ -109,6 +106,11 @@ public class PasswordActivity extends OnlyUserActivity {
 			}
 		};
 		labPassword1.setOnClickListener(listener);
+		labPassword2.setOnClickListener(listener);
+		labPassword3.setOnClickListener(listener);
+		labPassword4.setOnClickListener(listener);
+		labPassword5.setOnClickListener(listener);
+		labPassword6.setOnClickListener(listener);
 		txtPassword.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) { }

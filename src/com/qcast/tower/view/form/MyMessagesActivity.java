@@ -139,10 +139,9 @@ public class MyMessagesActivity extends ActivityEx {
                 }
                 com.qcast.tower.business.Runtime.hasUnreadMessage = false;
                 dataList.clear();
+                dataList.addAll(fetchUnreadMessages());
                 JSONArray result = (JSONArray) resultObject.get("data");
                 if (null == result) {
-                	dataList.clear();
-                	dataList.addAll(fetchUnreadMessages());
                     adapter.notifyDataSetChanged();
                     return;
                 }
@@ -227,7 +226,6 @@ public class MyMessagesActivity extends ActivityEx {
                     }
                     dataList.add(myMessageModel);
                 }
-                dataList.addAll(fetchUnreadMessages());
                 adapter.notifyDataSetChanged();
             }
         }, Me.instance.token);

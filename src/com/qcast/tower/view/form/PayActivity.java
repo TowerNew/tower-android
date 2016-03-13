@@ -82,6 +82,7 @@ public class PayActivity extends ActivityEx {
 						status = RESULT_FAIL;
 					}
 				}
+				PayActivity.this.finish();
 				break;
 			}
 			default:
@@ -151,7 +152,7 @@ public class PayActivity extends ActivityEx {
 		//
 		labName.setText(productName);
 		labDescription.setText(productDescription);
-		labPrice.setText(String.valueOf(productPrice / 100) + "元");
+		labPrice.setText(String.valueOf((float)(productPrice / 100.0)) + "元");
 		btnConfirm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -9,6 +9,7 @@ import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.business.Profile;
 import com.qcast.tower.business.core.IMeListener;
+import com.qcast.tower.framework.Helper;
 import com.qcast.tower.framework.Storage;
 import com.qcast.tower.view.control.HorizontalScrollViewEx;
 import com.qcast.tower.view.control.ScrollWebView;
@@ -145,7 +146,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 * 当前资讯列表
 	 */
 	protected ArrayList<HashMap<String, Object>> newsList = new ArrayList<HashMap<String, Object>>();
-    
+
 	/**
 	 * 顶部浏览器
 	 */
@@ -446,9 +447,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					break;
 				case 1:
 					if(null != Profile.instance().region && null != Me.instance) {
-						Intent intent2 = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
-						intent2.putExtra("url", Host.fetchURL("yuyuetijian", Profile.instance().region.id, Me.instance.token));
-						HomeActivity.this.startActivity(intent2);
+						Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("yuyuetijian", Profile.instance().region.id, Me.instance.token));
 					}
 					else {
 						Toast.makeText(HomeActivity.this.getActivity(), "请登录并设置所在小区", Toast.LENGTH_LONG).show();
@@ -456,9 +455,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					break;
 				case 2:
 					if(null != Profile.instance().region && null != Me.instance) {
-						Intent intent2 = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
-						intent2.putExtra("url", Host.fetchURL("yuyueliliao", Profile.instance().region.id, Me.instance.token));
-						HomeActivity.this.startActivity(intent2);
+						Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("yuyueliliao", Profile.instance().region.id, Me.instance.token));
 					}
 					else {
 						Toast.makeText(HomeActivity.this.getActivity(), "请登录并设置所在小区", Toast.LENGTH_LONG).show();
@@ -471,9 +468,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					break;
 				case 4:
 					if(null != Profile.instance().region && null != Me.instance) {
-						Intent intent4 = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
-						intent4.putExtra("url", Host.fetchURL("yuyueguahao", Profile.instance().region.id, Me.instance.token));
-						HomeActivity.this.startActivity(intent4);
+						Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("yuyueguahao", Profile.instance().region.id, Me.instance.token));
 					}
 					else {
 						Toast.makeText(HomeActivity.this.getActivity(), "请登录并设置所在小区", Toast.LENGTH_LONG).show();

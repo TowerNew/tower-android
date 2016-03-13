@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <protocols domain="beta.service.wehop.cn" mock="false" storage="tower/image/">
+	<protocol name="Hit">
+		<url>
+		<![CDATA[
+http://beta.service.wehop.cn/counting-platform-web/rest/appHit#[1]
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
 	<protocol name="daipingfen">
 		<url>
 		<![CDATA[

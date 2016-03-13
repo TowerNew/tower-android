@@ -16,12 +16,16 @@ import com.qcast.tower.business.user.Relative;
 import com.qcast.tower.business.user.User;
 import com.qcast.tower.framework.Storage;
 import com.slfuture.carrie.base.etc.Serial;
+import com.slfuture.carrie.base.json.JSONNumber;
+import com.slfuture.carrie.base.json.JSONObject;
+import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.time.Date;
 import com.slfuture.carrie.base.type.List;
 import com.slfuture.carrie.base.type.safe.Table;
 import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.etc.Version;
@@ -561,13 +565,21 @@ public class Me extends User implements Serializable, IReactor {
 
 	@Override
 	public void onCommand(final String from, final String action, final com.slfuture.carrie.base.type.Table<String, Object> data) {
-		Reminder.ringtone(Program.application);
 		Integer type = (Integer) data.get("type");
 		if("systemMessage".equals(action)) {
 			Runtime.hasUnreadMessage = true;
 		}
 		else if("send".equals(action)) {
-			String parameter = "user_input_content=";
+			JSONObject object = new JSONObject();
+			object.put("action", new JSONString("send"));
+			object.put("from", new JSONString(from));
+			object.put("to", new JSONString((String) data.get("to")));
+			object.put("type", new JSONNumber((Integer) data.get("type")));
+			Host.doCommand("Hit", new CommonResponse<String>() {
+				@Override
+				public void onFinished(String content) { }
+			}, "user_input_content=" + object.toString());
+			return;
 		}
 		if(null != type && (Notify.TYPE_5 == type || Notify.TYPE_9 == type)) {
 			Me.instance.refreshMember(Program.application, new IEventable<Boolean>() {
@@ -582,6 +594,7 @@ public class Me extends User implements Serializable, IReactor {
 			Reminder.vibrate(Program.application);
 			return;
 		}
+		Reminder.ringtone(Program.application);
 		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
 	}
 }

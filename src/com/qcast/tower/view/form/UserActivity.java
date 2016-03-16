@@ -76,7 +76,7 @@ public class UserActivity extends FragmentEx {
 			txtCaption.setText(Me.instance.nickname);
 		}
 		if(null == Me.instance) {
-			btnPhoto.setBackgroundResource(R.drawable.user_photo_null);
+			btnPhoto.setImageResource(R.drawable.user_photo_null);
 		}
 		else {
             Host.doImage("image", new ImageResponse(Me.instance.photoUrl) {

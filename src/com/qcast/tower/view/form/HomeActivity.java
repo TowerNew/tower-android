@@ -50,15 +50,14 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.SimpleAdapter.ViewBinder;
 
 /**
@@ -172,11 +171,20 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 */
 	@ResourceView(id = R.id.home_scroll_entry)
 	public HorizontalScrollViewEx scrollEntry;
-	/**
-	 * 入口表格
-	 */
-	@ResourceView(id = R.id.home_grid_entry)
-	public GridView gridEntry;
+
+	@ResourceView(id = R.id.home_label_entry1)
+	public View viewEntry1;
+	@ResourceView(id = R.id.home_label_entry2)
+	public View viewEntry2;
+	@ResourceView(id = R.id.home_label_entry3)
+	public View viewEntry3;
+	@ResourceView(id = R.id.home_label_entry4)
+	public View viewEntry4;
+	@ResourceView(id = R.id.home_label_entry5)
+	public View viewEntry5;
+	@ResourceView(id = R.id.home_label_entry6)
+	public View viewEntry6;
+
 	/**
 	 * 铃铛
 	 */
@@ -378,6 +386,9 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			@Override
 			public void onClick(View v) {
 				if(null == Me.instance) {
+					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
+					HomeActivity.this.startActivity(intent);
+					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
 					return;
 				}
 				Intent intent = new Intent();
@@ -430,55 +441,98 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		scrollEntry.setHorizontalScrollBarEnabled(false);
 		DisplayMetrics metrics = new DisplayMetrics();
 		this.getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		GridViewAdapter adapter = new GridViewAdapter(this.getActivity());
-		gridEntry.setAdapter(adapter);
-		LayoutParams params = new LayoutParams(adapter.getCount() * metrics.widthPixels / 4, LayoutParams.WRAP_CONTENT);
-		gridEntry.setLayoutParams(params);
-		gridEntry.setColumnWidth(metrics.widthPixels / 4);
-		gridEntry.setStretchMode(GridView.NO_STRETCH);
-		gridEntry.setNumColumns(adapter.getCount());
-		gridEntry.setOnItemClickListener(new OnItemClickListener() {
+		LinearLayout.LayoutParams lp =  (LinearLayout.LayoutParams) viewEntry1.getLayoutParams();
+		lp.width = metrics.widthPixels / 4;
+		viewEntry1.setLayoutParams(lp);
+		viewEntry1.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				switch(position) {
-				case 0:
-					Intent intent0 = new Intent(HomeActivity.this.getActivity(), SelectDoctorActivity.class);
-					HomeActivity.this.startActivity(intent0);
-					break;
-				case 1:
-					if(null != Profile.instance().region && null != Me.instance) {
-						Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("yuyuetijian", Profile.instance().region.id, Me.instance.token));
-					}
-					else {
-						Toast.makeText(HomeActivity.this.getActivity(), "请登录并设置所在小区", Toast.LENGTH_LONG).show();
-					}
-					break;
-				case 2:
-					if(null != Profile.instance().region && null != Me.instance) {
-						Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("yuyueliliao", Profile.instance().region.id, Me.instance.token));
-					}
-					else {
-						Toast.makeText(HomeActivity.this.getActivity(), "请登录并设置所在小区", Toast.LENGTH_LONG).show();
-					}
-					break;
-				case 3:
-					Intent intent3 = new Intent(HomeActivity.this.getActivity(), ArchiveActivity.class);
-					intent3.putExtra("password", 0);
-					HomeActivity.this.startActivity(intent3);
-					break;
-				case 4:
-					if(null != Profile.instance().region && null != Me.instance) {
-						Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("yuyueguahao", Profile.instance().region.id, Me.instance.token));
-					}
-					else {
-						Toast.makeText(HomeActivity.this.getActivity(), "请登录并设置所在小区", Toast.LENGTH_LONG).show();
-					}
-					break;
-				case 5:
-					Intent intent5 = new Intent(HomeActivity.this.getActivity(), SelfDiagnosticActivity.class);
-					HomeActivity.this.startActivity(intent5);
-					break;
+			public void onClick(View v) {
+				Intent intent0 = new Intent(HomeActivity.this.getActivity(), SelectDoctorActivity.class);
+				HomeActivity.this.startActivity(intent0);
+			}
+		});
+		lp =  (LinearLayout.LayoutParams) viewEntry2.getLayoutParams();
+		lp.width = metrics.widthPixels / 4;
+		viewEntry2.setLayoutParams(lp);
+		viewEntry2.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Profile.instance().region) {
+					Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
+					HomeActivity.this.startActivityForResult(intent, MESSAGE_REGION);
+					Toast.makeText(HomeActivity.this.getActivity(), "请设置所在小区", Toast.LENGTH_LONG).show();
+					return;
 				}
+				if(null == Me.instance) {
+					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
+					HomeActivity.this.startActivity(intent);
+					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
+					return;
+				}
+				Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("yuyuetijian", Profile.instance().region.id, Me.instance.token));
+			}
+		});
+		lp =  (LinearLayout.LayoutParams) viewEntry3.getLayoutParams();
+		lp.width = metrics.widthPixels / 4;
+		viewEntry3.setLayoutParams(lp);
+		viewEntry3.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Profile.instance().region) {
+					Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
+					HomeActivity.this.startActivityForResult(intent, MESSAGE_REGION);
+					Toast.makeText(HomeActivity.this.getActivity(), "请设置所在小区", Toast.LENGTH_LONG).show();
+					return;
+				}
+				if(null == Me.instance) {
+					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
+					HomeActivity.this.startActivity(intent);
+					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
+					return;
+				}
+				Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("yuyueliliao", Profile.instance().region.id, Me.instance.token));
+			}
+		});
+		lp =  (LinearLayout.LayoutParams) viewEntry4.getLayoutParams();
+		lp.width = metrics.widthPixels / 4;
+		viewEntry4.setLayoutParams(lp);
+		viewEntry4.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(HomeActivity.this.getActivity(), ArchiveActivity.class);
+				intent.putExtra("password", 0);
+				HomeActivity.this.startActivity(intent);
+			}
+		});
+		lp =  (LinearLayout.LayoutParams) viewEntry5.getLayoutParams();
+		lp.width = metrics.widthPixels / 4;
+		viewEntry5.setLayoutParams(lp);
+		viewEntry5.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Profile.instance().region) {
+					Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
+					HomeActivity.this.startActivityForResult(intent, MESSAGE_REGION);
+					Toast.makeText(HomeActivity.this.getActivity(), "请设置所在小区", Toast.LENGTH_LONG).show();
+					return;
+				}
+				if(null == Me.instance) {
+					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
+					HomeActivity.this.startActivity(intent);
+					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
+					return;
+				}
+				Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("yuyueguahao", Profile.instance().region.id, Me.instance.token));
+			}
+		});
+		lp =  (LinearLayout.LayoutParams) viewEntry6.getLayoutParams();
+		lp.width = metrics.widthPixels / 4;
+		viewEntry6.setLayoutParams(lp);
+		viewEntry6.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(HomeActivity.this.getActivity(), SelfDiagnosticActivity.class);
+				HomeActivity.this.startActivity(intent);
 			}
 		});
 	}
@@ -525,8 +579,12 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				}
 			}
 		});
-		gridEntry = (GridView) viewHead.findViewById(R.id.home_grid_entry);
-		gridEntry.setFastScrollEnabled(false);
+		viewEntry1 = (View) viewHead.findViewById(R.id.home_layout_entry1);
+		viewEntry2 = (View) viewHead.findViewById(R.id.home_layout_entry2);
+		viewEntry3 = (View) viewHead.findViewById(R.id.home_layout_entry3);
+		viewEntry4 = (View) viewHead.findViewById(R.id.home_layout_entry4);
+		viewEntry5 = (View) viewHead.findViewById(R.id.home_layout_entry5);
+		viewEntry6 = (View) viewHead.findViewById(R.id.home_layout_entry6);
 		btnRegion.getBackground().setAlpha(200);
 		btnSearch.getBackground().setAlpha(200);
 		btnBell.setImageAlpha(200);

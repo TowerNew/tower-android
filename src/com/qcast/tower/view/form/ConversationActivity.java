@@ -70,7 +70,9 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 			@Override
 			public void onClick(View v) {
 				if(null == Me.instance) {
-					Toast.makeText(ConversationActivity.this.getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent(ConversationActivity.this.getActivity(), LoginActivity.class);
+					ConversationActivity.this.startActivity(intent);
+					Toast.makeText(ConversationActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
 					return;
 				}
 				Toast.makeText(ConversationActivity.this.getActivity(), "正在打开扫描器", Toast.LENGTH_SHORT).show();

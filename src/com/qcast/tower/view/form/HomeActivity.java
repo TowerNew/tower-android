@@ -526,6 +526,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			}
 		});
 		gridEntry = (GridView) viewHead.findViewById(R.id.home_grid_entry);
+		gridEntry.setFastScrollEnabled(false);
 		btnRegion.getBackground().setAlpha(200);
 		btnSearch.getBackground().setAlpha(200);
 		btnBell.setImageAlpha(200);

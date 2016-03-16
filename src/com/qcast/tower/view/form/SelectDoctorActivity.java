@@ -137,7 +137,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 					}
 					doctorList.add(map);
 					// 加载图片
-		            Host.doImage("image", new ImageResponse(doctor.getString("photo"), i) {
+		            Host.doImage("image", new ImageResponse(doctor.getString("photo"), i, 100, 100) {
 						@Override
 						public void onFinished(Bitmap content) {
 							HashMap<String, Object> map = doctorList.get((Integer) tag);

@@ -59,7 +59,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/favorate.html?
 	<protocol name="UserProtocol">
 		<url>
 		<![CDATA[
-http://m.dianping.com
+http://cdn.oss.wehop-resources.wehop.cn/banner/sites/v-1/agreement.html
 		]]>
 		</url>
 		<mock></mock>
@@ -568,13 +568,13 @@ user-platform-web/rest/user/member?token=[1]
 user-platform-web/rest/user/editowner#token=[1]&userGlobalId=[2]&mode=[3]&relation=[4]&name=[5]&idnumber=[6]&image=[7]
         ]]>
         </path>
-    <mock>
-        <![CDATA[
+		<mock>
+<![CDATA[
 {
     "code": 200,
     "data": null
 }
-        ]]>
+]]>
         </mock>
     </protocol>
     <!-- 新增和修改联系人，mode：0新增，1编辑。编辑时服务端使用userGlobalId忽略phone。 -->

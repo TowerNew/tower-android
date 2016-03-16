@@ -414,6 +414,12 @@ public class Me extends User implements Serializable, IReactor {
 					}
 				}
 				catch (ParseException e) { }
+				if(3 == visitor.getInteger("type", 1)) {
+					isAuthenticated = true;
+				}
+				else {
+					isAuthenticated = false;
+				}
 				gender = item.getInteger("gender", 0);
 				name = item.getString("name");
 				idNumber = item.getString("idnumber");

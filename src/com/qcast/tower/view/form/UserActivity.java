@@ -79,6 +79,10 @@ public class UserActivity extends FragmentEx {
 			btnPhoto.setImageResource(R.drawable.user_photo_null);
 		}
 		else {
+			if(null == Me.instance.photoUrl) {
+				btnPhoto.setImageResource(R.drawable.user_photo_default);
+				return;
+			}
             Host.doImage("image", new ImageResponse(Me.instance.photoUrl) {
 				@Override
 				public void onFinished(Bitmap content) {

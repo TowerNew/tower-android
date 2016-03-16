@@ -138,6 +138,9 @@ public class User implements Serializable {
 	 * @return 头像位图
 	 */
 	public Bitmap photo() {
+		if(null == photoUrl) {
+			return null;
+		}
 		File file = Storage.getImageFileByUrl(photoUrl);
 		if(!file.exists()) {
 			return null;

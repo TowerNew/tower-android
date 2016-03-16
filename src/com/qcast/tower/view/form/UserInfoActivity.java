@@ -111,6 +111,7 @@ public class UserInfoActivity extends ActivityEx {
 							if(null == url) {
 								return;
 							}
+							Me.instance.snapshot = url;
 							Host.doImage("image", new ImageResponse(url) {
 								@Override
 								public void onFinished(Bitmap content) {
@@ -139,6 +140,7 @@ public class UserInfoActivity extends ActivityEx {
 							if(null == url) {
 								return;
 							}
+							Me.instance.snapshot = url;
 							Host.doImage("image", new ImageResponse(url) {
 								@Override
 								public void onFinished(Bitmap content) {
@@ -284,6 +286,17 @@ public class UserInfoActivity extends ActivityEx {
 				UserInfoActivity.this.startActivityForResult(intent, 4);
 			}
 		});
+		if(!Text.isBlank(Me.instance.snapshot)) {
+            Host.doImage("image", new ImageResponse(Me.instance.snapshot, 100, 100) {
+				@Override
+				public void onFinished(Bitmap content) {
+					if(null == content) {
+						return;
+					}
+					imgSnapshot.setImageBitmap(content);
+				}
+            }, Me.instance.snapshot);
+		}
 		imgSnapshot.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

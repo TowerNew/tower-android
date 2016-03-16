@@ -14,10 +14,12 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.type.List;
 import com.slfuture.carrie.base.type.Set;
+import com.slfuture.carrie.base.type.Table;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -84,7 +86,11 @@ public class SelfDiagnosticActivity extends ActivityEx {
 	 * 当前显示的部位图层
 	 */
 	private List<ImageView> currentImages = new List<ImageView>();
-
+	/**
+	 * 
+	 */
+	private Table<Integer, Bitmap> cache = new Table<Integer, Bitmap>();
+	
 
 	/**
 	 * 界面创建
@@ -94,6 +100,15 @@ public class SelfDiagnosticActivity extends ActivityEx {
 		super.onCreate(savedInstanceState);
 		prepare();
 		loadBody();
+	}
+	
+	/**
+	 * 界面销毁
+	 */
+	@Override
+    protected void onDestroy() {
+		super.onDestroy();
+		cache.clear();
 	}
 
 	/**
@@ -313,6 +328,15 @@ public class SelfDiagnosticActivity extends ActivityEx {
 			btnTowards.setText("朝向：背面");
 		}
 		for(ImageView view : currentImages) {
+			// Drawable drawable = view.getDrawable();
+	        // if (drawable != null && drawable instanceof BitmapDrawable) {
+	        //     BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+	        //    Bitmap bitmap = bitmapDrawable.getBitmap();
+	        //    if (bitmap != null && !bitmap.isRecycled()) {
+	        //        bitmap.recycle();
+	        //    }
+	        // }
+	        view.setImageBitmap(null);
 			container.removeView(view);
 		}
 		currentImages.clear();
@@ -344,9 +368,10 @@ public class SelfDiagnosticActivity extends ActivityEx {
 				params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 				params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 				image.setLayoutParams(params);
-				image.setScaleType(ScaleType.CENTER_INSIDE);
+				image.setScaleType(ScaleType.FIT_CENTER);
 				try {
-					image.setImageResource(R.drawable.class.getField("image_body_" + map.get("id") + "_" + sentry).getInt(null));
+					image.setImageBitmap(cacheBitmap(R.drawable.class.getField("image_body_" + map.get("id") + "_" + sentry).getInt(null)));
+					// image.setImageResource();
 				}
 				catch (Exception e) {
 					continue;
@@ -387,5 +412,20 @@ public class SelfDiagnosticActivity extends ActivityEx {
 		}
 		btnGender.bringToFront();
 		btnTowards.bringToFront();
+	}
+
+	/**
+	 * 获取缓存
+	 */
+	public Bitmap cacheBitmap(int resId) {
+		Bitmap result = cache.get(resId);
+		if(null != result) {
+			return result;
+		}
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inSampleSize = 1;
+		result = BitmapFactory.decodeStream(this.getResources().openRawResource(resId), null, options);  
+		cache.put(resId, result);
+		return result;
 	}
 }

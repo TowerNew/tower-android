@@ -18,7 +18,8 @@
 		    android:layout_gravity="center"
 		    android:adjustViewBounds="true"
 		    android:background="@drawable/user_photo_null"
-		    android:padding="0dip" />
+		    android:padding="0dip"
+		    android:scaleType="fitXY" />
 		<ImageView
 		    android:id="@+id/user_status"
 		    android:layout_width="20dp"

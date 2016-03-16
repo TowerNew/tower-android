@@ -28,6 +28,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -50,6 +51,8 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 	public ImageView imgAdd;
 	@ResourceView(id = R.id.conversation_layout_doctor)
 	public ViewGroup viewDoctor;
+	@ResourceView(id = R.id.conversation_label_tip)
+	public TextView labTip;
 	@ResourceView(id = R.id.conversation_list_family)
 	public ListView listFamily;
 
@@ -225,24 +228,39 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 	private void refreshList() {		
 		if(null == Me.instance) {
 			conversationList.clear();
+			labTip.setVisibility(View.GONE);
 			((SimpleAdapter) listFamily.getAdapter()).notifyDataSetChanged();
 			return;
+		}
+		if(null != Me.instance.doctor) {
+			int unreadMessageCount = Me.instance.doctor.unreadMessageCount();
+			if(unreadMessageCount > 0) {
+				labTip.setText(String.valueOf(unreadMessageCount));
+				labTip.setVisibility(View.VISIBLE);
+			}
+			else {
+				labTip.setVisibility(View.GONE);
+			}
+		}
+		else {
+			labTip.setVisibility(View.GONE);
 		}
 		conversationList.clear();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", Me.instance.id);
-		if(null == Me.instance.photo) {
+		if(null == Me.instance.photoUrl) {
 			map.put("photo", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_user_default));
 		}
 		else {
-			Host.doImage("image", new ImageResponse(Me.instance.photo, map) {
+			Host.doImage("image", new ImageResponse(Me.instance.photoUrl, map) {
 				@SuppressWarnings("unchecked")
 				@Override
 				public void onFinished(Bitmap content) {
+					content = GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(content, 200, 200), Color.WHITE, 4);
 					((Map<String, Object>) tag).put("photo", content);
 					((SimpleAdapter) listFamily.getAdapter()).notifyDataSetChanged();
 				}
-			}, Me.instance.photo);
+			}, Me.instance.photoUrl);
 		}
 		map.put("name", "我");
 		map.put("tip", Me.instance.unreadMessageCount());
@@ -256,18 +274,19 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 		for(Friend friend : Me.instance.friends) {
 			map = new HashMap<String, Object>();
 			map.put("id", friend.id);
-			if(null == friend.photo) {
+			if(null == friend.photoUrl) {
 				map.put("photo", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_user_default));
 			}
 			else {
-				Host.doImage("image", new ImageResponse(friend.photo, map) {
+				Host.doImage("image", new ImageResponse(friend.photoUrl, map) {
 					@SuppressWarnings("unchecked")
 					@Override
 					public void onFinished(Bitmap content) {
+						content = GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(content, 200, 200), Color.WHITE, 4);
 						((Map<String, Object>) tag).put("photo", content);
 						((SimpleAdapter) listFamily.getAdapter()).notifyDataSetChanged();
 					}
-				}, friend.photo);
+				}, friend.photoUrl);
 			}
 			map.put("name", friend.nickname());
 			map.put("tip", friend.unreadMessageCount());

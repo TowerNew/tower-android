@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.text.ParseException;
 
 import com.qcast.tower.Program;
-import com.qcast.tower.R;
 import com.qcast.tower.business.core.IMeListener;
 import com.qcast.tower.business.structure.Doctor;
 import com.qcast.tower.business.structure.IM;
@@ -21,13 +20,14 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
+import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.time.Date;
 import com.slfuture.carrie.base.type.List;
 import com.slfuture.carrie.base.type.safe.Table;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
+import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
-import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.etc.Version;
 import com.slfuture.pluto.framework.Broadcaster;
 import com.slfuture.pluto.sensor.Reminder;
@@ -43,28 +43,6 @@ import android.graphics.Bitmap;
  * 当前登录用户类
  */
 public class Me extends User implements Serializable, IReactor {
-	/**
-	 * 最近联系人类
-	 */
-	private static class Contact implements Serializable {
-		private static final long serialVersionUID = 1L;
-
-		/**
-		 * 头像路径
-		 */
-		public String photo = null;
-		/**
-		 * 姓名
-		 */
-		public String name = null;
-		
-		public Contact(String photo, String name) {
-			this.photo = photo;
-			this.name = name;
-		}
-	}
-
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -110,7 +88,7 @@ public class Me extends User implements Serializable, IReactor {
 	/**
 	 * 最近联系人
 	 */
-	public Table<String, Contact> contacts = new Table<String, Contact>();
+	public Table<String, Bitmap> contacts = new Table<String, Bitmap>();
 
 	/**
 	 * 实例
@@ -271,6 +249,12 @@ public class Me extends User implements Serializable, IReactor {
 				 }
 				 doctor = new Doctor();
 				 doctor.parse(content.getVisitor("data"));
+				 if(!Text.isBlank(doctor.photoUrl)) {
+					 Host.doImage("image", new ImageResponse(doctor.photoUrl) {
+						@Override
+						public void onFinished(Bitmap content) { }
+					 }, doctor.photoUrl);
+				 }
 				 try {
 					save();
 				 }
@@ -353,26 +337,8 @@ public class Me extends User implements Serializable, IReactor {
 	 * 保存
 	 */
 	public void save() throws IOException {
+		contacts = new Table<String, Bitmap>();
 		Serial.restore(this, file());
-	}
-
-	/**
-	 * 添加联系人
-	 * 
-	 * @param imId 即时通信ID
-	 * @param photo 头像
-	 * @param name 姓名
-	 */
-	public void addContact(String imId, String photo, String name) {
-		Contact contact = contacts.get(imId);
-		if(null != contact) {
-			contact.photo = photo;
-			contact.name = name;
-		}
-		else {
-			contact = new Contact(photo, name);
-			contacts.put(imId, contact);
-		}
 	}
 	
 	/**
@@ -472,6 +438,12 @@ public class Me extends User implements Serializable, IReactor {
 			Doctor doctor = new Doctor();
 			if(doctor.parse(visitor.getVisitor("privateDoctor"))) {
 				this.doctor = doctor;
+				 if(!Text.isBlank(doctor.photoUrl)) {
+					 Host.doImage("image", new ImageResponse(doctor.photoUrl) {
+						@Override
+						public void onFinished(Bitmap content) { }
+					 }, doctor.photoUrl);
+				 }
 			}
 		}
 		return true;
@@ -513,14 +485,26 @@ public class Me extends User implements Serializable, IReactor {
 
 	@Override
 	public Bitmap getPhoto(String userId) {
-		Contact contact = contacts.get(userId);
-		if(null == contact || null == contact.photo) {
-			return null;
+		Bitmap cache = contacts.get(userId);
+		if(null != cache) {
+			return cache;
 		}
 		if(null != doctor && userId.equals(doctor.imId)) {
-			return GraphicsHelper.decodeResource(Program.application, R.drawable.icon_doctor_default);
+			cache = doctor.photo();
 		}
-		return GraphicsHelper.decodeFile(new File(contact.photo));
+		else if(userId.equals(this.fetchIMId(IM.TYPE_PHONE))) {
+			cache = this.photo();
+		}
+		else {
+			Friend friend = fetchFriendByIM(userId);
+			if(null != friend) {
+				cache = friend.photo();
+			}
+		}
+		if(null != cache) {
+			contacts.put(userId, cache);
+		}
+		return cache;
 	}
 
 	@Override
@@ -540,11 +524,7 @@ public class Me extends User implements Serializable, IReactor {
 		if(null != doctor && userId.equals(doctor.imId)) {
 			return doctor.name;
 		}
-		Contact contact = contacts.get(userId);
-		if(null == contact || null == contact.name) {
-			return "未知";
-		}
-		return contact.name;
+		return "未知";
 	}
 
 	@Override
@@ -578,7 +558,7 @@ public class Me extends User implements Serializable, IReactor {
 			Host.doCommand("Hit", new CommonResponse<String>() {
 				@Override
 				public void onFinished(String content) { }
-			}, "user_input_content=" + object.toString());
+			}, "user-platform-onlineDiag", object.toString());
 			return;
 		}
 		if(null != type && (Notify.TYPE_5 == type || Notify.TYPE_9 == type)) {

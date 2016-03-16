@@ -11,6 +11,7 @@ import com.alipay.sdk.app.PayTask;
 import com.qcast.tower.R;
 import com.qcast.tower.thirdparty.alipay.PayResult;
 import com.qcast.tower.thirdparty.alipay.SignUtils;
+import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.etc.Controller;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -108,6 +109,8 @@ public class PayActivity extends ActivityEx {
 	private String productName;
 	private String productDescription;
 	private int productPrice;
+	private String sign;
+	private String tradeNumber;
 	
 	private int status = RESULT_CANCEL;
 	private int commandId = 0;
@@ -148,6 +151,14 @@ public class PayActivity extends ActivityEx {
 		if(null == productDescription) {
 			productDescription = "";
 		}
+		sign = this.getIntent().getStringExtra("sign");
+		if(null == sign) {
+			sign = "";
+		}
+		tradeNumber = this.getIntent().getStringExtra("tradeNumber");
+		if(null == tradeNumber) {
+			tradeNumber = "";
+		}
 		productPrice = this.getIntent().getIntExtra("price", 0);
 		//
 		labName.setText(productName);
@@ -182,18 +193,33 @@ public class PayActivity extends ActivityEx {
 					}).show();
 			return;
 		}
-		String orderInfo = getOrderInfo(productName, productDescription, String.valueOf(productPrice / 100));
-		/**
-		 * 特别注意，这里的签名逻辑需要放在服务端，切勿将私钥泄露在代码中！
-		 */
-		String sign = sign(orderInfo);
-		try {
-			/**
-			 * 仅需对sign 做URL编码
-			 */
-			sign = URLEncoder.encode(sign, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		String priceString = String.valueOf(productPrice);
+		if(priceString.length() <= 2) {
+			priceString = ("00" + priceString).substring(priceString.length() - 1);
+		}
+		priceString = priceString.substring(0, priceString.length() - 2) + "." + priceString.substring(priceString.length() - 2);
+		String orderInfo = getOrderInfo(productName, productDescription, priceString);
+		String sign = null;
+		if(Text.isBlank(this.sign)) {
+			sign = sign(orderInfo);
+			try {
+				/**
+				 * 仅需对sign 做URL编码
+				 */
+				sign = URLEncoder.encode(sign, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			try {
+				/**
+				 * 仅需对sign 做URL编码
+				 */
+				sign = URLEncoder.encode(this.sign, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		}
 
 		/**
@@ -291,14 +317,19 @@ public class PayActivity extends ActivityEx {
 	 * 
 	 */
 	private String getOutTradeNo() {
-		SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
-		Date date = new Date();
-		String key = format.format(date);
+		if(Text.isBlank(tradeNumber)) {
+			SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
+			Date date = new Date();
+			String key = format.format(date);
 
-		Random r = new Random();
-		key = key + r.nextInt();
-		key = key.substring(0, 15);
-		return key;
+			Random r = new Random();
+			key = key + r.nextInt();
+			key = key.substring(0, 15);
+			return key;
+		}
+		else {
+			return tradeNumber;
+		}
 	}
 
 	/**

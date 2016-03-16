@@ -15,9 +15,11 @@
         android:src="@drawable/icon_doctor_default" />
     <ImageView
         android:id="@+id/selectdoctor_image_status"
-        android:layout_width="80dp"
-        android:layout_height="fill_parent"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
 		android:scaleType="fitXY"
         android:src="@drawable/icon_selected">
     </ImageView>

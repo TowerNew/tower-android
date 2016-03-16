@@ -3,7 +3,7 @@
 	<protocol name="Hit">
 		<url>
 		<![CDATA[
-http://beta.service.wehop.cn/counting-platform-web/rest/appHit#[1]
+http://beta.service.wehop.cn/counting-platform-web/rest/appHit#title=[1]&user_input_content=[2]
 		]]>
 		</url>
 		<mock></mock>
@@ -43,7 +43,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html
 	<protocol name="MyMoney">
 		<url>
 		<![CDATA[
-http://m.dianping.com
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/money.html?token=[1]
 		]]>
 		</url>
 		<mock></mock>
@@ -67,7 +67,7 @@ http://m.dianping.com
 	<protocol name="PayNotify">
 		<url>
 		<![CDATA[
-http://beta.service.wehop.cn/pay-platform-web/rest/alipay/notify
+http://beta.service.wehop.cn/finance-pay-web/rest/alipay/notify
 		]]>
 		</url>
 		<mock></mock>
@@ -1682,7 +1682,7 @@ user-platform-web/rest/user/comment#doctorId=[1]&attitude=[2]&score1=[3]&score2=
 	<protocol name="HomePage">
         <url>
         <![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/banner-index.html?token=[1]&region=[2]
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/banner-index.html?token=[1]&regionId=[2]
        ]]>
         </url>
     	<mock></mock>

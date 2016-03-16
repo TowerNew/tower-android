@@ -8,6 +8,8 @@ import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.framework.Helper;
 import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.response.ImageResponse;
+import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
 
@@ -16,6 +18,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -76,7 +79,15 @@ public class UserActivity extends FragmentEx {
 			btnPhoto.setBackgroundResource(R.drawable.user_photo_null);
 		}
 		else {
-			btnPhoto.setBackgroundResource(R.drawable.user_photo_default);
+            Host.doImage("image", new ImageResponse(Me.instance.photoUrl) {
+				@Override
+				public void onFinished(Bitmap content) {
+					if(null == content) {
+						return;
+					}
+					btnPhoto.setImageBitmap(GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(content, 200, 200), Color.WHITE, 4));
+				}
+            }, Me.instance.photoUrl);
 		}
 	}
 

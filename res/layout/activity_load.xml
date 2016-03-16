@@ -10,6 +10,6 @@
 	    android:layout_height="match_parent"
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignParentTop="true"
-	    android:scaleType="fitXY"
+	    android:scaleType="centerCrop"
 	    android:src="@drawable/load_logo" />
 </RelativeLayout>

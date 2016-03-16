@@ -1,8 +1,14 @@
 package com.qcast.tower.business.structure;
 
+import java.io.File;
 import java.io.Serializable;
 
+import android.graphics.Bitmap;
+
+import com.qcast.tower.framework.Storage;
 import com.slfuture.carrie.base.json.JSONVisitor;
+import com.slfuture.pluto.etc.GraphicsHelper;
+import com.slfuture.pretty.im.Module;
 
 /**
  * 医生信息
@@ -59,5 +65,25 @@ public class Doctor implements Serializable {
 		description = visitor.getString("description");
 		imId = visitor.getString("imUsername");
 		return true;
+	}
+
+	/**
+	 * 获取头像位图
+	 * 
+	 * @return 头像位图
+	 */
+	public Bitmap photo() {
+		File file = Storage.getImageFileByUrl(photoUrl);
+		if(!file.exists()) {
+			return null;
+		}
+		return GraphicsHelper.decodeFile(file, 200, 200);
+	}
+	
+	/**
+	 * 获取未读消息个数
+	 */
+	public int unreadMessageCount() {
+		return Module.getUnreadMessageCount(imId);
 	}
 }

@@ -1,12 +1,17 @@
 package com.qcast.tower.business.user;
 
+import java.io.File;
 import java.io.Serializable;
 import java.text.ParseException;
 
+import android.graphics.Bitmap;
+
 import com.qcast.tower.business.structure.IM;
+import com.qcast.tower.framework.Storage;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.time.Date;
 import com.slfuture.carrie.base.type.List;
+import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pretty.im.Module;
 
 /**
@@ -31,9 +36,9 @@ public class User implements Serializable {
 	 */
 	public String nickname;
 	/**
-	 * 头像
+	 * 头像路径
 	 */
-	public String photo;
+	public String photoUrl;
 	/**
 	 * 出生年月
 	 */
@@ -57,7 +62,7 @@ public class User implements Serializable {
 	public boolean parse(JSONVisitor visitor) {
 		id = visitor.getString("userGlobalId");
 		nickname = visitor.getString("nickname");
-		photo = visitor.getString("photo");
+		photoUrl = visitor.getString("photo");
 		if(null != visitor.getString("birthday")) {
 			try {
 				birthday = Date.parse(visitor.getString("birthday"));
@@ -125,5 +130,18 @@ public class User implements Serializable {
 	 */
 	public String nickname() {
 		return nickname;
+	}
+
+	/**
+	 * 获取头像位图
+	 * 
+	 * @return 头像位图
+	 */
+	public Bitmap photo() {
+		File file = Storage.getImageFileByUrl(photoUrl);
+		if(!file.exists()) {
+			return null;
+		}
+		return GraphicsHelper.decodeFile(file, 200, 200);
 	}
 }

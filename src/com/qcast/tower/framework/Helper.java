@@ -1,6 +1,7 @@
 package com.qcast.tower.framework;
 
 import com.qcast.tower.Program;
+import com.qcast.tower.business.Me;
 import com.qcast.tower.view.form.PayActivity;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONVisitor;
@@ -39,6 +40,8 @@ public class Helper {
 				String name = visitor.getString("name");
 				String description = visitor.getString("description");
 				int price = visitor.getInteger("price");
+				String sign = visitor.getString("sign");
+				String tradeNumber = visitor.getString("tradeNumber");
 				//
 				Controller.doJoin(9527, new IEventable<Integer>() {
 					@Override
@@ -55,9 +58,28 @@ public class Helper {
 				intent.putExtra("commandId", 9527);
 				intent.putExtra("name", name);
 				intent.putExtra("description", description);
+				intent.putExtra("sign", sign);
+				intent.putExtra("tradeNumber", tradeNumber);
 				intent.putExtra("price", price);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
 				Program.application.startActivity(intent);
+			}
+		});
+		bundle.putSerializable("1", new IBrowserHandler() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String name() {
+				return "token";
+			}
+			@Override
+			public void on(String parameter, final IEventable<String> callback) {
+				if(null == Me.instance) {
+					callback.on(null);
+				}
+				else {
+					callback.on(Me.instance.token);
+				}
 			}
 		});
 		intent.putExtra("handler", bundle);

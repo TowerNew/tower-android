@@ -198,11 +198,11 @@ public class UserInfoActivity extends ActivityEx {
 			}
 		});
 		final ImageView imgPhoto = (ImageView) this.findViewById(R.id.userinfo_image_photo);
-		if(Text.isBlank(Me.instance.photo)) {
+		if(Text.isBlank(Me.instance.photoUrl)) {
 			imgPhoto.setImageBitmap(GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(BitmapFactory.decodeResource(this.getResources(), R.drawable.user_photo_default), 200, 200), Color.WHITE, 4));
 		}
 		else {
-            Host.doImage("image", new ImageResponse(Me.instance.photo) {
+            Host.doImage("image", new ImageResponse(Me.instance.photoUrl) {
 				@Override
 				public void onFinished(Bitmap content) {
 					if(null == content) {
@@ -210,7 +210,7 @@ public class UserInfoActivity extends ActivityEx {
 					}
 					imgPhoto.setImageBitmap(GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(content, 200, 200), Color.WHITE, 4));
 				}
-            }, Me.instance.photo);
+            }, Me.instance.photoUrl);
 		}
 		imgPhoto.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -375,7 +375,7 @@ public class UserInfoActivity extends ActivityEx {
 				}
 				else if("photo".equals(field)) {
 					imgPhoto.setImageBitmap(GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(BitmapFactory.decodeFile(value), 200, 200), Color.WHITE, 4));
-					Me.instance.photo = data;
+					Me.instance.photoUrl = data;
 				}
 				try {
 					Me.instance.save();

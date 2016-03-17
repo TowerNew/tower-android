@@ -68,7 +68,7 @@ public class UserActivity extends FragmentEx {
 	@Override
 	public void onResume() {
 		super.onResume();
-		TextView txtCaption = (TextView) this.getActivity().findViewById(R.id.user_text_caption);
+		TextView txtCaption = (TextView) this.getActivity().findViewById(R.id.user_label_caption);
 		if(null == Me.instance) {
 			txtCaption.setText("点击登录");
 		}
@@ -99,6 +99,7 @@ public class UserActivity extends FragmentEx {
 	 * 界面预处理
 	 */
 	public void prepare() {
+		dealList();
 		btnPhoto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -111,7 +112,6 @@ public class UserActivity extends FragmentEx {
 				UserActivity.this.startActivity(intent);
 			}
 		});
-		dealList();
 	}
 
 	/**
@@ -208,6 +208,7 @@ public class UserActivity extends FragmentEx {
                 }
             }
 		});
+		btnPhoto = (ImageButton) viewHead.findViewById(R.id.user_button_photo);
 		viewMemo1 = viewHead.findViewById(R.id.memo_layout_1);
 		viewMemo1.setOnClickListener(new View.OnClickListener() {
 			@Override

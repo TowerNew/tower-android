@@ -617,6 +617,37 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				browser.loadUrl("about:blank");
 			}
 		});
+
+		View viewActivity1 = (View) viewHead.findViewById(R.id.home_layout_left);
+		viewActivity1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String token = "";
+				if(null != Me.instance) {
+					token = Me.instance.token;
+				}
+				String regionId = "";
+				if(null != Profile.instance().region) {
+					regionId = String.valueOf(Profile.instance().region.id);
+				}
+				Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("activity1", token, regionId));
+			}
+		});
+		View viewActivity2 = (View) viewHead.findViewById(R.id.home_layout_right);
+		viewActivity2.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String token = "";
+				if(null != Me.instance) {
+					token = Me.instance.token;
+				}
+				String regionId = "";
+				if(null != Profile.instance().region) {
+					regionId = String.valueOf(Profile.instance().region.id);
+				}
+				Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("activity2", token, regionId));
+			}
+		});
 		this.getActivity().findViewById(R.id.home_layout_header).bringToFront();
 	}
 

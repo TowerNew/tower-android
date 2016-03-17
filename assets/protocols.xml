@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <protocols domain="ppe.service.wehop.cn" mock="false" storage="tower/image/">
+	<protocol name="activity1">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/activity1.html?token=[1]&regionId=[2]
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
+	<protocol name="activity2">
+		<url>
+		<![CDATA[
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/activity2.html?token=[1]&regionId=[2]
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
 	<protocol name="Hit">
 		<url>
 		<![CDATA[

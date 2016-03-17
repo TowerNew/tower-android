@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
@@ -39,19 +38,21 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 			this.finish();
 			return;
 		}
-		if(Me.instance.isAuthenticated) {
-			Toast.makeText(this, "您的身份证信息尚未认证通过", Toast.LENGTH_LONG).show();
-			Intent intent = new Intent(ArchiveActivity.this, UserInfoActivity.class);
-			this.startActivity(intent);
-			this.finish();
-			return;
-		}
+//		if(!Me.instance.isAuthenticated) {
+//			Toast.makeText(this, "您的身份证信息尚未认证通过", Toast.LENGTH_LONG).show();
+//			Intent intent = new Intent(ArchiveActivity.this, UserInfoActivity.class);
+//			this.startActivity(intent);
+//			this.finish();
+//			return;
+//		}
 		imgClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				ArchiveActivity.this.finish();
 			}
 		});
+		webData.getSettings().setJavaScriptEnabled(true);
+		webData.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		webData.loadUrl(Host.fetchURL("jiankangdangan", Me.instance.token));
 		viewExamination.setOnClickListener(new View.OnClickListener() {
 			@Override

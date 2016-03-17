@@ -53,6 +53,7 @@ import android.widget.Button;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -591,6 +592,13 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		imgDot1 = (ImageView) viewHead.findViewById(R.id.home_image_dot1);
 		imgDot2 = (ImageView) viewHead.findViewById(R.id.home_image_dot2);
 		browser = (ScrollWebView) viewHead.findViewById(R.id.home_browser);
+		
+		DisplayMetrics metrics = new DisplayMetrics();
+		this.getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		LayoutParams lp = (LayoutParams) browser.getLayoutParams();
+		lp.height = metrics.widthPixels * 7 / 10;
+		browser.setLayoutParams(lp);
+		
 		browser.getSettings().setJavaScriptEnabled(true);
 		browser.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		browser.setWebViewClient(new WebViewClient() {

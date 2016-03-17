@@ -15,8 +15,8 @@
         android:src="@drawable/icon_doctor_default" />
     <ImageView
         android:id="@+id/selectdoctor_image_status"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
@@ -28,7 +28,9 @@
         android:layout_height="fill_parent"
         android:layout_toRightOf="@id/selectdoctor_image_photo"
         android:layout_toLeftOf="@id/selectdoctor_image_status"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+		android:paddingBottom="5dp">
         <TextView
             android:id="@+id/selectdoctor_label_name"
             android:layout_width="wrap_content"
@@ -64,17 +66,5 @@
             android:textSize="13sp"
             android:textColor="@color/grey"
             android:text="医生头衔" />
-        <TextView
-            android:id="@+id/selectdoctor_label_resume"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/selectdoctor_label_name"
-            android:layout_above="@id/selectdoctor_label_title"
-            android:layout_marginTop="5dp"
-            android:textSize="13sp"
-            android:textColor="@color/grey"
-            android:text="医生简历" />
 	</RelativeLayout>
 </RelativeLayout>

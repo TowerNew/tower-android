@@ -414,7 +414,7 @@ public class Me extends User implements Serializable, IReactor {
 					}
 				}
 				catch (ParseException e) { }
-				if(3 == visitor.getInteger("type", 1)) {
+				if(3 == item.getInteger("type", 1)) {
 					isAuthenticated = true;
 				}
 				else {
@@ -423,6 +423,7 @@ public class Me extends User implements Serializable, IReactor {
 				gender = item.getInteger("gender", 0);
 				name = item.getString("name");
 				idNumber = item.getString("idnumber");
+				snapshot = visitor.getString("idcardfront");
 				continue;
 			}
 			// 非注册亲戚

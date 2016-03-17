@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="beta.service.wehop.cn" mock="false" storage="tower/image/">
+<protocols domain="ppe.service.wehop.cn" mock="false" storage="tower/image/">
 	<protocol name="Hit">
 		<url>
 		<![CDATA[
-http://beta.service.wehop.cn/counting-platform-web/rest/appHit#title=[1]&user_input_content=[2]
+http://ppe.service.wehop.cn/counting-platform-web/rest/appHit#title=[1]&user_input_content=[2]
 		]]>
 		</url>
 		<mock></mock>
@@ -11,7 +11,7 @@ http://beta.service.wehop.cn/counting-platform-web/rest/appHit#title=[1]&user_in
 	<protocol name="daipingfen">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=4
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=4
 		]]>
 		</url>
 		<mock></mock>
@@ -19,7 +19,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html
 	<protocol name="daifukuan">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=1
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=1
 		]]>
 		</url>
 		<mock></mock>
@@ -27,7 +27,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html
 	<protocol name="daiyuyue">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=2
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=2
 		]]>
 		</url>
 		<mock></mock>
@@ -35,7 +35,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html
 	<protocol name="MyOrder">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0
 		]]>
 		</url>
 		<mock></mock>
@@ -43,7 +43,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html
 	<protocol name="MyMoney">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/money.html?token=[1]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/money.html?token=[1]
 		]]>
 		</url>
 		<mock></mock>
@@ -51,7 +51,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/money.html?tok
 	<protocol name="MyCollection">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/favorate.html?token=[1]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/favorate.html?token=[1]
 		]]>
 		</url>
 		<mock></mock>
@@ -67,7 +67,7 @@ http://cdn.oss.wehop-resources.wehop.cn/banner/sites/v-1/agreement.html
 	<protocol name="PayNotify">
 		<url>
 		<![CDATA[
-http://beta.service.wehop.cn/finance-pay-web/rest/alipay/notify
+http://ppe.service.wehop.cn/finance-pay-web/rest/alipay/notify
 		]]>
 		</url>
 		<mock></mock>
@@ -75,7 +75,7 @@ http://beta.service.wehop.cn/finance-pay-web/rest/alipay/notify
 	<protocol name="wodeshoucang">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/favorate.html?token=[1]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/favorate.html?token=[1]
 		]]>
 		</url>
 		<mock></mock>
@@ -83,7 +83,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/favorate.html?
     <protocol name="guahaodingdan">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=1
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=1
 		]]>
 		</url>
 		<mock></mock>
@@ -91,7 +91,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html
 	<protocol name="liliaodingdan">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=2
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=2
 		]]>
 		</url>
 		<mock></mock>
@@ -99,7 +99,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html
 	<protocol name="tijiandingdan">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=3
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=3
 		]]>
 		</url>
 		<mock></mock>
@@ -107,7 +107,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/orderlist.html
 	<protocol name="tijianbaogao">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]&regionId=[2]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]&regionId=[2]
 		]]>
 		</url>
 		<mock></mock>
@@ -115,7 +115,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.htm
 	<protocol name="dianzibingli">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]&regionId=[2]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]&regionId=[2]
 		]]>
 		</url>
 		<mock></mock>
@@ -123,7 +123,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.htm
 	<protocol name="chuandaishuju">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]
 		]]>
 		</url>
 		<mock></mock>
@@ -132,7 +132,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthfile.htm
 	<protocol name="jiankangdangan">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthscoreentry.html?token=[1]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/healthscoreentry.html?token=[1]
 		]]>
 		</url>
 		<mock></mock>
@@ -140,7 +140,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/healthscoreent
 	<protocol name="yuyuetijian">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/physical.html?regionId=[1]&token=[2]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/physical.html?regionId=[1]&token=[2]
 		]]>
 		</url>
 		<mock></mock>
@@ -148,7 +148,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/physical.html?
 	<protocol name="yuyueguahao">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/registration.html?regionId=[1]&token=[2]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/registration.html?regionId=[1]&token=[2]
 		]]>
 		</url>
 		<mock></mock>
@@ -156,7 +156,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/registration.h
 	<protocol name="yuyueliliao">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/therapy.html?regionId=[1]&token=[2]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/therapy.html?regionId=[1]&token=[2]
 		]]>
 		</url>
 		<mock></mock>
@@ -966,7 +966,7 @@ user-platform-web/rest/loadSymptoms#partId=[1]&sex=[2]
      <protocol name="loadDisease">
         <url>
         <![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/sites/common/v-1/selfDiagDiagnose.html?uuid=[1]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/sites/common/v-1/selfDiagDiagnose.html?uuid=[1]
         ]]>
         </url>
 	<mock></mock>
@@ -1682,7 +1682,7 @@ user-platform-web/rest/user/comment#doctorId=[1]&attitude=[2]&score1=[3]&score2=
 	<protocol name="HomePage">
         <url>
         <![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/banner-index.html?token=[1]&regionId=[2]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/banner-index.html?token=[1]&regionId=[2]
        ]]>
         </url>
     	<mock></mock>

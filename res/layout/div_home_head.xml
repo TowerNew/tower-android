@@ -163,13 +163,17 @@
 			android:id="@+id/home_image_dot1"
 	        android:layout_width="6dp"
 	        android:layout_height="6dp"
-	        android:layout_margin="10dp"
+	        android:layout_marginBottom="10dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
 	        android:src="@drawable/icon_dot_selected" />
 		<ImageView 
 			android:id="@+id/home_image_dot2"
 	        android:layout_width="6dp"
 	        android:layout_height="6dp"
-	        android:layout_margin="10dp"
+	        android:layout_marginBottom="10dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
 	        android:src="@drawable/icon_dot_unselected" />
 	</LinearLayout>
 	<View

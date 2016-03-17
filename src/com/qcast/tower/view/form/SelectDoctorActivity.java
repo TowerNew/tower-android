@@ -65,8 +65,8 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 			}
 		});
 		SimpleAdapter listItemAdapter = new SimpleAdapter(SelectDoctorActivity.this, doctorList, R.layout.listitem_selectdoctor,
-				new String[]{"name", "photo", "department", "resume", "title", "status"}, 
-				new int[]{R.id.selectdoctor_label_name, R.id.selectdoctor_image_photo, R.id.selectdoctor_label_department, R.id.selectdoctor_label_resume, R.id.selectdoctor_label_title, R.id.selectdoctor_image_status});
+				new String[]{"name", "photo", "department", "title", "status"}, 
+				new int[]{R.id.selectdoctor_label_name, R.id.selectdoctor_image_photo, R.id.selectdoctor_label_department, R.id.selectdoctor_label_title, R.id.selectdoctor_image_status});
 		listItemAdapter.setViewBinder(new ViewBinder() {
 			@SuppressWarnings("deprecation")
 			public boolean setViewValue(View view, Object data, String textRepresentation) {
@@ -100,7 +100,9 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 						}
 						Me.instance.refreshDoctor(SelectDoctorActivity.this, new IEventable<Boolean>() {
 							@Override
-							public void on(Boolean data) { }
+							public void on(Boolean data) {
+								SelectDoctorActivity.this.finish();
+							}
 						});
 					}
 				}, map.get("id"), Me.instance.token);
@@ -126,7 +128,6 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 					map.put("name", doctor.getString("name"));
 					map.put("photo", doctorDefault);
 					map.put("department", doctor.getString("department"));
-					map.put("resume", doctor.getString("resume"));
 					map.put("title", doctor.getString("title"));
 					map.put("status", bitmap);
 					if(null != Me.instance && null != Me.instance.doctor) {

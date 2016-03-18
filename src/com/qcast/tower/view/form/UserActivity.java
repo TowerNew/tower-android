@@ -73,7 +73,7 @@ public class UserActivity extends FragmentEx {
 			txtCaption.setText("点击登录");
 		}
 		else {
-			txtCaption.setText(Me.instance.nickname);
+			txtCaption.setText(Me.instance.nickname());
 		}
 		if(null == Me.instance) {
 			btnPhoto.setImageResource(R.drawable.user_photo_null);

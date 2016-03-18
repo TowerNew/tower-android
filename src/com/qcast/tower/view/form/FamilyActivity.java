@@ -9,6 +9,7 @@ import com.qcast.tower.business.Me;
 import com.qcast.tower.business.user.Relative;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
+import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -178,7 +179,12 @@ public class FamilyActivity extends OnlyUserActivity {
 		for(Relative relative : Me.instance.relatives) {
 			HashMap<String, Object> memberMap = new HashMap<String, Object>();
 			memberMap.put("userId", relative.id);
-			memberMap.put("name", relative.nickname());
+			if(Text.isBlank(relative.nickname())) {
+				memberMap.put("name", relative.name);
+			}
+			else {
+				memberMap.put("name", relative.nickname());
+			}
 			memberMap.put("status", relative.isAuthenticated);
 			memberList.add(memberMap);
 		}

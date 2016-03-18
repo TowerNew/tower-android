@@ -60,7 +60,7 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="50dp"
 	        android:orientation="horizontal"
-	        android:layout_marginTop="1px"
+	        android:layout_marginTop="1dp"
 			android:background="@color/white">
 			<TextView
 			    android:id="@+id/config_label_password"

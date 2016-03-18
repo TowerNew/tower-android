@@ -50,7 +50,7 @@ public class SiriActivity extends OnlyUserActivity {
 					}
 					if(sentry > 5 * 2) {
 						File file = recorder.stop();
-						send(file, (int) recorder.duration());
+						send(file, (int) (recorder.duration() / 1000));
 						recorder = null;
 						Me.instance.doChat(SiriActivity.this, null, Me.instance.doctor.imId);
 						SiriActivity.this.finish();

@@ -98,7 +98,7 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ArchiveActivity.this, BrowserActivity.class);
-				intent.putExtra("url", Host.fetchURL("chuandaishuju", Profile.instance().region.id, Me.instance.token));
+				intent.putExtra("url", Host.fetchURL("chuandaishuju", Me.instance.token, Profile.instance().region.id));
 				ArchiveActivity.this.startActivity(intent);
 			}
 		});

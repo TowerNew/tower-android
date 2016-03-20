@@ -200,7 +200,7 @@ public class PayActivity extends ActivityEx {
 		priceString = priceString.substring(0, priceString.length() - 2) + "." + priceString.substring(priceString.length() - 2);
 		String orderInfo = getOrderInfo(productName, productDescription, priceString);
 		String sign = null;
-		if(Text.isBlank(this.sign)) {
+		if(!Text.isBlank(this.sign)) {
 			sign = sign(orderInfo);
 			try {
 				/**

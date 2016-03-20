@@ -131,7 +131,7 @@ http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/healthfile.html
 	<protocol name="dianzibingli">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]&regionId=[2]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/dianzibingli.html?token=[1]&regionId=[2]
 		]]>
 		</url>
 		<mock></mock>
@@ -139,7 +139,7 @@ http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/healthfile.html
 	<protocol name="chuandaishuju">
 		<url>
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/chuandaishuju.html?token=[1]&regionId=[2]
 		]]>
 		</url>
 		<mock></mock>

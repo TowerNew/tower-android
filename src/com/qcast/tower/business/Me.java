@@ -423,7 +423,7 @@ public class Me extends User implements Serializable, IReactor {
 				gender = item.getInteger("gender", 0);
 				name = item.getString("name");
 				idNumber = item.getString("idnumber");
-				snapshot = visitor.getString("idcardfront");
+				snapshot = item.getString("idcardfront");
 				continue;
 			}
 			// 非注册亲戚

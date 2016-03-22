@@ -23,7 +23,7 @@ import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.structure.MyChatHistoryModel;
 import com.qcast.tower.business.structure.MyReserveModel;
 import com.qcast.tower.framework.Storage;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
@@ -69,7 +69,7 @@ public class MyReserveHistoryActivity extends Activity{
     }
 
     private void loadData() {
-        Host.doCommand("reserveHistory", new CommonResponse<String>() {
+        Networking.doCommand("reserveHistory", new CommonResponse<String>() {
             @Override
             public void onFinished(String content) {
                 if (Response.CODE_SUCCESS != code()) {
@@ -136,7 +136,7 @@ public class MyReserveHistoryActivity extends Activity{
                     }
                     // 加载图片
                     if (!TextUtils.isEmpty(photoName)) {
-                        Host.doImage("image", new ImageResponse(photoName, dataList.size() - 1) {
+                        Networking.doImage("image", new ImageResponse(photoName, dataList.size() - 1) {
                             @Override
                             public void onFinished(Bitmap content) {
                                 // DoctorModel doctorModel = dataList.get((Integer) tag);

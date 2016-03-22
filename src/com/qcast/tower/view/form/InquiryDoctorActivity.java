@@ -23,7 +23,7 @@ import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.structure.DoctorModel;
 import com.qcast.tower.framework.Storage;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
@@ -119,7 +119,7 @@ public class InquiryDoctorActivity extends Activity {
     }
 
     private void loadData() {
-        Host.doCommand("doctorlist", new CommonResponse<String>(page) {
+        Networking.doCommand("doctorlist", new CommonResponse<String>(page) {
             @Override
             public void onFinished(String content) {
                 if (Response.CODE_SUCCESS != code()) {
@@ -196,7 +196,7 @@ public class InquiryDoctorActivity extends Activity {
                     }
                     // 加载图片
                     if(!TextUtils.isEmpty(photoName)) {
-                        Host.doImage("image", new ImageResponse(photoName, dataList.size() - 1) {
+                        Networking.doImage("image", new ImageResponse(photoName, dataList.size() - 1) {
                             @Override
                             public void onFinished(Bitmap content) {
                                 // DoctorModel doctorModel = dataList.get((Integer) tag);

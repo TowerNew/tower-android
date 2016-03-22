@@ -5,7 +5,7 @@ import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.structure.ExaminationPackage;
 import com.qcast.tower.business.structure.TimePeriod;
 import com.qcast.tower.framework.Storage;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
@@ -179,7 +179,7 @@ public class ExaminationActivity extends Activity {
 	 * 加载体检列表
 	 */
 	public void loadExaminationList() {
-		Host.doCommand("examinationlist", new CommonResponse<String>() {
+		Networking.doCommand("examinationlist", new CommonResponse<String>() {
 			@Override
 			public void onFinished(String content) {
 				if(Response.CODE_SUCCESS != code()) {
@@ -208,7 +208,7 @@ public class ExaminationActivity extends Activity {
 			Toast.makeText(ExaminationActivity.this, "请选择套餐和时间段", Toast.LENGTH_LONG).show();
 			return false;
 		}
-		Host.doCommand("reserveExamination", new CommonResponse<String>() {
+		Networking.doCommand("reserveExamination", new CommonResponse<String>() {
 			@Override
 			public void onFinished(String content) {
 				if(Response.CODE_SUCCESS != code()) {
@@ -277,7 +277,7 @@ public class ExaminationActivity extends Activity {
 		final ImageView image = (ImageView) this.findViewById(R.id.examination_image_description);
 		if(null != getCurrentPackage().image && !"".equals(getCurrentPackage().image)) {
 			String imageName = Storage.getImageName(getCurrentPackage().image);
-            Host.doImage("image", new ImageResponse(imageName, null) {
+            Networking.doImage("image", new ImageResponse(imageName, null) {
 				@Override
 				public void onFinished(Bitmap content) {
 					image.setImageBitmap(content);

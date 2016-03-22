@@ -10,7 +10,7 @@ import com.qcast.tower.business.user.Relative;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pretty.general.utility.GeneralHelper;
@@ -142,7 +142,7 @@ public class FamilyActivity extends OnlyUserActivity {
 							.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 									@Override  
 									public void onClick(DialogInterface dialog, int which) {
-										Host.doCommand("RemoveOwner", new JSONResponse(FamilyActivity.this) {
+										Networking.doCommand("RemoveOwner", new JSONResponse(FamilyActivity.this) {
 											@Override
 											public void onFinished(JSONVisitor content) {
 												if(null == content || content.getInteger("code", 0) <= 0) {

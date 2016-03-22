@@ -7,7 +7,7 @@ import com.qcast.tower.R;
 import com.qcast.tower.business.Profile;
 import com.qcast.tower.business.structure.City;
 import com.qcast.tower.business.structure.Region;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
@@ -192,7 +192,7 @@ public class RegionActivity extends ActivityEx {
 	 * 加载数据
 	 */
 	public void load() {
-		Host.doCommand("regionlist", new JSONResponse(RegionActivity.this) {
+		Networking.doCommand("regionlist", new JSONResponse(RegionActivity.this) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content || content.getInteger("code", 0) < 0) {

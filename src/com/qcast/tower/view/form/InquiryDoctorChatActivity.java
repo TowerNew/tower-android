@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.structure.ChatMsgEntity;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.core.IResponse;
 import com.qcast.tower.view.adapter.ChatMsgViewAdapter;
@@ -82,7 +82,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
     }
 
     private void requestChannel() {
-        Host.doCommand("talk", new CommonResponse<String>() {
+        Networking.doCommand("talk", new CommonResponse<String>() {
             @Override
             public void onFinished(String content) {
                 if (IResponse.CODE_SUCCESS != code()) {
@@ -146,7 +146,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
                 @Override
                 public void run() {
                     if (!breakFlag && !TextUtils.isEmpty(channel)) {
-                        Host.doCommand("pull", new CommonResponse<String>() {
+                        Networking.doCommand("pull", new CommonResponse<String>() {
                             @Override
                             public void onFinished(String content) {
                                 if(null == content){
@@ -218,7 +218,7 @@ public class InquiryDoctorChatActivity extends Activity implements View.OnClickL
         imm.hideSoftInputFromWindow(mEditTextContent.getWindowToken(), 0) ;
         mEditTextContent.setText("");// 清空编辑框数据
         if (contString.length() > 0) {
-            Host.doCommand("push", new CommonResponse<String>() {
+            Networking.doCommand("push", new CommonResponse<String>() {
                 @Override
                 public void onFinished(String content) {
                     if(null == content){

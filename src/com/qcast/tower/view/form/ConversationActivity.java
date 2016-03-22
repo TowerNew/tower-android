@@ -3,7 +3,7 @@ package com.qcast.tower.view.form;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.type.Table;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
@@ -155,7 +155,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 								.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 										@Override  
 										public void onClick(DialogInterface dialog, int which) {
-											Host.doCommand("RemoveFamily", new JSONResponse(ConversationActivity.this.getActivity()) {
+											Networking.doCommand("RemoveFamily", new JSONResponse(ConversationActivity.this.getActivity()) {
 												@Override
 												public void onFinished(JSONVisitor content) {
 													if(null == content || content.getInteger("code", 0) <= 0) {
@@ -254,7 +254,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 			map.put("photo", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_user_default));
 		}
 		else {
-			Host.doImage("image", new ImageResponse(Me.instance.photoUrl, map) {
+			Networking.doImage("image", new ImageResponse(Me.instance.photoUrl, map) {
 				@SuppressWarnings("unchecked")
 				@Override
 				public void onFinished(Bitmap content) {
@@ -280,7 +280,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 				map.put("photo", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_user_default));
 			}
 			else {
-				Host.doImage("image", new ImageResponse(friend.photoUrl, map) {
+				Networking.doImage("image", new ImageResponse(friend.photoUrl, map) {
 					@SuppressWarnings("unchecked")
 					@Override
 					public void onFinished(Bitmap content) {

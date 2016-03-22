@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.structure.MyWalletModel;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.carrie.base.json.JSONArray;
@@ -57,7 +57,7 @@ public class MyWalletActivity extends Activity {
     }
 
     private void loadData() {
-        Host.doCommand("myWallet", new CommonResponse<String>() {
+        Networking.doCommand("myWallet", new CommonResponse<String>() {
             @Override
             public void onFinished(String content) {
                 if (Response.CODE_SUCCESS != code()) {

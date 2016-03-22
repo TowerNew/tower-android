@@ -11,7 +11,7 @@ import com.qcast.tower.business.Me;
 import com.qcast.tower.business.structure.Notify;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -63,12 +63,12 @@ public class AddRequestActivity extends OnlyUserActivity {
             @Override
             public void onClick(View v) {
             	if(!model.hasRead) {
-            		Host.doCommand("readMessage", new CommonResponse<String>() {
+            		Networking.doCommand("readMessage", new CommonResponse<String>() {
                         @Override
                         public void onFinished(String content) { }
                     }, Me.instance.token, model.id);
             	}
-                Host.doCommand("responseFamily", new JSONResponse(AddRequestActivity.this) {
+                Networking.doCommand("responseFamily", new JSONResponse(AddRequestActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null == content) {
@@ -83,12 +83,12 @@ public class AddRequestActivity extends OnlyUserActivity {
             @Override
             public void onClick(View v) {
             	if(!model.hasRead) {
-            		Host.doCommand("readMessage", new CommonResponse<String>() {
+            		Networking.doCommand("readMessage", new CommonResponse<String>() {
                         @Override
                         public void onFinished(String content) { }
                     }, Me.instance.token, model.id);
             	}
-                Host.doCommand("responseFamily", new JSONResponse(AddRequestActivity.this) {
+                Networking.doCommand("responseFamily", new JSONResponse(AddRequestActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null == content) {

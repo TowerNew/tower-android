@@ -1,6 +1,6 @@
 package com.qcast.tower;
 
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.config.Configuration;
 import com.slfuture.pretty.im.Module;
 
@@ -31,7 +31,7 @@ public class Program extends Application {
 		Module.context = this;
 		Module.initialize();
 		// 初始化网络
-		Host.initialize();
+		Networking.initialize(application);
     }
 
 	/**
@@ -46,6 +46,6 @@ public class Program extends Application {
 		// 关闭配置系统
 		Configuration.terminate();
 		// 关闭网络
-		Host.terminate();
+		Networking.terminate();
 	}
 }

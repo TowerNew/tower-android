@@ -10,7 +10,7 @@ import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.Me;
 import com.slfuture.carrie.base.json.JSONVisitor;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
@@ -95,7 +95,7 @@ public class TopicActivity extends ActivityEx {
     	btnFinish.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Host.doCommand("talk", new JSONResponse(TopicActivity.this) {
+				Networking.doCommand("talk", new JSONResponse(TopicActivity.this) {
         			@Override
         			public void onFinished(JSONVisitor content) {
         				if(code() < 0) {
@@ -122,7 +122,7 @@ public class TopicActivity extends ActivityEx {
      * 加载
      */
     public void load() {
-    	Host.doCommand("loadAvailableTopic", new JSONResponse(TopicActivity.this) {
+    	Networking.doCommand("loadAvailableTopic", new JSONResponse(TopicActivity.this) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(code() < 0) {

@@ -19,7 +19,7 @@ import com.qcast.tower.business.Me;
 import com.qcast.tower.business.Profile;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
@@ -92,7 +92,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 				map = doctorList.get(index);
 				map.put("status", GraphicsHelper.decodeResource(SelectDoctorActivity.this, R.drawable.icon_selected));
 				//
-				Host.doCommand("selectDoctor", new JSONResponse(SelectDoctorActivity.this) {
+				Networking.doCommand("selectDoctor", new JSONResponse(SelectDoctorActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null == content || content.getInteger("code", -1) < 0) {
@@ -109,7 +109,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 				((SimpleAdapter) listDoctor.getAdapter()).notifyDataSetChanged();
 			}
 		});
-		Host.doCommand("doctorlist", new JSONResponse(SelectDoctorActivity.this) {
+		Networking.doCommand("doctorlist", new JSONResponse(SelectDoctorActivity.this) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content || content.getInteger("code", -1) < 0) {
@@ -138,7 +138,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 					}
 					doctorList.add(map);
 					// 加载图片
-		            Host.doImage("image", new ImageResponse(doctor.getString("photo"), i, 100, 100) {
+		            Networking.doImage("image", new ImageResponse(doctor.getString("photo"), i, 100, 100) {
 						@Override
 						public void onFinished(Bitmap content) {
 							HashMap<String, Object> map = doctorList.get((Integer) tag);

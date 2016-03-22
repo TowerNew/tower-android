@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.qcast.tower.R;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.pretty.general.view.form.BrowserActivity;
@@ -114,7 +114,7 @@ public class DiseaseListActivity extends Activity {
 					caption = URLEncoder.encode(caption, "UTF-8");
 				}
 				catch(Exception ex) { }
-				intent.putExtra("url", Host.fetchURL("searchDisease", caption));
+				intent.putExtra("url", Networking.fetchURL("searchDisease", caption));
 				DiseaseListActivity.this.startActivity(intent);
             }
 		});
@@ -124,7 +124,7 @@ public class DiseaseListActivity extends Activity {
 	 * 加载疾病列表
 	 */
 	public void loadDiseaseList() {
-		Host.doCommand("loadDisease", new CommonResponse<String>() {
+		Networking.doCommand("loadDisease", new CommonResponse<String>() {
 			@Override
 			public void onFinished(String content) {
 				if(Response.CODE_SUCCESS != code()) {

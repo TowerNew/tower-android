@@ -1,180 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="ppe.service.wehop.cn" mock="false" storage="tower/image/">
+<network cache="tower/image/">
+    <environment name="product">
+    	<host name="server" domain="service.wehop.cn" />
+    	<host name="cdn" domain="cdn.oss.wehop-resources.wehop.cn" />
+    </environment>
+    <environment name="ppe">
+    	<host name="server" domain="ppe.service.wehop.cn" />
+    	<host name="cdn" domain="cdn.oss.wehop-resources-ppe.wehop.cn" />
+    </environment>
+    <environment name="beta">
+    	<host name="server" domain="beta.service.wehop.cn" />
+    	<host name="cdn" domain="cdn.oss.wehop-resources-beta.wehop.cn" />
+    </environment>
 	<protocol name="activity1">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/activity1.html?token=[1]&regionId=[2]
+user/appv2/sites/v-1/activity1.html?token=[1]&regionId=[2]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="activity2">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/activity2.html?token=[1]&regionId=[2]
+user/appv2/sites/v-1/activity2.html?token=[1]&regionId=[2]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="Hit">
-		<url>
+		<path>
 		<![CDATA[
-http://ppe.service.wehop.cn/counting-platform-web/rest/appHit#title=[1]&user_input_content=[2]
+counting-platform-web/rest/appHit#title=[1]&user_input_content=[2]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="daipingfen">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=4
+user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=4
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="daifukuan">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=1
+user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=1
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="daiyuyue">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=2
+user/appv2/sites/v-1/orderlist.html?token=[1]&type=0&status=2
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="MyOrder">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=0
+user/appv2/sites/v-1/orderlist.html?token=[1]&type=0
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="MyMoney">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/money.html?token=[1]
+user/appv2/sites/v-1/money.html?token=[1]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="MyCollection">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/favorate.html?token=[1]
+user/appv2/sites/v-1/favorate.html?token=[1]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="UserProtocol">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources.wehop.cn/banner/sites/v-1/agreement.html
+banner/sites/v-1/agreement.html
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="PayNotify">
-		<url>
+		<path>
 		<![CDATA[
-http://ppe.service.wehop.cn/finance-pay-web/rest/alipay/notify
+finance-pay-web/rest/alipay/notify
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="wodeshoucang">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/favorate.html?token=[1]
+user/appv2/sites/v-1/favorate.html?token=[1]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
     <protocol name="guahaodingdan">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=1
+user/appv2/sites/v-1/orderlist.html?token=[1]&type=1
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="liliaodingdan">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=2
+user/appv2/sites/v-1/orderlist.html?token=[1]&type=2
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="tijiandingdan">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/orderlist.html?token=[1]&type=3
+user/appv2/sites/v-1/orderlist.html?token=[1]&type=3
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="tijianbaogao">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/healthfile.html?token=[1]&regionId=[2]
+user/appv2/sites/v-1/healthfile.html?token=[1]&regionId=[2]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="dianzibingli">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/dianzibingli.html?token=[1]&regionId=[2]
+user/appv2/sites/v-1/dianzibingli.html?token=[1]&regionId=[2]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="chuandaishuju">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/chuandaishuju.html?token=[1]&regionId=[2]
+user/appv2/sites/v-1/chuandaishuju.html?token=[1]&regionId=[2]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<!-- 健康档案顶部滚动视图 -->
 	<protocol name="jiankangdangan">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/healthscoreentry.html?token=[1]
+user/appv2/sites/v-1/healthscoreentry.html?token=[1]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="yuyuetijian">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/physical.html?regionId=[1]&token=[2]
+user/appv2/sites/v-1/physical.html?regionId=[1]&token=[2]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="yuyueguahao">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/registration.html?regionId=[1]&token=[2]
+user/appv2/sites/v-1/registration.html?regionId=[1]&token=[2]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="yuyueliliao">
-		<url>
+		<path host="cdn">
 		<![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/therapy.html?regionId=[1]&token=[2]
+user/appv2/sites/v-1/therapy.html?regionId=[1]&token=[2]
 		]]>
-		</url>
+		</path>
 		<mock></mock>
 	</protocol>
 	<protocol name="CheckPassword">
@@ -642,11 +654,11 @@ user-platform-web/rest/user/removeOwner#token=[1]&userGlobalId=[2]
         </mock>
     </protocol>
     <protocol name="image">
-        <url>
+        <path>
         <![CDATA[
 [1]
         ]]>
-        </url>
+        </path>
     <mock>
         <![CDATA[
 
@@ -980,11 +992,11 @@ user-platform-web/rest/loadSymptoms#partId=[1]&sex=[2]
     </protocol>
     <!-- 获取自我诊断中指定症状的搜索URL，为H5展示 -->
      <protocol name="loadDisease">
-        <url>
+        <path>
         <![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/sites/common/v-1/selfDiagDiagnose.html?uuid=[1]
+user/sites/common/v-1/selfDiagDiagnose.html?uuid=[1]
         ]]>
-        </url>
+        </path>
 	<mock></mock>
 	</protocol>
 	<protocol name="commentlist">
@@ -1696,11 +1708,11 @@ user-platform-web/rest/user/comment#doctorId=[1]&attitude=[2]&score1=[3]&score2=
         </mock>
     </protocol>
 	<protocol name="HomePage">
-        <url>
+		<path host="cdn">
         <![CDATA[
-http://cdn.oss.wehop-resources-ppe.wehop.cn/user/appv2/sites/v-1/banner-index.html?token=[1]&regionId=[2]
+user/appv2/sites/v-1/banner-index.html?token=[1]&regionId=[2]
        ]]>
-        </url>
+        </path>
     	<mock></mock>
     </protocol>
-</protocols>
+</network>

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.slfuture.carrie.base.json.JSONVisitor;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
@@ -113,7 +113,7 @@ public class CommentActivity extends ActivityEx {
 		btnConfirm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Host.doCommand("comment", new JSONResponse(CommentActivity.this) {
+				Networking.doCommand("comment", new JSONResponse(CommentActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null == content) {

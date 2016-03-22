@@ -6,7 +6,7 @@ import java.util.HashMap;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.structure.TimePeriod;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.carrie.base.json.JSONArray;
@@ -148,7 +148,7 @@ public class ExamSelectActivity extends Activity {
 		if(EXAM_HOSPITAL == selectLevel) {
 			TextView labTitle = (TextView) this.findViewById(R.id.examselect_label_title);
 			labTitle.setText("医院");
-			Host.doCommand("gethospital", new CommonResponse<String>() {
+			Networking.doCommand("gethospital", new CommonResponse<String>() {
 				@Override
 				public void onFinished(String content) {
 					if(Response.CODE_SUCCESS != code()) {
@@ -180,7 +180,7 @@ public class ExamSelectActivity extends Activity {
 		else if(EXAM_PACKAGE == selectLevel) {
 			TextView labTitle = (TextView) this.findViewById(R.id.examselect_label_title);
 			labTitle.setText("套餐");
-			Host.doCommand("examinationlist", new CommonResponse<String>() {
+			Networking.doCommand("examinationlist", new CommonResponse<String>() {
 				@Override
 				public void onFinished(String content) {
 					if(Response.CODE_SUCCESS != code()) {

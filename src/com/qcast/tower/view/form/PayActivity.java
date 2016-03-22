@@ -12,7 +12,7 @@ import com.qcast.tower.R;
 import com.qcast.tower.thirdparty.alipay.PayResult;
 import com.qcast.tower.thirdparty.alipay.SignUtils;
 import com.slfuture.carrie.base.text.Text;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.etc.Controller;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
@@ -282,7 +282,7 @@ public class PayActivity extends ActivityEx {
 		orderInfo += "&total_fee=" + "\"" + price + "\"";
 
 		// 服务器异步通知页面路径
-		orderInfo += "&notify_url=" + "\"" + Host.fetchURL("PayNotify") + "\"";
+		orderInfo += "&notify_url=" + "\"" + Networking.fetchURL("PayNotify") + "\"";
 
 		// 服务接口名称， 固定值
 		orderInfo += "&service=\"mobile.securitypay.pay\"";

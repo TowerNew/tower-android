@@ -20,7 +20,7 @@ import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.type.core.ILink;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.storage.SDCard;
 
@@ -169,7 +169,7 @@ public class Storage {
 	 * @return 位图文件
 	 */
 	public static File getImageFileByUrl(String url) {
-		String fileName = Host.parseFileNameWithURL(url);
+		String fileName = Networking.parseFileNameWithURL(url);
 		return new File(IMAGE_ROOT + fileName);
 	}
 

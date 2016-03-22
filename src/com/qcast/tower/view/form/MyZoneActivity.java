@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pretty.general.view.form.BrowserActivity;
 
@@ -41,7 +41,7 @@ public class MyZoneActivity extends OnlyUserActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(MyZoneActivity.this, BrowserActivity.class);
-				intent.putExtra("url", Host.fetchURL("wodeshoucang", Me.instance.token));
+				intent.putExtra("url", Networking.fetchURL("wodeshoucang", Me.instance.token));
 				MyZoneActivity.this.startActivity(intent);
 			}
 		});
@@ -49,7 +49,7 @@ public class MyZoneActivity extends OnlyUserActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(MyZoneActivity.this, BrowserActivity.class);
-				intent.putExtra("url", Host.fetchURL("tijiandingdan", Me.instance.token));
+				intent.putExtra("url", Networking.fetchURL("tijiandingdan", Me.instance.token));
 				MyZoneActivity.this.startActivity(intent);
 			}
 		});
@@ -57,7 +57,7 @@ public class MyZoneActivity extends OnlyUserActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(MyZoneActivity.this, BrowserActivity.class);
-				intent.putExtra("url", Host.fetchURL("guahaodingdan", Me.instance.token));
+				intent.putExtra("url", Networking.fetchURL("guahaodingdan", Me.instance.token));
 				MyZoneActivity.this.startActivity(intent);
 			}
 		});
@@ -65,7 +65,7 @@ public class MyZoneActivity extends OnlyUserActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(MyZoneActivity.this, BrowserActivity.class);
-				intent.putExtra("url", Host.fetchURL("liliaodingdan", Me.instance.token));
+				intent.putExtra("url", Networking.fetchURL("liliaodingdan", Me.instance.token));
 				MyZoneActivity.this.startActivity(intent);
 			}
 		});

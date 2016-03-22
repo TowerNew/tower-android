@@ -3,7 +3,7 @@ package com.qcast.tower.view.form;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.structure.TimePeriod;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.carrie.base.json.JSONArray;
@@ -152,7 +152,7 @@ public class ReserveDoctorActivity extends Activity {
 	 * 加载体检列表
 	 */
 	public void loadTimes() {
-		Host.doCommand("doctortimelist", new CommonResponse<String>() {
+		Networking.doCommand("doctortimelist", new CommonResponse<String>() {
 			@Override
 			public void onFinished(String content) {
 				if(Response.CODE_SUCCESS != code()) {
@@ -197,7 +197,7 @@ public class ReserveDoctorActivity extends Activity {
 			return false;
 		}
 		EditText memo = (EditText) this.findViewById(R.id.reservedoctor_text_memo); 
-		Host.doCommand("reserveDoctor", new CommonResponse<String>() {
+		Networking.doCommand("reserveDoctor", new CommonResponse<String>() {
 			@Override
 			public void onFinished(String content) {
 				if(Response.CODE_SUCCESS != code()) {

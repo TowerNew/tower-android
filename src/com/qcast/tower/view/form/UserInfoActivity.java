@@ -8,7 +8,7 @@ import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.text.Text;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
@@ -20,6 +20,8 @@ import com.slfuture.pretty.general.view.form.ImageActivity;
 import com.slfuture.pretty.general.view.form.TextEditActivity;
 import com.slfuture.pretty.qcode.Module;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -101,7 +103,7 @@ public class UserInfoActivity extends ActivityEx {
 					return;
 				}
 				if(isAlteringIdCard) {
-					Host.doCommand("idcardfront", new JSONResponse(UserInfoActivity.this) {
+					Networking.doCommand("idcardfront", new JSONResponse(UserInfoActivity.this) {
 						@Override
 						public void onFinished(JSONVisitor content) {
 							if(null == content || content.getInteger("code", 0) <= 0) {
@@ -112,7 +114,7 @@ public class UserInfoActivity extends ActivityEx {
 								return;
 							}
 							Me.instance.snapshot = url;
-							Host.doImage("image", new ImageResponse(url) {
+							Networking.doImage("image", new ImageResponse(url) {
 								@Override
 								public void onFinished(Bitmap content) {
 									imgSnapshot.setImageBitmap(content);
@@ -130,7 +132,7 @@ public class UserInfoActivity extends ActivityEx {
 					return;
 				}
 				if(isAlteringIdCard) {
-					Host.doCommand("idcardfront", new JSONResponse(UserInfoActivity.this) {
+					Networking.doCommand("idcardfront", new JSONResponse(UserInfoActivity.this) {
 						@Override
 						public void onFinished(JSONVisitor content) {
 							if(null == content || content.getInteger("code", 0) <= 0) {
@@ -141,7 +143,7 @@ public class UserInfoActivity extends ActivityEx {
 								return;
 							}
 							Me.instance.snapshot = url;
-							Host.doImage("image", new ImageResponse(url) {
+							Networking.doImage("image", new ImageResponse(url) {
 								@Override
 								public void onFinished(Bitmap content) {
 									imgSnapshot.setImageBitmap(content);
@@ -195,8 +197,18 @@ public class UserInfoActivity extends ActivityEx {
 		labLogout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Me.instance.logout();
-				UserInfoActivity.this.finish();
+				new AlertDialog.Builder(UserInfoActivity.this).setTitle("确认注销吗？")  
+				.setIcon(android.R.drawable.ic_dialog_info)  
+				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Me.instance.logout();
+							UserInfoActivity.this.finish();
+						}  
+				}).setNegativeButton("返回", new DialogInterface.OnClickListener() {
+			        @Override  
+			        public void onClick(DialogInterface dialog, int which) {}  
+				}).show();
 			}
 		});
 		final ImageView imgPhoto = (ImageView) this.findViewById(R.id.userinfo_image_photo);
@@ -204,7 +216,7 @@ public class UserInfoActivity extends ActivityEx {
 			imgPhoto.setImageBitmap(GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(BitmapFactory.decodeResource(this.getResources(), R.drawable.user_photo_default), 200, 200), Color.WHITE, 4));
 		}
 		else {
-            Host.doImage("image", new ImageResponse(Me.instance.photoUrl) {
+            Networking.doImage("image", new ImageResponse(Me.instance.photoUrl) {
 				@Override
 				public void onFinished(Bitmap content) {
 					if(null == content) {
@@ -287,7 +299,7 @@ public class UserInfoActivity extends ActivityEx {
 			}
 		});
 		if(!Text.isBlank(Me.instance.snapshot)) {
-            Host.doImage("image", new ImageResponse(Me.instance.snapshot, 100, 100) {
+            Networking.doImage("image", new ImageResponse(Me.instance.snapshot, 100, 100) {
 				@Override
 				public void onFinished(Bitmap content) {
 					if(null == content) {
@@ -357,7 +369,7 @@ public class UserInfoActivity extends ActivityEx {
 		else {
 			tag = field + "=" + value;
 		}
-		Host.doCommand("AlterUserInfo", new JSONResponse(this, tag) {
+		Networking.doCommand("AlterUserInfo", new JSONResponse(this, tag) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content) {

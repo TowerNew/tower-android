@@ -7,7 +7,7 @@ import com.qcast.tower.Program;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.framework.Helper;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -83,7 +83,7 @@ public class UserActivity extends FragmentEx {
 				btnPhoto.setImageResource(R.drawable.user_photo_default);
 				return;
 			}
-            Host.doImage("image", new ImageResponse(Me.instance.photoUrl) {
+            Networking.doImage("image", new ImageResponse(Me.instance.photoUrl) {
 				@Override
 				public void onFinished(Bitmap content) {
 					if(null == content) {
@@ -181,7 +181,7 @@ public class UserActivity extends FragmentEx {
 						UserActivity.this.startActivity(intent);
 						return;
 					}
-					String url = Host.fetchURL("MyCollection", Me.instance.token);
+					String url = Networking.fetchURL("MyCollection", Me.instance.token);
 					Helper.openBrowser(UserActivity.this.getActivity(), url);
 					return;
 				}
@@ -218,7 +218,7 @@ public class UserActivity extends FragmentEx {
 					UserActivity.this.getActivity().startActivity(intent);
 					return;
 				}
-				String url = Host.fetchURL("daipingfen", Me.instance.token);
+				String url = Networking.fetchURL("daipingfen", Me.instance.token);
 				Helper.openBrowser(UserActivity.this.getActivity(), url);
 			}
 		});
@@ -231,7 +231,7 @@ public class UserActivity extends FragmentEx {
 					UserActivity.this.getActivity().startActivity(intent);
 					return;
 				}
-				String url = Host.fetchURL("daifukuan", Me.instance.token);
+				String url = Networking.fetchURL("daifukuan", Me.instance.token);
 				Helper.openBrowser(UserActivity.this.getActivity(), url);
 			}
 		});
@@ -244,7 +244,7 @@ public class UserActivity extends FragmentEx {
 					UserActivity.this.getActivity().startActivity(intent);
 					return;
 				}
-				String url = Host.fetchURL("daiyuyue", Me.instance.token);
+				String url = Networking.fetchURL("daiyuyue", Me.instance.token);
 				Helper.openBrowser(UserActivity.this.getActivity(), url);
 			}
 		});
@@ -257,7 +257,7 @@ public class UserActivity extends FragmentEx {
 					UserActivity.this.getActivity().startActivity(intent);
 					return;
 				}
-				String url = Host.fetchURL("MyOrder", Me.instance.token);
+				String url = Networking.fetchURL("MyOrder", Me.instance.token);
 				Helper.openBrowser(UserActivity.this.getActivity(), url);
 			}
 		});
@@ -270,7 +270,7 @@ public class UserActivity extends FragmentEx {
 					UserActivity.this.getActivity().startActivity(intent);
 					return;
 				}
-				String url = Host.fetchURL("MyMoney", Me.instance.token);
+				String url = Networking.fetchURL("MyMoney", Me.instance.token);
 				Helper.openBrowser(UserActivity.this.getActivity(), url);
 			}
 		});

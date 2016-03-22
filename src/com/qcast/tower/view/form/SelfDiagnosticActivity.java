@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.qcast.tower.R;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -226,7 +226,7 @@ public class SelfDiagnosticActivity extends ActivityEx {
 		listSymptom.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
-				String url = Host.fetchURL("loadDisease", symptomList.get(index).get("uuid"));
+				String url = Networking.fetchURL("loadDisease", symptomList.get(index).get("uuid"));
 				Intent intent = new Intent(SelfDiagnosticActivity.this, BrowserActivity.class);
 				intent.putExtra("url", url);
 				SelfDiagnosticActivity.this.startActivity(intent);
@@ -249,7 +249,7 @@ public class SelfDiagnosticActivity extends ActivityEx {
 	 * 加载器官列表
 	 */
 	public void loadBody() {
-		String text = Host.fetchMock("loadBody");
+		String text = Networking.fetchMock("loadBody");
 		if(null == text) {
 			return;
 		}
@@ -292,7 +292,7 @@ public class SelfDiagnosticActivity extends ActivityEx {
 	 * 加载症状列表
 	 */
 	public void loadSymptom() {
-		Host.doCommand("loadSymptoms", new JSONResponse(SelfDiagnosticActivity.this) {
+		Networking.doCommand("loadSymptoms", new JSONResponse(SelfDiagnosticActivity.this) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content || content.getInteger("code", 0) <= 0) {

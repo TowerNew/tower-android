@@ -3,7 +3,7 @@ package com.qcast.tower.view.form;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.structure.FamilyMember;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.core.IResponse;
 import com.slfuture.carrie.base.json.JSONNumber;
@@ -80,7 +80,7 @@ public class FamilyEditActivity extends Activity {
 					member.relation = txtRelation.getText().toString();
 					EditText txtPhone = (EditText) findViewById(R.id.familyedit_text_phone);
 					member.phone = txtPhone.getText().toString();
-					Host.doCommand("editrelation", new CommonResponse<String>() {
+					Networking.doCommand("editrelation", new CommonResponse<String>() {
 						@Override
 						public void onFinished(String content) {
 							if(IResponse.CODE_SUCCESS != code()) {
@@ -131,7 +131,7 @@ public class FamilyEditActivity extends Activity {
 				if(null == userId) {
 					mode = 0;
 				}
-				Host.doCommand("editowner", new CommonResponse<String>() {
+				Networking.doCommand("editowner", new CommonResponse<String>() {
 					@Override
 					public void onFinished(String content) {
 						if(IResponse.CODE_SUCCESS != code()) {

@@ -159,7 +159,7 @@
 		<activity android:name="com.qcast.tower.view.form.UserInfoActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 		<activity android:name="com.qcast.tower.view.form.ArchiveActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 		<activity android:name="com.qcast.tower.view.form.MyZoneActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-        <activity android:name="com.qcast.tower.view.form.FamilyActivity" android:label="@string/app_name" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.qcast.tower.view.form.FamilyActivity" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:label="@string/app_name" android:screenOrientation="portrait"></activity>
 		<activity android:name="com.qcast.tower.view.form.PasswordActivity" android:label="@string/app_name" android:screenOrientation="portrait"></activity>
 		<activity android:name="com.qcast.tower.view.form.PayActivity" android:label="@string/app_name" android:screenOrientation="portrait"></activity>
         

@@ -23,7 +23,7 @@ import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.structure.DoctorCommentsModel;
 import com.qcast.tower.business.structure.DoctorModel;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.carrie.base.json.JSONArray;
@@ -89,7 +89,7 @@ public class InquiryDoctorDetailActivity extends Activity{
         /*good_vote_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Host.doCommand("docVote", new CommonResponse<String>() {
+                Networking.doCommand("docVote", new CommonResponse<String>() {
                     @Override
                     public void onFinished(String content) throws JSONException {
                         if (Response.CODE_SUCCESS != code()) {
@@ -119,7 +119,7 @@ public class InquiryDoctorDetailActivity extends Activity{
         /*bad_vote_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Host.doCommand("docVote", new CommonResponse<String>() {
+                Networking.doCommand("docVote", new CommonResponse<String>() {
                     @Override
                     public void onFinished(String content) throws JSONException {
                         if (Response.CODE_SUCCESS != code()) {
@@ -234,7 +234,7 @@ public class InquiryDoctorDetailActivity extends Activity{
     }
 
     private void loadData() {
-        Host.doCommand("commentlist", new CommonResponse<String>(page) {
+        Networking.doCommand("commentlist", new CommonResponse<String>(page) {
             @Override
             public void onFinished(String content) {
                 if (Response.CODE_SUCCESS != code()) {

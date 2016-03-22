@@ -12,7 +12,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.business.Profile;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pretty.general.view.form.BrowserActivity;
 
@@ -77,12 +77,12 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 				browser.loadUrl("about:blank");
 			}
 		});
-		browser.loadUrl(Host.fetchURL("jiankangdangan", Me.instance.token));
+		browser.loadUrl(Networking.fetchURL("jiankangdangan", Me.instance.token));
 		viewExamination.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ArchiveActivity.this, BrowserActivity.class);
-				intent.putExtra("url", Host.fetchURL("tijianbaogao", Me.instance.token, Profile.instance().region.id));
+				intent.putExtra("url", Networking.fetchURL("tijianbaogao", Me.instance.token, Profile.instance().region.id));
 				ArchiveActivity.this.startActivity(intent);
 			}
 		});
@@ -90,7 +90,7 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ArchiveActivity.this, BrowserActivity.class);
-				intent.putExtra("url", Host.fetchURL("dianzibingli", Me.instance.token, Profile.instance().region.id));
+				intent.putExtra("url", Networking.fetchURL("dianzibingli", Me.instance.token, Profile.instance().region.id));
 				ArchiveActivity.this.startActivity(intent);
 			}
 		});
@@ -98,7 +98,7 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ArchiveActivity.this, BrowserActivity.class);
-				intent.putExtra("url", Host.fetchURL("chuandaishuju", Me.instance.token, Profile.instance().region.id));
+				intent.putExtra("url", Networking.fetchURL("chuandaishuju", Me.instance.token, Profile.instance().region.id));
 				ArchiveActivity.this.startActivity(intent);
 			}
 		});

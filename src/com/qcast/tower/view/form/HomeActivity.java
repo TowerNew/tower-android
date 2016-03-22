@@ -13,7 +13,7 @@ import com.qcast.tower.framework.Helper;
 import com.qcast.tower.framework.Storage;
 import com.qcast.tower.view.control.HorizontalScrollViewEx;
 import com.qcast.tower.view.control.ScrollWebView;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
@@ -286,7 +286,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 * 加载版本准备升级
 	 */
 	private void loadVersion() {
-		Host.doCommand("readVersion", new CommonResponse<String>() {
+		Networking.doCommand("readVersion", new CommonResponse<String>() {
 			@Override
 			public void onFinished(String content) {
 				if(Response.CODE_SUCCESS != code()) {
@@ -318,7 +318,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 * 加载资讯列表
 	 */
 	private void loadNews() {
-		Host.doCommand("news", new CommonResponse<String>(page) {
+		Networking.doCommand("news", new CommonResponse<String>(page) {
 			@Override
 			public void onFinished(String content) {
 				if(Response.CODE_SUCCESS != code()) {
@@ -353,7 +353,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		            	continue;
 		            }
 		            // 加载图片
-		            Host.doImage("image", new ImageResponse(photoName, newsList.size() - 1) {
+		            Networking.doImage("image", new ImageResponse(photoName, newsList.size() - 1) {
 						@Override
 						public void onFinished(Bitmap content) {
 							HashMap<String, Object> map = newsList.get((Integer) tag);
@@ -427,10 +427,10 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		}
 		if(sentry) {
 			if(null == Me.instance) {
-				browser.loadUrl(Host.fetchURL("HomePage", "", currentRegionId));
+				browser.loadUrl(Networking.fetchURL("HomePage", "", currentRegionId));
 			}
 			else {
-				browser.loadUrl(Host.fetchURL("HomePage", Me.instance.token, currentRegionId));
+				browser.loadUrl(Networking.fetchURL("HomePage", Me.instance.token, currentRegionId));
 			}
 		}
 	}
@@ -470,7 +470,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
 					return;
 				}
-				Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("yuyuetijian", Profile.instance().region.id, Me.instance.token));
+				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("yuyuetijian", Profile.instance().region.id, Me.instance.token));
 			}
 		});
 		lp =  (LinearLayout.LayoutParams) viewEntry3.getLayoutParams();
@@ -491,7 +491,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
 					return;
 				}
-				Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("yuyueliliao", Profile.instance().region.id, Me.instance.token));
+				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("yuyueliliao", Profile.instance().region.id, Me.instance.token));
 			}
 		});
 		lp =  (LinearLayout.LayoutParams) viewEntry4.getLayoutParams();
@@ -523,7 +523,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
 					return;
 				}
-				Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("yuyueguahao", Profile.instance().region.id, Me.instance.token));
+				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("yuyueguahao", Profile.instance().region.id, Me.instance.token));
 			}
 		});
 		lp =  (LinearLayout.LayoutParams) viewEntry6.getLayoutParams();
@@ -630,7 +630,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				if(null != Profile.instance().region) {
 					regionId = String.valueOf(Profile.instance().region.id);
 				}
-				Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("activity1", token, regionId));
+				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("activity1", token, regionId));
 			}
 		});
 		View viewActivity2 = (View) viewHead.findViewById(R.id.home_layout_right);
@@ -645,7 +645,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				if(null != Profile.instance().region) {
 					regionId = String.valueOf(Profile.instance().region.id);
 				}
-				Helper.openBrowser(HomeActivity.this.getActivity(), Host.fetchURL("activity2", token, regionId));
+				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("activity2", token, regionId));
 			}
 		});
 		this.getActivity().findViewById(R.id.home_layout_header).bringToFront();

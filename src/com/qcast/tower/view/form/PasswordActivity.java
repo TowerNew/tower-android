@@ -3,7 +3,7 @@ package com.qcast.tower.view.form;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.slfuture.carrie.base.json.JSONVisitor;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.Controller;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -77,7 +77,7 @@ public class PasswordActivity extends OnlyUserActivity {
 			return;
 		}
 		mode = this.getIntent().getIntExtra("mode", MODE_VERIFY);
-		Host.doCommand("CheckPassword", new JSONResponse(PasswordActivity.this) {
+		Networking.doCommand("CheckPassword", new JSONResponse(PasswordActivity.this) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content || content.getInteger("code", 0) <= 0) {
@@ -121,7 +121,7 @@ public class PasswordActivity extends OnlyUserActivity {
 				String text = txtPassword.getText().toString();
 				if(text.length() >= 6) {
 					if(MODE_VERIFY == mode) {
-						Host.doCommand("CheckPassword", new JSONResponse(PasswordActivity.this) {
+						Networking.doCommand("CheckPassword", new JSONResponse(PasswordActivity.this) {
 							@Override
 							public void onFinished(JSONVisitor content) {
 								if(null == content || content.getInteger("code", 0) <= 0) {
@@ -143,7 +143,7 @@ public class PasswordActivity extends OnlyUserActivity {
 						}, Me.instance.token, text.substring(0, 6));
 					}
 					else if(MODE_MODIFY_CHECK == mode) {
-						Host.doCommand("CheckPassword", new JSONResponse(PasswordActivity.this) {
+						Networking.doCommand("CheckPassword", new JSONResponse(PasswordActivity.this) {
 							@Override
 							public void onFinished(JSONVisitor content) {
 								if(null == content || content.getInteger("code", 0) <= 0) {
@@ -164,7 +164,7 @@ public class PasswordActivity extends OnlyUserActivity {
 							refresh();
 						}
 						else if(password.equals(text.substring(0, 6))) {
-							Host.doCommand("SetPassword", new JSONResponse(PasswordActivity.this, password) {
+							Networking.doCommand("SetPassword", new JSONResponse(PasswordActivity.this, password) {
 								@Override
 								public void onFinished(JSONVisitor content) {
 									if(null == content || content.getInteger("code", -1) < 0) {

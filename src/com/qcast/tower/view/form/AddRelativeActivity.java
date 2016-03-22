@@ -21,7 +21,7 @@ import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.model.core.ITargetEventable;
 import com.slfuture.carrie.base.text.Text;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.storage.Storage;
@@ -85,8 +85,8 @@ public class AddRelativeActivity extends OnlyUserActivity {
 				txtIdNumber.setEnabled(false);
 			}
 			if(null != relative.snapshot) {
-				snapshot = new File(com.qcast.tower.framework.Storage.imagePath(Host.parseFileNameWithURL(relative.snapshot)));
-				Host.doImage("image", imgSnapshot, new ITargetEventable<ImageView, Bitmap>() {
+				snapshot = new File(com.qcast.tower.framework.Storage.imagePath(Networking.parseFileNameWithURL(relative.snapshot)));
+				Networking.doImage("image", imgSnapshot, new ITargetEventable<ImageView, Bitmap>() {
 					@Override
 					public void on(ImageView target, Bitmap event) {
 						target.setImageBitmap(event);
@@ -121,7 +121,7 @@ public class AddRelativeActivity extends OnlyUserActivity {
 					Toast.makeText(AddRelativeActivity.this, "请上传身份证正面照片", Toast.LENGTH_LONG).show();
 					return;
 				}
-				Host.doCommand("editowner", new JSONResponse(AddRelativeActivity.this) {
+				Networking.doCommand("editowner", new JSONResponse(AddRelativeActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null != content && content.getInteger("code") > 0) {

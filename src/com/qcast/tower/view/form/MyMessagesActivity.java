@@ -19,7 +19,7 @@ import com.easemob.chat.EMConversation;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.business.structure.Notify;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -70,7 +70,7 @@ public class MyMessagesActivity extends ActivityEx {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Notify notifyModel = dataList.get(position);
                 if(!notifyModel.hasRead && Notify.TYPE_1 != notifyModel.type) {
-                    Host.doCommand("readMessage", new CommonResponse<String>() {
+                    Networking.doCommand("readMessage", new CommonResponse<String>() {
                         @Override
                         public void onFinished(String content) { }
                     }, Me.instance.token, notifyModel.id);
@@ -125,7 +125,7 @@ public class MyMessagesActivity extends ActivityEx {
     }
 
     private void loadData() {
-        Host.doCommand("myMessage", new CommonResponse<String>() {
+        Networking.doCommand("myMessage", new CommonResponse<String>() {
             @Override
             public void onFinished(String content) {
                 if (Response.CODE_SUCCESS != code()) {

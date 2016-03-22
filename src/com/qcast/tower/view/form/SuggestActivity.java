@@ -3,7 +3,7 @@ package com.qcast.tower.view.form;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.slfuture.carrie.base.json.JSONVisitor;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 
@@ -49,7 +49,7 @@ public class SuggestActivity extends OnlyUserActivity {
 					Toast.makeText(SuggestActivity.this, "用户未登录无法评论", Toast.LENGTH_LONG).show();
 					return;
 				}
-				Host.doCommand("suggest", new JSONResponse(SuggestActivity.this) {
+				Networking.doCommand("suggest", new JSONResponse(SuggestActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null == content || content.getInteger("code", -1) < 0) {

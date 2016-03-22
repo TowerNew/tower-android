@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.framework.Helper;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.core.IResponse;
 import com.slfuture.pluto.etc.Controller;
@@ -81,7 +81,7 @@ public class LoginActivity extends ActivityEx {
 		labMemo.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Helper.openBrowser(LoginActivity.this, Host.fetchURL("UserProtocol"));
+				Helper.openBrowser(LoginActivity.this, Networking.fetchURL("UserProtocol"));
 			}
 		});
 		txtPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -121,7 +121,7 @@ public class LoginActivity extends ActivityEx {
 					return;
 				}
 				lastTick = (new Date()).getTime();
-				Host.doCommand("fetchCode", new CommonResponse<String>() {
+				Networking.doCommand("fetchCode", new CommonResponse<String>() {
 					@Override
 					public void onFinished(String content) {
 						if(IResponse.CODE_SUCCESS != code()) {

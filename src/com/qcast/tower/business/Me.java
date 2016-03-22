@@ -24,7 +24,7 @@ import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.time.Date;
 import com.slfuture.carrie.base.type.List;
 import com.slfuture.carrie.base.type.safe.Table;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
@@ -105,7 +105,7 @@ public class Me extends User implements Serializable, IReactor {
 	 * @param callback 回调函数
 	 */
 	public static void login(Context context, String phone, String code, IEventable<Boolean> callback) {
-		Host.doCommand("login", new JSONResponse(context, callback) {
+		Networking.doCommand("login", new JSONResponse(context, callback) {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void onFinished(JSONVisitor content) {
@@ -173,7 +173,7 @@ public class Me extends User implements Serializable, IReactor {
 			}
 			else {
 				instance = me;
-				Host.doCommand("check", new JSONResponse(context, callback) {
+				Networking.doCommand("check", new JSONResponse(context, callback) {
 					@SuppressWarnings("unchecked")
 					@Override
 					public void onFinished(JSONVisitor content) {
@@ -235,7 +235,7 @@ public class Me extends User implements Serializable, IReactor {
 	 * @param callback 结果
 	 */
 	public void refreshDoctor(Context context, IEventable<Boolean> callback) {
-		Host.doCommand("privateDoctor", new JSONResponse(context, callback) {
+		Networking.doCommand("privateDoctor", new JSONResponse(context, callback) {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void onFinished(JSONVisitor content) {
@@ -250,7 +250,7 @@ public class Me extends User implements Serializable, IReactor {
 				 doctor = new Doctor();
 				 doctor.parse(content.getVisitor("data"));
 				 if(!Text.isBlank(doctor.photoUrl)) {
-					 Host.doImage("image", new ImageResponse(doctor.photoUrl) {
+					 Networking.doImage("image", new ImageResponse(doctor.photoUrl) {
 						@Override
 						public void onFinished(Bitmap content) { }
 					 }, doctor.photoUrl);
@@ -271,7 +271,7 @@ public class Me extends User implements Serializable, IReactor {
 	 * @param callback 结果
 	 */
 	public void refreshMember(Context context, IEventable<Boolean> callback) {
-		Host.doCommand("member", new JSONResponse(context, callback) {
+		Networking.doCommand("member", new JSONResponse(context, callback) {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void onFinished(JSONVisitor content) {
@@ -446,7 +446,7 @@ public class Me extends User implements Serializable, IReactor {
 			if(doctor.parse(visitor.getVisitor("privateDoctor"))) {
 				this.doctor = doctor;
 				 if(!Text.isBlank(doctor.photoUrl)) {
-					 Host.doImage("image", new ImageResponse(doctor.photoUrl) {
+					 Networking.doImage("image", new ImageResponse(doctor.photoUrl) {
 						@Override
 						public void onFinished(Bitmap content) { }
 					 }, doctor.photoUrl);
@@ -562,7 +562,7 @@ public class Me extends User implements Serializable, IReactor {
 			object.put("from", new JSONString(from));
 			object.put("to", new JSONString((String) data.get("to")));
 			object.put("type", new JSONNumber((Integer) data.get("type")));
-			Host.doCommand("Hit", new CommonResponse<String>() {
+			Networking.doCommand("Hit", new CommonResponse<String>() {
 				@Override
 				public void onFinished(String content) { }
 			}, "user-platform-onlineDiag", object.toString());

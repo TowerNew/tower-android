@@ -169,7 +169,12 @@ public class MyMessagesActivity extends ActivityEx {
                         myMessageModel.requestId = ((JSONString) infomation1.get("requestId")).getValue();
                         myMessageModel.name = ((JSONString) infomation1.get("name")).getValue();
                         myMessageModel.phone = ((JSONString) infomation1.get("phone")).getValue();
-                        myMessageModel.relation = ((JSONString) infomation1.get("relation")).getValue();
+                        if(null == infomation1.get("relation")) {
+                            myMessageModel.relation = "";
+                        }
+                        else {
+                            myMessageModel.relation = ((JSONString) infomation1.get("relation")).getValue();
+                        }
                     	break;
                     case Notify.TYPE_5:
                         JSONObject infomation2 = (JSONObject) newJSONObject.get("info");

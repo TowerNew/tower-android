@@ -1,6 +1,7 @@
 package com.qcast.tower.view.form;
 
 import com.qcast.tower.R;
+import com.slfuture.pretty.general.view.form.RadioActivity;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.app.Activity;

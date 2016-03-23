@@ -101,6 +101,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 						Me.instance.refreshDoctor(SelectDoctorActivity.this, new IEventable<Boolean>() {
 							@Override
 							public void on(Boolean data) {
+								Me.instance.doChat(SelectDoctorActivity.this, null, Me.instance.doctor.imId);
 								SelectDoctorActivity.this.finish();
 							}
 						});
@@ -129,6 +130,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 					map.put("photo", doctorDefault);
 					map.put("department", doctor.getString("department"));
 					map.put("title", doctor.getString("title"));
+					map.put("imId", doctor.getString("imUsername"));
 					map.put("status", bitmap);
 					if(null != Me.instance && null != Me.instance.doctor) {
 						if(Me.instance.doctor.id.equals(doctor.getString("userGlobalId"))) {

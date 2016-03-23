@@ -85,7 +85,7 @@ public class PrescriptionActivity extends Activity {
 	 */
 	private void dealList() {
 		ListView listview = (ListView) this.findViewById(R.id.prescription_list_prescriptions);
-		SimpleAdapter listItemAdapter = new SimpleAdapter(this, prescriptionList, R.layout.listview_radio,
+		SimpleAdapter listItemAdapter = new SimpleAdapter(this, prescriptionList, R.layout.listitem_radio,
 			new String[]{"caption"}, 
 	        new int[]{R.id.radiolist_label_caption});
 		listItemAdapter.setViewBinder(new ViewBinder() {

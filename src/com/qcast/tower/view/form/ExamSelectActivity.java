@@ -105,7 +105,7 @@ public class ExamSelectActivity extends Activity {
 		});
 		//
 		ListView listview = (ListView) this.findViewById(R.id.examselect_list);
-		SimpleAdapter simpleAdapter = new SimpleAdapter(this, dataList, R.layout.listview_radio, new String[]{"name", "status"}, new int[]{R.id.radiolist_label_caption, R.id.radiolist_image_status});
+		SimpleAdapter simpleAdapter = new SimpleAdapter(this, dataList, R.layout.listitem_radio, new String[]{"name", "status"}, new int[]{R.id.radiolist_label_caption, R.id.radiolist_image_status});
 		simpleAdapter.setViewBinder(new ViewBinder() {
 			@SuppressWarnings("deprecation")
 			public boolean setViewValue(View view, Object data, String textRepresentation) {

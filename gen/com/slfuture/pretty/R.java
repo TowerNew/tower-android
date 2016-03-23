@@ -204,6 +204,12 @@ public final class R {
 		public static final int messagestime_label_message = 0x7f070290;
 		public static final int preview_view = 0x7f07007d;
 		public static final int quit = 0x7f070007;
+		public static final int radio_image_close = 0x7f07017d;
+		public static final int radio_label_title = 0x7f07017e;
+		public static final int radio_layout_header = 0x7f07017c;
+		public static final int radio_list = 0x7f07017f;
+		public static final int radiolist_image_status = 0x7f070296;
+		public static final int radiolist_label_caption = 0x7f070295;
 		public static final int recording_image_icon = 0x7f07021d;
 		public static final int restart_preview = 0x7f070008;
 		public static final int return_scan_result = 0x7f070009;
@@ -234,7 +240,7 @@ public final class R {
 		public static final int test_image_1 = 0x7f0701ca;
 		public static final int test_image_control1 = 0x7f0701cb;
 		public static final int test_listview_test = 0x7f0701cc;
-		public static final int testitem_label_title = 0x7f07029f;
+		public static final int testitem_label_title = 0x7f0702a1;
 		public static final int textedit_button_close = 0x7f0701d2;
 		public static final int textedit_divide = 0x7f0701d6;
 		public static final int textedit_label_description = 0x7f0701d7;
@@ -263,6 +269,7 @@ public final class R {
 		public static final int activity_capture = 0x7f030009;
 		public static final int activity_image = 0x7f030014;
 		public static final int activity_load = 0x7f030019;
+		public static final int activity_radio = 0x7f030026;
 		public static final int activity_ring = 0x7f03002a;
 		public static final int activity_singlechat = 0x7f03002e;
 		public static final int activity_test = 0x7f030031;
@@ -278,7 +285,8 @@ public final class R {
 		public static final int listitem_messages_left = 0x7f030051;
 		public static final int listitem_messages_right = 0x7f030052;
 		public static final int listitem_messages_time = 0x7f030053;
-		public static final int listitem_testitem = 0x7f030059;
+		public static final int listitem_radio = 0x7f030055;
+		public static final int listitem_testitem = 0x7f03005a;
 	}
 	public static final class raw {
 		public static final int beep = 0x7f040000;

@@ -654,16 +654,12 @@ user-platform-web/rest/user/removeOwner#token=[1]&userGlobalId=[2]
         </mock>
     </protocol>
     <protocol name="image">
-        <path>
+        <url>
         <![CDATA[
 [1]
         ]]>
-        </path>
-    <mock>
-        <![CDATA[
-
-        ]]>
-        </mock>
+        </url>
+    	<mock></mock>
     </protocol>
     <protocol name="search">
         <path>

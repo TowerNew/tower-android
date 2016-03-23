@@ -83,6 +83,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 		listDoctor.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
+				listDoctor.setEnabled(false);
 				HashMap<String, Object> map = null;
 				if(current >= 0) {
 					map = doctorList.get(current);
@@ -116,6 +117,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 				if(null == content || content.getInteger("code", -1) < 0) {
 					return;
 				}
+				listDoctor.setEnabled(true);
 				doctorList.clear();
 				Bitmap bitmap = GraphicsHelper.decodeResource(SelectDoctorActivity.this, R.drawable.icon_unselected);
 				int i = 0;

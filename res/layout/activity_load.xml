@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    tools:context=".LoadActivity" >
+    tools:context=".LoadActivity"
+    android:background="@color/white">
 	<ImageView
 	    android:id="@+id/load_image_ad"
 	    android:layout_width="match_parent"
@@ -11,5 +12,6 @@
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignParentTop="true"
 	    android:scaleType="centerCrop"
-	    android:src="@drawable/load_logo" />
+	    android:src="@drawable/load_logo"
+    	android:background="@color/white" />
 </RelativeLayout>

@@ -988,7 +988,7 @@ user-platform-web/rest/loadSymptoms#partId=[1]&sex=[2]
     </protocol>
     <!-- 获取自我诊断中指定症状的搜索URL，为H5展示 -->
      <protocol name="loadDisease">
-        <path>
+		<path host="cdn">
         <![CDATA[
 user/sites/common/v-1/selfDiagDiagnose.html?uuid=[1]
         ]]>

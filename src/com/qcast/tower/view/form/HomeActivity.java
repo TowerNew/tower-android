@@ -424,9 +424,11 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			sentry = true;
 		}
 		if(null == Me.instance && null != currentUserId) {
+			currentUserId = null;
 			sentry = true;
 		}
 		else if(null != Me.instance && !Me.instance.id.equals(currentUserId)) {
+			currentUserId = Me.instance.id;
 			sentry = true;
 		}
 		if(sentry) {

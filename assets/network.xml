@@ -667,7 +667,7 @@ user-platform-web/rest/user/removeOwner#token=[1]&userGlobalId=[2]
     <protocol name="search">
         <path>
         <![CDATA[
-user-platform-web/rest/contentSearch?keyword=[1]
+user-platform-web/rest/contentSearch?keyword=[1]&token=[2]
         ]]>
         </path>
     <mock>

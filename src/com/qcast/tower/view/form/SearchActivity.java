@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleAdapter.ViewBinder;
 
 import com.qcast.tower.R;
+import com.qcast.tower.business.Me;
 import com.qcast.tower.business.Profile;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.text.Text;
@@ -196,8 +197,12 @@ public class SearchActivity extends ActivityEx {
 				catch (IOException e) { }
 			}
 		}
+		String token = "";
+		if(null != Me.instance) {
+			token = Me.instance.token;
+		}
 		Intent intent = new Intent(SearchActivity.this, BrowserActivity.class);
-		intent.putExtra("url", Networking.fetchURL("search", keyword));
+		intent.putExtra("url", Networking.fetchURL("search", keyword, token));
 		SearchActivity.this.startActivity(intent);
 		SearchActivity.this.finish();
 	}

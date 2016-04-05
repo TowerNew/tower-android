@@ -8,6 +8,7 @@ import android.view.View.OnLongClickListener;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -38,7 +39,9 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
      */
 	@ResourceView(id = R.id.main_image_conversation)
 	public ImageView imgConversation;
-
+	
+	@ResourceView(id = R.id.main_conversation)
+	public RelativeLayout layout_conversation;
 
     /**
      * 界面创建
@@ -73,13 +76,13 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
                 }
             }
         });
-        imgConversation.setOnClickListener(new View.OnClickListener() {
+        layout_conversation.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				group.check(R.id.main_tab_conversation);
 			}
 		});
-        imgConversation.setOnLongClickListener(new OnLongClickListener() {
+        layout_conversation.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
 				if(null == Me.instance) {

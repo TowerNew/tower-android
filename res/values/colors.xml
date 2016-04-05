@@ -24,4 +24,5 @@
     <color name="grey_tab">#b4b4b4</color>
     <color name="orange">#ffe9602c</color>
     <color name="cyan">#ffadce76</color>
+    <color name="black_text">#ff494949</color>
 </resources>

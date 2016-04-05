@@ -34,8 +34,8 @@
 			    android:background="@color/white" >
 			    <ImageView
 					android:id="@+id/home_image_entry1"
-			        android:layout_width="60dp"
-			        android:layout_height="60dp"
+			        android:layout_width="45dp"
+			        android:layout_height="45dp"
 			        android:scaleType="fitCenter"
 			        android:src="@drawable/icon_entry_1" />
 			    <TextView
@@ -43,7 +43,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_marginTop="5dp"
-			        android:textColor="@color/black"
+			        android:textColor="@color/black_text"
 			        android:text="私人医生" />
 			</LinearLayout>
 			<LinearLayout
@@ -55,8 +55,8 @@
 			    android:background="@color/white" >
 			    <ImageView
 					android:id="@+id/home_image_entry2"
-			        android:layout_width="60dp"
-			        android:layout_height="60dp"
+			        android:layout_width="45dp"
+			        android:layout_height="45dp"
 			        android:scaleType="fitCenter"
 			        android:src="@drawable/icon_entry_2" />
 			    <TextView
@@ -64,7 +64,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_marginTop="5dp"
-			        android:textColor="@color/black"
+			        android:textColor="@color/black_text"
 			        android:text="预约体检" />
 			</LinearLayout>
 			<LinearLayout
@@ -76,8 +76,8 @@
 			    android:background="@color/white" >
 			    <ImageView
 					android:id="@+id/home_image_entry3"
-			        android:layout_width="60dp"
-			        android:layout_height="60dp"
+			        android:layout_width="45dp"
+			        android:layout_height="45dp"
 			        android:scaleType="fitCenter"
 			        android:src="@drawable/icon_entry_3" />
 			    <TextView
@@ -85,7 +85,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_marginTop="5dp"
-			        android:textColor="@color/black"
+			        android:textColor="@color/black_text"
 			        android:text="预约理疗" />
 			</LinearLayout>
 			<LinearLayout
@@ -97,8 +97,8 @@
 			    android:background="@color/white" >
 			    <ImageView
 					android:id="@+id/home_image_entry4"
-			        android:layout_width="60dp"
-			        android:layout_height="60dp"
+			        android:layout_width="45dp"
+			        android:layout_height="45dp"
 			        android:scaleType="fitCenter"
 			        android:src="@drawable/icon_entry_4" />
 			    <TextView
@@ -106,7 +106,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_marginTop="5dp"
-			        android:textColor="@color/black"
+			        android:textColor="@color/black_text"
 			        android:text="健康档案" />
 			</LinearLayout>
 			<LinearLayout
@@ -118,8 +118,8 @@
 			    android:background="@color/white" >
 			    <ImageView
 					android:id="@+id/home_image_entry5"
-			        android:layout_width="60dp"
-			        android:layout_height="60dp"
+			        android:layout_width="45dp"
+			        android:layout_height="45dp"
 			        android:scaleType="fitCenter"
 			        android:src="@drawable/icon_entry_5" />
 			    <TextView
@@ -127,7 +127,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_marginTop="5dp"
-			        android:textColor="@color/black"
+			        android:textColor="@color/black_text"
 			        android:text="预约挂号" />
 			</LinearLayout>
 			<LinearLayout
@@ -139,8 +139,8 @@
 			    android:background="@color/white" >
 			    <ImageView
 					android:id="@+id/home_image_entry6"
-			        android:layout_width="60dp"
-			        android:layout_height="60dp"
+			        android:layout_width="45dp"
+			        android:layout_height="45dp"
 			        android:scaleType="fitCenter"
 			        android:src="@drawable/icon_entry_6" />
 			    <TextView
@@ -148,7 +148,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_marginTop="5dp"
-			        android:textColor="@color/black"
+			        android:textColor="@color/black_text"
 			        android:text="自我诊断" />
 			</LinearLayout>
         </LinearLayout>
@@ -207,7 +207,7 @@
 				android:layout_toRightOf="@id/home_image_left"
 				android:layout_marginLeft="10dp"
 				android:layout_centerVertical="true"
-				android:textColor="@color/black"
+				android:textColor="@color/black_text"
 				android:text="精美礼物" />
     	</RelativeLayout>
     	<View 
@@ -236,7 +236,7 @@
 				android:layout_toRightOf="@id/home_image_right"
 				android:layout_marginLeft="10dp"
 				android:layout_centerVertical="true"
-				android:textColor="@color/black"
+				android:textColor="@color/black_text"
 				android:text="幸运转盘" />
     	</RelativeLayout>
 	</LinearLayout>

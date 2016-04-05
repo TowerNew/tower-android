@@ -36,9 +36,9 @@ public class Region implements Serializable {
 	 * @return 短名称
 	 */
 	public String getShortName() {
-		if(name.length() <= 4) {
+		if(name.length()>0) {
 			return name;
 		}
-		return name.substring(name.length() - 4);
+		return name.substring(name.length());
 	}
 }

@@ -5,12 +5,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import com.qcast.tower.R;
+import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.Me;
+import com.qcast.tower.business.structure.FamilyMember;
+import com.slfuture.carrie.base.json.JSONNumber;
+import com.slfuture.carrie.base.json.JSONObject;
+import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
+import com.slfuture.pluto.communication.response.core.IResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.storage.Storage;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -19,7 +25,6 @@ import com.slfuture.pretty.general.utility.GeneralHelper;
 import com.slfuture.pretty.general.view.form.ImageActivity;
 import com.slfuture.pretty.general.view.form.TextEditActivity;
 import com.slfuture.pretty.qcode.Module;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,12 +45,14 @@ import android.widget.Toast;
 @ResourceView(id = R.layout.activity_userinfo)
 public class UserInfoActivity extends ActivityEx {
 	@ResourceView(id = R.id.userinfo_image_close)
-	public ImageView imgClose;
+	public ImageView ivClose;
 	@ResourceView(id = R.id.userinfo_label_logout)
 	public TextView labLogout;
+	
 	@ResourceView(id = R.id.userinfo_image_photo)
 	public ImageView imgPhoto;
 	@ResourceView(id = R.id.userinfo_layout_phone)
+	
 	public View viewPhone;
 	@ResourceView(id = R.id.userinfo_text_photo)
 	public TextView labPhone;
@@ -56,25 +63,15 @@ public class UserInfoActivity extends ActivityEx {
 	@ResourceView(id = R.id.userinfo_layout_address)
 	public View viewAddress;
 	@ResourceView(id = R.id.userinfo_text_address)
-	public TextView labAddress;
-	@ResourceView(id = R.id.userinfo_layout_name)
-	public View viewName;
-	@ResourceView(id = R.id.userinfo_text_name)
-	public TextView labName;
-	@ResourceView(id = R.id.userinfo_layout_idnumber)
-	public View viewIdNumber;
-	@ResourceView(id = R.id.userinfo_text_idnumber)
-	public TextView labIdNumber;
-	@ResourceView(id = R.id.userinfo_image_snapshot)
-	public ImageView imgSnapshot;
-	@ResourceView(id = R.id.userinfo_label_status)
-	public TextView labStatus;
+	public TextView labAddress;	
+	
 	@ResourceView(id = R.id.userinfo_image_qcode)
 	public ImageView imgQCode;
 	
-
-	private boolean isAlteringIdCard = false;
-
+	@ResourceView(id = R.id.userinfo_layout_id)
+	public View viewId;
+	private  boolean isAlteringIdCard =false;
+	public int state=0;
 	
 	/**
 	 * 界面创建
@@ -102,59 +99,13 @@ public class UserInfoActivity extends ActivityEx {
 				if(null == uri) {
 					return;
 				}
-				if(isAlteringIdCard) {
-					Networking.doCommand("idcardfront", new JSONResponse(UserInfoActivity.this) {
-						@Override
-						public void onFinished(JSONVisitor content) {
-							if(null == content || content.getInteger("code", 0) <= 0) {
-								return;
-							}
-							String url = content.getString("data");
-							if(null == url) {
-								return;
-							}
-							Me.instance.snapshot = url;
-							Networking.doImage("image", new ImageResponse(url) {
-								@Override
-								public void onFinished(Bitmap content) {
-									imgSnapshot.setImageBitmap(content);
-								}
-							}, url);
-						}
-					}, Me.instance.token, com.qcast.tower.framework.Storage.compressImageFile(new File(Storage.getPathFromURI(UserInfoActivity.this, uri)), 500, 500));
-				}
-				else {
-					alter("photo", new File(Storage.getPathFromURI(UserInfoActivity.this, uri)));
-				}
+				alter("photo", new File(Storage.getPathFromURI(UserInfoActivity.this, uri)));
 				break;
 			case GeneralHelper.INTENT_REQUEST_CAMERA:
 				if(RESULT_OK != resultCode || null == data) {
 					return;
 				}
-				if(isAlteringIdCard) {
-					Networking.doCommand("idcardfront", new JSONResponse(UserInfoActivity.this) {
-						@Override
-						public void onFinished(JSONVisitor content) {
-							if(null == content || content.getInteger("code", 0) <= 0) {
-								return;
-							}
-							String url = content.getString("data");
-							if(null == url) {
-								return;
-							}
-							Me.instance.snapshot = url;
-							Networking.doImage("image", new ImageResponse(url) {
-								@Override
-								public void onFinished(Bitmap content) {
-									imgSnapshot.setImageBitmap(content);
-								}
-							}, url);
-						}
-					}, Me.instance.token, com.qcast.tower.framework.Storage.compressImageFile(Storage.saveCamera(data), 500, 500));
-				}
-				else {
-					alter("photo", Storage.saveCamera(data));
-				}
+				alter("photo", Storage.saveCamera(data));
 				break;
 			case 1:
 				if(TextEditActivity.RESULT_CANCEL == resultCode) {
@@ -167,19 +118,7 @@ public class UserInfoActivity extends ActivityEx {
 					return;
 				}
 				alter("address", data.getStringExtra("result"));
-				break;
-			case 3:
-				if(TextEditActivity.RESULT_CANCEL == resultCode) {
-					return;
-				}
-				alter("name", data.getStringExtra("result"));
-				break;
-			case 4:
-				if(RegionActivity.RESULT_CANCEL == resultCode) {
-					return;
-				}
-				alter("idnumber", data.getStringExtra("result"));
-				break;
+				break;			
 		}
 	    super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -188,12 +127,47 @@ public class UserInfoActivity extends ActivityEx {
 	 * 界面预处理
 	 */
 	public void prepare() {
-		imgClose.setOnClickListener(new View.OnClickListener() {
+		
+		
+		View viewId=(View)findViewById(R.id.userinfo_layout_id);
+		final TextView textId=(TextView)findViewById(R.id.userinfo_text_name);
+
+		if(Me.instance.isAuthenticated){				
+			textId.setText("已认证");	
+	    }else if(state==0) {
+			textId.setText("未认证");				
+	    }else if(state==1){
+	    	textId.setText("待审核");	
+	    }else if(state==2){
+	    	textId.setText("已驳回");	
+	    }
+		viewId.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {										
+					Intent intent = new Intent(UserInfoActivity.this, IdAuthenticationActivity.class);	
+					UserInfoActivity.this.startActivity(intent);
+					UserInfoActivity.this.finish();					
+					Networking.doCommand("RequestStateId", new JSONResponse(UserInfoActivity.this) {
+						@Override
+						public void onFinished(JSONVisitor content) {
+							if(null == content || content.getInteger("code", -1) < 0) {
+								return;
+							}
+							UserInfoActivity.this.finish();	
+						}
+					},Me.instance.token);	
+					}				
+			});		
+	
+				
+		ivClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				UserInfoActivity.this.finish();
 			}
 		});
+		
+		
 		labLogout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -211,7 +185,7 @@ public class UserInfoActivity extends ActivityEx {
 				}).show();
 			}
 		});
-		final ImageView imgPhoto = (ImageView) this.findViewById(R.id.userinfo_image_photo);
+		
 		if(Text.isBlank(Me.instance.photoUrl)) {
 			imgPhoto.setImageBitmap(GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(BitmapFactory.decodeResource(this.getResources(), R.drawable.user_photo_default), 200, 200), Color.WHITE, 4));
 		}
@@ -258,68 +232,9 @@ public class UserInfoActivity extends ActivityEx {
 				UserInfoActivity.this.startActivityForResult(intent, 2);
 			}
 		});
-		labName.setText(Me.instance.name);
-		viewName.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(Me.instance.isAuthenticated) {
-					Toast.makeText(UserInfoActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
-					return;
-				}
-				Intent intent = new Intent(UserInfoActivity.this, TextEditActivity.class);
-				intent.putExtra("title", "编辑姓名");
-				intent.putExtra("default", Me.instance.name);
-				intent.putExtra("description", "请填写真实姓名");
-				intent.putExtra("length", 6);
-				UserInfoActivity.this.startActivityForResult(intent, 3);
-			}
-		});
-    	if(Me.instance.isAuthenticated) {
-    		labStatus.setBackgroundResource(R.drawable.button_green);
-    		labStatus.setText("已认证");
-    	}
-    	else {
-    		labStatus.setBackgroundResource(R.drawable.button_red);
-        	labStatus.setText("未认证");
-    	}
-		labIdNumber.setText(Me.instance.idNumber);
-		viewIdNumber.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(Me.instance.isAuthenticated) {
-					Toast.makeText(UserInfoActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
-					return;
-				}
-				Intent intent = new Intent(UserInfoActivity.this, TextEditActivity.class);
-				intent.putExtra("title", "编辑身份证号");
-				intent.putExtra("default", Me.instance.idNumber);
-				intent.putExtra("description", "请务必填写真实身份证号");
-				intent.putExtra("length", 20);
-				UserInfoActivity.this.startActivityForResult(intent, 4);
-			}
-		});
-		if(!Text.isBlank(Me.instance.snapshot)) {
-            Networking.doImage("image", new ImageResponse(Me.instance.snapshot, 100, 100) {
-				@Override
-				public void onFinished(Bitmap content) {
-					if(null == content) {
-						return;
-					}
-					imgSnapshot.setImageBitmap(content);
-				}
-            }, Me.instance.snapshot);
-		}
-		imgSnapshot.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(Me.instance.isAuthenticated) {
-					Toast.makeText(UserInfoActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
-					return;
-				}
-				isAlteringIdCard = true;
-				GeneralHelper.selectImage(UserInfoActivity.this);
-			}
-		});
+	
+		
+		
 		imgQCode.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -390,18 +305,11 @@ public class UserInfoActivity extends ActivityEx {
 					Me.instance.address = value;
 					labAddress.setText(Me.instance.address);
 				}
-				else if("name".equals(field)) {
-					Me.instance.name = value;
-					labName.setText(Me.instance.name);
-				}
-				else if("idnumber".equals(field)) {
-					Me.instance.idNumber = value;
-					labIdNumber.setText(Me.instance.idNumber);
-				}
 				else if("photo".equals(field)) {
 					imgPhoto.setImageBitmap(GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(BitmapFactory.decodeFile(value), 200, 200), Color.WHITE, 4));
 					Me.instance.photoUrl = data;
 				}
+					
 				try {
 					Me.instance.save();
 				}

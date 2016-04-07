@@ -18,10 +18,11 @@
     <color name="transprant">#00000000</color>
     <color name="blue">#ff4278a7</color>
     <color name="lightblue">#FF3A61A6</color>
-    <color name="voip_interface_text_color">#bababa</color>
-    
-    
+    <color name="voip_interface_text_color">#bababa</color>      
     <color name="main">#ff6fc6cf</color>
     <color name="sub">#fff5f4f2</color>
     <color name="grey_tab">#b4b4b4</color>
+    <color name="orange">#ffe9602c</color>
+    <color name="cyan">#ffadce76</color>
+    <color name="black_text">#ff494949</color>
 </resources>

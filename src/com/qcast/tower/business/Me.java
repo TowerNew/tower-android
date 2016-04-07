@@ -14,6 +14,8 @@ import com.qcast.tower.business.user.Friend;
 import com.qcast.tower.business.user.Relative;
 import com.qcast.tower.business.user.User;
 import com.qcast.tower.framework.Storage;
+import com.qcast.tower.view.form.IdAuthenticationActivity;
+import com.qcast.tower.view.form.UserInfoActivity;
 import com.slfuture.carrie.base.etc.Serial;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -38,6 +40,8 @@ import com.slfuture.pretty.im.view.form.SingleChatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.view.View;
+import android.widget.Toast;
 
 /**
  * 当前登录用户类
@@ -72,7 +76,8 @@ public class Me extends User implements Serializable, IReactor {
 	/**
 	 * 是否认证
 	 */
-	public boolean isAuthenticated;
+	public boolean isAuthenticated=false;
+
 	/**
 	 * 私人医生
 	 */
@@ -401,11 +406,10 @@ public class Me extends User implements Serializable, IReactor {
 		phone = visitor.getString("username");
 		address = visitor.getString("address");
 		token = visitor.getString("token");
-		if(3 == visitor.getInteger("type", 1)) {
+		if(1 == visitor.getInteger("type", 1)) {
+			isAuthenticated = false;		
+		}else {
 			isAuthenticated = true;
-		}
-		else {
-			isAuthenticated = false;
 		}
 		relatives.clear();
 		for(JSONVisitor item : visitor.getVisitors("userList")) {
@@ -416,11 +420,11 @@ public class Me extends User implements Serializable, IReactor {
 					}
 				}
 				catch (ParseException e) { }
-				if(3 == item.getInteger("type", 1)) {
-					isAuthenticated = true;
+				if(1 == item.getInteger("type", 1)) {
+					isAuthenticated = false;
 				}
 				else {
-					isAuthenticated = false;
+					isAuthenticated = true;
 				}
 				gender = item.getInteger("gender", 0);
 				name = item.getString("name");

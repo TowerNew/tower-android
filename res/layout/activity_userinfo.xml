@@ -203,16 +203,15 @@
             android:layout_below="@id/userinfo_layout_address"
             android:layout_centerHorizontal="true"
             android:background="@drawable/divider" >
-		</ImageView>
+		</ImageView>	
 		<RelativeLayout
-		    android:id="@+id/userinfo_layout_name"
-		    android:layout_width="match_parent"
-		    android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-		    android:layout_below="@id/userinfo_divide3"
+            android:id="@+id/userinfo_layout_id"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/userinfo_divide3"
             android:background="@color/white">
 			<TextView
-                android:id="@+id/userinfo_label_name"
+                android:id="@+id/userinfo_label_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -220,11 +219,11 @@
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="姓  名"
+                android:text="实名认证"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 			<ImageView
-				android:id="@+id/userinfo_image_name"
+				android:id="@+id/userinfo_image_id"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignParentRight="true"
@@ -237,106 +236,22 @@
 			    android:layout_height="40dp"
 			    android:layout_centerVertical="true"
 			    android:layout_marginRight="10dp"
-			    android:layout_toLeftOf="@id/userinfo_image_name"
+			    android:layout_toLeftOf="@id/userinfo_image_id"
 			    android:gravity="right|center"
-			    android:text="柳君"
+			    android:text="未填写"
 			    android:textColor="@color/grey_text"
-			    android:textSize="16sp" />
+			    android:textSize="16sp"
+			    android:maxLength="10" />
 		</RelativeLayout>
-		<ImageView
-            android:id="@+id/userinfo_divide4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/userinfo_layout_name"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/divider" >
-		</ImageView>
-		<RelativeLayout
-            android:id="@+id/userinfo_layout_idnumber"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/userinfo_divide4"
-            android:background="@color/white">
-			<TextView
-                android:id="@+id/userinfo_label_idnumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerHorizontal="false"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="身份证号"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-			<ImageView
-				android:id="@+id/userinfo_image_idnumber"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-				android:layout_centerVertical="true"
-                android:layout_marginRight="6dp"
-				android:background="@drawable/arrow" />
-			<TextView
-			    android:id="@+id/userinfo_text_idnumber"
-			    android:layout_width="wrap_content"
-			    android:layout_height="40dp"
-			    android:layout_centerVertical="true"
-			    android:layout_marginRight="10dp"
-			    android:layout_toLeftOf="@id/userinfo_image_idnumber"
-			    android:gravity="right|center"
-			    android:text="340221198601191234"
-			    android:textColor="@color/grey_text"
-			    android:textSize="16sp" />
-		</RelativeLayout>
-		<ImageView
-            android:id="@+id/userinfo_divide5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/userinfo_layout_idnumber"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/divider" >
-		</ImageView>
-		<RelativeLayout
-            android:id="@+id/userinfo_layout_snapshot"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_below="@id/userinfo_divide5"
-            android:background="@color/white">
-			<TextView
-                android:id="@+id/userinfo_label_snapshot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerHorizontal="false"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="身份证拍照"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-			<TextView
-				android:id="@+id/userinfo_label_status"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_margin="10dp"
-			    android:padding="2dp"
-			    android:text="未认证"
-			    android:textColor="@color/white"
-				android:layout_toRightOf="@id/userinfo_label_snapshot"
-				android:layout_centerVertical="true"
-			    android:textSize="12sp" />
-			<ImageView
-				android:id="@+id/userinfo_image_snapshot"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-				android:layout_centerVertical="true"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-				android:src="@drawable/chat_picture"
-				android:scaleType="fitXY" />
-		</RelativeLayout>
+		<TextView
+		    android:id="@+id/hit"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_below="@id/userinfo_layout_id"
+		    android:padding="5dp"
+		    android:layout_marginLeft="10dp"		  
+		    android:text="!  实名认证不能修改  请认真填写" 
+		    android:textSize="14sp"
+		    android:textColor="@color/orange"/>
 	</RelativeLayout>
 </ScrollView>

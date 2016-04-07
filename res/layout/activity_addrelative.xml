@@ -26,16 +26,6 @@
             android:text="编辑家庭成员"
             android:textColor="@color/white"
             android:textSize="18sp" />
-        <TextView
-            android:id="@+id/addrelative_label_confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:text="确认"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
 	</RelativeLayout>
 	<LinearLayout
 	    android:id="@+id/addrelative_layout_list"
@@ -199,5 +189,18 @@
                 android:scaleType="fitXY"
 				android:src="@drawable/chat_picture" />
 		</RelativeLayout>
+		<Button
+		    android:id="@+id/addrelative_label_confirm"
+		    android:layout_width="match_parent"
+		    android:layout_height="40dp"
+		    android:layout_below="@id/addrelative_item_snapshot"
+		    android:layout_centerHorizontal="true"
+		    android:layout_marginTop="20dp"
+		    android:layout_marginLeft="10dp"
+		    android:layout_marginRight="10dp"	    
+		    android:text="提交审核" 
+		    android:textColor="#ffffffff"
+	        android:textSize="15sp"
+	        android:background="@drawable/button_submit" />
 	</LinearLayout>
 </RelativeLayout>

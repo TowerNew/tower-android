@@ -243,6 +243,36 @@ user-platform-web/rest/submitSuggestion#phone=[1]&content=[2]
 ]]>
 	    </mock>
 	</protocol>
+	<protocol name="saveIdInfo">
+		<path>
+<![CDATA[
+user-platform-web/rest/user/applyVerify#identifyCardNo=[1]&realname=[2]&token=[3]
+]]>
+		</path>
+	<mock>
+<![CDATA[
+{
+    "code": 1
+   
+}
+]]>
+	    </mock>
+	</protocol>
+	<protocol name="RequestStateId">
+		<path>
+<![CDATA[
+user-platform-web/rest/user/latestApply?token=[1]
+]]>
+		</path>
+	<mock>
+<![CDATA[
+{
+    "code": 1
+   
+}
+]]>
+	    </mock>
+	</protocol>
 	<protocol name="AlterUserInfo">
 	    <!-- 支持修改的字段：nickname,address,name,idnumber,photo，其中photo上传的是文件对象 -->
 		<path>

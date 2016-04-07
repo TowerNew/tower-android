@@ -76,7 +76,8 @@ public class Me extends User implements Serializable, IReactor {
 	/**
 	 * 是否认证
 	 */
-	public boolean isAuthenticated=false;	
+	public boolean isAuthenticated=false;
+
 	/**
 	 * 私人医生
 	 */

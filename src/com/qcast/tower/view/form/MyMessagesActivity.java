@@ -101,6 +101,7 @@ public class MyMessagesActivity extends ActivityEx {
                 	intent4.putExtra("url", notifyModel.url);
                     MyMessagesActivity.this.startActivity(intent4);
                 	break;
+                
                 case Notify.TYPE_7:
                 	Me.instance.doChat(MyMessagesActivity.this, notifyModel.imGroupId, notifyModel.imId);
                 	break;
@@ -113,6 +114,10 @@ public class MyMessagesActivity extends ActivityEx {
                 	intent9.putExtra("content", "对方删除了您");
                     MyMessagesActivity.this.startActivity(intent9);
                 	break;
+                case Notify.TYPE_10:
+                	Intent intent=new Intent(MyMessagesActivity.this,UserInfoActivity.class);
+                    intent.putExtra("reason", notifyModel.reason);
+                	MyMessagesActivity.this.startActivity(intent);	
                 }
             }
         });
@@ -221,13 +226,23 @@ public class MyMessagesActivity extends ActivityEx {
                         if(null != infomation4.get("url")) {
                         	myMessageModel.url = ((JSONString) infomation4.get("url")).getValue();
                         }
-                    	break;
+                    	break;                    
                     case Notify.TYPE_7:
                     	break;
                     case Notify.TYPE_8:
                     	break;
                     case Notify.TYPE_9:
                     	break;
+                    case Notify.TYPE_10:
+                    	JSONObject infomation=(JSONObject) newJSONObject.get("");
+                    			if(null == infomation) {
+                                	break;
+                                }  
+                    			myMessageModel.reason = "";
+                                if(null != infomation.get("reason")) {
+                                	myMessageModel.reason= ((JSONString) infomation.get("reason")).getValue();
+                                }
+                            	break;
                     }
                     dataList.add(myMessageModel);
                 }
@@ -350,6 +365,8 @@ public class MyMessagesActivity extends ActivityEx {
 			}
 			else if(Notify.TYPE_9 == model.type) {
             	viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_6);
+			}else if(Notify.TYPE_10 == model.type){
+				viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_6);
 			}
             viewHolder.labTitle.setText(model.title);
             viewHolder.labTime.setText(model.time);

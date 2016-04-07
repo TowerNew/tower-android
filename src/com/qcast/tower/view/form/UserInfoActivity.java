@@ -5,18 +5,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import com.qcast.tower.R;
-import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.Me;
-import com.qcast.tower.business.structure.FamilyMember;
-import com.slfuture.carrie.base.json.JSONNumber;
-import com.slfuture.carrie.base.json.JSONObject;
-import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.JSONVisitor;
+import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
+import com.slfuture.carrie.base.type.Table;
 import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
-import com.slfuture.pluto.communication.response.core.IResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.storage.Storage;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -37,7 +33,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * 首页
@@ -67,12 +62,18 @@ public class UserInfoActivity extends ActivityEx {
 	
 	@ResourceView(id = R.id.userinfo_image_qcode)
 	public ImageView imgQCode;
-	
-	@ResourceView(id = R.id.userinfo_layout_id)
-	public View viewId;
-	private  boolean isAlteringIdCard =false;
-	public int state=0;
-	
+
+	@ResourceView(id = R.id.userinfo_layout_authority)
+	public View viewAuthority;
+	@ResourceView(id = R.id.userinfo_text_authority)
+	public TextView txtAuthority;
+
+	/**
+	 * 当前审核状态
+	 */
+	private int authorityStatus = 0;
+
+
 	/**
 	 * 界面创建
 	 */
@@ -127,47 +128,45 @@ public class UserInfoActivity extends ActivityEx {
 	 * 界面预处理
 	 */
 	public void prepare() {
-		
-		
-		View viewId=(View)findViewById(R.id.userinfo_layout_id);
-		final TextView textId=(TextView)findViewById(R.id.userinfo_text_name);
-
-		if(Me.instance.isAuthenticated){				
-			textId.setText("已认证");	
-	    }else if(state==0) {
-			textId.setText("未认证");				
-	    }else if(state==1){
-	    	textId.setText("待审核");	
-	    }else if(state==2){
-	    	textId.setText("已驳回");	
-	    }
-		viewId.setOnClickListener(new View.OnClickListener() {
+		Me.instance.fetchAuthorityStatus(new IEventable<com.slfuture.carrie.base.type.Table<String, Object>>() {
 			@Override
-			public void onClick(View v) {										
-					Intent intent = new Intent(UserInfoActivity.this, IdAuthenticationActivity.class);	
-					UserInfoActivity.this.startActivity(intent);
-					UserInfoActivity.this.finish();					
-					Networking.doCommand("RequestStateId", new JSONResponse(UserInfoActivity.this) {
-						@Override
-						public void onFinished(JSONVisitor content) {
-							if(null == content || content.getInteger("code", -1) < 0) {
-								return;
-							}
-							UserInfoActivity.this.finish();	
-						}
-					},Me.instance.token);	
-					}				
-			});		
-	
-				
+			public void on(Table<String, Object> event) {
+				if(null == event) {
+					authorityStatus = 0;
+					txtAuthority.setText("未认证");
+					return;
+				}
+				authorityStatus = (Integer) event.get("status");
+				switch(authorityStatus) {
+				case 1:
+					txtAuthority.setText("待审核");
+					break;
+				case 2:
+					txtAuthority.setText("已认证");
+					break;
+				case 3:
+					txtAuthority.setText("被驳回");
+					break;
+				}
+			}
+		});
+		viewAuthority.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(0 != authorityStatus && 2 != authorityStatus) {
+					return;
+				}
+				Intent intent = new Intent(UserInfoActivity.this, IdAuthenticationActivity.class);
+				UserInfoActivity.this.startActivity(intent);
+				UserInfoActivity.this.finish();
+			}
+		});
 		ivClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				UserInfoActivity.this.finish();
 			}
 		});
-		
-		
 		labLogout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -203,7 +202,6 @@ public class UserInfoActivity extends ActivityEx {
 		imgPhoto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				isAlteringIdCard = false;
 				GeneralHelper.selectImage(UserInfoActivity.this);
 			}
 		});

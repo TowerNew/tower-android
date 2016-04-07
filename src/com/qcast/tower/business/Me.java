@@ -14,8 +14,6 @@ import com.qcast.tower.business.user.Friend;
 import com.qcast.tower.business.user.Relative;
 import com.qcast.tower.business.user.User;
 import com.qcast.tower.framework.Storage;
-import com.qcast.tower.view.form.IdAuthenticationActivity;
-import com.qcast.tower.view.form.UserInfoActivity;
 import com.slfuture.carrie.base.etc.Serial;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -40,8 +38,6 @@ import com.slfuture.pretty.im.view.form.SingleChatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.view.View;
-import android.widget.Toast;
 
 /**
  * 当前登录用户类
@@ -391,6 +387,36 @@ public class Me extends User implements Serializable, IReactor {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * 获取认证状态
+	 * 
+	 * @param eventable 事件回调
+	 */
+	public void fetchAuthorityStatus(IEventable<com.slfuture.carrie.base.type.Table<String, Object>> eventable) {
+		Networking.doCommand("RequestStateId", new JSONResponse(Program.application, eventable) {
+			@Override
+			public void onFinished(JSONVisitor content) {
+				if(null == content) {
+					return;
+				}
+				if(content.getInteger("code", 0) <= 0) {
+					return;
+				}
+				if(null == content.getVisitor("data")) {
+					((IEventable<com.slfuture.carrie.base.type.Table<String, Object>>) tag).on(null);
+					return;
+				}
+				com.slfuture.carrie.base.type.Table<String, Object> table = new com.slfuture.carrie.base.type.Table<String, Object>();
+				table.put("status", content.getInteger("status"));
+				table.put("imageUrl", content.getString("imageUrl"));
+				table.put("idNumber", content.getString("identifyCardNo"));
+				table.put("name", content.getString("realname"));
+				table.put("reason", content.getString("returnReason"));
+				((IEventable<com.slfuture.carrie.base.type.Table<String, Object>>) tag).on(table);
+			}
+		}, token);
 	}
 
 	/**

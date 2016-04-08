@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.slfuture.carrie.base.json.JSONVisitor;
-import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.model.core.ITargetEventable;
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Networking;
@@ -61,7 +60,7 @@ public class IdAuthenticationActivity extends ActivityEx{
 	public Button submitButton;
 	private boolean isAlteringIdCard = false;
 	
-	
+
 
 	
 	/**
@@ -70,16 +69,12 @@ public class IdAuthenticationActivity extends ActivityEx{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		prepare();
 	}
-
-
 	@Override
-	public void onStart() {
-		super.onStart();
+	public void onResume() {
+		super.onResume();
 		prepare();
 	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
@@ -147,21 +142,240 @@ public class IdAuthenticationActivity extends ActivityEx{
 				alter("name", data.getStringExtra("result"));
 				break;
 			case 2:
-				if(RegionActivity.RESULT_CANCEL == resultCode) {
+				if(TextEditActivity.RESULT_CANCEL == resultCode) {
 					return;
 				}
 				alter("idnumber", data.getStringExtra("result"));
 				break;
-			
 		}
 	    super.onActivityResult(requestCode, resultCode, data);
 	}
-
-
 	/*
 	 * 界面预处理
 	 */
-    public void prepare() { 
+    public void prepare() {   
+    	
+    	Intent intent=getIntent(); 
+    	int authorityStatus = intent.getIntExtra("authorityStatus", 0);   	 
+		    	labName.setText(Me.instance.name);
+				viewName.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {				
+						Intent intent = new Intent(IdAuthenticationActivity.this, TextEditActivity.class);
+						intent.putExtra("title", "编辑姓名");
+						intent.putExtra("default", Me.instance.name);
+						intent.putExtra("description", "请填写真实姓名");
+						intent.putExtra("length", 6);
+						IdAuthenticationActivity.this.startActivityForResult(intent, 1);				
+					}
+				});   	
+				labIdNumber.setText(Me.instance.idNumber);
+				viewIdNumber.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {				
+						Intent intent = new Intent(IdAuthenticationActivity.this, TextEditActivity.class);
+						intent.putExtra("title", "编辑身份证号");
+						intent.putExtra("default", Me.instance.idNumber);
+						intent.putExtra("description", "请务必填写真实身份证号");
+						intent.putExtra("length", 20);
+						IdAuthenticationActivity.this.startActivityForResult(intent, 2);
+					}
+				});
+				if(!Text.isBlank(Me.instance.snapshot)) {
+		            Networking.doImage("image", new ImageResponse(Me.instance.snapshot, 100, 100) {
+						@Override
+						public void onFinished(Bitmap content) {
+							if(null == content) {
+								return;
+							}
+							imgSnapshot.setImageBitmap(content);
+						}
+		            }, Me.instance.snapshot);				
+				}
+		    	imgSnapshot.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {					
+							isAlteringIdCard = true;
+							GeneralHelper.selectImage(IdAuthenticationActivity.this);
+						}
+					});	   	
+		    	submitButton.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {	
+						if(Text.isBlank(labName.getText().toString())) {
+							Toast.makeText(IdAuthenticationActivity.this, "姓名不能为空", Toast.LENGTH_LONG).show();
+							return;
+						}
+						Pattern pattern = Pattern.compile("^(^\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$");
+						Matcher matcher = pattern.matcher(labIdNumber.getText().toString());
+						if(!matcher.matches()) {
+							Toast.makeText(IdAuthenticationActivity.this, "身份证号码格式不正确", Toast.LENGTH_LONG).show();
+							return;
+						}
+						if(Text.isBlank(Me.instance.snapshot)) {
+							Toast.makeText(IdAuthenticationActivity.this, "请上传身份证正面照片", Toast.LENGTH_LONG).show();
+							return;
+						}							
+						Networking.doCommand("saveIdInfo", new JSONResponse(IdAuthenticationActivity.this) {
+							@Override
+							public void onFinished(JSONVisitor content) {
+								if(null == content || content.getInteger("code", -1) < 0) {
+									return;
+								}
+								Toast.makeText(IdAuthenticationActivity.this, "提交成功", Toast.LENGTH_LONG).show();	
+								
+							}
+						},labIdNumber.getText().toString(),labName.getText().toString(),Me.instance.token);	
+					}	
+					});	 		    	
+			switch(authorityStatus) {
+				case 1:
+					labName.setText(Me.instance.name);
+					viewName.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+								Toast.makeText(IdAuthenticationActivity.this, "待审核信息无法修改", Toast.LENGTH_LONG).show();
+								return;
+							}			
+						});
+					labIdNumber.setText(Me.instance.idNumber);
+					viewIdNumber.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+								Toast.makeText(IdAuthenticationActivity.this, "待审核信息无法修改", Toast.LENGTH_LONG).show();
+								return;
+							}			
+						});
+					if(!Text.isBlank(Me.instance.snapshot)) {
+			            Networking.doImage("image", new ImageResponse(Me.instance.snapshot, 100, 100) {
+							@Override
+							public void onFinished(Bitmap content) {
+								if(null == content) {
+									return;
+								}
+								imgSnapshot.setImageBitmap(content);
+							}
+			            }, Me.instance.snapshot);				
+					}
+					imgSnapshot.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+								Toast.makeText(IdAuthenticationActivity.this, "待审核信息无法修改", Toast.LENGTH_LONG).show();
+								return;
+							}			
+						});
+					break;
+				case 2:
+					isAlteringIdCard = false;
+					submitButton.setVisibility(View.GONE);
+					labName.setText(Me.instance.name);
+					viewName.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+								Toast.makeText(IdAuthenticationActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
+								return;
+						}});	
+					labIdNumber.setText(Me.instance.idNumber);
+					viewIdNumber.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {							
+								Toast.makeText(IdAuthenticationActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
+								return;
+						}});
+					if(!Text.isBlank(Me.instance.snapshot)) {
+			            Networking.doImage("image", new ImageResponse(Me.instance.snapshot, 100, 100) {
+							@Override
+							public void onFinished(Bitmap content) {
+								if(null == content) {
+									return;
+								}
+								imgSnapshot.setImageBitmap(content);
+							}
+			            }, Me.instance.snapshot);				
+					}
+					imgSnapshot.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {		
+								Toast.makeText(IdAuthenticationActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
+								return;
+						}
+					});	
+					break;
+				case 3:
+					labName.setText(Me.instance.name);
+					viewName.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {				
+							Intent intent = new Intent(IdAuthenticationActivity.this, TextEditActivity.class);
+							intent.putExtra("title", "编辑姓名");
+							intent.putExtra("default", Me.instance.name);
+							intent.putExtra("description", "请填写真实姓名");
+							intent.putExtra("length", 6);
+							IdAuthenticationActivity.this.startActivityForResult(intent, 1);				
+						}
+					});   	
+					labIdNumber.setText(Me.instance.idNumber);
+					viewIdNumber.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {				
+							Intent intent = new Intent(IdAuthenticationActivity.this, TextEditActivity.class);
+							intent.putExtra("title", "编辑身份证号");
+							intent.putExtra("default", Me.instance.idNumber);
+							intent.putExtra("description", "请务必填写真实身份证号");
+							intent.putExtra("length", 20);
+							IdAuthenticationActivity.this.startActivityForResult(intent, 2);
+						}
+					});		
+					if(!Text.isBlank(Me.instance.snapshot)) {
+			            Networking.doImage("image", new ImageResponse(Me.instance.snapshot, 100, 100) {
+							@Override
+							public void onFinished(Bitmap content) {
+								if(null == content) {
+									return;
+								}
+								imgSnapshot.setImageBitmap(content);
+							}
+			            }, Me.instance.snapshot);				
+					}
+			    	imgSnapshot.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View v) {					
+								isAlteringIdCard = true;
+								GeneralHelper.selectImage(IdAuthenticationActivity.this);
+							}
+						});	
+			    	submitButton.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {	
+							if(Text.isBlank(labName.getText().toString())) {
+								Toast.makeText(IdAuthenticationActivity.this, "姓名不能为空", Toast.LENGTH_LONG).show();
+								return;
+							}
+							Pattern pattern = Pattern.compile("^(^\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$");
+							Matcher matcher = pattern.matcher(labIdNumber.getText().toString());
+							if(!matcher.matches()) {
+								Toast.makeText(IdAuthenticationActivity.this, "身份证号码格式不正确", Toast.LENGTH_LONG).show();
+								return;
+							}
+							if(Text.isBlank(Me.instance.snapshot)) {
+								Toast.makeText(IdAuthenticationActivity.this, "请上传身份证正面照片", Toast.LENGTH_LONG).show();
+								return;
+							}			
+							Networking.doCommand("saveIdInfo", new JSONResponse(IdAuthenticationActivity.this) {
+								@Override
+								public void onFinished(JSONVisitor content) {
+									if(null == content || content.getInteger("code", -1) < 0) {
+										return;
+									}
+									Toast.makeText(IdAuthenticationActivity.this, "提交成功", Toast.LENGTH_LONG).show();	
+									
+								}
+							},labIdNumber.getText().toString(),labName.getText().toString(),Me.instance.token);	
+							IdAuthenticationActivity.this.finish();
+						}	
+						});					
+					break;
+				}
     	imgClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -171,150 +385,8 @@ public class IdAuthenticationActivity extends ActivityEx{
 			}
 		});  
     	
-    	if(Me.instance.isAuthenticated){
-			isAlteringIdCard = false;
-			submitButton.setVisibility(View.GONE);
-			labName.setText(Me.instance.name);
-			viewName.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if(Me.instance.isAuthenticated) {
-						Toast.makeText(IdAuthenticationActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
-						return;
-				}}});			
-			labIdNumber.setText(Me.instance.idNumber);
-			viewIdNumber.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if(Me.instance.isAuthenticated) {
-						Toast.makeText(IdAuthenticationActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
-						return;
-					}
-				}});
-			imgSnapshot.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if(Me.instance.isAuthenticated) {
-						Toast.makeText(IdAuthenticationActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
-						return;
-					}			
-				}
-			});	
-		}else {
-		labName.setText(Me.instance.name);
-		viewName.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {				
-				Intent intent = new Intent(IdAuthenticationActivity.this, TextEditActivity.class);
-				intent.putExtra("title", "编辑姓名");
-				intent.putExtra("default", Me.instance.name);
-				intent.putExtra("description", "请填写真实姓名");
-				intent.putExtra("length", 6);
-				IdAuthenticationActivity.this.startActivityForResult(intent, 1);				
-			}
-		});   	
-		labIdNumber.setText(Me.instance.idNumber);
-		viewIdNumber.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {				
-				Intent intent = new Intent(IdAuthenticationActivity.this, TextEditActivity.class);
-				intent.putExtra("title", "编辑身份证号");
-				intent.putExtra("default", Me.instance.idNumber);
-				intent.putExtra("description", "请务必填写真实身份证号");
-				intent.putExtra("length", 20);
-				IdAuthenticationActivity.this.startActivityForResult(intent, 2);
-			}
-		});
-		
-    	if(!Text.isBlank(Me.instance.snapshot)){
-            Networking.doImage("image", new ImageResponse(Me.instance.snapshot, 100, 100) {
-				@Override
-				public void onFinished(Bitmap content) {
-					if(null == content) {
-						return;
-					}
-					imgSnapshot.setImageBitmap(content);
-				}
-            }, Me.instance.snapshot);
-		}		
-    	imgSnapshot.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {					
-					isAlteringIdCard = true;
-					GeneralHelper.selectImage(IdAuthenticationActivity.this);
-				}
-			});	
-    	
-    	
-    	submitButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {	
-				if(Text.isBlank(labName.getText().toString())) {
-					Toast.makeText(IdAuthenticationActivity.this, "姓名不能为空", Toast.LENGTH_LONG).show();
-					return;
-				}
-				Pattern pattern = Pattern.compile("^(^\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$");
-				Matcher matcher = pattern.matcher(labIdNumber.getText().toString());
-				if(!matcher.matches()) {
-					Toast.makeText(IdAuthenticationActivity.this, "身份证号码格式不正确", Toast.LENGTH_LONG).show();
-					return;
-				}
-				if(Text.isBlank(Me.instance.snapshot)) {
-					Toast.makeText(IdAuthenticationActivity.this, "请上传身份证正面照片", Toast.LENGTH_LONG).show();
-					return;
-				}
-							
-				Networking.doCommand("saveIdInfo", new JSONResponse(IdAuthenticationActivity.this) {
-					@Override
-					public void onFinished(JSONVisitor content) {
-						if(null == content || content.getInteger("code", -1) < 0) {
-							return;
-						}
-						Toast.makeText(IdAuthenticationActivity.this, "提交成功", Toast.LENGTH_LONG).show();	
-						
-					}
-				},labIdNumber.getText().toString(),labName.getText().toString(),Me.instance.token);	
-			 
-			}	
-			});	
-    	
-    	if(submitButton.hasOnClickListeners()){
-    		
-    		labName.setText(Me.instance.name);
-    		viewName.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {					
-					Toast.makeText(IdAuthenticationActivity.this, "已提交不可更改", Toast.LENGTH_SHORT).show();
-				}
-			});	
-    		labIdNumber.setText(Me.instance.idNumber);
-    		viewIdNumber.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {					
-					Toast.makeText(IdAuthenticationActivity.this, "已提交不可更改", Toast.LENGTH_SHORT).show();
-				}
-			});	
-    		imgSnapshot.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {					
-					Toast.makeText(IdAuthenticationActivity.this, "已提交不可更改", Toast.LENGTH_SHORT).show();
-				}
-			});	
-    		
-    	}
-    	
-    	}}
-		
-	
-   
-			
-    	
-  		
-    	
-    	
-    	
-    	
-	/**
+    }
+    /**
 	 * 修改字段
 	 * 
 	 * @param field 字段名
@@ -341,12 +413,11 @@ public class IdAuthenticationActivity extends ActivityEx{
 				String field = Text.substring(value, null, "=");
 				value = Text.substring(value, "=", null);
 				String data = content.getString("data");
-				
-				 if("name".equals(field)) {
+				if("name".equals(field)) {
 					Me.instance.name = value;
 					labName.setText(Me.instance.name);
 				}
-				else if("idnumber".equals(field)) {
+				if("idnumber".equals(field)) {
 					Me.instance.idNumber = value;
 					labIdNumber.setText(Me.instance.idNumber);
 				}
@@ -355,6 +426,6 @@ public class IdAuthenticationActivity extends ActivityEx{
 				}
 				catch (IOException e) { }
 			}
-		}, Me.instance.token, field, value);
+		}, Me.instance.token, field, value);		
 	}
 }

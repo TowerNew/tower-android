@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import com.qcast.tower.Program;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.business.user.Relative;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
+import com.slfuture.carrie.base.type.Table;
 import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -104,21 +106,42 @@ public class FamilyActivity extends OnlyUserActivity {
                     imageView.setImageBitmap((Bitmap) data);
                     return true;
                 }
-                else if(view instanceof TextView && data instanceof Boolean) {
+                else if(view instanceof TextView && data instanceof Integer) {
+                	Me.instance.fetchAuthorityFamilyStatus(new IEventable<com.slfuture.carrie.base.type.Table<String, Object>>() {
+            			@Override
+            			public void on(Table<String, Object> event) {
+            				int authorityStatus = 0;
+            				if(null == event) {
+            					return;
+            				}
+            				if(null==event.get("status")){
+            					return;
+            				}
+            				authorityStatus = (Integer) event.get("status");           				
+            		
+            			}
+            		});
                 	TextView textView = (TextView) view;
-                	if((Boolean) data) {
+                	if((Integer) data ==1) {
                     	textView.setBackgroundResource(R.drawable.button_green);
-                    	textView.setText("已认证");
+                    	textView.setText("待审核");
                 	}
-                	else {
+                	else if((Integer) data ==2){
                     	textView.setBackgroundResource(R.drawable.button_red);
-                    	textView.setText("未认证");
+                    	textView.setText("已认证");
+                	}else if((Integer) data ==3){
+                		textView.setText("被驳回");	
+                	}else{
+                		textView.setText("未认证");	
                 	}
                     return true;
                 }
                 return false;
-            }
-        });
+			}});
+           
+                	
+        
+     
 		listview.setAdapter(listItemAdapter);
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override

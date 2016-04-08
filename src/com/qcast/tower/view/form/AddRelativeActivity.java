@@ -137,6 +137,20 @@ public class AddRelativeActivity extends OnlyUserActivity {
 				}, Me.instance.token, userId, mode, txtRelation.getText().toString(), txtName.getText().toString(), txtIdNumber.getText().toString(), snapshot);
 			}
 		});
+		 Networking.doCommand("editFamily", new JSONResponse(AddRelativeActivity.this) {
+			@Override
+			public void onFinished(JSONVisitor content) {
+				if(null != content && content.getInteger("code") > 0) {
+					Me.instance.refreshMember(AddRelativeActivity.this, new IEventable<Boolean>() {
+						@Override
+						public void on(Boolean data) {
+							AddRelativeActivity.this.finish();
+						}
+					});
+					return;
+				}
+			}
+		}, Me.instance.token, userId,txtName.getText().toString(), txtIdNumber.getText().toString(), snapshot);
 		imgSnapshot.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

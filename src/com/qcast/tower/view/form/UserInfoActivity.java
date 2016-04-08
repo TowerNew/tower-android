@@ -72,8 +72,19 @@ public class UserInfoActivity extends ActivityEx {
 	 * 当前审核状态
 	 */
 	private int authorityStatus = 0;
-
-
+	/**
+     * 获取用户真实姓名
+     */
+	private String realname = null;
+	/**
+     * 获取用户身份证号
+     */
+	private String identifyCardNo = null;
+	/**
+     * 获取用户照片
+     */
+	private String imageUrl = null;
+	
 	/**
 	 * 界面创建
 	 */
@@ -136,7 +147,13 @@ public class UserInfoActivity extends ActivityEx {
 					txtAuthority.setText("未认证");
 					return;
 				}
+				if(null==event.get("status")){
+					return;
+				}
 				authorityStatus = (Integer) event.get("status");
+				realname = (String)event.get("realname");
+				identifyCardNo = (String)event.get("identifyCardNo");
+				imageUrl = (String)event.get("imageUrl");
 				switch(authorityStatus) {
 				case 1:
 					txtAuthority.setText("待审核");
@@ -152,11 +169,12 @@ public class UserInfoActivity extends ActivityEx {
 		});
 		viewAuthority.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				if(0 != authorityStatus && 2 != authorityStatus) {
-					return;
-				}
+			public void onClick(View v) {			
 				Intent intent = new Intent(UserInfoActivity.this, IdAuthenticationActivity.class);
+				intent.putExtra("authorityStatus", authorityStatus);
+				intent.putExtra(realname, "realname");
+				intent.putExtra(identifyCardNo, "identifyCardNo");
+				intent.putExtra(imageUrl, "imageUrl");
 				UserInfoActivity.this.startActivity(intent);
 				UserInfoActivity.this.finish();
 			}

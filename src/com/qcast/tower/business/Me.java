@@ -295,7 +295,7 @@ public class Me extends User implements Serializable, IReactor {
 						catch (ParseException e) { }
 						gender = item.getInteger("gender", 0);
 						name = item.getString("name");
-						idNumber = item.getString("idnumber");
+						idNumber  = item.getString("idNumber");
 						continue;
 					}
 					// 非注册亲戚
@@ -404,7 +404,8 @@ public class Me extends User implements Serializable, IReactor {
 				if(content.getInteger("code", 0) <= 0) {
 					return;
 				}
-				if(null == content.getVisitor("data")) {
+				content = content.getVisitor("data");
+				if(null == content) {
 					((IEventable<com.slfuture.carrie.base.type.Table<String, Object>>) tag).on(null);
 					return;
 				}
@@ -418,7 +419,30 @@ public class Me extends User implements Serializable, IReactor {
 			}
 		}, token);
 	}
-
+	/**
+	 * 获取家庭成员的认证状态
+	 */
+	public void fetchAuthorityFamilyStatus(IEventable<com.slfuture.carrie.base.type.Table<String, Object>> eventable) {
+		Networking.doCommand("RequestStateId", new JSONResponse(Program.application, eventable) {
+			@Override
+			public void onFinished(JSONVisitor content) {
+				if(null == content) {
+					return;
+				}
+				if(content.getInteger("code", 0) <= 0) {
+					return;
+				}
+				content = content.getVisitor("data");
+				if(null == content) {
+					((IEventable<com.slfuture.carrie.base.type.Table<String, Object>>) tag).on(null);
+					return;
+				}
+				com.slfuture.carrie.base.type.Table<String, Object> table = new com.slfuture.carrie.base.type.Table<String, Object>();
+				table.put("status", content.getInteger("status"));				
+				((IEventable<com.slfuture.carrie.base.type.Table<String, Object>>) tag).on(table);
+			}
+		}, token);
+	}
 	/**
 	 * 解析数据生成用户对象
 	 * 
@@ -431,6 +455,8 @@ public class Me extends User implements Serializable, IReactor {
 		}
 		phone = visitor.getString("username");
 		address = visitor.getString("address");
+		name =visitor.getString("name");
+		idNumber=visitor.getString("idnumber");
 		token = visitor.getString("token");
 		if(1 == visitor.getInteger("type", 1)) {
 			isAuthenticated = false;		

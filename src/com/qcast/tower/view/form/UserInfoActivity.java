@@ -67,6 +67,8 @@ public class UserInfoActivity extends ActivityEx {
 	public View viewAuthority;
 	@ResourceView(id = R.id.userinfo_text_authority)
 	public TextView txtAuthority;
+	@ResourceView(id = R.id.userinfo_text_reason)
+	public TextView txtReason;
 
 	/**
 	 * 当前审核状态
@@ -84,7 +86,10 @@ public class UserInfoActivity extends ActivityEx {
      * 获取用户照片
      */
 	private String imageUrl = null;
-	
+	/**
+	 * 获取用户驳回原因
+	 */
+	private String rejectReason = "驳回原因.....";
 	/**
 	 * 界面创建
 	 */
@@ -150,7 +155,11 @@ public class UserInfoActivity extends ActivityEx {
 				if(null==event.get("status")){
 					return;
 				}
+				if(null==event.get("reason")){
+					return;
+				}
 				authorityStatus = (Integer) event.get("status");
+				rejectReason =(String)event.get("reason");
 				realname = (String)event.get("realname");
 				identifyCardNo = (String)event.get("identifyCardNo");
 				imageUrl = (String)event.get("imageUrl");
@@ -163,6 +172,7 @@ public class UserInfoActivity extends ActivityEx {
 					break;
 				case 3:
 					txtAuthority.setText("被驳回");
+					txtReason.setText(rejectReason);
 					break;
 				}
 			}

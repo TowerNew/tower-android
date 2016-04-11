@@ -638,22 +638,6 @@ user-platform-web/rest/user/editowner#token=[1]&userGlobalId=[2]&mode=[3]&relati
 ]]>
         </mock>
     </protocol>
-    <protocol name="editFamily">
-         <!--  实名认证家人信息，其中image为上传的身份证正面File对象 -->
-        <path>
-        <![CDATA[
-user-platform-web/rest/user/applyVerifyForFamilyMember#token=[1]&memberId=[2]
-        ]]>
-        </path>
-		<mock>
-<![CDATA[
-{
-    "code": 1,
-    "data": null
-}
-]]>
-        </mock>
-    </protocol>
     <!-- 新增和修改联系人，mode：0新增，1编辑。编辑时服务端使用userGlobalId忽略phone。 -->
     <protocol name="editrelation">
         <path>

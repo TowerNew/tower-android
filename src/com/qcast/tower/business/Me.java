@@ -248,15 +248,18 @@ public class Me extends User implements Serializable, IReactor {
 					 return;
 				 }
 				 if(null == content.getVisitor("data")) {
+					 doctor = null;
 					 return;
 				 }
-				 doctor = new Doctor();
-				 doctor.parse(content.getVisitor("data"));
-				 if(!Text.isBlank(doctor.photoUrl)) {
-					 Networking.doImage("image", new ImageResponse(doctor.photoUrl) {
-						@Override
-						public void onFinished(Bitmap content) { }
-					 }, doctor.photoUrl);
+				 else {
+					 doctor = new Doctor();
+					 doctor.parse(content.getVisitor("data"));
+					 if(!Text.isBlank(doctor.photoUrl)) {
+						 Networking.doImage("image", new ImageResponse(doctor.photoUrl) {
+							@Override
+							public void onFinished(Bitmap content) { }
+						 }, doctor.photoUrl);
+					 }
 				 }
 				 try {
 					save();
@@ -388,7 +391,7 @@ public class Me extends User implements Serializable, IReactor {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 获取认证状态
 	 * 
@@ -396,6 +399,7 @@ public class Me extends User implements Serializable, IReactor {
 	 */
 	public void fetchAuthorityStatus(IEventable<com.slfuture.carrie.base.type.Table<String, Object>> eventable) {
 		Networking.doCommand("RequestStateId", new JSONResponse(Program.application, eventable) {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content) {
@@ -419,30 +423,7 @@ public class Me extends User implements Serializable, IReactor {
 			}
 		}, token);
 	}
-	/**
-	 * 获取家庭成员的认证状态
-	 */
-	public void fetchAuthorityFamilyStatus(IEventable<com.slfuture.carrie.base.type.Table<String, Object>> eventable) {
-		Networking.doCommand("RequestStateId", new JSONResponse(Program.application, eventable) {
-			@Override
-			public void onFinished(JSONVisitor content) {
-				if(null == content) {
-					return;
-				}
-				if(content.getInteger("code", 0) <= 0) {
-					return;
-				}
-				content = content.getVisitor("data");
-				if(null == content) {
-					((IEventable<com.slfuture.carrie.base.type.Table<String, Object>>) tag).on(null);
-					return;
-				}
-				com.slfuture.carrie.base.type.Table<String, Object> table = new com.slfuture.carrie.base.type.Table<String, Object>();
-				table.put("status", content.getInteger("status"));				
-				((IEventable<com.slfuture.carrie.base.type.Table<String, Object>>) tag).on(table);
-			}
-		}, token);
-	}
+
 	/**
 	 * 解析数据生成用户对象
 	 * 
@@ -626,7 +607,7 @@ public class Me extends User implements Serializable, IReactor {
 			}, "user-platform-onlineDiag", object.toString());
 			return;
 		}
-		if(null != type && (Notify.TYPE_5 == type || Notify.TYPE_9 == type)) {
+		if(null != type && (Notify.TYPE_5 == type || Notify.TYPE_9 == type || Notify.TYPE_10 == type)) {
 			Me.instance.refreshMember(Program.application, new IEventable<Boolean>() {
 				@Override
 				public void on(Boolean result) {
@@ -635,6 +616,14 @@ public class Me extends User implements Serializable, IReactor {
 					}
 					Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
 				}
+			});
+			Reminder.vibrate(Program.application);
+			return;
+		}
+		else if(null != type && Notify.TYPE_31 == type) {
+			Me.instance.refreshDoctor(Program.application, new IEventable<Boolean>() {
+				@Override
+				public void on(Boolean event) { }
 			});
 			Reminder.vibrate(Program.application);
 			return;

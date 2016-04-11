@@ -37,13 +37,13 @@ public class Relative implements Serializable {
 	 */
 	public String snapshot = null;
 	/**
-	 * 是否认证
-	 */
-	public boolean isAuthenticated;
-	/**
 	 * 关系&备注
 	 */
 	public String relation;
+	/**
+	 * 状态：1-待审核，2-审核通过，3-驳回，4-取消申请
+	 */
+	public int status = 1;
 
 
 	/**
@@ -64,13 +64,11 @@ public class Relative implements Serializable {
 		name = visitor.getString("name");
 		idNumber = visitor.getString("idnumber");
 		snapshot = visitor.getString("idcardfront");
-		if(4 == visitor.getInteger("type", 2)) {
-			isAuthenticated = true;
-		}
-		else {
-			isAuthenticated = false;
-		}
 		relation = visitor.getString("relation");
+		visitor = visitor.getVisitor("lastApply");
+		if(null != visitor) {
+			status = visitor.getInteger("status", 1);
+		}
 		return true;
 	}
 

@@ -45,6 +45,8 @@ public class AddRelativeActivity extends OnlyUserActivity {
 	public EditText txtRelation;
 	@ResourceView(id = R.id.addrelative_image_snapshot)
 	public ImageView imgSnapshot;
+	@ResourceView(id = R.id.addrelative_label_reason)
+	public TextView labReason;
 
 	/**
 	 * 带编辑的成员ID
@@ -92,6 +94,12 @@ public class AddRelativeActivity extends OnlyUserActivity {
 						target.setImageBitmap(event);
 					}
 				}, relative.snapshot);
+			}
+			if(3 == relative.status) {
+				labReason.setVisibility(View.VISIBLE);
+				if(null != relative.rejectReason) {
+					labReason.setText(relative.rejectReason);
+				}
 			}
 		}
 		imgClose.setOnClickListener(new View.OnClickListener() {

@@ -163,7 +163,7 @@ user/appv2/sites/v-1/chuandaishuju.html?token=[1]&regionId=[2]
 	<protocol name="jiankangdangan">
 		<path host="cdn">
 		<![CDATA[
-user/appv2/sites/v-1/healthscoreentry.html?token=[1]
+user/appv2/sites/v-1/healthscoreentry.html?token=[1]&regionId=[2]
 		]]>
 		</path>
 		<mock></mock>

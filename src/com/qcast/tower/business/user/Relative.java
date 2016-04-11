@@ -44,6 +44,10 @@ public class Relative implements Serializable {
 	 * 状态：1-待审核，2-审核通过，3-驳回，4-取消申请
 	 */
 	public int status = 1;
+	/**
+	 * 驳回理由
+	 */
+	public String rejectReason = null;
 
 
 	/**
@@ -68,6 +72,7 @@ public class Relative implements Serializable {
 		visitor = visitor.getVisitor("lastApply");
 		if(null != visitor) {
 			status = visitor.getInteger("status", 1);
+			rejectReason = visitor.getString("returnReason");
 		}
 		return true;
 	}

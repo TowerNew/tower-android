@@ -108,19 +108,19 @@ public class FamilyActivity extends OnlyUserActivity {
                 	TextView textView = (TextView) view;
                 	switch((Integer) data) {
                 	case 1:
-                    	textView.setBackgroundResource(R.drawable.button_green);
+                    	textView.setBackgroundResource(R.drawable.button_red);
                     	textView.setText("待审核");
                 		break;
                 	case 2:
-                    	textView.setBackgroundResource(R.drawable.button_red);
+                    	textView.setBackgroundResource(R.drawable.button_green);
                     	textView.setText("已认证");
                 		break;
                 	case 3:
-                    	textView.setBackgroundResource(R.drawable.button_green);
+                    	textView.setBackgroundResource(R.drawable.button_red);
                     	textView.setText("被驳回");
                 		break;
                 	case 4:
-                    	textView.setBackgroundResource(R.drawable.button_green);
+                    	textView.setBackgroundResource(R.drawable.button_red);
                     	textView.setText("未认证");
                 		break;
                 	}

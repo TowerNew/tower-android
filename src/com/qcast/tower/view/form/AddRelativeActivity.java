@@ -45,6 +45,8 @@ public class AddRelativeActivity extends OnlyUserActivity {
 	public EditText txtRelation;
 	@ResourceView(id = R.id.addrelative_image_snapshot)
 	public ImageView imgSnapshot;
+	@ResourceView(id = R.id.addrelative_label_reason)
+	public TextView labReason;
 
 	/**
 	 * 带编辑的成员ID
@@ -73,14 +75,15 @@ public class AddRelativeActivity extends OnlyUserActivity {
 				AddRelativeActivity.this.finish();
 				return;
 			}
-			if(null != relative.relation) {
+			if(null != relative.relation&& 3 != relative.status) {
 				txtRelation.setText(relative.relation);
+				txtRelation.setEnabled(false);
 			}
-			if(null != relative.name) {
+			if(null != relative.name&& 3 != relative.status) {
 				txtName.setText(relative.name);
 				txtName.setEnabled(false);
 			}
-			if(null != relative.idNumber) {
+			if(null != relative.idNumber&& 3 != relative.status) {
 				txtIdNumber.setText(relative.idNumber);
 				txtIdNumber.setEnabled(false);
 			}
@@ -93,6 +96,18 @@ public class AddRelativeActivity extends OnlyUserActivity {
 					}
 				}, relative.snapshot);
 			}
+			if(3 == relative.status) {
+				labReason.setVisibility(View.VISIBLE);
+				txtRelation.setText(relative.relation);
+				txtName.setText(relative.name);
+				txtIdNumber.setText(relative.idNumber);
+				if(null != relative.rejectReason) {
+					labReason.setText(relative.rejectReason);
+				}
+			}
+			if(2 == relative.status) {
+				labConfirm.setVisibility(View.GONE);				
+			}			
 		}
 		imgClose.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -128,6 +143,7 @@ public class AddRelativeActivity extends OnlyUserActivity {
 							Me.instance.refreshMember(AddRelativeActivity.this, new IEventable<Boolean>() {
 								@Override
 								public void on(Boolean data) {
+									Toast.makeText(AddRelativeActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
 									AddRelativeActivity.this.finish();
 								}
 							});
@@ -137,20 +153,6 @@ public class AddRelativeActivity extends OnlyUserActivity {
 				}, Me.instance.token, userId, mode, txtRelation.getText().toString(), txtName.getText().toString(), txtIdNumber.getText().toString(), snapshot);
 			}
 		});
-		 Networking.doCommand("editFamily", new JSONResponse(AddRelativeActivity.this) {
-			@Override
-			public void onFinished(JSONVisitor content) {
-				if(null != content && content.getInteger("code") > 0) {
-					Me.instance.refreshMember(AddRelativeActivity.this, new IEventable<Boolean>() {
-						@Override
-						public void on(Boolean data) {
-							AddRelativeActivity.this.finish();
-						}
-					});
-					return;
-				}
-			}
-		}, Me.instance.token, userId,txtName.getText().toString(), txtIdNumber.getText().toString(), snapshot);
 		imgSnapshot.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -160,8 +162,8 @@ public class AddRelativeActivity extends OnlyUserActivity {
 						AddRelativeActivity.this.finish();
 						return;
 					}
-					if(relative.isAuthenticated) {
-						Toast.makeText(AddRelativeActivity.this, "已认证信息无法修改", Toast.LENGTH_LONG).show();
+					if(1 == relative.status || 2 == relative.status) {
+						Toast.makeText(AddRelativeActivity.this, "信息无法修改", Toast.LENGTH_LONG).show();
 						return;
 					}
 				}

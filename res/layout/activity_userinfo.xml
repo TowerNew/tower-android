@@ -243,25 +243,26 @@
 			    android:textSize="16sp"
 			    android:maxLength="10" />
 		</RelativeLayout>
+		
 		<TextView
-		    android:id="@+id/userinfo_label_hit"
+		    android:id="@+id/userinfo_text_reason"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_below="@id/userinfo_layout_authority"
 		    android:padding="5dp"
 		    android:layout_marginLeft="10dp"
-		    android:text="! 实名认证不能修改  请认真填写"
-		    android:textSize="14sp"
-		    android:textColor="@color/orange"/>
-		<TextView
-		    android:id="@+id/userinfo_text_reason"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_below="@id/userinfo_label_hit"
-		    android:padding="5dp"
-		    android:layout_marginLeft="10dp"
 		    android:text=""
 		    android:textSize="16sp"
 		    android:textColor="@color/red"/>
+		<TextView
+		    android:id="@+id/userinfo_label_hit"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_below="@id/userinfo_text_reason"
+		    android:padding="5dp"
+		    android:layout_marginLeft="10dp"
+		    android:text="! 实名认证不能修改  请认真填写"
+		    android:textSize="14sp"
+		    android:textColor="@color/orange"/>
 	</RelativeLayout>
 </ScrollView>

@@ -219,7 +219,7 @@ public class IdAuthenticationActivity extends ActivityEx{
 									return;
 								}
 								Toast.makeText(IdAuthenticationActivity.this, "提交成功", Toast.LENGTH_LONG).show();	
-								
+								IdAuthenticationActivity.this.finish();
 							}
 						},labIdNumber.getText().toString(),labName.getText().toString(),Me.instance.token);	
 					}	

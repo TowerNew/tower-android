@@ -1,7 +1,11 @@
 package com.qcast.tower.view.form;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
+import com.qcast.tower.business.Me;
 import com.qcast.tower.business.structure.FamilyMember;
 import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
@@ -9,6 +13,7 @@ import com.slfuture.pluto.communication.response.core.IResponse;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
+import com.slfuture.carrie.base.text.Text;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -111,20 +116,22 @@ public class FamilyEditActivity extends Activity {
 				EditText txtName = (EditText) findViewById(R.id.familyedit_text_name);
 				EditText txtIdNumber = (EditText) findViewById(R.id.familyedit_text_idnumber);
 				member.relation = txtRelation.getText().toString();
-				if(member.relation.equals("")) {
+				if(Text.isBlank(txtRelation.getText().toString())) {
 					Toast.makeText(FamilyEditActivity.this, "请填写关系", Toast.LENGTH_LONG).show();
 					return;
 				}
 				member.name = txtName.getText().toString();
-				if(member.name.equals("")) {
+				if(Text.isBlank(txtName.getText().toString())) {
 					Toast.makeText(FamilyEditActivity.this, "请填写姓名", Toast.LENGTH_LONG).show();
 					return;
 				}
 				member.idNumber = txtIdNumber.getText().toString();
-				if(member.idNumber.equals("")) {
-					Toast.makeText(FamilyEditActivity.this, "请填写身份证号码", Toast.LENGTH_LONG).show();
+				Pattern pattern = Pattern.compile("^(^\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$");
+				Matcher matcher = pattern.matcher(txtIdNumber.getText().toString());
+				if(!matcher.matches()) {
+					Toast.makeText(FamilyEditActivity.this, "身份证号码格式不正确", Toast.LENGTH_LONG).show();
 					return;
-				}
+				}					
 				member.category = FamilyMember.CATEGORY_OWNER;
 				member.status = FamilyMember.STATUS_UNCONFIRM;
 				int mode = 1;

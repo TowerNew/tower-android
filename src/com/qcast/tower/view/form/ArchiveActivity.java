@@ -77,7 +77,7 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 				browser.loadUrl("about:blank");
 			}
 		});
-		browser.loadUrl(Networking.fetchURL("jiankangdangan", Me.instance.token));
+		browser.loadUrl(Networking.fetchURL("jiankangdangan", Me.instance.token, Profile.instance().region.id));
 		viewExamination.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -125,7 +125,7 @@
 			    android:layout_marginLeft="0dp"
 			    android:gravity="center_vertical"
 			    android:paddingLeft="10dp"
-			    android:text="备  注"
+			    android:text="关   系"
 			    android:textColor="@color/grey_text"
 			    android:textSize="18sp" />
 			<EditText
@@ -189,17 +189,28 @@
                 android:scaleType="fitXY"
 				android:src="@drawable/chat_picture" />
 		</RelativeLayout>
+		<TextView
+            android:id="@+id/addrelative_label_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_below="@id/addrelative_item_snapshot"
+		    android:layout_gravity="left"
+		    android:layout_marginLeft="10dp"
+            android:text=""
+            android:textColor="@color/red"
+            android:textSize="15sp"
+            android:visibility="gone" />
 		<Button
 		    android:id="@+id/addrelative_label_confirm"
 		    android:layout_width="match_parent"
 		    android:layout_height="40dp"
-		    android:layout_below="@id/addrelative_item_snapshot"
+		    android:layout_below="@id/addrelative_label_reason"
 		    android:layout_centerHorizontal="true"
 		    android:layout_marginTop="20dp"
 		    android:layout_marginLeft="10dp"
 		    android:layout_marginRight="10dp"	    
 		    android:text="提交审核" 
-		    android:textColor="#ffffffff"
+		    android:textColor="@color/white"
 	        android:textSize="15sp"
 	        android:background="@drawable/button_submit" />
 	</LinearLayout>

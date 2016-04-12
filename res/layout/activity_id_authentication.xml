@@ -189,7 +189,7 @@
 		    android:layout_below="@id/userinfo_divide3"
 		    android:padding="10dp"
 		    android:layout_marginLeft="10dp"		  
-		    android:text="!  实名认证不能修改  请认真填写" 
+		    android:text="!实名认证不能修改  请认真填写" 
 		    android:textSize="14sp"
 		    android:textColor="@color/orange"/>
         <Button

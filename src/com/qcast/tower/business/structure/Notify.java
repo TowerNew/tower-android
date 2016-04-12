@@ -26,8 +26,10 @@ public class Notify implements Serializable{
 	public final static int TYPE_8 = 8;
 	// 亲友删除通知
 	public final static int TYPE_9 = 9;
-    //用户驳回原因的通知
-    public final static int TYPE_10=10;
+    //用户认证通过的通知
+    public final static int TYPE_21 = 21;
+    //用户认证被驳回的通知
+    public final static int TYPE_22 = 22;
     
 	public int id;
     public boolean hasRead;

@@ -114,10 +114,18 @@ public class MyMessagesActivity extends ActivityEx {
                 	intent9.putExtra("content", "对方删除了您");
                     MyMessagesActivity.this.startActivity(intent9);
                 	break;
-                case Notify.TYPE_10:
-                	Intent intent=new Intent(MyMessagesActivity.this,UserInfoActivity.class);
-                    intent.putExtra("reason", notifyModel.reason);
-                	MyMessagesActivity.this.startActivity(intent);	
+                case Notify.TYPE_21:
+                	Intent intent21 = new Intent(MyMessagesActivity.this,TextActivity.class);
+                    intent21.putExtra("title", "通知");
+                    intent21.putExtra("content", "用户身份认证通过");
+                	MyMessagesActivity.this.startActivity(intent21);	
+                	break;
+                case Notify.TYPE_22:
+                	Intent intent22 = new Intent(MyMessagesActivity.this,TextActivity.class);
+                    intent22.putExtra("title", "通知");
+                    intent22.putExtra("content", "用户身份认证被驳回");
+                	MyMessagesActivity.this.startActivity(intent22);
+                	break;
                 }
             }
         });
@@ -233,16 +241,10 @@ public class MyMessagesActivity extends ActivityEx {
                     	break;
                     case Notify.TYPE_9:
                     	break;
-                    case Notify.TYPE_10:
-                    	JSONObject infomation=(JSONObject) newJSONObject.get("");
-                    			if(null == infomation) {
-                                	break;
-                                }  
-                    			myMessageModel.reason = "";
-                                if(null != infomation.get("reason")) {
-                                	myMessageModel.reason= ((JSONString) infomation.get("reason")).getValue();
-                                }
-                            	break;
+                    case Notify.TYPE_21:     	
+                        break;
+                    case Notify.TYPE_22:     	
+                    	break;       	
                     }
                     dataList.add(myMessageModel);
                 }
@@ -365,8 +367,10 @@ public class MyMessagesActivity extends ActivityEx {
 			}
 			else if(Notify.TYPE_9 == model.type) {
             	viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_6);
-			}else if(Notify.TYPE_10 == model.type){
+			}else if(Notify.TYPE_21 == model.type){
 				viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_6);
+			}else if(Notify.TYPE_22 == model.type){
+				viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_5);
 			}
             viewHolder.labTitle.setText(model.title);
             viewHolder.labTime.setText(model.time);

@@ -68,12 +68,16 @@ public class UserInfoActivity extends ActivityEx {
 	@ResourceView(id = R.id.userinfo_text_authority)
 	public TextView txtAuthority;
 	@ResourceView(id = R.id.userinfo_text_reason)
-	public TextView txtReason;
+	public TextView lableReason;
 
 	/**
 	 * 当前审核状态
 	 */
 	private int authorityStatus = 0;
+	/**
+	 * 驳回原因
+	 */
+	private String rejectReason = null;
 	/**
      * 获取用户真实姓名
      */
@@ -86,10 +90,7 @@ public class UserInfoActivity extends ActivityEx {
      * 获取用户照片
      */
 	private String imageUrl = null;
-	/**
-	 * 获取用户驳回原因
-	 */
-	private String rejectReason = "驳回原因.....";
+	
 	/**
 	 * 界面创建
 	 */
@@ -155,14 +156,8 @@ public class UserInfoActivity extends ActivityEx {
 				if(null==event.get("status")){
 					return;
 				}
-				if(null==event.get("reason")){
-					return;
-				}
 				authorityStatus = (Integer) event.get("status");
-				rejectReason =(String)event.get("reason");
-				realname = (String)event.get("realname");
-				identifyCardNo = (String)event.get("identifyCardNo");
-				imageUrl = (String)event.get("imageUrl");
+				rejectReason = (String)event.get("reason");
 				switch(authorityStatus) {
 				case 1:
 					txtAuthority.setText("待审核");
@@ -172,7 +167,7 @@ public class UserInfoActivity extends ActivityEx {
 					break;
 				case 3:
 					txtAuthority.setText("被驳回");
-					txtReason.setText(rejectReason);
+					lableReason.setText(rejectReason);
 					break;
 				}
 			}
@@ -182,9 +177,6 @@ public class UserInfoActivity extends ActivityEx {
 			public void onClick(View v) {			
 				Intent intent = new Intent(UserInfoActivity.this, IdAuthenticationActivity.class);
 				intent.putExtra("authorityStatus", authorityStatus);
-				intent.putExtra(realname, "realname");
-				intent.putExtra(identifyCardNo, "identifyCardNo");
-				intent.putExtra(imageUrl, "imageUrl");
 				UserInfoActivity.this.startActivity(intent);
 				UserInfoActivity.this.finish();
 			}

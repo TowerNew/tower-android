@@ -238,7 +238,7 @@
 			    android:layout_marginRight="10dp"
 			    android:layout_toLeftOf="@id/userinfo_image_authority"
 			    android:gravity="right|center"
-			    android:text="未填写"
+			    android:text="未认证"
 			    android:textColor="@color/grey_text"
 			    android:textSize="16sp"
 			    android:maxLength="10" />

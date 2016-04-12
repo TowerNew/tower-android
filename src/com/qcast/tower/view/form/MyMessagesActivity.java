@@ -117,13 +117,13 @@ public class MyMessagesActivity extends ActivityEx {
                 case Notify.TYPE_21:
                 	Intent intent21 = new Intent(MyMessagesActivity.this,TextActivity.class);
                     intent21.putExtra("title", "通知");
-                    intent21.putExtra("content", "用户身份认证通过");
+                    intent21.putExtra("content", "用户实名认证已通过，您可以去健康档案页面查看体检报告");
                 	MyMessagesActivity.this.startActivity(intent21);	
                 	break;
                 case Notify.TYPE_22:
                 	Intent intent22 = new Intent(MyMessagesActivity.this,TextActivity.class);
                     intent22.putExtra("title", "通知");
-                    intent22.putExtra("content", "用户身份认证被驳回");
+                    intent22.putExtra("content", "用户实名认证被驳回，请去“我的”页面查看驳回原因并重新提交");
                 	MyMessagesActivity.this.startActivity(intent22);
                 	break;
                 }

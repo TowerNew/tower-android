@@ -48,7 +48,7 @@ public class Relative implements Serializable {
 	 * 驳回理由
 	 */
 	public String rejectReason = null;
-
+	
 
 	/**
 	 * 解析数据生成用户对象

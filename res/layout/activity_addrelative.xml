@@ -196,15 +196,26 @@
 		    android:layout_below="@id/addrelative_item_snapshot"
 		    android:layout_gravity="left"
 		    android:layout_marginLeft="10dp"
-            android:text=""
+            android:text="驳回原因"
             android:textColor="@color/red"
             android:textSize="15sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
+		<TextView
+            android:id="@+id/addrelative_label_hit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_below="@id/addrelative_label_reason"
+		    android:layout_gravity="left"
+		    android:layout_marginLeft="10dp"
+            android:text="!实名认证不能修改 请认真填写"
+            android:textColor="@color/orange"
+            android:textSize="15sp"/>
+             
 		<Button
 		    android:id="@+id/addrelative_label_confirm"
 		    android:layout_width="match_parent"
 		    android:layout_height="40dp"
-		    android:layout_below="@id/addrelative_label_reason"
+		    android:layout_below="@id/addrelative_label_hit"
 		    android:layout_centerHorizontal="true"
 		    android:layout_marginTop="20dp"
 		    android:layout_marginLeft="10dp"

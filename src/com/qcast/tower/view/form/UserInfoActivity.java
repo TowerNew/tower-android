@@ -167,7 +167,7 @@ public class UserInfoActivity extends ActivityEx {
 					break;
 				case 3:
 					txtAuthority.setText("被驳回");
-					lableReason.setText(rejectReason);
+					lableReason.setText("驳回理由："+rejectReason);
 					break;
 				}
 			}

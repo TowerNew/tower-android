@@ -30,6 +30,8 @@ public class Notify implements Serializable{
     public final static int TYPE_21 = 21;
     //用户认证被驳回的通知
     public final static int TYPE_22 = 22;
+    //私人医生被删除的通知
+	public static final int TYPE_10 = 10;
     
 	public int id;
     public boolean hasRead;

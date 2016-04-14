@@ -19,6 +19,7 @@ import com.easemob.chat.EMConversation;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.business.structure.Notify;
+import com.qcast.tower.business.user.Relative;
 import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
@@ -50,7 +51,10 @@ public class MyMessagesActivity extends ActivityEx {
 
     private ArrayList<Notify> dataList = new ArrayList<Notify>();
     private MyMessageAdapter adapter = null;
-
+    /**
+	 * 带编辑的成员ID
+	 */
+	private String userId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,13 +118,24 @@ public class MyMessagesActivity extends ActivityEx {
                 	intent9.putExtra("content", "对方删除了您");
                     MyMessagesActivity.this.startActivity(intent9);
                 	break;
-                case Notify.TYPE_21:
+                case Notify.TYPE_10:
+                	Me.instance.doctor = null;
+                	Intent intent10 = new Intent(MyMessagesActivity.this, TextActivity.class);  
+                	intent10.putExtra("title", "通知");
+                	intent10.putExtra("content", "您的私人医生因故不能为您继续服务，请重新选择，谢谢！");
+                    MyMessagesActivity.this.startActivity(intent10);
+                    break;
+                case Notify.TYPE_21:    
+                	Relative relative = Me.instance.fetchRelativeById(userId);
+                	relative.status=2;
                 	Intent intent21 = new Intent(MyMessagesActivity.this,TextActivity.class);
                     intent21.putExtra("title", "通知");
                     intent21.putExtra("content", "用户实名认证已通过，您可以去健康档案页面查看体检报告");
                 	MyMessagesActivity.this.startActivity(intent21);	
                 	break;
                 case Notify.TYPE_22:
+                	Relative relative22 = Me.instance.fetchRelativeById(userId);
+                	relative22.status=3;
                 	Intent intent22 = new Intent(MyMessagesActivity.this,TextActivity.class);
                     intent22.putExtra("title", "通知");
                     intent22.putExtra("content", "用户实名认证被驳回，请去“我的”页面查看驳回原因并重新提交");
@@ -241,6 +256,8 @@ public class MyMessagesActivity extends ActivityEx {
                     	break;
                     case Notify.TYPE_9:
                     	break;
+                    case Notify.TYPE_10:
+                    	break;	
                     case Notify.TYPE_21:     	
                         break;
                     case Notify.TYPE_22:     	
@@ -367,10 +384,12 @@ public class MyMessagesActivity extends ActivityEx {
 			}
 			else if(Notify.TYPE_9 == model.type) {
             	viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_6);
+			}else if(Notify.TYPE_10 == model.type){
+				viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_4);
 			}else if(Notify.TYPE_21 == model.type){
-				viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_6);
+				viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_21);
 			}else if(Notify.TYPE_22 == model.type){
-				viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_5);
+				viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_21);
 			}
             viewHolder.labTitle.setText(model.title);
             viewHolder.labTime.setText(model.time);

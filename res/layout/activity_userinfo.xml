@@ -262,7 +262,7 @@
 		    android:padding="5dp"
 		    android:layout_marginLeft="10dp"
 		    android:text="! 实名认证不能修改  请认真填写"
-		    android:textSize="14sp"
+		    android:textSize="15sp"
 		    android:textColor="@color/orange"/>
 	</RelativeLayout>
 </ScrollView>

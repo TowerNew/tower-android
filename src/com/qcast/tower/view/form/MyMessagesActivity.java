@@ -51,10 +51,6 @@ public class MyMessagesActivity extends ActivityEx {
 
     private ArrayList<Notify> dataList = new ArrayList<Notify>();
     private MyMessageAdapter adapter = null;
-    /**
-	 * 带编辑的成员ID
-	 */
-	private String userId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,16 +122,12 @@ public class MyMessagesActivity extends ActivityEx {
                     MyMessagesActivity.this.startActivity(intent10);
                     break;
                 case Notify.TYPE_21:    
-                	Relative relative = Me.instance.fetchRelativeById(userId);
-                	relative.status=2;
                 	Intent intent21 = new Intent(MyMessagesActivity.this,TextActivity.class);
                     intent21.putExtra("title", "通知");
                     intent21.putExtra("content", "用户实名认证已通过，您可以去健康档案页面查看体检报告");
                 	MyMessagesActivity.this.startActivity(intent21);	
                 	break;
                 case Notify.TYPE_22:
-                	Relative relative22 = Me.instance.fetchRelativeById(userId);
-                	relative22.status=3;
                 	Intent intent22 = new Intent(MyMessagesActivity.this,TextActivity.class);
                     intent22.putExtra("title", "通知");
                     intent22.putExtra("content", "用户实名认证被驳回，请去“我的”页面查看驳回原因并重新提交");

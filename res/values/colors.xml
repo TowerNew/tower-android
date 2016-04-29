@@ -25,4 +25,13 @@
     <color name="orange">#ffe9602c</color>
     <color name="cyan">#ffadce76</color>
     <color name="black_text">#ff494949</color>
+    <color name="home_child">#ffeef5d6</color>
+    <color name="home_woman">#ffeff7f9</color>
+    <color name="home_old">#fffef4f2</color>
+    <color name="home_color">#fff6f4f5</color>
+    <color name="home_hot_text">#ff676968</color>
+    <color name="user_background">#ff6dc5cf</color>
+    <color name="user_text">#ff786e6c</color>
+    <color name="account_money">#ff9a9899</color>
+    <color name="user_backcolor">#ff66b3b9</color>
 </resources>

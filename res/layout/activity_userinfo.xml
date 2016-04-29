@@ -69,7 +69,7 @@
 			    android:layout_gravity="center"
 			    android:scaleType="fitXY"
 			    android:adjustViewBounds="true"
-			    android:src="@drawable/icon_qcode"
+			    android:src="@drawable/icon_qr_code"
 			    android:padding="0dip" />
 		</RelativeLayout>
 		<RelativeLayout

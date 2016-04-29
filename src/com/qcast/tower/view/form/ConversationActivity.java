@@ -1,3 +1,4 @@
+
 package com.qcast.tower.view.form;
 
 import com.slfuture.carrie.base.json.JSONVisitor;
@@ -125,28 +126,21 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 		listFamily.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if(0 == position) {
-					pop(Me.instance);
+				if(Me.instance.friends.size() < position) {
 					return;
 				}
-				else if(Me.instance.friends.size() < position) {
-					return;
-				}
-				pop(Me.instance.friends.get(position - 1));
+				pop(Me.instance.friends.get(position));
 			}
 		});
 		listFamily.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-				if(0 == position) {
-					return true;
-				}
+			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {				
 				GeneralHelper.showSelector(ConversationActivity.this.getActivity(), new IEventable<Integer>() {
 					@Override
 					public void on(Integer index) {
 						if(0 == index) {
 							Intent intent = new Intent(ConversationActivity.this.getActivity(), AddFriendActivity.class);
-							intent.putExtra("userId", Me.instance.friends.get(position - 1).id);
+							intent.putExtra("userId", Me.instance.friends.get(position).id);
 							ConversationActivity.this.getActivity().startActivity(intent);
 						}
 						else if(1 == index) {
@@ -158,7 +152,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 											Networking.doCommand("RemoveFamily", new JSONResponse(ConversationActivity.this.getActivity()) {
 												@Override
 												public void onFinished(JSONVisitor content) {
-													if(null == content || content.getInteger("code", 0) <= 0) {
+													if(null == content || content.getInteger("code", 0) < 0) {
 														return;
 													}
 													Me.instance.refreshMember(ConversationActivity.this.getActivity(),  new IEventable<Boolean>() {
@@ -171,7 +165,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 														}
 													});
 												}
-											}, Me.instance.token, Me.instance.friends.get(position - 1).id);
+											}, Me.instance.token, Me.instance.friends.get(position).id);
 										}  
 								}).setNegativeButton("返回", new DialogInterface.OnClickListener() {
 							        @Override  
@@ -249,30 +243,6 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 		}
 		conversationList.clear();
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("id", Me.instance.id);
-		if(null == Me.instance.photoUrl) {
-			map.put("photo", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_user_default));
-		}
-		else {
-			Networking.doImage("image", new ImageResponse(Me.instance.photoUrl, map) {
-				@SuppressWarnings("unchecked")
-				@Override
-				public void onFinished(Bitmap content) {
-					content = GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(content, 200, 200), Color.WHITE, 4);
-					((Map<String, Object>) tag).put("photo", content);
-					((SimpleAdapter) listFamily.getAdapter()).notifyDataSetChanged();
-				}
-			}, Me.instance.photoUrl);
-		}
-		map.put("name", "我");
-		map.put("tip", Me.instance.unreadMessageCount());
-		if(null != Me.instance.fetchIMId(IM.TYPE_PHONE)) {
-			map.put("hasphone", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_phone));
-		}
-		if(null != Me.instance.fetchIMId(IM.TYPE_TV)) {
-			map.put("hastv", GraphicsHelper.decodeResource(ConversationActivity.this.getActivity(), R.drawable.icon_tv));
-		}
-		conversationList.add(map);
 		for(Friend friend : Me.instance.friends) {
 			map = new HashMap<String, Object>();
 			map.put("id", friend.id);

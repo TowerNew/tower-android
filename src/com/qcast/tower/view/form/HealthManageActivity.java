@@ -86,7 +86,6 @@ public class HealthManageActivity extends Activity {
 			}
 		});
 	}
-
 	/**
 	 * 打开浏览器
 	 * 

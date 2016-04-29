@@ -12,25 +12,39 @@
 		android:focusableInTouchMode="true">
 
 		<Button
-		    android:id="@+id/home_button_region"
+		    android:id="@+id/home_button_signin"
 		    android:layout_width="wrap_content"
-		    android:layout_height="26dp"
+		    android:layout_height="25dp"
 		    android:layout_alignParentLeft="true"
 		    android:layout_centerVertical="true"
-		    android:layout_marginLeft="6dp"
-		    android:background="@drawable/button_region"		    
-		    android:maxEms="15"
-		    android:paddingLeft="2dp"
+		    android:layout_marginLeft="12dp"
+		    android:background="@drawable/button_region"
 		    android:paddingRight="2dp"
-		    android:singleLine="true"
-		    android:text="@string/home_region_default"
+		    android:paddingLeft="2dp"
+		    android:drawableLeft="@drawable/icon_signin"
+		    android:text="签到"
 		    android:textColor="@color/white"
 		    android:textSize="15sp" />
 
+		<Button
+            android:id="@+id/home_button_region"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_alignTop="@+id/home_button_search"
+            android:layout_toRightOf="@id/home_button_signin"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_region"
+            android:maxEms="15"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:singleLine="true"
+            android:text="@string/home_region_default"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
         <ImageView
             android:id="@+id/home_button_notify"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
@@ -38,13 +52,13 @@
             android:src="@drawable/bell_normal" />
         <Button
             android:id="@+id/home_button_search"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:scaleType="centerInside"
             android:layout_toLeftOf="@+id/home_button_notify"            
-            android:background="@drawable/icon2_search" />   
+            android:background="@drawable/icon2_search" />
 	</RelativeLayout>
 
     <ListView

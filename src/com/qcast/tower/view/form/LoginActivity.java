@@ -19,6 +19,7 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
+import com.slfuture.carrie.base.type.Table;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -57,7 +58,7 @@ public class LoginActivity extends ActivityEx {
 	 * 等待对话框
 	 */
 	private AlertDialog dialog = null;
-
+	
 
 	/**
 	 * 界面创建
@@ -71,7 +72,7 @@ public class LoginActivity extends ActivityEx {
 	/**
 	 * 界面预处理
 	 */
-	public void prepare() {
+	public void prepare() {		
 		imgClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

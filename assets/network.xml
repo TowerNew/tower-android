@@ -542,6 +542,75 @@ user-platform-web/rest/banner?regionId=[1]
         ]]>
         </mock>
     </protocol>
+     <protocol name="newBanner">
+        <path>
+        <![CDATA[
+user-platform-web/rest/user/ciming/getEvaluationList?token=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1
+       
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+       <protocol name="ThreeBanner">
+        <path>
+        <![CDATA[
+user-platform-web/rest/listOperationPosition?regionId=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+    {
+  "code": 0,
+  "msg": null,
+  "data": [
+    {
+      "id": 27,
+      "title": "标题",
+      "subtitle": "副标题",
+      "url": "www.baidu.com",
+      "imgUrl": "http://cdn.make.oss.wehop-resources-beta.wehop.cn/operation/image/6400c7c9-be2b-4785-b856-fe1ad9c8e4e4@100h_100w_0e",
+      "status": 0,
+      "effectDate": 1461772800000,
+      "addTime": 1461822701000,
+      "regionId": 1,
+      "priority": 1
+    },
+    {
+      "id": 15,
+      "title": "标题",
+      "subtitle": "副标题",
+      "url": "www.baidu.com",
+      "imgUrl": "http://cdn.make.oss.wehop-resources-beta.wehop.cn/operation/image/08b93a3b-8caa-48bb-b818-89be0def423d@100h_100w_0e",
+      "status": 0,
+      "effectDate": 1461772800000,
+      "addTime": 1461821245000,
+      "regionId": 1,
+      "priority": 1
+    },
+    {
+      "id": 12,
+      "title": "标题",
+      "subtitle": "副标题",
+      "url": "www.baidu.com",
+      "imgUrl": "http://cdn.make.oss.wehop-resources-beta.wehop.cn/operation/image/2aa053e8-2ac8-400a-806b-627c1732930e@100h_100w_0e",
+      "status": 1,
+      "effectDate": 1461686400000,
+      "addTime": 1461812253000,
+      "regionId": 1,
+      "priority": 1
+    }
+  ]
+}
+       ]]>
+        </mock>
+    </protocol>
     <protocol name="news">
         <path>
         <![CDATA[

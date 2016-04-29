@@ -54,6 +54,10 @@ public class Me extends User implements Serializable, IReactor {
 	 */
 	public String token = null;
 	/**
+	 * 区域id
+	 */
+	public int reginId = 1;
+	/**
 	 * 地址
 	 */
 	public String address = null;
@@ -73,7 +77,9 @@ public class Me extends User implements Serializable, IReactor {
 	 * 是否认证
 	 */
 	public boolean isAuthenticated=false;
-
+	public int point = 0 ;
+	public int level = 1 ;
+	public int account = 0;
 	/**
 	 * 私人医生
 	 */
@@ -139,6 +145,7 @@ public class Me extends User implements Serializable, IReactor {
 				catch (IOException e) {
 					throw new RuntimeException("存储用户信息失败", e);
 				}
+				
 				Module.reactor = instance;
 				Runtime.hasUnreadMessage = false;
 				Module.login(new IEventable<Boolean>() {
@@ -154,14 +161,13 @@ public class Me extends User implements Serializable, IReactor {
 							callback.on(false);
 						}
 					}
-				});
+				});							
 			}
 		}, phone, code);
 	}
 
 	/**
 	 * 自动登录
-	 * 
 	 * @param context 上下文
 	 * @param callback 回调函数
 	 */
@@ -388,7 +394,6 @@ public class Me extends User implements Serializable, IReactor {
 		}
 		return null;
 	}
-	
 	/**
 	 * 获取认证状态
 	 * 
@@ -420,30 +425,6 @@ public class Me extends User implements Serializable, IReactor {
 		}, token);
 	}
 	/**
-	 * 获取家庭成员的认证状态
-	 */
-	public void fetchAuthorityFamilyStatus(IEventable<com.slfuture.carrie.base.type.Table<String, Object>> eventable) {
-		Networking.doCommand("RequestStateId", new JSONResponse(Program.application, eventable) {
-			@Override
-			public void onFinished(JSONVisitor content) {
-				if(null == content) {
-					return;
-				}
-				if(content.getInteger("code", 0) <= 0) {
-					return;
-				}
-				content = content.getVisitor("data");
-				if(null == content) {
-					((IEventable<com.slfuture.carrie.base.type.Table<String, Object>>) tag).on(null);
-					return;
-				}
-				com.slfuture.carrie.base.type.Table<String, Object> table = new com.slfuture.carrie.base.type.Table<String, Object>();
-				table.put("status", content.getInteger("status"));				
-				((IEventable<com.slfuture.carrie.base.type.Table<String, Object>>) tag).on(table);
-			}
-		}, token);
-	}
-	/**
 	 * 解析数据生成用户对象
 	 * 
 	 * @param visitor 数据
@@ -453,6 +434,9 @@ public class Me extends User implements Serializable, IReactor {
 		if(!super.parse(visitor)) {
 			return false;
 		}
+		point = visitor.getInteger("point", 0);
+		level = visitor.getInteger("level", 1);
+		account = visitor.getInteger("accountBalance", 0);				
 		phone = visitor.getString("username");
 		address = visitor.getString("address");
 		name =visitor.getString("name");
@@ -513,7 +497,6 @@ public class Me extends User implements Serializable, IReactor {
 		}
 		return true;
 	}
-
 	/**
 	 * 获取存储文件
 	 * 
@@ -626,7 +609,7 @@ public class Me extends User implements Serializable, IReactor {
 			}, "user-platform-onlineDiag", object.toString());
 			return;
 		}
-		if(null != type && (Notify.TYPE_5 == type || Notify.TYPE_9 == type)) {
+		if(null != type && (Notify.TYPE_5 == type || Notify.TYPE_9 == type|| Notify.TYPE_21 == type|| Notify.TYPE_22 == type)) {
 			Me.instance.refreshMember(Program.application, new IEventable<Boolean>() {
 				@Override
 				public void on(Boolean result) {
@@ -635,11 +618,18 @@ public class Me extends User implements Serializable, IReactor {
 					}
 					Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
 				}
-			});
+			});	
+		}else if(null != type && Notify.TYPE_10 == type) {
+				Me.instance.refreshDoctor(Program.application, new IEventable<Boolean>() {
+					@Override
+					public void on(Boolean event) { }
+				});
 			Reminder.vibrate(Program.application);
 			return;
 		}
 		Reminder.ringtone(Program.application);
 		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
 	}
+
+	
 }

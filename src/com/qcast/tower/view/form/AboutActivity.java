@@ -1,4 +1,4 @@
-package com.qcast.tower.view.form;
+ package com.qcast.tower.view.form;
 
 import com.qcast.tower.Program;
 import com.qcast.tower.R;
@@ -22,7 +22,7 @@ public class AboutActivity extends ActivityEx {
 	public ImageView imgClose;
 	@ResourceView(id = R.id.about_label_version)
 	public TextView labVersion;
-	
+
 	
 	/**
 	 * 界面创建
@@ -32,8 +32,8 @@ public class AboutActivity extends ActivityEx {
 		super.onCreate(savedInstanceState);
 		// 界面处理
 		prepare();
-	}
-
+	}  
+	
 	/**
 	 * 界面预处理
 	 */

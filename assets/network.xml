@@ -31,6 +31,22 @@ user/appv2/sites/v-1/activity2.html?token=[1]&regionId=[2]
 		</path>
 		<mock></mock>
 	</protocol>
+	<protocol name="activity3">
+		<path host="cdn">
+		<![CDATA[
+user/appv2/sites/v-2/index.html#!/SignIn?token=[1]
+		]]>
+		</path>
+		<mock></mock>
+	</protocol>
+	<protocol name="jifen">
+		<path host="cdn">
+		<![CDATA[
+user/appv2/sites/v-1/credits.html?token=[1]
+		]]>
+		</path>
+		<mock></mock>
+	</protocol>
 	<protocol name="Hit">
 		<path>
 		<![CDATA[
@@ -651,6 +667,20 @@ user-platform-web/rest/news?page=[1]
             "url": "http://news.baidu.com"
         }
     ]
+}
+        ]]>
+        </mock>
+    </protocol>
+      <protocol name="hotRecommend">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/recommendations?regionId=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1
 }
         ]]>
         </mock>

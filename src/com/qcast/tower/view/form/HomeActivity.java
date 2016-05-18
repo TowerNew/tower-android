@@ -2,6 +2,7 @@ package com.qcast.tower.view.form;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -24,6 +25,7 @@ import com.qcast.tower.framework.Storage;
 import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
+import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.pluto.etc.Controller;
 import com.slfuture.pluto.etc.Version;
@@ -35,8 +37,11 @@ import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
+import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
+import com.slfuture.carrie.base.type.core.ICollection;
+import com.slfuture.carrie.base.type.core.ILink;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -59,6 +64,7 @@ import android.widget.GridView;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -73,6 +79,7 @@ import java.util.concurrent.TimeUnit;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.view.View.OnClickListener;
 import android.widget.ImageView.ScaleType;
 
@@ -82,7 +89,7 @@ import android.widget.ImageView.ScaleType;
  */
 @ResourceView(id = R.layout.activity_home)
 public class HomeActivity extends FragmentEx implements IMeListener {
-	
+	private static final String TAG = HomeActivity.class.getSimpleName();
 	public static String IMAGE_CACHE_PATH = "imageloader/Cache"; // 图片缓存路径
 
 	private ViewPager adViewPager;
@@ -146,10 +153,12 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 */
 	@ResourceView(id = R.id.home_list_news)
 	public ListView listNews;
+	
 	/**
-	 * 当前页面索引
+	 * 当前
 	 */
 	protected int page = 1;
+	protected int regionId = 1;
 	/**
 	 * 当前信息
 	 */
@@ -200,21 +209,21 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				.cacheInMemory(true).cacheOnDisc(true)
 				.bitmapConfig(Bitmap.Config.RGB_565)
 				.imageScaleType(ImageScaleType.EXACTLY).build();
-		prepare();
 		startAd();
 		dealNews();
-		dealSignin();
 		dealRegion();
 		dealSearch();		
 		//
 		loadVersion();
-		loadNews();
 	}	
 
   @Override
 	public void onResume() {
 		super.onResume();
 		final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
+		if(null != Me.instance){
+      		btnSignin.setVisibility(View.VISIBLE);
+		}
 		if(null != Logic.regionName) {
 			regionButton.setText(fetchRegionName());
 		}
@@ -229,7 +238,9 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		else {
 			stopBell();
 		}
+		prepare();
 		loadEntry();
+		loadNews();
 	}
 
 	@Override
@@ -260,6 +271,10 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					return;
 				}
 				JSONObject result = (JSONObject) resultObject.get("data");
+				if (result.get("appVersion") == null || result.get("downloadUrl") == null) {
+					return;
+				}
+				
 				String version = ((JSONString) (result.get("appVersion"))).getValue();
 				String url = ((JSONString) (result.get("downloadUrl"))).getValue();
 				Version current = Version.fetchVersion(Program.application);
@@ -277,85 +292,192 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		});
 	}
 
+	
+//	/**
+//	 * 加载资讯列表
+//	 */
+//	private void loadNews() {
+//		Networking.doCommand("news", new CommonResponse<String>(page) {
+//			@Override
+//			public void onFinished(String content) {
+//				if(Response.CODE_SUCCESS != code()) {
+//					Toast.makeText(HomeActivity.this.getActivity(), "加载资讯失败", Toast.LENGTH_LONG).show();
+//					return;
+//				}
+//				JSONObject resultObject = JSONObject.convert(content);
+//				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
+//					Toast.makeText(HomeActivity.this.getActivity(), ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
+//					return;
+//				}
+//				JSONArray result = (JSONArray) resultObject.get("data");
+//				int thisPage = (Integer) this.tag;
+//				if(page != thisPage) {
+//					return;
+//				}
+//				if(0 == result.size()) {
+//					return;
+//				}
+//				for(IJSON item : result) {
+//					JSONObject newJSONObject = (JSONObject) item;
+//					HashMap<String, Object> newsMap = new HashMap<String, Object>();
+//					String photoURL = "";
+//					if(null != newJSONObject.get("imageUrl")) {
+//						photoURL = ((JSONString) newJSONObject.get("imageUrl")).getValue();
+//					}
+//					String photoName = Storage.getImageName(photoURL);
+//					newsMap.put("photo", photoName);
+//					newsMap.put("title", ((JSONString) newJSONObject.get("title")).getValue());
+//					newsMap.put("publisher", ((JSONString) newJSONObject.get("publisher")).getValue());
+//					newsMap.put("date", ((JSONString) newJSONObject.get("date")).getValue());
+//					newsMap.put("url", ((JSONString) newJSONObject.get("url")).getValue());
+//					newsList.add(newsMap);
+//					if(Text.isBlank(photoURL)) {
+//		            	continue;
+//		            }
+//		            // 加载图片
+//		            Networking.doImage("image", new ImageResponse(photoName, newsList.size() - 1) {
+//						@Override
+//						public void onFinished(Bitmap content) {
+//							HashMap<String, Object> map = newsList.get((Integer) tag);
+//							map.put("photo", content);
+//							ListView listview = (ListView) HomeActivity.this.getActivity().findViewById(R.id.home_list_news);
+//							SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
+//							adapter.notifyDataSetChanged();
+//						}
+//		            }, photoURL);
+//				}
+//				ListView listview = (ListView) HomeActivity.this.getActivity().findViewById(R.id.home_list_news);
+//				SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
+//				adapter.notifyDataSetChanged();
+//				page = thisPage + 1;
+//			}
+//		}, page);
+//	}
 	/**
 	 * 加载资讯列表
 	 */
 	private void loadNews() {
-		Networking.doCommand("news", new CommonResponse<String>(page) {
+		Networking.doCommand("hotRecommend", new JSONResponse(HomeActivity.this.getActivity(), (Integer) currentRegionId) {
 			@Override
-			public void onFinished(String content) {
-				if(Response.CODE_SUCCESS != code()) {
-					Toast.makeText(HomeActivity.this.getActivity(), "加载资讯失败", Toast.LENGTH_LONG).show();
+			public void onFinished(JSONVisitor content) {
+				if(null == content || content.getInteger("code", 0) <= 0) {
+					Log.e(TAG, "hotRecommend  err:" + content.getString("msg"));
 					return;
 				}
-				JSONObject resultObject = JSONObject.convert(content);
-				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-					Toast.makeText(HomeActivity.this.getActivity(), ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
-					return;
-				}
-				JSONArray result = (JSONArray) resultObject.get("data");
-				int thisPage = (Integer) this.tag;
-				if(page != thisPage) {
-					return;
-				}
-				if(0 == result.size()) {
-					return;
-				}
-				for(IJSON item : result) {
-					JSONObject newJSONObject = (JSONObject) item;
-					HashMap<String, Object> newsMap = new HashMap<String, Object>();
-					String photoURL = "";
-					if(null != newJSONObject.get("imageUrl")) {
-						photoURL = ((JSONString) newJSONObject.get("imageUrl")).getValue();
-					}
-					String photoName = Storage.getImageName(photoURL);
-					newsMap.put("photo", photoName);
-					newsMap.put("title", ((JSONString) newJSONObject.get("title")).getValue());
-					newsMap.put("publisher", ((JSONString) newJSONObject.get("publisher")).getValue());
-					newsMap.put("date", ((JSONString) newJSONObject.get("date")).getValue());
-					newsMap.put("url", ((JSONString) newJSONObject.get("url")).getValue());
-					newsList.add(newsMap);
-					if(Text.isBlank(photoURL)) {
-		            	continue;
-		            }
-		            // 加载图片
-		            Networking.doImage("image", new ImageResponse(photoName, newsList.size() - 1) {
-						@Override
-						public void onFinished(Bitmap content) {
-							HashMap<String, Object> map = newsList.get((Integer) tag);
-							map.put("photo", content);
-							ListView listview = (ListView) HomeActivity.this.getActivity().findViewById(R.id.home_list_news);
-							SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
-							adapter.notifyDataSetChanged();
-						}
-		            }, photoURL);
-				}
+				newsList.clear();
 				ListView listview = (ListView) HomeActivity.this.getActivity().findViewById(R.id.home_list_news);
 				SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
 				adapter.notifyDataSetChanged();
-				page = thisPage + 1;
-			}
-		}, page);
-	}
-	/**
-	 * 处理签到
-	 */
-	public void dealSignin() {	
- 		/*btnSignin.setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				if(null == Me.instance) {
-					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
-					HomeActivity.this.startActivity(intent);
-					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
+				
+				JSONVisitor data = content.getVisitor("data");
+				if (null == data) {
 					return;
 				}
-				Intent intent = new Intent(HomeActivity.this.getActivity(), SignInActivity.class);
-				HomeActivity.this.startActivity(intent);
+				int thisPage = (Integer) this.tag;
+				if(currentRegionId != thisPage) {
+					return;
+				}
+				for(ILink<String, JSONVisitor> link : data.toVisitorMap()) {
+					String key = link.origin();
+					JSONVisitor value = link.destination();
+					HashMap<String, Object> newsMap = new HashMap<String, Object>();
+					String photoURL = "";
+					if(!TextUtils.isEmpty(value.getString("image"))) {
+						photoURL = value.getString("image");
+					} else {
+						//XXX default image
+					}
+					String photoName = Storage.getImageName(photoURL);
+					newsMap.put("image", photoName);
+					newsMap.put("name",  value.getString("name"));
+					newsMap.put("image", value.getString("image"));
+					newsMap.put("price", value.getInteger("price"));
+					newsMap.put("originalPrice", value.getInteger("originalPrice"));
+					newsMap.put("score", value.getInteger("score"));
+					newsMap.put("url", value.getString("url"));
+					newsMap.put("totalNumber", value.getInteger("totalNumber"));
+					newsList.add(newsMap);
+					if(!Text.isBlank(photoURL)) {
+						// 加载图片
+						Networking.doImage("image", new ImageResponse(photoName, newsList.size() - 1) {
+							@Override
+							public void onFinished(Bitmap content) {
+								HashMap<String, Object> map = newsList.get((Integer) tag);
+								map.put("image", content);
+								ListView listview = (ListView) HomeActivity.this.getActivity().findViewById(R.id.home_list_news);
+								SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
+								adapter.notifyDataSetChanged();
+							}
+						}, photoURL);
+		            }
+				}
+				adapter.notifyDataSetChanged();
+				page = thisPage + 1;
 			}
-			
-		});*/
+		}, currentRegionId);
 	}
+	
+	private void loadOperationPosition() {
+		Networking.doCommand("ThreeBanner", new JSONResponse(HomeActivity.this.getActivity(), (Integer) currentRegionId) {
+			@Override
+			public void onFinished(JSONVisitor content) {
+				if(null == content || content.getInteger("code", 0) <= 0) {
+					Log.e(TAG, "hotRecommend  err:" + content.getString("msg"));
+					return;
+				}
+				newsList.clear();
+				ListView listview = (ListView) HomeActivity.this.getActivity().findViewById(R.id.home_list_news);
+				SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
+				adapter.notifyDataSetChanged();
+				
+				JSONVisitor data = content.getVisitor("data");
+				if (null == data) {
+					return;
+				}
+				int thisPage = (Integer) this.tag;
+				if(currentRegionId != thisPage) {
+					return;
+				}
+				for(ILink<String, JSONVisitor> link : data.toVisitorMap()) {
+					String key = link.origin();
+					JSONVisitor value = link.destination();
+					HashMap<String, Object> newsMap = new HashMap<String, Object>();
+					String photoURL = "";
+					if(!TextUtils.isEmpty(value.getString("image"))) {
+						photoURL = value.getString("image");
+					} else {
+						//XXX default image
+					}
+					String photoName = Storage.getImageName(photoURL);
+					newsMap.put("image", photoName);
+					newsMap.put("name",  value.getString("name"));
+					newsMap.put("image", value.getString("image"));
+					newsMap.put("price", value.getInteger("price"));
+					newsMap.put("originalPrice", value.getInteger("originalPrice"));
+					newsMap.put("score", value.getInteger("score"));
+					newsMap.put("url", value.getString("url"));
+					newsMap.put("totalNumber", value.getInteger("totalNumber"));
+					newsList.add(newsMap);
+					if(!Text.isBlank(photoURL)) {
+						// 加载图片
+						Networking.doImage("image", new ImageResponse(photoName, newsList.size() - 1) {
+							@Override
+							public void onFinished(Bitmap content) {
+								HashMap<String, Object> map = newsList.get((Integer) tag);
+								map.put("image", content);
+								ListView listview = (ListView) HomeActivity.this.getActivity().findViewById(R.id.home_list_news);
+								SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
+								adapter.notifyDataSetChanged();
+							}
+						}, photoURL);
+		            }
+				}
+				adapter.notifyDataSetChanged();
+				page = thisPage + 1;
+			}
+		}, currentRegionId);
+	}
+ 		
 	/**
 	 * 处理区域按钮
 	 */
@@ -429,7 +551,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	/**
 	 * 界面预设
 	 */
-	private void prepare() {
+	private void prepare() {		
 		if(listNews.getHeaderViewsCount() > 0) {
 			return;
 		}
@@ -447,55 +569,88 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		/**
 		 * 广告数据
 		 */
-			adList = getBannerAd();
-			imageViews = new ArrayList<ImageView>();
-			// 点
-			dots = new ArrayList<View>();
-			dotList = new ArrayList<View>();
-			View dot0 =(View)viewHead.findViewById(R.id.v_dot0);
-			View dot1 =(View)viewHead.findViewById(R.id.v_dot1);
-			View dot2 =(View)viewHead.findViewById(R.id.v_dot2);
-			View dot3 =(View)viewHead.findViewById(R.id.v_dot3);
-			View dot4 =(View)viewHead.findViewById(R.id.v_dot4);
-			dots.add(dot0);
-			dots.add(dot1);
-			dots.add(dot2);
-			dots.add(dot3);
-			dots.add(dot4);			
-			adViewPager = (ViewPager) viewHead.findViewById(R.id.vp);
-			adViewPager.setAdapter(new MyAdapter());// 设置填充ViewPager页面的适配器
-			// 设置一个监听器，当ViewPager中的页面改变时调用
-			adViewPager.setOnPageChangeListener(new MyPageChangeListener());
-			addDynamicView();
-			//
-		/*	ImageView childImg =(ImageView)viewHead.findViewById(R.id.home_img_child);
-			ImageView womanImg =(ImageView)viewHead.findViewById(R.id.home_img_woman);
-			ImageView oldImg =(ImageView)viewHead.findViewById(R.id.home_img_old);
-			Networking.doCommand("ThreeBanner", new JSONResponse(null) {
-				@Override
-				public void onFinished(JSONVisitor content) {
-					if(null == content) {
-						return;
-					}
-					if(content.getInteger("code", 0) <= 0) {
-						return;
-					}
-					content = content.getVisitor("data");
-					for(JSONVisitor banner : content.getVisitors("data")) {
-						HashMap<String, Object> map = new HashMap<String, Object>();
-						map.put("title", banner.getString("title"));
-						map.put("subtitle", banner.getString("subtitle"));
-						map.put("url", banner.getString("url"));
-						map.put("imgUrl", banner.getString("imgUrl"));
-						bannerList.add(map);
-					}
+		adList = getBannerAd();
+		imageViews = new ArrayList<ImageView>();
+		// 点
+		dots = new ArrayList<View>();
+		dotList = new ArrayList<View>();
+		View dot0 =(View)viewHead.findViewById(R.id.v_dot0);
+		View dot1 =(View)viewHead.findViewById(R.id.v_dot1);
+		View dot2 =(View)viewHead.findViewById(R.id.v_dot2);
+		View dot3 =(View)viewHead.findViewById(R.id.v_dot3);
+		View dot4 =(View)viewHead.findViewById(R.id.v_dot4);
+		dots.add(dot0);
+		dots.add(dot1);
+		dots.add(dot2);
+		dots.add(dot3);
+		dots.add(dot4);			
+		adViewPager = (ViewPager) viewHead.findViewById(R.id.vp);
+		adViewPager.setAdapter(new MyAdapter());// 设置填充ViewPager页面的适配器
+		// 设置一个监听器，当ViewPager中的页面改变时调用
+		adViewPager.setOnPageChangeListener(new MyPageChangeListener());
+		addDynamicView();
+		//
+		ImageView childImg =(ImageView)viewHead.findViewById(R.id.home_img_child);
+		ImageView womanImg =(ImageView)viewHead.findViewById(R.id.home_img_woman);
+		ImageView oldImg =(ImageView)viewHead.findViewById(R.id.home_img_old);
+		final ImageView[] opImageViews = {childImg, womanImg, oldImg};
+		final TextView[] titles = {(TextView) viewHead.findViewById(R.id.tv_title_child),
+				(TextView) viewHead.findViewById(R.id.tv_title_woman),
+				(TextView) viewHead.findViewById(R.id.tv_title_old)};
+		final TextView[] subTitles = {(TextView) viewHead.findViewById(R.id.tv_subtitle_child),
+				(TextView) viewHead.findViewById(R.id.tv_subtitle_woman),
+				(TextView) viewHead.findViewById(R.id.tv_subtitle_old)};
+		final RelativeLayout[] opLayouts = {
+				(RelativeLayout) viewHead.findViewById(R.id.home_layout_1),
+				(RelativeLayout) viewHead.findViewById(R.id.home_layout_2),
+				(RelativeLayout) viewHead.findViewById(R.id.home_layout_3)
+		};
+		Networking.doCommand("ThreeBanner", new JSONResponse(null) {
+			@Override
+			public void onFinished(JSONVisitor content) {
+				if(null == content) {
+					return;
 				}
-			}, currentRegionId);
-		*/
+				if(content.getInteger("code", 0) <= 0) {
+					return;
+				}
+				ICollection<JSONVisitor> data = content.getVisitors("data");
+				if (data == null) {
+					return;
+				}
+				int i = 0;
+				for(JSONVisitor banner : data) {
+					String title = banner.getString("title");
+					String subTitle = banner.getString("subtitle");
+					final String url = banner.getString("url");
+					String imgUrl = banner.getString("imgUrl");
+					titles[i].setText(title);
+					subTitles[i].setText(subTitle);
+					opLayouts[i].setClickable(true);
+					opLayouts[i].setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							Helper.openBrowser(HomeActivity.this.getActivity(), url);
+						}
+					});
+					// 加载图片
+					String photoName = Storage.getImageName(imgUrl);
+					Networking.doImage("image", new ImageResponse(photoName, (Integer)i) {
+						@Override
+						public void onFinished(Bitmap content) {
+							opImageViews[(Integer) tag].setImageBitmap(content);
+						}
+					}, imgUrl);
+					
+					i++;
+				}
+			}
+		}, currentRegionId);
+		
 	
-	/**
-	 * 8大功能按钮	
-	 */
+		/**
+		 * 8大功能按钮	
+		 */
 		int[] icon = {R.drawable.icon_function_1,R.drawable.icon_function_2,R.drawable.icon_function_3,R.drawable.icon_function_4,
         		R.drawable.icon_function_5,R.drawable.icon_function_6,R.drawable.icon_function_7,R.drawable.icon_function_8};
         String[] iconName = {"私人医生","预约体检","预约理疗","预约挂号","健康档案","自我诊断","健康监测","慢病百科"};
@@ -607,13 +762,24 @@ public class HomeActivity extends FragmentEx implements IMeListener {
             		
             } 
         }); 
-
+        /**
+		 * 处理签到
+		 */	    
+		btnSignin.setOnClickListener(new View.OnClickListener(){
+						@Override
+				public void onClick(View v) {	
+							String token = "";
+		    				if(null != Me.instance) {
+		    					token = Me.instance.token;
+		    				}
+		    				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("activity3", token));		    				
+						}				
+		});				 
         btnSignin.getBackground().setAlpha(200);	
 		btnRegion.getBackground().setAlpha(200);
 		btnSearch.getBackground().setAlpha(200);
 		btnBell.setImageAlpha(200);
-		this.getActivity().findViewById(R.id.home_layout_header).bringToFront();
-		
+		this.getActivity().findViewById(R.id.home_layout_header).bringToFront();	
 	}
 		
 
@@ -810,9 +976,9 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 * 处理资讯
 	 */
 	private void dealNews() {
-		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), newsList, R.layout.listitem_news,
-			new String[]{"photo", "title", "publisher", "date"}, 
-	        new int[]{R.id.news_image_photo, R.id.news_label_title, R.id.news_label_publisher, R.id.news_label_date});
+		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), newsList, R.layout.listitem_hot_news,
+			new String[]{"image", "name", "price", "originalPrice","status","totalNumber"}, 
+	        new int[]{R.id.reserve_image_photo, R.id.reserve_lable_title, R.id.reserve_lable_newprice, R.id.reserve_lable_oldprice,R.id.reaserve_lable_docLevel,R.id.reserve_lable_number});
 		listItemAdapter.setViewBinder(new ViewBinder() {
 			public boolean setViewValue(View view, Object data, String textRepresentation) {
                 if(view instanceof ImageView && data instanceof Bitmap) {

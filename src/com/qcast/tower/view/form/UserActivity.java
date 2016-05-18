@@ -68,7 +68,7 @@ public class UserActivity extends FragmentEx {
 	public RelativeLayout viewSignin;
 	//认证状态
 	@ResourceView(id = R.id.user_status)
-	public TextView viewStatus;
+	public ImageView viewStatus;
 	//二维码
 	@ResourceView(id = R.id.userinfo_image_qcode)
 	public ImageView viewQcode;
@@ -81,6 +81,10 @@ public class UserActivity extends FragmentEx {
 	//会员等级
 	@ResourceView(id = R.id.user_vip)
 	public ImageView viewVip;
+	@ResourceView(id = R.id.money_layout_01)
+	public RelativeLayout layout_Point;
+	@ResourceView(id = R.id.money_layout_00)
+	public RelativeLayout layout_Coupons;
 	
 	@ResourceView(id = R.id.user_layout_10)
 	public RelativeLayout viewMyfooter10;
@@ -124,8 +128,7 @@ public class UserActivity extends FragmentEx {
 				public void on(Table<String, Object> event) {				
 					if(null == event) {
 						authorityStatus = 0;
-						viewStatus.setText("未认证");
-						viewStatus.setBackgroundResource(R.drawable.button_orange);
+						viewStatus.setBackgroundResource(R.drawable.button_status0);
 						return;
 					}
 					if(null==event.get("status")){
@@ -134,28 +137,49 @@ public class UserActivity extends FragmentEx {
 					authorityStatus = (Integer) event.get("status");
 					switch(authorityStatus) {
 					case 1:
-						viewStatus.setText("待审核");
-						viewStatus.setBackgroundResource(R.drawable.button_orange);
+						viewStatus.setBackgroundResource(R.drawable.button_status1);
 						break;
 					case 2:
-						viewStatus.setText("已认证");
-						viewStatus.setBackgroundResource(R.drawable.button_orange);
+						viewStatus.setBackgroundResource(R.drawable.button_status2);
 						break;
 					case 3:
-						viewStatus.setText("被驳回");
-						viewStatus.setBackgroundResource(R.drawable.button_orange);
+						viewStatus.setBackgroundResource(R.drawable.button_status3);
 						break;
 					}
 				}
-			});	}												
+			});	
+			}												
 		if(null == Me.instance) {
 			btnPhoto.setImageResource(R.drawable.user_photo_null);
 		}
 		else {
+			if(0==Me.instance.level){
+				return;
+			}else {
+				String point= String.valueOf(Me.instance.point);
+				String account= String.valueOf(Me.instance.account);
+				viewpoint.setText(point+"分");
+				viewBalance.setText(account+"元");
+				 switch(Me.instance.level){
+				 case 1:					 
+					 viewVip.setImageResource(R.drawable.icon_v1);
+					 break;
+				 case 2:
+					 viewVip.setImageResource(R.drawable.icon_v2);
+					 break;
+				 case 3:
+					 viewVip.setImageResource(R.drawable.icon_v3);
+					 break;
+				 case 4:
+					 viewVip.setImageResource(R.drawable.icon_v4);
+					 break;
+				 }
+				 }
 			if(null == Me.instance.photoUrl) {
 				btnPhoto.setImageResource(R.drawable.user_photo_default);
 				return;
 			}
+			else{
             Networking.doImage("image", new ImageResponse(Me.instance.photoUrl) {
 				@Override
 				public void onFinished(Bitmap content) {
@@ -166,6 +190,8 @@ public class UserActivity extends FragmentEx {
 				}
             }, Me.instance.photoUrl);
 		}
+			}
+		
 	}
 
 	/**
@@ -202,11 +228,11 @@ public class UserActivity extends FragmentEx {
 		viewSignin.setOnClickListener(new View.OnClickListener() {		
 			@Override
 			public void onClick(View v) {
-				if(null != Me.instance) {
-					Intent intent = new Intent(UserActivity.this.getActivity(), SignInActivity.class);
-					UserActivity.this.startActivity(intent);
-					return;
-				}
+				if(null != Me.instance) {					
+						String	token = Me.instance.token;
+		    				Helper.openBrowser(UserActivity.this.getActivity(), Networking.fetchURL("activity3", token));
+		    				return;
+						}				
 				Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);
 				UserActivity.this.startActivity(intent);
 				
@@ -344,37 +370,28 @@ public class UserActivity extends FragmentEx {
 		btnPhoto = (ImageButton) viewHead.findViewById(R.id.user_button_photo);
 		viewMycollection = (RelativeLayout) viewHead.findViewById(R.id.user_layout_01);
 		viewSignin = (RelativeLayout) viewHead.findViewById(R.id.user_layout_02);
+		
 		viewQcode = (ImageView) viewHead.findViewById(R.id.userinfo_image_qcode);
-		viewStatus = (TextView) viewHead.findViewById(R.id.user_status);
+		viewStatus = (ImageView) viewHead.findViewById(R.id.user_status);
 		
 		viewBalance = (TextView) viewHead.findViewById(R.id.user_text_balance);
 		viewpoint = (TextView) viewHead.findViewById(R.id.money_text_points);
 		viewVip = (ImageView) viewHead.findViewById(R.id.user_vip);	
-		if(null !=Me.instance ){			
-			if(0==Me.instance.level){
-				return;
+
+		layout_Point = (RelativeLayout) viewHead.findViewById(R.id.money_layout_01);
+		layout_Point.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Me.instance) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);
+					UserActivity.this.getActivity().startActivity(intent);
+					return;
+				}
+				String url = Networking.fetchURL("jifen", Me.instance.token);
+				Helper.openBrowser(UserActivity.this.getActivity(), url);
 			}
-			else {
-				String point= String.valueOf(Me.instance.point);
-				String account= String.valueOf(Me.instance.account);
-				viewpoint.setText(point+"分");
-				viewBalance.setText(account+"元");
-				 switch(Me.instance.level){
-				 case 1:					 
-					 viewVip.setImageResource(R.drawable.icon_v1);
-					 break;
-				 case 2:
-					 viewVip.setImageResource(R.drawable.icon_v2);
-					 break;
-				 case 3:
-					 viewVip.setImageResource(R.drawable.icon_v3);
-					 break;
-				 case 4:
-					 viewVip.setImageResource(R.drawable.icon_v4);
-					 break;
-				 }
-			}
-		}
+		});
+		layout_Coupons = (RelativeLayout) viewHead.findViewById(R.id.money_layout_00);	
 		viewMemo1 = viewHead.findViewById(R.id.memo_layout_1);
 		viewMemo1.setOnClickListener(new View.OnClickListener() {
 			@Override

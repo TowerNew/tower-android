@@ -48,18 +48,16 @@
 			android:src="@drawable/icon_qr_code"
 			android:padding="0dip"
 			android:visibility="gone"/>
-        <TextView
+
+        <ImageView
             android:id="@+id/user_status"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/user_label_caption"
             android:layout_alignTop="@+id/user_button_photo"
             android:layout_marginLeft="35dp"
-            android:padding="2dp"
-            android:text="待认证"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:visibility="gone"/>
+            android:background="@drawable/button_status0"
+            android:scaleType="fitXY" />
 
         <ImageView
             android:id="@+id/user_vip"

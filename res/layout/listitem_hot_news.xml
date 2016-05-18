@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="80dp"
+	android:orientation="horizontal"
+	android:background="@color/white">
+<ImageView
+    android:id="@+id/reserve_image_photo"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_gravity="center_vertical"
+    android:src="@drawable/askdoctor_chat_other" />
+<RelativeLayout
+    android:id="@+id/reserve_layout_examination"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/reserve_image_photo" 
+    android:layout_marginLeft="10dp">
+    <TextView
+        android:id="@+id/reserve_lable_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:textSize="16sp"
+        android:text="预约体检标题"
+        android:textColor="@color/black"/>
+    <TextView
+        android:id="@+id/reserve_lable_newprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reserve_lable_title"
+        android:textSize="16sp"
+        android:text="￥100"
+        android:textColor="@color/red"/>
+    <TextView
+        android:id="@+id/reserve_lable_oldprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/reserve_lable_newprice"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/reserve_lable_title"
+        android:textSize="16sp"
+        android:text="￥100"/>
+    <ImageView
+        android:id="@+id/reaserve_lable_docLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reserve_lable_oldprice"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/star_2"/>    
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/reserve_more_examination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/reserve_image_examination"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/reserve_image_examination"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/reserve_layout_examination">
+
+        <TextView
+            android:id="@+id/reserve_lable_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/reserve_image_discount"
+            android:layout_marginBottom="20dp"
+            android:text="500人"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/reserve_image_discount"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:text="惠"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_circle_green" />
+
+        <Button
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignBaseline="@+id/reserve_image_discount"
+            android:layout_alignBottom="@+id/reserve_image_discount"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@+id/reserve_image_discount"
+            android:background="@drawable/button_circle_blue"
+            android:text="预"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        </RelativeLayout>
+</RelativeLayout>
+

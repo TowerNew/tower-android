@@ -76,16 +76,13 @@
 	
 	    <RelativeLayout
 	        android:id="@+id/home_layout_1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="180dp" >
-	        <ImageView
-	            android:id="@+id/home_img_child"
-	            android:layout_width="150dp"
-	            android:layout_height="180dp"
-	            android:layout_alignParentBottom="true"
-	            android:background="@color/home_child"
-	            android:scaleType="fitXY" />
-            <LinearLayout 
+	        android:layout_width="150dp"
+	        android:layout_height="180dp" 
+	        android:background="@color/home_child">	        
+            <LinearLayout
+                android:id="@+id/layout_child" 
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,16 +91,26 @@
                     android:id="@+id/tv_title_child"    
                     android:layout_width="wrap_content" 
                     android:layout_height="wrap_content" 
-                    android:textColor="#ff0000" 
-                    android:textSize="15sp" />
+                    android:textColor="@color/red"  
+                    android:singleLine="true"                   
+                    android:textSize="14sp" />
                 <TextView 
                     android:id="@+id/tv_subtitle_child" 
                     android:layout_width="wrap_content" 
                     android:layout_height="wrap_content" 
-                    android:textColor="#000000" 
-                    android:textSize="15sp" />
+                    android:singleLine="true"
+                    android:textColor="@color/grey_text" 
+                    android:textSize="12sp" />
             </LinearLayout>
-	
+            <ImageView
+	            android:id="@+id/home_img_child"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"		          
+	            android:layout_below="@id/layout_child"	
+           	    android:layout_marginTop="30dp"       	            
+				android:layout_marginLeft="30dp"                   
+	            android:scaleType="fitXY" />	          	            	            
+				
 	    </RelativeLayout>
 	
 	    <View
@@ -117,35 +124,37 @@
 	        android:id="@+id/home_layout_2"
 	        android:layout_width="match_parent"
 	        android:layout_height="80dp"
-	        android:layout_toRightOf="@id/home_line_3" >
+	        android:layout_toRightOf="@id/home_line_3" 
+	        android:background="@color/home_woman">
 	        <ImageView
 	            android:id="@+id/home_img_woman"
 	            android:layout_width="wrap_content"
-	            android:layout_height="80dp"
-	            android:layout_alignParentBottom="true"
-	            android:layout_alignParentLeft="true"
-	            android:layout_alignParentRight="true"
-	            android:layout_alignParentTop="true"
-	            android:background="@color/home_woman"
+	            android:layout_height="85dp"
+	            android:layout_alignParentLeft="true"        
 	            android:scaleType="fitXY" />
-	        <LinearLayout 
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+
+	        <LinearLayout
+	            android:id="@+id/layout_woman"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_marginTop="10dp"
+	            android:orientation="vertical" >
+
                 <TextView 
                     android:id="@+id/tv_title_woman"    
                     android:layout_width="wrap_content" 
-                    android:layout_height="wrap_content" 
-                    android:textColor="#ffff00" 
-                    android:textSize="15sp" />
+                    android:layout_height="wrap_content"
+                    android:singleLine="true" 
+                    android:textColor="@color/orange" 
+                    android:textSize="14sp" />
                 <TextView 
                     android:id="@+id/tv_subtitle_woman" 
                     android:layout_width="wrap_content" 
                     android:layout_height="wrap_content" 
-                    android:textColor="#000000" 
-                    android:textSize="15sp" />
+                    android:singleLine="true"
+                    android:textColor="@color/grey_text" 
+                    android:textSize="12sp" />
             </LinearLayout>
 	
 	    </RelativeLayout>
@@ -160,14 +169,16 @@
 	        android:layout_marginTop="5dp"
 	        android:layout_toRightOf="@+id/home_line_3"
 	        android:background="@color/home_old" >
-	        <ImageView
+	         <ImageView
 	            android:id="@+id/home_img_old"
 	            android:layout_width="wrap_content"
 	            android:layout_height="85dp"
+	            android:layout_alignParentRight="true"
 	            android:layout_alignParentBottom="true"
 	            android:layout_alignParentTop="true"
 	            android:scaleType="fitXY" />
 	        <LinearLayout 
+	            android:id="@+id/layout_old"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
@@ -177,15 +188,18 @@
                     android:id="@+id/tv_title_old"    
                     android:layout_width="wrap_content" 
                     android:layout_height="wrap_content" 
-                    android:textColor="#0000ff" 
-                    android:textSize="15sp" />
+                    android:singleLine="true"
+                    android:textColor="@color/green" 
+                    android:textSize="14sp" />
                 <TextView 
                     android:id="@+id/tv_subtitle_old" 
                     android:layout_width="wrap_content" 
                     android:layout_height="wrap_content" 
-                    android:textColor="#000000" 
-                    android:textSize="15sp" />
+                    android:singleLine="true"
+                    android:textColor="@color/grey_text" 
+                    android:textSize="12sp" />
             </LinearLayout>
+           
 	
 	    </RelativeLayout>
 	</RelativeLayout>

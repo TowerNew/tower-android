@@ -1,0 +1,249 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/doctordetail_layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/main"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <ImageView
+            android:id="@+id/doctordetail_image_close"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="0dp"
+            android:background="@drawable/arrow_left_white_wide"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/doctordetail_text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="私人医生名称"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/doctordetail_Layout"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/doctordetail_layout_header"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/doctordetail_image_photo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/askdoctor_chat_other" />
+
+        <RelativeLayout
+            android:id="@+id/doctordetail_layout_examination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/doctordetail_image_photo" >
+
+            <TextView
+                android:id="@+id/doctordetail_lable_title"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:paddingTop="2dp"
+                android:singleLine="true"
+                android:text="预约体检标题"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/doctordetail_more_examination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/doctordetail_image_examination"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/doctordetail_image_examination"
+            android:layout_toRightOf="@+id/doctordetail_lable_department" >
+
+            <Button
+                android:id="@+id/doctordetail_image_discount"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_circle_green"
+                android:text="问"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <Button
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignBaseline="@+id/doctordetail_image_discount"
+                android:layout_alignBottom="@+id/doctordetail_image_discount"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/doctordetail_image_discount"
+                android:background="@drawable/button_circle_blue"
+                android:text="预"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/doctordetail_lable_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/doctordetail_image_photo"
+            android:layout_alignLeft="@+id/doctordetail_layout_examination"
+            android:text="预顶顶顶顶"
+            android:textColor="@color/grey"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/doctordetail_lable_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/doctordetail_lable_title2"
+            android:layout_alignLeft="@+id/doctordetail_layout_examination"
+            android:text="意思是事实上"
+            android:textColor="@color/red"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/doctordetail_lable_department"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@+id/doctordetail_layout_examination"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/doctordetail_layout_examination"
+            android:background="@drawable/button_green"
+            android:text="手术科"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/doctor_layout_detail"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/doctordetail_Layout"
+        android:background="@color/grey_bg"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="医生简介"
+            android:textColor="@color/grey_text"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/doctor_text_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/doctor_layout_detail"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="医生简介的顶顶顶顶顶的顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶"
+        android:textColor="@color/grey_text"
+        android:textSize="12sp" />
+
+    <RelativeLayout
+        android:id="@+id/doctor_layout_evaluate"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/doctor_text_detail"
+        android:background="@color/grey_bg"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="用户评价"
+            android:textColor="@color/grey_text"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/doctordetail_layout_collection"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/doctor_layout_evaluate"
+        android:background="@color/white" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:text="暂无评价！" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/doctordetail_layout_collection"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/doctor_btn_set"
+        android:background="@color/grey" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/icon_user_mycollection" />
+
+        <TextView
+            android:id="@+id/doco_label_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView1"
+            android:layout_centerHorizontal="true"
+            android:text="收藏"
+            android:textColor="@color/grey_text"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/doctor_btn_set"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_toRightOf="@+id/doctordetail_layout_collection"
+        android:background="@color/main"
+        android:text="设为私人医生"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

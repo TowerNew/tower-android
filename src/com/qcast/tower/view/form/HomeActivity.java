@@ -45,6 +45,7 @@ import com.slfuture.carrie.base.type.core.ILink;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,6 +63,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.HeaderViewListAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -195,7 +197,8 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	protected RotateAnimation animRight = null; 
 	protected RotateAnimation animLeft = null; 
 
-
+	/** 广告位*/
+	View viewHead;
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -209,12 +212,35 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				.cacheInMemory(true).cacheOnDisc(true)
 				.bitmapConfig(Bitmap.Config.RGB_565)
 				.imageScaleType(ImageScaleType.EXACTLY).build();
-		startAd();
-		dealNews();
-		dealRegion();
-		dealSearch();		
-		//
-		loadVersion();
+		viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_home_head, null);
+		
+	   /**
+       * 广告数据
+       */
+		      adList = new ArrayList<AdDomain>();;
+		      imageViews = new ArrayList<ImageView>();
+		      // 点
+		      dots = new ArrayList<View>();
+		      dotList = new ArrayList<View>();
+		      View dot0 =(View)viewHead.findViewById(R.id.v_dot0);
+		      View dot1 =(View)viewHead.findViewById(R.id.v_dot1);
+		      View dot2 =(View)viewHead.findViewById(R.id.v_dot2);
+		      View dot3 =(View)viewHead.findViewById(R.id.v_dot3);
+		      View dot4 =(View)viewHead.findViewById(R.id.v_dot4);
+		      dots.add(dot0);
+		      dots.add(dot1);
+		      dots.add(dot2);
+		      dots.add(dot3);
+		      dots.add(dot4);
+      
+		        loadEntry();
+		        loadBannerAd();
+				startAd();		
+				dealNews();
+				dealRegion();
+				dealSearch();		
+				//
+				loadVersion();
 	}	
 
   @Override
@@ -292,67 +318,6 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		});
 	}
 
-	
-//	/**
-//	 * 加载资讯列表
-//	 */
-//	private void loadNews() {
-//		Networking.doCommand("news", new CommonResponse<String>(page) {
-//			@Override
-//			public void onFinished(String content) {
-//				if(Response.CODE_SUCCESS != code()) {
-//					Toast.makeText(HomeActivity.this.getActivity(), "加载资讯失败", Toast.LENGTH_LONG).show();
-//					return;
-//				}
-//				JSONObject resultObject = JSONObject.convert(content);
-//				if(((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-//					Toast.makeText(HomeActivity.this.getActivity(), ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
-//					return;
-//				}
-//				JSONArray result = (JSONArray) resultObject.get("data");
-//				int thisPage = (Integer) this.tag;
-//				if(page != thisPage) {
-//					return;
-//				}
-//				if(0 == result.size()) {
-//					return;
-//				}
-//				for(IJSON item : result) {
-//					JSONObject newJSONObject = (JSONObject) item;
-//					HashMap<String, Object> newsMap = new HashMap<String, Object>();
-//					String photoURL = "";
-//					if(null != newJSONObject.get("imageUrl")) {
-//						photoURL = ((JSONString) newJSONObject.get("imageUrl")).getValue();
-//					}
-//					String photoName = Storage.getImageName(photoURL);
-//					newsMap.put("photo", photoName);
-//					newsMap.put("title", ((JSONString) newJSONObject.get("title")).getValue());
-//					newsMap.put("publisher", ((JSONString) newJSONObject.get("publisher")).getValue());
-//					newsMap.put("date", ((JSONString) newJSONObject.get("date")).getValue());
-//					newsMap.put("url", ((JSONString) newJSONObject.get("url")).getValue());
-//					newsList.add(newsMap);
-//					if(Text.isBlank(photoURL)) {
-//		            	continue;
-//		            }
-//		            // 加载图片
-//		            Networking.doImage("image", new ImageResponse(photoName, newsList.size() - 1) {
-//						@Override
-//						public void onFinished(Bitmap content) {
-//							HashMap<String, Object> map = newsList.get((Integer) tag);
-//							map.put("photo", content);
-//							ListView listview = (ListView) HomeActivity.this.getActivity().findViewById(R.id.home_list_news);
-//							SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
-//							adapter.notifyDataSetChanged();
-//						}
-//		            }, photoURL);
-//				}
-//				ListView listview = (ListView) HomeActivity.this.getActivity().findViewById(R.id.home_list_news);
-//				SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
-//				adapter.notifyDataSetChanged();
-//				page = thisPage + 1;
-//			}
-//		}, page);
-//	}
 	/**
 	 * 加载资讯列表
 	 */
@@ -361,7 +326,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content || content.getInteger("code", 0) <= 0) {
-					Log.e(TAG, "hotRecommend  err:" + content.getString("msg"));
+					//Log.e(TAG, "hotRecommend  err:" + content.getString("msg"));
 					return;
 				}
 				newsList.clear();
@@ -395,7 +360,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					newsMap.put("originalPrice", value.getInteger("originalPrice"));
 					newsMap.put("score", value.getInteger("score"));
 					newsMap.put("url", value.getString("url"));
-					newsMap.put("totalNumber", value.getInteger("totalNumber"));
+					newsMap.put("pop", value.getInteger("pop"));
 					newsList.add(newsMap);
 					if(!Text.isBlank(photoURL)) {
 						// 加载图片
@@ -411,73 +376,12 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 						}, photoURL);
 		            }
 				}
-				adapter.notifyDataSetChanged();
-				page = thisPage + 1;
-			}
-		}, currentRegionId);
-	}
-	
-	private void loadOperationPosition() {
-		Networking.doCommand("ThreeBanner", new JSONResponse(HomeActivity.this.getActivity(), (Integer) currentRegionId) {
-			@Override
-			public void onFinished(JSONVisitor content) {
-				if(null == content || content.getInteger("code", 0) <= 0) {
-					Log.e(TAG, "hotRecommend  err:" + content.getString("msg"));
-					return;
-				}
-				newsList.clear();
-				ListView listview = (ListView) HomeActivity.this.getActivity().findViewById(R.id.home_list_news);
-				SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
-				adapter.notifyDataSetChanged();
 				
-				JSONVisitor data = content.getVisitor("data");
-				if (null == data) {
-					return;
-				}
-				int thisPage = (Integer) this.tag;
-				if(currentRegionId != thisPage) {
-					return;
-				}
-				for(ILink<String, JSONVisitor> link : data.toVisitorMap()) {
-					String key = link.origin();
-					JSONVisitor value = link.destination();
-					HashMap<String, Object> newsMap = new HashMap<String, Object>();
-					String photoURL = "";
-					if(!TextUtils.isEmpty(value.getString("image"))) {
-						photoURL = value.getString("image");
-					} else {
-						//XXX default image
-					}
-					String photoName = Storage.getImageName(photoURL);
-					newsMap.put("image", photoName);
-					newsMap.put("name",  value.getString("name"));
-					newsMap.put("image", value.getString("image"));
-					newsMap.put("price", value.getInteger("price"));
-					newsMap.put("originalPrice", value.getInteger("originalPrice"));
-					newsMap.put("score", value.getInteger("score"));
-					newsMap.put("url", value.getString("url"));
-					newsMap.put("totalNumber", value.getInteger("totalNumber"));
-					newsList.add(newsMap);
-					if(!Text.isBlank(photoURL)) {
-						// 加载图片
-						Networking.doImage("image", new ImageResponse(photoName, newsList.size() - 1) {
-							@Override
-							public void onFinished(Bitmap content) {
-								HashMap<String, Object> map = newsList.get((Integer) tag);
-								map.put("image", content);
-								ListView listview = (ListView) HomeActivity.this.getActivity().findViewById(R.id.home_list_news);
-								SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
-								adapter.notifyDataSetChanged();
-							}
-						}, photoURL);
-		            }
-				}
 				adapter.notifyDataSetChanged();
 				page = thisPage + 1;
 			}
 		}, currentRegionId);
-	}
- 		
+	}		
 	/**
 	 * 处理区域按钮
 	 */
@@ -532,7 +436,9 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		else if(null != Me.instance && !Me.instance.id.equals(currentUserId)) {
 			currentUserId = Me.instance.id;
 			sentry = true;
-		}}
+		}
+		Log.i(TAG, "loadEntry, currentRegionId=" + currentRegionId + ",currentUserId=" + currentUserId);
+	}
 	
 	/**
 	 * 处理搜索按钮
@@ -546,49 +452,58 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			}
 		});
 	}
-	
+	/**
+	 * 广告位
+	 */
+	private void loadBannerAd() {
+		if(listNews.getHeaderViewsCount() > 0) {
+			return;
+		}
+	    listNews.removeHeaderView(viewHead);       
+        Networking.doCommand("bannerAd", new JSONResponse(HomeActivity.this.getActivity(), (Integer) currentRegionId) {
+            @Override
+            public void onFinished(JSONVisitor content) {
+                if(null == content || content.getInteger("code", 1) < 0) {
+                     return;
+                }
+                ICollection<JSONVisitor> data = content.getVisitors("data");
+                if (data == null) {
+                    return;
+                }
+                adList.clear();
+                for(JSONVisitor banner : data){              
+                    AdDomain adDomain = new AdDomain();
+                    adDomain.setImgUrl(banner.getString("image"));
+                    adDomain.setUrl(banner.getString("url"));
+                    adDomain.setAd(true);
+                    adList.add(adDomain);
+                }
+               
+                adViewPager = (ViewPager) viewHead.findViewById(R.id.vp);
+                adViewPager.setAdapter(new MyAdapter());// 设置填充ViewPager页面的适配器
+                // 设置一个监听器，当ViewPager中的页面改变时调用
+                adViewPager.setOnPageChangeListener(new MyPageChangeListener());
+//                MyAdapter adapter = (MyAdapter) adViewPager.getAdapter();
+//                adapter.notifyDataSetChanged();
+                listNews.addHeaderView(viewHead);
+                
+                addDynamicView();
+            }
+        }, currentRegionId);
+	}
+
 
 	/**
 	 * 界面预设
 	 */
 	private void prepare() {		
-		if(listNews.getHeaderViewsCount() > 0) {
-			return;
-		}
+	
 		animRight = new RotateAnimation(-30, 30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
 		animRight.setDuration(1000);
         animRight.setAnimationListener(listener);
 		animLeft = new RotateAnimation(30f, -30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
 		animLeft.setDuration(1000);
-		animLeft.setAnimationListener(listener);
-		
-		View viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_home_head, null);
-		listNews.addHeaderView(viewHead);
-
-
-		/**
-		 * 广告数据
-		 */
-		adList = getBannerAd();
-		imageViews = new ArrayList<ImageView>();
-		// 点
-		dots = new ArrayList<View>();
-		dotList = new ArrayList<View>();
-		View dot0 =(View)viewHead.findViewById(R.id.v_dot0);
-		View dot1 =(View)viewHead.findViewById(R.id.v_dot1);
-		View dot2 =(View)viewHead.findViewById(R.id.v_dot2);
-		View dot3 =(View)viewHead.findViewById(R.id.v_dot3);
-		View dot4 =(View)viewHead.findViewById(R.id.v_dot4);
-		dots.add(dot0);
-		dots.add(dot1);
-		dots.add(dot2);
-		dots.add(dot3);
-		dots.add(dot4);			
-		adViewPager = (ViewPager) viewHead.findViewById(R.id.vp);
-		adViewPager.setAdapter(new MyAdapter());// 设置填充ViewPager页面的适配器
-		// 设置一个监听器，当ViewPager中的页面改变时调用
-		adViewPager.setOnPageChangeListener(new MyPageChangeListener());
-		addDynamicView();
+		animLeft.setAnimationListener(listener);	
 		//
 		ImageView childImg =(ImageView)viewHead.findViewById(R.id.home_img_child);
 		ImageView womanImg =(ImageView)viewHead.findViewById(R.id.home_img_woman);
@@ -804,24 +719,67 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 
 	private void addDynamicView() {
 		// 动态添加图片和下面指示的圆点
-				// 初始化图片资源
-				for (int i = 0; i < adList.size(); i++) {
-					ImageView imageView = new ImageView(this.getActivity());
-					// 异步加载图片
-					mImageLoader.displayImage(adList.get(i).getImgUrl(), imageView,
-							options);
-					imageView.setScaleType(ScaleType.CENTER_CROP);
-					imageViews.add(imageView);
-					dots.get(i).setVisibility(View.VISIBLE);
-					dotList.add(dots.get(i));
-				}
+		// 初始化图片资源
+	    imageViews.clear();
+	    dotList.clear();
+		for (int i = 0; i < adList.size(); i++) {
+			ImageView imageView = new ImageView(this.getActivity());
+            imageView.setScaleType(ScaleType.CENTER_CROP);
+            imageView.setTag(adList.get(i));
+            imageView.setClickable(true);
+            imageView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Helper.openBrowser(HomeActivity.this.getActivity(), ((AdDomain)v.getTag()).getUrl());
+                }
+            });
+            imageViews.add(imageView);
+			
+			String photoURL = adList.get(i).getImgUrl();
+			String photoName = Storage.getImageName(photoURL);
+            if(!Text.isBlank(photoURL)) {
+                // 加载图片
+                Networking.doImage("image", new ImageResponse(photoName, imageView) {
+                    @Override
+                    public void onFinished(Bitmap content) {
+                        ((ImageView)tag).setImageBitmap(content);
+                        
+                        ViewPager ads = (ViewPager) viewHead.findViewById(R.id.vp);
+                        MyAdapter adapter = (MyAdapter) ads.getAdapter();
+                        adapter.notifyDataSetChanged();
+                    }
+                }, photoURL);
+            }
+			
+			
+			
+//			// 异步加载图片
+//			mImageLoader.displayImage(adList.get(i).getImgUrl(), imageView,
+//					options);
+//			imageView.setScaleType(ScaleType.CENTER_CROP);
+//			imageView.setTag(adList.get(i));
+//			imageView.setClickable(true);
+//			imageView.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Helper.openBrowser(HomeActivity.this.getActivity(), ((AdDomain)v.getTag()).getUrl());
+//                }
+//            });
+//			imageViews.add(imageView);
+			dots.get(i).setVisibility(View.VISIBLE);
+			dotList.add(dots.get(i));
+		}
 		
+		for (int i = adList.size()-1 ; i < dotList.size(); i++) {
+		    dots.get(i).setVisibility(View.GONE);
+        }
+        
 	}
 	private class MyAdapter extends PagerAdapter {
 
 		@Override
 		public int getCount() {
-			return adList.size();
+			return imageViews.size();
 		}
 
 		@Override
@@ -830,14 +788,14 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			((ViewPager) container).addView(iv);
 			final AdDomain adDomain = adList.get(position);
 			// 在这个方法里面设置图片的点击事件
-			iv.setOnClickListener(new OnClickListener() {
+		/*	iv.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 					// 处理跳转逻辑
 					
 				}
-			});
+			});*/
 			return iv;
 		}
 
@@ -912,62 +870,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			}
 		}
 	}
-	/**
-	 * 轮播广播模拟数据
-	 * @return
-	 */
-	public static List<AdDomain> getBannerAd() {
-	
-	/*	Networking.doCommand("newBanner", new JSONResponse(context,null) {
-			@Override
-			public void onFinished(JSONVisitor content) {
-				if(null == content || content.getInteger("code", 1) < 0) {
-					 return;
-				 }
-				content = content.getVisitor("data");
-				List<AdDomain> adList = new ArrayList<AdDomain>();
-				for(JSONVisitor banner : content.getVisitors("data")){				
-					AdDomain adDomain = new AdDomain();
-					adDomain.setImgUrl(banner.getString("image"));
-					adDomain.setAd(false);
-					adList.add(adDomain);
-				}
-			
-			}
-		},Logic.token);	*/	
-		List<AdDomain> adList = new ArrayList<AdDomain>();
-		AdDomain adDomain = new AdDomain();
-		adDomain.setId("108078");
-		adDomain.setImgUrl("http://g.hiphotos.baidu.com/image/w%3D310/sign=bb99d6add2c8a786be2a4c0f5708c9c7/d50735fae6cd7b8900d74cd40c2442a7d9330e29.jpg");
-		adDomain.setAd(false);
-		adList.add(adDomain);
 
-		AdDomain adDomain2 = new AdDomain();
-		adDomain2.setId("108078");
-		adDomain2.setImgUrl("http://g.hiphotos.baidu.com/image/w%3D310/sign=7cbcd7da78f40ad115e4c1e2672e1151/eaf81a4c510fd9f9a1edb58b262dd42a2934a45e.jpg");
-		adDomain2.setAd(false);
-		adList.add(adDomain2);
-		
-		AdDomain adDomain3 = new AdDomain();
-		adDomain3.setId("108078");
-		adDomain3.setImgUrl("http://e.hiphotos.baidu.com/image/w%3D310/sign=392ce7f779899e51788e3c1572a6d990/8718367adab44aed22a58aeeb11c8701a08bfbd4.jpg");
-		adDomain3.setAd(false);
-		adList.add(adDomain3);
-
-		AdDomain adDomain4 = new AdDomain();
-		adDomain4.setId("108078");
-		adDomain4.setImgUrl("http://d.hiphotos.baidu.com/image/w%3D310/sign=54884c82b78f8c54e3d3c32e0a282dee/a686c9177f3e670932e4cf9338c79f3df9dc55f2.jpg");
-		adDomain4.setAd(false);
-		adList.add(adDomain4);
-
-		AdDomain adDomain5 = new AdDomain();
-		adDomain5.setId("108078");
-		adDomain5.setImgUrl("http://e.hiphotos.baidu.com/image/w%3D310/sign=66270b4fe8c4b7453494b117fffd1e78/0bd162d9f2d3572c7dad11ba8913632762d0c30d.jpg");
-		adDomain5.setAd(true); // 代表是广告
-		adList.add(adDomain5);
-
-		return adList;
-	}
 
 
 	
@@ -977,7 +880,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 */
 	private void dealNews() {
 		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), newsList, R.layout.listitem_hot_news,
-			new String[]{"image", "name", "price", "originalPrice","status","totalNumber"}, 
+			new String[]{"image", "name", "price", "originalPrice","score","pop"}, 
 	        new int[]{R.id.reserve_image_photo, R.id.reserve_lable_title, R.id.reserve_lable_newprice, R.id.reserve_lable_oldprice,R.id.reaserve_lable_docLevel,R.id.reserve_lable_number});
 		listItemAdapter.setViewBinder(new ViewBinder() {
 			public boolean setViewValue(View view, Object data, String textRepresentation) {
@@ -987,6 +890,38 @@ public class HomeActivity extends FragmentEx implements IMeListener {
                     imageView.setImageDrawable(new BitmapDrawable(bitmap));
                     return true;
                 }
+                else if(view instanceof ImageView && data instanceof Integer) {  
+                	ImageView textView = (ImageView)view;
+	                switch((Integer) data) {
+	                case 0:
+	                	textView.setBackgroundResource(R.drawable.star_0);
+	            		break;
+	                case 1:
+	                	textView.setBackgroundResource(R.drawable.star_1);
+	            		break;
+	            	case 2:
+	            		textView.setBackgroundResource(R.drawable.star_2);
+	            		break;
+	            	case 3:
+	            		textView.setBackgroundResource(R.drawable.star_3);
+	            		break;
+	            	case 4:
+	            		textView.setBackgroundResource(R.drawable.star_4);
+	            		break;
+	            	case 5:
+	            		textView.setBackgroundResource(R.drawable.star_5);
+	            		break;	
+	            	}
+	                return true;
+                }
+                else if(view instanceof TextView && data instanceof Integer) {
+                	TextView textView = (TextView)view;
+                	 if("old".equals(textView.getTag())) {
+	                		textView.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); //中间横线       
+                		}/*else if("new".equals(textView.getTag())){
+                			textView.setText("现价"+String.valueOf((Integer)data));	
+                	}*/
+                }
                 return false;
             }
         });
@@ -994,13 +929,14 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		listNews.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
-				index = index - 1;
-				HashMap<String, Object> newsMap = newsList.get(index);
+				index = index-1;
+				HashMap<String, Object> newsMap = newsList.get(index);				
 				Intent intent = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
 				intent.putExtra("url", newsMap.get("url").toString());
-				HomeActivity.this.startActivity(intent);
+				HomeActivity.this.startActivity(intent);				
             }
 		});
+
 		listNews.setOnScrollListener(new OnScrollListener() {    
 	        boolean isLastRow = false;
 

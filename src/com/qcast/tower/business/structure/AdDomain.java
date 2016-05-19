@@ -10,7 +10,16 @@ package com.qcast.tower.business.structure;
 public class AdDomain {
 	private String id; 
 	private String imgUrl;
-	private boolean isAd; 
+	private String url;
+	public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    private boolean isAd; 
 	private String startTime;
 	private String endTime; 
 	private String targetUrl;

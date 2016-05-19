@@ -20,10 +20,11 @@
     android:layout_marginLeft="10dp">
     <TextView
         android:id="@+id/reserve_lable_title"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         android:textSize="16sp"
+        android:singleLine="true"
         android:text="预约体检标题"
         android:textColor="@color/black"/>
     <TextView
@@ -33,7 +34,8 @@
         android:layout_below="@id/reserve_lable_title"
         android:textSize="16sp"
         android:text="￥100"
-        android:textColor="@color/red"/>
+        android:textColor="@color/red"
+        android:tag="new" />
     <TextView
         android:id="@+id/reserve_lable_oldprice"
         android:layout_width="wrap_content"
@@ -42,14 +44,15 @@
         android:layout_marginLeft="20dp"
         android:layout_below="@id/reserve_lable_title"
         android:textSize="16sp"
-        android:text="￥100"/>
+        android:text="￥100"
+        android:tag="old" />
     <ImageView
         android:id="@+id/reaserve_lable_docLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/reserve_lable_oldprice"
         android:layout_marginTop="2dp"
-        android:background="@drawable/star_2"/>    
+        android:background="@drawable/star_0"/>    
     </RelativeLayout>
 
     <RelativeLayout
@@ -58,33 +61,24 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/reserve_image_examination"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/reserve_image_examination"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@id/reserve_layout_examination">
-
-        <TextView
-            android:id="@+id/reserve_lable_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/reserve_image_discount"
-            android:layout_marginBottom="20dp"
-            android:text="500人"
-            android:textSize="16sp" />
+        android:layout_marginRight="10dp"
+        android:layout_alignTop="@+id/reserve_image_examination" >
 
         <Button
             android:id="@+id/reserve_image_discount"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_circle_green"
             android:text="惠"
-            android:textSize="12sp"
             android:textColor="@color/white"
-            android:background="@drawable/button_circle_green" />
+            android:textSize="12sp" 
+            android:focusable="false"/>
 
         <Button
+            android:id="@+id/button1"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignBaseline="@+id/reserve_image_discount"
@@ -94,8 +88,29 @@
             android:background="@drawable/button_circle_blue"
             android:text="预"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="12sp" 
+            android:focusable="false"/>
 
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/reserve_lable_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/button1"
+            android:tag="people"
+            android:text="500"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/reserve_lable_number"
+            android:text="人"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
 </RelativeLayout>
 

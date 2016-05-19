@@ -574,6 +574,25 @@ user-platform-web/rest/user/ciming/getEvaluationList?token=[1]
         ]]>
         </mock>
     </protocol>
+    
+     
+     <protocol name="bannerAd">
+        <path>
+        <![CDATA[
+user-platform-web-1.0.0/rest/banner?regionId=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1
+       
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+    
        <protocol name="ThreeBanner">
         <path>
         <![CDATA[
@@ -674,7 +693,7 @@ user-platform-web/rest/news?page=[1]
       <protocol name="hotRecommend">
         <path>
         <![CDATA[
-user-platform-web-1.0.0/rest/recommendations?regionId=[1]
+user-platform-web/rest/recommendations?regionId=[1]
         ]]>
         </path>
     <mock>

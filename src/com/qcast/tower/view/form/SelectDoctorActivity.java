@@ -1,5 +1,6 @@
 package com.qcast.tower.view.form;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -18,6 +19,7 @@ import android.widget.SimpleAdapter.ViewBinder;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.business.Profile;
+import com.qcast.tower.business.structure.DoctorModel;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.pluto.communication.Networking;
@@ -44,7 +46,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 	 * 当前被选中的索引
 	 */
 	private int current = -1;
-
+	
 
 	/**
 	 * 界面创建
@@ -81,8 +83,16 @@ public class SelectDoctorActivity extends OnlyUserActivity {
             }
         });
 		listDoctor.setAdapter(listItemAdapter);
-		listDoctor.setOnItemClickListener(new OnItemClickListener() {
+		listDoctor.setOnItemClickListener(new OnItemClickListener() {			
 			@Override
+		/*	  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				doctorModel= (DoctorModel) parent.getAdapter().getItem(position);
+                Intent intent = new Intent(SelectDoctorActivity.this,DoctorDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("docDetail",doctorModel);
+                intent.putExtras(bundle);
+                SelectDoctorActivity.this.startActivity(intent);*/
+            
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long id) {
 				listDoctor.setEnabled(false);
 				HashMap<String, Object> map = null;
@@ -91,14 +101,17 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 					/*map.put("status", GraphicsHelper.decodeResource(SelectDoctorActivity.this, R.drawable.icon_unselected));*/
 				}
 				current = index;
-				map = doctorList.get(index);				
+				map = doctorList.get(index);
 				Intent intent= new Intent(SelectDoctorActivity.this,DoctorDetailActivity.class);
-				intent.putExtra("name", map.get("id").toString());
+				intent.putExtra("id", map.get("id").toString());
+				intent.putExtra("name", map.get("name").toString());
+				intent.putExtra("title", map.get("title").toString());
+				intent.putExtra("department", map.get("department").toString());
+				intent.putExtra("photo", map.get("photo").toString());
 			    SelectDoctorActivity.this.startActivity(intent);
-				SelectDoctorActivity.this.finish();
 				/*map.put("status", GraphicsHelper.decodeResource(SelectDoctorActivity.this, R.drawable.icon_selected));*/
 				//
-			/*	Networking.doCommand("selectDoctor", new JSONResponse(SelectDoctorActivity.this) {
+				/*Networking.doCommand("selectDoctor", new JSONResponse(SelectDoctorActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null == content || content.getInteger("code", -1) < 0) {
@@ -114,6 +127,8 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 					}
 				}, map.get("id"), Me.instance.token);*/
 				
+				
+				
 				((SimpleAdapter) listDoctor.getAdapter()).notifyDataSetChanged();
 			}
 		});
@@ -126,7 +141,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 				}
 				listDoctor.setEnabled(true);
 				doctorList.clear();
-				Bitmap bitmap = GraphicsHelper.decodeResource(SelectDoctorActivity.this, R.drawable.icon_unselected);
+				/*Bitmap bitmap = GraphicsHelper.decodeResource(SelectDoctorActivity.this, R.drawable.icon_unselected);*/
 				int i = 0;
 				if(null == content.getVisitors("data")) {
 					return;
@@ -140,7 +155,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 					map.put("department", doctor.getString("department"));
 					map.put("title", doctor.getString("title"));
 					map.put("imId", doctor.getString("imUsername"));
-					map.put("status", bitmap);
+					/*map.put("status", bitmap);*/
 					if(null != Me.instance && null != Me.instance.doctor) {
 						if(Me.instance.doctor.id.equals(doctor.getString("userGlobalId"))) {
 							current = i;

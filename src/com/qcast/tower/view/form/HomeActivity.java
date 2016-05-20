@@ -39,6 +39,7 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.json.core.IJSON;
+import com.slfuture.carrie.base.model.core.IFilter;
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.type.core.ICollection;
 import com.slfuture.carrie.base.type.core.ILink;
@@ -155,7 +156,9 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 */
 	@ResourceView(id = R.id.home_list_news)
 	public ListView listNews;
-	
+	@ResourceView(id = R.id.reserve_image_discount)
+	public Button btnDiscount;
+
 	/**
 	 * 当前
 	 */
@@ -588,6 +591,12 @@ public class HomeActivity extends FragmentEx implements IMeListener {
             { 
             	switch (position){
             	case 0:
+            		if(null == Me.instance) {
+    					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
+    					HomeActivity.this.startActivity(intent);
+    					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
+    					return;
+    				}
             		Intent intent0 = new Intent(HomeActivity.this.getActivity(), SelectDoctorActivity.class);
             		HomeActivity.this.startActivity(intent0);
 				break;
@@ -670,7 +679,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
     				String regionId1 = "";
     				if(null != Profile.instance().region) {
     					regionId = String.valueOf(Profile.instance().region.id);
-    				}
+    				}    				
     				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("activity1", token1, regionId1));
             		break;
             	}
@@ -916,15 +925,30 @@ public class HomeActivity extends FragmentEx implements IMeListener {
                 }
                 else if(view instanceof TextView && data instanceof Integer) {
                 	TextView textView = (TextView)view;
-                	 if("old".equals(textView.getTag())) {
-	                		textView.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); //中间横线       
-                		}/*else if("new".equals(textView.getTag())){
-                			textView.setText("现价"+String.valueOf((Integer)data));	
-                	}*/
-                }
+                	if(null == data || 0 == (Integer) data) {
+                		textView.setText("");
+			    	}else {
+			    		
+			    		if("old".equals(textView.getTag())) {
+			    			textView.setText("￥"+String.valueOf(data));
+	                		textView.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); //中间横线   	                	
+                		}
+			    		if("new".equals(textView.getTag())){
+                			textView.setText("￥"+String.valueOf(data));
+                		}			    		
+			    		if("people".equals(textView.getTag())){
+                			textView.setText(String.valueOf(data)+"人");
+                		}
+			    		
+			    			/*btnDiscount.setVisibility(View.INVISIBLE);		    		
+			    			btnDiscount.setBackgroundResource(R.drawable.button_circle_blue)*/;
+			    		
+			    		
+			    		return true;
+			    	}
+                }                
                 return false;
-            }
-        });
+			}});
 		listNews.setAdapter(listItemAdapter);
 		listNews.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -956,9 +980,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		});
 	}
 
-	/**
-	 * 回调
-	 */
+	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);

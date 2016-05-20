@@ -8,17 +8,17 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
-        android:background="@color/main"
         android:focusable="true"
-        android:focusableInTouchMode="true" >
+        android:focusableInTouchMode="true"
+        android:background="@color/main">
 
-        <ImageView
+        <Button
             android:id="@+id/doctordetail_image_close"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="0dp"
+            android:layout_marginLeft="5dp"
             android:background="@drawable/arrow_left_white_wide"
             android:scaleType="fitXY" />
 
@@ -33,12 +33,12 @@
             android:textColor="#ffffffff"
             android:textSize="18sp" />
     </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/doctordetail_Layout"
         android:layout_width="fill_parent"
         android:layout_height="80dp"
         android:layout_below="@id/doctordetail_layout_header"
+        android:layout_marginTop="2dp"
         android:background="@color/white"
         android:orientation="horizontal" >
 
@@ -188,23 +188,23 @@
             android:textSize="14sp" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_above="@+id/doctordetail_layout_collection"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_below="@id/doctor_layout_evaluate"
-        android:background="@color/white" >
+        android:layout_weight="1">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"
-            android:text="暂无评价！" />
-    </RelativeLayout>
+        <ListView
+            android:id="@+id/doctor_comments_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/gap_line_length"
+            android:layout_marginRight="@dimen/gap_line_length"
+            android:background="@color/white"
+            android:divider="@drawable/divider" />
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/doctordetail_layout_collection"

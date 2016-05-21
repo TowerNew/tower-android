@@ -67,7 +67,6 @@ public class MyReserveHistoryActivity extends Activity{
 
 
     }
-
     private void loadData() {
         Networking.doCommand("reserveHistory", new CommonResponse<String>() {
             @Override

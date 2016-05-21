@@ -1,19 +1,21 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/doctordetail_layout_header"
+        android:id="@+id/home_layout_head"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
+        android:background="@color/main"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:background="@color/main">
+        android:focusableInTouchMode="true">
 
         <Button
-            android:id="@+id/doctordetail_image_close"
+            android:id="@+id/doctordetail_return_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
@@ -23,176 +25,183 @@
             android:scaleType="fitXY" />
 
         <TextView
-            android:id="@+id/doctordetail_text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:text="私人医生名称"
+            android:text="@string/home_caption"
             android:textColor="#ffffffff"
             android:textSize="18sp" />
     </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/doctordetail_Layout"
-        android:layout_width="fill_parent"
-        android:layout_height="80dp"
-        android:layout_below="@id/doctordetail_layout_header"
-        android:layout_marginTop="2dp"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="horizontal" >
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/doctordetail_image_photo"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/askdoctor_chat_other" />
+        <LinearLayout
+            android:id="@+id/layout00"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-        <RelativeLayout
-            android:id="@+id/doctordetail_layout_examination"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/doctordetail_image_photo" >
+            <ImageView
+                android:id="@+id/doctor_photo_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:src="@drawable/askdoctor_chat_other" />
+
+            <LinearLayout
+                android:layout_width="139dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.28"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" >
+
+                    <TextView
+                        android:id="@+id/doctor_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="王AA"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/doctor_department_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/button_green"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:text="妇科少室山"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/doctor_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="妇科主任"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/doctor_des_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="10"
+                    android:text="描述"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/doctordetail_lable_title"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:paddingTop="2dp"
-                android:singleLine="true"
-                android:text="预约体检标题"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/doctordetail_more_examination"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/doctordetail_image_examination"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/doctordetail_image_examination"
-            android:layout_toRightOf="@+id/doctordetail_lable_department" >
-
-            <Button
                 android:id="@+id/doctordetail_image_discount"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_circle_green"
+                android:padding="2dp"
                 android:text="问"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
-            <Button
+            <TextView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignBaseline="@+id/doctordetail_image_discount"
-                android:layout_alignBottom="@+id/doctordetail_image_discount"
+                android:layout_alignParentRight="true"
                 android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/doctordetail_image_discount"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/button_circle_blue"
+                android:padding="2dp"
                 android:text="预"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
-        </RelativeLayout>
+                android:textSize="14sp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/doctordetail_lable_title2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/doctordetail_image_photo"
-            android:layout_alignLeft="@+id/doctordetail_layout_examination"
-            android:text="预顶顶顶顶"
-            android:textColor="@color/grey"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/doctordetail_lable_title1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/doctordetail_lable_title2"
-            android:layout_alignLeft="@+id/doctordetail_layout_examination"
-            android:text="意思是事实上"
-            android:textColor="@color/red"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/doctordetail_lable_department"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_alignBottom="@+id/doctordetail_layout_examination"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/doctordetail_layout_examination"
-            android:background="@drawable/button_green"
-            android:text="手术科"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
+       <RelativeLayout
+			        android:id="@+id/doctor_layout_detail"
+			        android:layout_width="match_parent"
+			        android:layout_height="30dp"
+			        android:layout_alignParentLeft="true"
+			        android:layout_below="@+id/layout00"
+			        android:background="@color/grey_bg"
+			        android:orientation="horizontal" >
+			
+			        <TextView
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_marginLeft="10dp"
+			            android:layout_marginTop="5dp"
+			            android:text="医生简介"
+			            android:textColor="@color/grey_text"
+			            android:textSize="14sp" />
     </RelativeLayout>
+
+        <TextView
+            android:id="@+id/doctor_skill_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:maxLines="5"
+            android:ellipsize="end"
+			android:scrollbars = "vertical"
+            android:text="技能" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/docgrey" />
 
     <RelativeLayout
-        android:id="@+id/doctor_layout_detail"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/doctordetail_Layout"
-        android:background="@color/grey_bg"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:text="医生简介"
-            android:textColor="@color/grey_text"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/doctor_text_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/doctor_layout_detail"
-        android:background="@color/white"
-        android:padding="10dp"
-        android:text="医生简介的顶顶顶顶顶的顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶"
-        android:textColor="@color/grey_text"
-        android:textSize="12sp" />
-
-    <RelativeLayout
-        android:id="@+id/doctor_layout_evaluate"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/doctor_text_detail"
-        android:background="@color/grey_bg"
-        android:orientation="horizontal" >
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="5dp">
 
         <TextView
+            android:id="@+id/user_comments_num_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:text="用户评价"
-            android:textColor="@color/grey_text"
-            android:textSize="14sp" />
+            android:paddingTop="3dp"
+            android:text="用户评价 （190）" />
+
+        <View
+            android:id="@+id/div_vote"
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/docgrey" />
+
     </RelativeLayout>
 
-   <LinearLayout
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/gap_line_length"
+        android:layout_marginRight="@dimen/gap_line_length"
+        android:background="@color/docgrey" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_below="@id/doctor_layout_evaluate"
         android:layout_weight="1">
 
         <ListView
@@ -206,44 +215,53 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/doctordetail_layout_collection"
-        android:layout_width="140dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignTop="@+id/doctor_btn_set"
-        android:background="@color/grey" >
+        android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/icon_user_mycollection" />
+        <LinearLayout
+            android:id="@+id/inquiry_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center">
 
-        <TextView
-            android:id="@+id/doco_label_signin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView1"
-            android:layout_centerHorizontal="true"
-            android:text="收藏"
-            android:textColor="@color/grey_text"
-            android:textSize="14sp" />
+         <ImageView
+             android:id="@+id/doctor_icon_collection"
+             android:layout_width="40dp"
+             android:layout_height="40dp"
+             android:src="@drawable/favorite_normal" />
+        </LinearLayout>
 
-    </RelativeLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
 
-    <Button
-        android:id="@+id/doctor_btn_set"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/relativeLayout2"
-        android:layout_toRightOf="@+id/doctordetail_layout_collection"
-        android:background="@color/main"
-        android:text="设为私人医生"
-        android:textColor="@color/white" />
+        <LinearLayout
+            android:id="@+id/setDoctor_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@color/main"
+            android:layout_gravity="center">
 
-</RelativeLayout>
+            <Button
+		        android:id="@+id/doctor_btn_set"
+		        android:layout_width="wrap_content"
+		        android:layout_height="40dp"
+		        android:layout_alignParentBottom="true"
+		        android:layout_alignParentRight="true"
+		        android:layout_below="@+id/relativeLayout2"
+		        android:layout_toRightOf="@+id/doctordetail_layout_collection"
+		        android:background="@color/main"
+		        android:text="设为私人医生"
+		        android:textColor="@color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

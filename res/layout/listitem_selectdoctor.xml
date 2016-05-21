@@ -50,21 +50,21 @@
             android:layout_marginTop="2dp"
             android:layout_marginLeft="10dp"
             android:padding="2dp"
-            android:singleLine="false"
-            android:text="科室"
+            android:text="科室ddddddddd"
             android:textColor="@color/white"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:background="@drawable/button_green" />
+
         <TextView
             android:id="@+id/selectdoctor_label_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="2dp"
-            android:textSize="13sp"
+            android:layout_below="@+id/selectdoctor_label_department"
+            android:layout_marginTop="15dp"
+            android:text="医生头衔"
             android:textColor="@color/grey"
-            android:text="医生头衔" />
+            android:textSize="14sp" />
+
 	</RelativeLayout>
 </RelativeLayout>

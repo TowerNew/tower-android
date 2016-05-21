@@ -39,6 +39,15 @@ user/appv2/sites/v-2/index.html#!/SignIn?token=[1]
 		</path>
 		<mock></mock>
 	</protocol>
+	<protocol name="collectionStatus">
+		<path host="cdn">
+		<![CDATA[
+user-platform-web/rest//user/isDoctorCollect?doctorId=[1]
+
+		]]>
+		</path>
+		<mock></mock>
+	</protocol>
 	<protocol name="jifen">
 		<path host="cdn">
 		<![CDATA[

@@ -33,4 +33,6 @@ public class DoctorModel implements Serializable {
     public Bitmap getPhoto() {
     	return Storage.getImage(photoName);
     }
+
+	
 }

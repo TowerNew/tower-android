@@ -1,12 +1,12 @@
 package com.qcast.tower.view.form;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +19,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alipay.android.phone.mrpc.core.r;
 import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.Me;
+import com.qcast.tower.business.Profile;
 import com.qcast.tower.business.structure.DoctorCommentsModel;
 import com.qcast.tower.business.structure.DoctorModel;
 import com.slfuture.pluto.communication.Networking;
@@ -45,7 +45,7 @@ import java.util.ArrayList;
  */
 @ResourceView(id = R.layout.activity_doctor_detail)
 public class DoctorDetailActivity  extends ActivityEx{
-
+	private TextView docdetail_title_bar;
     private TextView doctor_name_tv;
     private TextView doctor_department_tv;
     private TextView doctor_title_tv;
@@ -59,12 +59,10 @@ public class DoctorDetailActivity  extends ActivityEx{
     private ImageView doctor_photo_image;
     private ListView doctor_comments_list;
     private LinearLayout doctorCollection_layout;
-    private LinearLayout setDoctor_layout;
-    private LinearLayout comments_layout;
+    private Button doctor_btn_set;
     private ArrayList<DoctorCommentsModel> dataList;
     private CommentsAdapter adapter;
     private DoctorModel doctorModel;
-    private int nextStart;
     /**
      * 当前页面索引
      */
@@ -72,13 +70,17 @@ public class DoctorDetailActivity  extends ActivityEx{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);        
+        super.onCreate(savedInstanceState); 
+        if(null == Me.instance) {
+			return;
+		}	
         Intent intent = this.getIntent();     
         Bundle bundle = intent.getExtras();
         doctorModel = (DoctorModel) bundle.getSerializable("docDetail");
         if(doctorModel==null){
             this.finish();
         }
+        docdetail_title_bar = (TextView) this.findViewById(R.id.docdetail_title_bar);
         doctor_name_tv = (TextView) this.findViewById(R.id.doctor_name_tv);
         doctor_department_tv = (TextView) this.findViewById(R.id.doctor_department_tv);
         doctor_title_tv = (TextView) this.findViewById(R.id.doctor_title_tv);
@@ -151,14 +153,13 @@ public class DoctorDetailActivity  extends ActivityEx{
         
         doctor_comments_list = (ListView) this.findViewById(R.id.doctor_comments_list);
         //收藏
-        doctorCollection_layout = (LinearLayout) this.findViewById(R.id.inquiry_layout);
+        doctorCollection_layout = (LinearLayout) this.findViewById(R.id.doctorCollection_layout);
         doctorCollection_layout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { 
             	if(null == Me.instance) {
-            		Toast.makeText(DoctorDetailActivity.this, "请先登录", Toast.LENGTH_LONG).show();
-                    return;
-            	}
+        			return;
+        		}
             	Networking.doCommand("collectionStatus", new CommonResponse<String>() {
                     @Override
                     public void onFinished(String content) {
@@ -170,50 +171,45 @@ public class DoctorDetailActivity  extends ActivityEx{
                         if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
                             Toast.makeText(DoctorDetailActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
                             return;
-                        }
-                        JSONObject result = (JSONObject) resultObject.get("data");                       
-                        if (result.equals(false)){
+                        }                        
+                        JSONBoolean hasCollection=  (JSONBoolean) resultObject.get("data");
+                        if (!hasCollection.getValue()){
                         	viewCollection.setBackgroundResource(R.drawable.favorite_selected);
                         }
+                        viewCollection.setBackgroundResource(R.drawable.favorite_normal);
                     }
-                },Logic.token,false);	
+                },Me.instance.token,false);	
             }
         });
         //设为私人医生
-        setDoctor_layout = (LinearLayout) this.findViewById(R.id.setDoctor_layout);
-        setDoctor_layout.setOnClickListener(new View.OnClickListener() {
+        doctor_btn_set = (Button) this.findViewById(R.id.doctor_btn_set);
+        doctor_btn_set.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-            	if(null == Logic.token) {
-            		Toast.makeText(DoctorDetailActivity.this, "请先登录", Toast.LENGTH_LONG).show();
-                    return;
-            	}
-                Intent intent = new Intent(DoctorDetailActivity.this, ReserveDoctorActivity.class);
-                intent.putExtra("doctorId",doctorModel.doctorId);
-                DoctorDetailActivity.this.startActivity(intent);
-            }
-        });
-        //评论
-        /*comments_layout = (LinearLayout) this.findViewById(R.id.comments_layout);
-        comments_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(null == Logic.token) {
-                    Toast.makeText(DoctorDetailActivity.this, "请先登录", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                Intent intent = new Intent(DoctorDetailActivity.this, CommentActivity.class);
-                intent.putExtra("doctorId", doctorModel.doctorId);
-                intent.putExtra("doctorName", doctorModel.name);
-                DoctorDetailActivity.this.startActivity(intent);
-            }
-        });*/
-        
+            public void onClick(View v) {  
+            	if(null == Me.instance) {
+        			return;
+        		}	
+        				new AlertDialog.Builder(DoctorDetailActivity.this).setTitle("你要设为私人医生吗？")  
+        				.setIcon(android.R.drawable.ic_dialog_info)  
+        				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        						@Override
+        						public void onClick(DialogInterface dialog, int which) { 
+        							
+        							DoctorDetailActivity.this.finish();
+        						}  
+        				}).setNegativeButton("返回", new DialogInterface.OnClickListener() {
+        			        @Override  
+        			        public void onClick(DialogInterface dialog, int which) {}  
+        				}).show();
+        			}
+        		});     
+        //
         dataList = new ArrayList<DoctorCommentsModel>();
         adapter = new CommentsAdapter(this,dataList);
         doctor_comments_list.setAdapter(adapter);        
         if(!TextUtils.isEmpty(doctorModel.name)){
             doctor_name_tv.setText(doctorModel.name);
+            docdetail_title_bar.setText(doctorModel.name);
         }
         if(!TextUtils.isEmpty(doctorModel.department)){
             doctor_department_tv.setText(doctorModel.department);
@@ -279,7 +275,7 @@ public class DoctorDetailActivity  extends ActivityEx{
                 JSONObject result = (JSONObject) resultObject.get("data");
 
                 String commentsNum = ((JSONNumber)result.get("recordCount")).intValue()+"";
-                nextStart = ((JSONNumber)result.get("nextStart")).intValue();
+                int nextStart = ((JSONNumber)result.get("nextStart")).intValue();
                 if(!TextUtils.isEmpty(commentsNum)){
                     user_comments_num_tv.setText("用户评价（"+commentsNum+"）");
                 }
@@ -355,9 +351,9 @@ public class DoctorDetailActivity  extends ActivityEx{
             }else{
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.user_name_tv.setText(dataList.get(position).userName);
-            viewHolder.user_comments_date_tv.setText(dataList.get(position).commentDate);
-            viewHolder.user_comments_tv.setText(dataList.get(position).userComment);
+            viewHolder.user_name_tv.setText(data.userName);
+            viewHolder.user_comments_date_tv.setText(data.commentDate);
+            viewHolder.user_comments_tv.setText(data.userComment);
             return convertView;
         }
 

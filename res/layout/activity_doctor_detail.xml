@@ -25,6 +25,7 @@
             android:scaleType="fitXY" />
 
         <TextView
+            android:id="@+id/docdetail_title_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -55,43 +56,45 @@
                 android:src="@drawable/askdoctor_chat_other" />
 
             <LinearLayout
-                android:layout_width="139dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.28"
+                android:layout_weight="0.2"
                 android:orientation="vertical" >
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" >
+                    android:layout_height="wrap_content" >
 
                     <TextView
                         android:id="@+id/doctor_name_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
                         android:gravity="center_vertical"
                         android:text="王AA"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/doctor_department_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
                         android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/doctor_name_tv"
                         android:background="@drawable/button_green"
                         android:gravity="center"
-                        android:padding="2dp"
                         android:text="妇科少室山"
                         android:textColor="@color/white" />
-                </LinearLayout>
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/doctor_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:text="妇科主任"
                     android:textSize="14sp" />
 
@@ -99,9 +102,10 @@
                     android:id="@+id/doctor_des_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/doctor_title_tv"
                     android:layout_marginRight="10dp"
                     android:ellipsize="end"
-                    android:maxLines="10"
+                    android:singleLine="true"
                     android:text="描述"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -110,10 +114,10 @@
                 android:id="@+id/doctordetail_image_discount"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_circle_green"
-                android:padding="2dp"
+                android:gravity="center"
                 android:text="问"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
@@ -121,14 +125,14 @@
             <TextView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_circle_blue"
-                android:padding="2dp"
+                android:gravity="center"
                 android:text="预"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
+
         </LinearLayout>
 
        <RelativeLayout
@@ -154,7 +158,7 @@
             android:id="@+id/doctor_skill_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="20dp"
             android:maxLines="5"
             android:ellipsize="end"
 			android:scrollbars = "vertical"
@@ -163,23 +167,24 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="1dp"
         android:background="@color/docgrey" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="5dp">
+        android:background="@color/grey_bg">
 
         <TextView
             android:id="@+id/user_comments_num_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="3dp"
-            android:text="用户评价 （190）" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="用户评价 " 
+            android:textColor="@color/grey_text"
+			android:textSize="14sp" />
 
         <View
             android:id="@+id/div_vote"
@@ -206,7 +211,7 @@
 
         <ListView
             android:id="@+id/doctor_comments_list"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/gap_line_length"
             android:layout_marginRight="@dimen/gap_line_length"
@@ -221,7 +226,7 @@
         android:background="@color/white">
 
         <LinearLayout
-            android:id="@+id/inquiry_layout"
+            android:id="@+id/doctorCollection_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -234,20 +239,14 @@
              android:layout_height="40dp"
              android:src="@drawable/favorite_normal" />
         </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/white" />
-
         <LinearLayout
             android:id="@+id/setDoctor_layout"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
             android:background="@color/main"
-            android:layout_gravity="center">
+            android:gravity="center" >
 
             <Button
 		        android:id="@+id/doctor_btn_set"

@@ -64,10 +64,6 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 	 */
 	/*private LinkedList<HashMap<String, Object>> dataList = new LinkedList<HashMap<String, Object>>();*/
 	private ArrayList<DoctorModel> dataList = new ArrayList<DoctorModel>();
-	/**
-	 * 当前被选中的索引
-	 */
-	private int current = -1;
 	private DoctorModel doctorModel;
 	private DoctorAdapter adapter;
 	/**
@@ -117,7 +113,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 		listDoctor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DoctorModel doctorModel= (DoctorModel) parent.getAdapter().getItem(position);
+                 doctorModel= (DoctorModel) parent.getAdapter().getItem(position);
                 Intent intent = new Intent(SelectDoctorActivity.this,DoctorDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("docDetail",doctorModel);
@@ -204,6 +200,7 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 	                            public void onFinished(Bitmap content) {
 	                                // DoctorModel doctorModel = dataList.get((Integer) tag);
 	                                // doctorModel.docImage = content;
+	                      
 	                            	adapter.notifyDataSetChanged();
 	                            }
 	                        }, imageUrl);

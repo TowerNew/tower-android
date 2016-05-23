@@ -27,26 +27,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleAdapter.ViewBinder;
 
 import com.qcast.tower.R;
-import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.business.Profile;
-import com.qcast.tower.business.structure.Doctor;
-import com.qcast.tower.business.structure.DoctorModel;
-import com.qcast.tower.framework.Storage;
-import com.qcast.tower.view.form.InquiryDoctorActivity.DoctorAdapter;
-import com.slfuture.carrie.base.json.JSONArray;
-import com.slfuture.carrie.base.json.JSONNumber;
-import com.slfuture.carrie.base.json.JSONObject;
-import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.JSONVisitor;
-import com.slfuture.carrie.base.json.core.IJSON;
-import com.slfuture.carrie.base.model.core.IEventable;
-import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Networking;
-import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
-import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
 
@@ -64,12 +50,10 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 	 * 医生面板列表
 	 */
 	private LinkedList<HashMap<String, Object>> dataList = new LinkedList<HashMap<String, Object>>();
-	/*private ArrayList<DoctorModel> dataList = new ArrayList<DoctorModel>();*/
 	/**
 	 * 当前被选中的索引
 	 */
 	private int current = -1;
-	private Doctor doctorModel;
 	/**
 	 * 界面创建
 	 */
@@ -107,11 +91,9 @@ public class SelectDoctorActivity extends OnlyUserActivity {
             }
         });
 		listDoctor.setAdapter(listAdapter);
-		
-		//
-		/*dataList = new LinkedList<HashMap<String, Object>>();       
-		adapter = new DoctorAdapter(this, dataList);
-		listDoctor.setAdapter(adapter);*/
+		/*
+		 * 加载私人医生列表
+		 */
 		loadData();		
 		//
 		listDoctor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -124,31 +106,21 @@ public class SelectDoctorActivity extends OnlyUserActivity {
 					
 				}
 				current = position;
-				map = dataList.get(position);
-				map.put("id", Me.instance.doctor.id);
-			/*	Networking.doCommand("selectDoctor", new JSONResponse(SelectDoctorActivity.this) {
-					@Override
-					public void onFinished(JSONVisitor content) {
-						if(null == content || content.getInteger("code", -1) < 0) {
-							return;
-						}
-						Me.instance.refreshDoctor(SelectDoctorActivity.this, new IEventable<Boolean>() {
-							@Override
-							public void on(Boolean data) {
-								Me.instance.doChat(SelectDoctorActivity.this, null, Me.instance.doctor.imId);
-								SelectDoctorActivity.this.finish();
-							}
-						});
-					}
-				}, map.get("id"), Me.instance.token);*/
+				map = dataList.get(position);			
                 Intent intent = new Intent(SelectDoctorActivity.this,DoctorDetailActivity.class);
-                intent.putExtra("docDetail",Me.instance.doctor.id);
+                intent.putExtra("doctorId", map.get("id").toString());
                 SelectDoctorActivity.this.startActivity(intent);
                 ((SimpleAdapter) listDoctor.getAdapter()).notifyDataSetChanged();
             }           
         });
 	}
 //
+	@Override
+	protected void onResume() {
+		super.onResume();
+		loadData();
+		
+	}
 	private void loadData() {	
 		Networking.doCommand("doctorlist", new JSONResponse(SelectDoctorActivity.this) {
 			@Override

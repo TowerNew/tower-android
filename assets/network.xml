@@ -42,7 +42,7 @@ user/appv2/sites/v-2/index.html#!/SignIn?token=[1]
 	<protocol name="collectionStatus">
 		<path host="cdn">
 		<![CDATA[
-user-platform-web/rest//user/isDoctorCollect?doctorId=[1]
+user-platform-web/rest//user/isDoctorCollect?doctorId=[1]&token=[2]
 
 		]]>
 		</path>
@@ -317,6 +317,21 @@ user-platform-web/rest/user/alterUserInfo#token=[1]&field=[2]&value=[3]
 		<path>
 		<![CDATA[
 user-platform-web/rest/user/chooseMyDoctor#doctorGlobalId=[1]&token=[2]
+		]]>
+		</path>
+	<mock>
+        <![CDATA[
+{
+    "code": 1
+}
+	    ]]>
+	    </mock>
+	</protocol>
+	<protocol name="doctorDetail">
+		<path>
+		<![CDATA[
+user-platform-web/rest//doctorInfo?doctorId=[1]
+
 		]]>
 		</path>
 	<mock>
@@ -1174,7 +1189,7 @@ user/sites/common/v-1/selfDiagDiagnose.html?uuid=[1]
 	<protocol name="commentlist">
         <path>
         <![CDATA[
-user-platform-web/rest/commentList?id=[1]&page=[2]
+user-platform-web/rest/commentList?page=[1]&pageSize=[2]&id=[3]&type=[4]
         ]]>
         </path>
     <mock>

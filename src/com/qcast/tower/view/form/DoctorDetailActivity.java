@@ -23,8 +23,8 @@ import com.qcast.tower.R;
 import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.business.Profile;
+import com.qcast.tower.business.structure.Doctor;
 import com.qcast.tower.business.structure.DoctorCommentsModel;
-import com.qcast.tower.business.structure.DoctorModel;
 import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.Response;
@@ -62,7 +62,7 @@ public class DoctorDetailActivity  extends ActivityEx{
     private Button doctor_btn_set;
     private ArrayList<DoctorCommentsModel> dataList;
     private CommentsAdapter adapter;
-    private DoctorModel doctorModel;
+    private Doctor doctor;
     /**
      * 当前页面索引
      */
@@ -74,12 +74,8 @@ public class DoctorDetailActivity  extends ActivityEx{
         if(null == Me.instance) {
 			return;
 		}	
-        Intent intent = this.getIntent();     
-        Bundle bundle = intent.getExtras();
-        doctorModel = (DoctorModel) bundle.getSerializable("docDetail");
-        if(doctorModel==null){
-            this.finish();
-        }
+        Intent intent = this.getIntent();
+        
         docdetail_title_bar = (TextView) this.findViewById(R.id.docdetail_title_bar);
         doctor_name_tv = (TextView) this.findViewById(R.id.doctor_name_tv);
         doctor_department_tv = (TextView) this.findViewById(R.id.doctor_department_tv);
@@ -92,65 +88,15 @@ public class DoctorDetailActivity  extends ActivityEx{
         /*doctor_des_tv.setMovementMethod(new ScrollingMovementMethod());*/
         
         user_comments_num_tv = (TextView) this.findViewById(R.id.user_comments_num_tv);
-        
-        /*bad_result_tv = (TextView) this.findViewById(R.id.bad_result_tv);
-        good_result_tv = (TextView) this.findViewById(R.id.good_result_tv);
-        good_vote_btn = (Button) this.findViewById(R.id.good_vote_btn);*/
-        /*good_vote_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Networking.doCommand("docVote", new CommonResponse<String>() {
-                    @Override
-                    public void onFinished(String content) throws JSONException {
-                        if (Response.CODE_SUCCESS != code()) {
-                            Toast.makeText(DoctorDetailActivity.this, "网络问题", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        JSONObject resultObject = JSONObject.convert(content);
-                        if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-                            Toast.makeText(DoctorDetailActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        if (!TextUtils.isEmpty(good_result_tv.getText().toString())){
-                            good_result_tv.setText((Integer.parseInt(good_result_tv.getText().toString())+1)+"");
-                        }
-                    }
-                },Logic.token,true);
-            }
-        });*/
+              
         Button button = (Button) this.findViewById(R.id.doctordetail_return_btn);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				DoctorDetailActivity.this.finish();
 			}
-		});
-       /* bad_vote_btn = (Button) this.findViewById(R.id.bad_vote_btn);
-        bad_vote_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Networking.doCommand("docVote", new CommonResponse<String>() {
-                    @Override
-                    public void onFinished(String content) throws JSONException {
-                        if (Response.CODE_SUCCESS != code()) {
-                            Toast.makeText(DoctorDetailActivity.this, "网络问题", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        JSONObject resultObject = JSONObject.convert(content);
-                        if (((JSONNumber) resultObject.get("code")).intValue() <= 0) {
-                            Toast.makeText(DoctorDetailActivity.this, ((JSONString) resultObject.get("msg")).getValue(), Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        if (!TextUtils.isEmpty(bad_result_tv.getText().toString())){
-                            bad_result_tv.setText((Integer.parseInt(bad_result_tv.getText().toString())+1)+"");
-                        }
-                    }
-                },Logic.token,false);
-            }
-        });*/
-		
-        doctor_photo_image = (ImageView) this.findViewById(R.id.doctor_photo_image);
-        
+		});     		
+        doctor_photo_image = (ImageView) this.findViewById(R.id.doctor_photo_image);        
         doctor_comments_list = (ListView) this.findViewById(R.id.doctor_comments_list);
         //收藏
         doctorCollection_layout = (LinearLayout) this.findViewById(R.id.doctorCollection_layout);
@@ -178,7 +124,7 @@ public class DoctorDetailActivity  extends ActivityEx{
                         }
                         viewCollection.setBackgroundResource(R.drawable.favorite_normal);
                     }
-                },Me.instance.token,false);	
+                },Me.instance.doctor.id,Me.instance.token,false);	
             }
         });
         //设为私人医生
@@ -207,28 +153,28 @@ public class DoctorDetailActivity  extends ActivityEx{
         dataList = new ArrayList<DoctorCommentsModel>();
         adapter = new CommentsAdapter(this,dataList);
         doctor_comments_list.setAdapter(adapter);        
-        if(!TextUtils.isEmpty(doctorModel.name)){
-            doctor_name_tv.setText(doctorModel.name);
-            docdetail_title_bar.setText(doctorModel.name);
+        if(!TextUtils.isEmpty(doctor.name)){
+            doctor_name_tv.setText(doctor.name);
+            docdetail_title_bar.setText(doctor.name);
         }
-        if(!TextUtils.isEmpty(doctorModel.department)){
-            doctor_department_tv.setText(doctorModel.department);
+        if(!TextUtils.isEmpty(doctor.department)){
+            doctor_department_tv.setText(doctor.department);
         }
-        if(!TextUtils.isEmpty(doctorModel.title)){
-            doctor_title_tv.setText(doctorModel.title);
+        if(!TextUtils.isEmpty(doctor.title)){
+            doctor_title_tv.setText(doctor.title);
         }
-        if(!TextUtils.isEmpty(doctorModel.description)){
-            doctor_des_tv.setText(doctorModel.description);
+        if(!TextUtils.isEmpty(doctor.description)){
+            doctor_des_tv.setText(doctor.description);
         }
-        if(doctorModel.getPhoto() instanceof Bitmap){
-            doctor_photo_image.setImageBitmap(doctorModel.getPhoto());
+        if(doctor.photo() instanceof Bitmap){
+            doctor_photo_image.setImageBitmap(doctor.photo());
         }
-        if(!TextUtils.isEmpty(doctorModel.resume)){
-            doctor_skill_tv.setText(doctorModel.resume);
+        if(!TextUtils.isEmpty(doctor.resume)){
+            doctor_skill_tv.setText(doctor.resume);
         }
         
-        /*bad_result_tv.setText(String.valueOf(doctorModel.badCount));
-        good_result_tv.setText(String.valueOf(doctorModel.goodCount));*/
+        /*bad_result_tv.setText(String.valueOf(doctor.badCount));
+        good_result_tv.setText(String.valueOf(doctor.goodCount));*/
         
         doctor_comments_list.setOnScrollListener(new AbsListView.OnScrollListener() {
             private int lastItemIndex;//当前ListView中最后一个Item的索引
@@ -301,7 +247,7 @@ public class DoctorDetailActivity  extends ActivityEx{
                 page = thisPage + 1;
 
             }
-        }, doctorModel.doctorId ,page);
+        }, Me.instance.doctor.id ,page);
     }
 
     public class CommentsAdapter extends BaseAdapter{

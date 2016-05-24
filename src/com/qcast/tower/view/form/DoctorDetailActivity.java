@@ -42,6 +42,7 @@ import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.model.core.IEventable;
+import com.slfuture.carrie.base.text.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class DoctorDetailActivity  extends ActivityEx{
     private TextView doctor_des_tv;
     private TextView user_comments_num_tv;
     private ImageView doctor_photo_image;
+
     private ListView doctor_comments_list;
     private LinearLayout doctorCollection_layout;
     private Button doctor_btn_set;
@@ -74,6 +76,7 @@ public class DoctorDetailActivity  extends ActivityEx{
      * 当前页面索引
      */
     protected int page = 1;
+    protected int function = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,23 +91,18 @@ public class DoctorDetailActivity  extends ActivityEx{
         doctor_department_tv = (TextView) this.findViewById(R.id.doctor_department_tv);
         doctor_title_tv = (TextView) this.findViewById(R.id.doctor_title_tv);
         doctor_skill_tv = (TextView) this.findViewById(R.id.doctor_skill_tv);
-        doctor_photo_image = (ImageView) this.findViewById(R.id.doctor_photo_image);
-        /*doctor_skill_tv.setMovementMethod(new ScrollingMovementMethod());*/
-        
+        doctor_photo_image = (ImageView) this.findViewById(R.id.doctor_photo_image);       
         doctor_des_tv = (TextView) this.findViewById(R.id.doctor_des_tv);
         /*doctor_des_tv.setMovementMethod(new ScrollingMovementMethod());*/ 
-
-        user_comments_num_tv = (TextView) this.findViewById(R.id.user_comments_num_tv);
-              
+        //
+        user_comments_num_tv = (TextView) this.findViewById(R.id.user_comments_num_tv);              
         Button button = (Button) this.findViewById(R.id.doctordetail_return_btn);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				DoctorDetailActivity.this.finish();
 			}
-		});     		
-               
-        doctor_comments_list = (ListView) this.findViewById(R.id.doctor_comments_list);
+		});     		                    
       
         //设为私人医生
         doctor_btn_set = (Button) this.findViewById(R.id.doctor_btn_set);
@@ -140,10 +138,11 @@ public class DoctorDetailActivity  extends ActivityEx{
         				}).show();
         			}
         		});     
-        //
+        //处理用户评论
+        doctor_comments_list = (ListView) this.findViewById(R.id.doctor_comments_list);
         dataList = new ArrayList<DoctorCommentsModel>();
         adapter = new CommentsAdapter(this,dataList);
-        doctor_comments_list.setAdapter(adapter);             
+        doctor_comments_list.setAdapter(adapter);
         doctor_comments_list.setOnScrollListener(new AbsListView.OnScrollListener() {
             private int lastItemIndex;//当前ListView中最后一个Item的索引
 
@@ -162,7 +161,7 @@ public class DoctorDetailActivity  extends ActivityEx{
         });
    
 
-    	  //收藏
+    //处理私人医生收藏
         doctorCollection_layout = (LinearLayout) this.findViewById(R.id.doctorCollection_layout);
         doctorCollection_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,24 +169,30 @@ public class DoctorDetailActivity  extends ActivityEx{
             	if(null==Me.instance){
             		return ;
             	}
-           
-        
-        	
+			Networking.doCommand("doctorCollect", new JSONResponse(DoctorDetailActivity.this,null){
+				@Override
+				public void onFinished(JSONVisitor content) {
+					if(null == content || content.getInteger("code", -1) < 0) {
+						return;
+					}
+					if(viewCollection.getId()==R.drawable.favorite_selected){
+						viewCollection.setBackgroundResource(R.drawable.favorite_normal);
+						function=2;
+					}else{
+						viewCollection.setBackgroundResource(R.drawable.selected);
+						function=1;
+					}
+				}       	   
+	           }, doctorId,function);        	
             }
         });
     }
-       /* Networking.doCommand("doctorCollect", new JSONResponse(null, DoctorDetailActivity.this) {
-			@Override
-			public void onFinished(JSONVisitor content) {
-				if(null == content || content.getInteger("code", -1) < 0) {
-					return;
-				}
-				Toast.makeText(DoctorDetailActivity.this, "成功", Toast.LENGTH_LONG).show();	
-				DoctorDetailActivity.this.finish();
-					
-        loadDetail();
-    }*/
-	
+    @Override
+	protected void onResume() {
+		super.onResume();
+		loadData();
+		loadDetail();
+	}
 
 	private void loadDetail() {
     	  //  加载医生详情  	
@@ -210,20 +215,24 @@ public class DoctorDetailActivity  extends ActivityEx{
 					String description = ((JSONString)(((JSONObject) result.get("data")).get("description"))).getValue();
 					String title = ((JSONString)(((JSONObject) result.get("data")).get("title"))).getValue();
 					String photoName = ((JSONString)(((JSONObject) result.get("data")).get("photo"))).getValue();
+					String address = ((JSONString)(((JSONObject) result.get("data")).get("address"))).getValue();
 					
 					String	photo = Storage.getImageName(photoName);
 				if(!TextUtils.isEmpty(name)){
 		            doctor_name_tv.setText(name);
 		            docdetail_title_bar.setText(name);
 		        }
+				if(!TextUtils.isEmpty(title)){
+				 doctor_title_tv.setText("title");
+				}
 		        if(!TextUtils.isEmpty(department)){
 		            doctor_department_tv.setText(department);
 		        }
-		        if(!TextUtils.isEmpty(title)){
-		            doctor_title_tv.setText(title);
-		        }
 		        if(!TextUtils.isEmpty(description)){
-		            doctor_des_tv.setText(description);
+		           doctor_skill_tv.setText(description);
+		        }
+		        if(!TextUtils.isEmpty(address)){
+		            doctor_des_tv.setText(address);
 		        }
 		        // 加载图片
                 if(!TextUtils.isEmpty(photoName)) {
@@ -237,16 +246,7 @@ public class DoctorDetailActivity  extends ActivityEx{
 			}
 		},this.getIntent().getStringExtra("doctorId"));
     }
-		
-	
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		loadData();
-		
-	}
-
+	//
     private void loadData() {
         Networking.doCommand("commentlist", new CommonResponse<String>(page) {
             @Override
@@ -265,38 +265,52 @@ public class DoctorDetailActivity  extends ActivityEx{
                     return;
                 }
                 JSONObject result = (JSONObject) resultObject.get("data");
-
                 String commentsNum = ((JSONNumber)result.get("recordCount")).intValue()+"";
-                int nextStart = ((JSONNumber)result.get("nextStart")).intValue();
                 if(!TextUtils.isEmpty(commentsNum)){
                     user_comments_num_tv.setText("用户评价（"+commentsNum+"）");
                 }
-               /* JSONArray listResult = (JSONArray)result.get("records");
+                JSONArray listResult = (JSONArray)result.get("records");
                 if(null != listResult) {
                     for (IJSON item : listResult) {
                         JSONObject newJSONObject = (JSONObject) item;
                         DoctorCommentsModel doctorCommentsModel = new DoctorCommentsModel();
+                        String imageUrl = "";
+                        String photoName = "";
                         if(null==((JSONString) newJSONObject.get("username")).getValue()){
                         	return;
+                        }
+                        if (newJSONObject.get("portrait") != null) {
+                            imageUrl = ((JSONString) newJSONObject.get("portrait")).getValue();
+                            photoName = Storage.getImageName(imageUrl);
+                            doctorCommentsModel.imageUrl = photoName;
                         }
                         doctorCommentsModel.userName = ((JSONString) newJSONObject.get("username")).getValue();
                         SimpleDateFormat sdf= new SimpleDateFormat("MM/dd/yyyy HH:mm");
                         long time = ((JSONNumber) newJSONObject.get("date")).longValue();
-                        doctorCommentsModel.commentDate = sdf.format(time);
-
-                        doctorCommentsModel.userComment = ((JSONString) newJSONObject.get("content")).getValue();
-                        doctorCommentsModel.attitude = ((JSONBoolean) newJSONObject.get("attitude")).getValue();
+                        doctorCommentsModel.date = sdf.format(time);
+                        doctorCommentsModel.content = ((JSONString) newJSONObject.get("content")).getValue();
+                        doctorCommentsModel.score = ((JSONNumber) newJSONObject.get("score")).intValue();
                         dataList.add(doctorCommentsModel);
-                    }
-                }*/
+                        if (!TextUtils.isEmpty(imageUrl) && Text.isBlank(imageUrl)) {
+                            continue;
+                        }
+                        // 加载图片
+                        if (!TextUtils.isEmpty(photoName)) {
+                            Networking.doImage("image", new ImageResponse(photoName, dataList.size() - 1) {
+                                @Override
+                                public void onFinished(Bitmap content) {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }, imageUrl);
+                        }
+                    }                
                 adapter.notifyDataSetChanged();
                 page = thisPage + 1;
-
+                }
             }
         }, page,10,this.getIntent().getStringExtra("doctorId"),3);
-        //
-    	Networking.doCommand("collectionStatus", new JSONResponse(DoctorDetailActivity.this, null) {
-			
+        //加载收藏状态
+    	Networking.doCommand("collectionStatus", new JSONResponse(DoctorDetailActivity.this, null) {			
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content){
@@ -359,13 +373,17 @@ public class DoctorDetailActivity  extends ActivityEx{
                 viewHolder.user_comments_date_tv=(TextView)convertView.findViewById(R.id.user_comments_date_tv);
                 viewHolder.user_name_tv=(TextView)convertView.findViewById(R.id.user_name_tv);
                 viewHolder.user_comments_tv=(TextView)convertView.findViewById(R.id.user_comments_tv);
+                viewHolder.user_photo_iv = (ImageView)convertView.findViewById(R.id.user_photo_iv);
                 convertView.setTag(viewHolder);
             }else{
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             viewHolder.user_name_tv.setText(data.userName);
-            viewHolder.user_comments_date_tv.setText(data.commentDate);
-            viewHolder.user_comments_tv.setText(data.userComment);
+            viewHolder.user_comments_date_tv.setText(data.date);
+            viewHolder.user_comments_tv.setText(data.content);
+            if(data.getPhoto() instanceof Bitmap) {
+                viewHolder.user_photo_iv.setImageBitmap(data.getPhoto());
+            }
             return convertView;
         }
 
@@ -373,6 +391,7 @@ public class DoctorDetailActivity  extends ActivityEx{
             public TextView user_name_tv;
             public TextView user_comments_date_tv;
             public TextView user_comments_tv;
+            public ImageView user_photo_iv;
         }
     }
 }

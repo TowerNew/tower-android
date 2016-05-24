@@ -1211,12 +1211,15 @@ user-platform-web/rest/commentList?page=[1]&pageSize=[2]&id=[3]&type=[4]
         "pageSize": 10,
         "page": 1,
         "records": [
-            {
-                "username": "秦岭",
-                "date": 1441785979000,
-                "content": "a'a'a",
-                "attitude": true
-            }
+            "records": [
+      {
+			        "username": "姓名2002",
+			        "date": 1458544498000,
+			        "content": "医生很热情医生很热情医生很热情",
+			        "portrait": "http://cdn.oss.wehop-resources-beta.wehop.cn/portrait/3bed1988-b79a-4875-b7f0-8f90aa0ad299",
+			        "score": 5
+      }
+
         ],
         "sortField": null,
         "": true,

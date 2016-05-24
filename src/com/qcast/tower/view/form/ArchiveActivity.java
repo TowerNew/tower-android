@@ -25,9 +25,7 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 	@ResourceView(id = R.id.archive_layout_examination)
 	public View viewExamination;
 	@ResourceView(id = R.id.archive_layout_medical)
-	public View viewMedical;
-	@ResourceView(id = R.id.archive_layout_wearables)
-	public View viewWearables;
+	public View viewMedical;	
 
 
 	@Override
@@ -94,13 +92,13 @@ public class ArchiveActivity extends OnlyPasswordActivity {
 				ArchiveActivity.this.startActivity(intent);
 			}
 		});
-		viewWearables.setOnClickListener(new View.OnClickListener() {
+		/*viewWearables.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ArchiveActivity.this, BrowserActivity.class);
 				intent.putExtra("url", Networking.fetchURL("chuandaishuju", Me.instance.token, Profile.instance().region.id));
 				ArchiveActivity.this.startActivity(intent);
 			}
-		});
+		});*/
 	}
 }

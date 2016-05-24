@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@color/grey_bg" >
     <RelativeLayout
@@ -90,39 +90,6 @@
             android:layout_centerVertical="true"
             android:textSize="14sp" 
             android:text="电子病历" />
-         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/arrow_right" />
-    </RelativeLayout>
-	<RelativeLayout
-        android:id="@+id/archive_layout_wearables"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/archive_layout_medical"
-        android:layout_marginTop="1dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-    	android:background="@color/white">
-        <ImageView
-            android:id="@+id/archive_image_wearables"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/icon_archive_wearables" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/archive_image_wearables"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:textSize="14sp" 
-            android:text="穿戴数据" />
          <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,19 +1,12 @@
 package com.qcast.tower.view.form;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -35,12 +28,13 @@ import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
+import com.slfuture.pluto.view.component.ActivityEx;
 
 /**
  * 选择私人医生
  */
 @ResourceView(id = R.layout.activity_selectdoctor)
-public class SelectDoctorActivity extends OnlyUserActivity {
+public class SelectDoctorActivity extends ActivityEx {
 	@ResourceView(id = R.id.selectdoctor_image_close)
 	public ImageView imgClose;
 	@ResourceView(id = R.id.selectdoctor_list)

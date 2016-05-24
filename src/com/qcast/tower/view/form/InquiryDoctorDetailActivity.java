@@ -266,10 +266,9 @@ public class InquiryDoctorDetailActivity extends Activity{
                         doctorCommentsModel.userName = ((JSONString) newJSONObject.get("username")).getValue();
                         SimpleDateFormat sdf= new SimpleDateFormat("MM/dd/yyyy HH:mm");
                         long time = ((JSONNumber) newJSONObject.get("date")).longValue();
-                        doctorCommentsModel.commentDate = sdf.format(time);
+                        doctorCommentsModel.date = sdf.format(time);
 
-                        doctorCommentsModel.userComment = ((JSONString) newJSONObject.get("content")).getValue();
-                        doctorCommentsModel.attitude = ((JSONBoolean) newJSONObject.get("attitude")).getValue();
+                        doctorCommentsModel.content = ((JSONString) newJSONObject.get("content")).getValue();                       
                         dataList.add(doctorCommentsModel);
                     }
                 }
@@ -328,8 +327,8 @@ public class InquiryDoctorDetailActivity extends Activity{
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             viewHolder.user_name_tv.setText(dataList.get(position).userName);
-            viewHolder.user_comments_date_tv.setText(dataList.get(position).commentDate);
-            viewHolder.user_comments_tv.setText(dataList.get(position).userComment);
+            viewHolder.user_comments_date_tv.setText(dataList.get(position).date);
+            viewHolder.user_comments_tv.setText(dataList.get(position).content);
             return convertView;
         }
 

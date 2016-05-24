@@ -1,38 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="80dp"
+    android:orientation="vertical" >
+     <ImageView
+                android:id="@+id/user_photo_iv"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/askdoctor_chat_other" />    
+	<RelativeLayout	    	
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/user_photo_iv"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="10dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+         <TextView
+	        android:id="@+id/user_name_tv"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="3dp"
+	        android:maxLength="10"
+	        android:maxLines="1"
+	        android:text="张三张三张三张三张三张三张三张三张三张三张三张三" />
 
-        <TextView
-            android:id="@+id/user_name_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:maxLines="1"
-            android:maxLength="10"
-            android:text="张三张三张三张三张三张三张三张三张三张三张三张三" />
-
+          <TextView
+              android:id="@+id/user_comments_tv"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true"
+              android:layout_below="@id/user_name_tv"
+              android:layout_marginTop="5dp"
+              android:layout_marginLeft="3dp"
+              android:maxLines="2"
+              android:text="sfaffasfddddddddsfaffasfddddddddsfaffasfddddddddsfaffasfddddddddsfaffasfddddddddsfaffasfddddddddsfaffasfdddddddd" />
+	        
         <TextView
             android:id="@+id/user_comments_date_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
             android:text="08-08" />
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/user_comments_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
-        android:text="sfaffasfddddddddsfaffasfddddddddsfaffasfddddddddsfaffasfddddddddsfaffasfddddddddsfaffasfddddddddsfaffasfdddddddd" />
-
-</LinearLayout>
+   
+</RelativeLayout>

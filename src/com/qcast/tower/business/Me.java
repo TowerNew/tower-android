@@ -631,5 +631,11 @@ public class Me extends User implements Serializable, IReactor {
 		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
 	}
 
+    @Override
+    public boolean onDial(int type) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 	
 }

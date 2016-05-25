@@ -53,22 +53,6 @@
             android:scaleType="centerInside" />
 
     </RelativeLayout>
-    <Button
-        android:id="@+id/home_button_signin"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/home_layout_header1"
-        android:layout_marginRight="23dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/button_region"
-        android:drawableLeft="@drawable/icon_signin"
-        android:paddingLeft="2dp"
-        android:paddingRight="2dp"
-        android:visibility="invisible"
-        android:text="签到"
-        android:textColor="@color/white"
-        android:textSize="15sp" />
 </RelativeLayout>
 
     <ListView

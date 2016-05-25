@@ -124,7 +124,7 @@ public class SelectDoctorActivity extends ActivityEx {
 				}
 				listDoctor.setEnabled(true);
 				dataList.clear();
-				Bitmap bitmap = GraphicsHelper.decodeResource(SelectDoctorActivity.this, R.drawable.icon_unselected);
+				/*Bitmap bitmap = GraphicsHelper.decodeResource(SelectDoctorActivity.this, R.drawable.icon_unselected);*/
 				int i = 0;
 				if(null == content.getVisitors("data")) {
 					return;
@@ -138,11 +138,11 @@ public class SelectDoctorActivity extends ActivityEx {
 					map.put("department", doctor.getString("department"));
 					map.put("title", doctor.getString("title"));
 					map.put("imId", doctor.getString("imUsername"));
-					map.put("status", bitmap);
+/*					map.put("status", bitmap);*/
 					if(null != Me.instance && null != Me.instance.doctor) {
 						if(Me.instance.doctor.id.equals(doctor.getString("userGlobalId"))) {
 							current = i;
-							map.put("status", GraphicsHelper.decodeResource(SelectDoctorActivity.this, R.drawable.icon_selected));
+							/*map.put("status", GraphicsHelper.decodeResource(SelectDoctorActivity.this, R.drawable.icon_selected));*/
 						}
 					}
 					dataList.add(map);

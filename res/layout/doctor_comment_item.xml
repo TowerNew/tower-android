@@ -9,8 +9,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="10dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/askdoctor_chat_other" />    
+                android:scaleType="fitXY" />    
 	<RelativeLayout	    	
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"

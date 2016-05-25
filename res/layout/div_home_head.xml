@@ -11,7 +11,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/vp"
             android:layout_width="match_parent"
-            android:layout_height="210dp" />    
+            android:layout_height="210dp" />       
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,17 +35,22 @@
                 android:id="@+id/v_dot2"
                 style="@style/dot_style"
                 android:visibility="invisible" />
-
-            <View
-                android:id="@+id/v_dot3"
-                style="@style/dot_style"
-                android:visibility="invisible" />
-
-            <View
-                android:id="@+id/v_dot4"
-                style="@style/dot_style"
-                android:visibility="invisible" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/home_button_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:background="@drawable/button_region"
+	        android:drawableLeft="@drawable/icon_signin"
+	        android:layout_marginBottom="5dp"
+	        android:paddingRight="3dp"
+	        android:visibility="visible"
+	        android:text="签到"
+	        android:textColor="@color/white"
+	        android:textSize="15sp" /> 
+
     </FrameLayout>
 	<View 
         android:id="@+id/home_line_1"
@@ -82,7 +87,7 @@
             <LinearLayout
                 android:id="@+id/layout_child" 
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,7 +98,8 @@
                     android:layout_height="wrap_content" 
                     android:textColor="@color/red"  
                     android:singleLine="true"                   
-                    android:textSize="14sp" />
+                    android:textSize="12sp" 
+                    android:text=""/>
                 <TextView 
                     android:id="@+id/tv_subtitle_child" 
                     android:layout_width="wrap_content" 
@@ -138,6 +144,7 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_alignParentRight="true"
+	            android:layout_marginRight="3dp"
 	            android:layout_marginTop="10dp"
 	            android:orientation="vertical" >
 

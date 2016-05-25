@@ -148,8 +148,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	/**
 	 *签到按钮
 	 */
-	@ResourceView(id = R.id.home_button_signin)
-	public Button btnSignin;
+	
 	
 	/**
 	 * 新闻列表
@@ -228,13 +227,9 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		      View dot0 =(View)viewHead.findViewById(R.id.v_dot0);
 		      View dot1 =(View)viewHead.findViewById(R.id.v_dot1);
 		      View dot2 =(View)viewHead.findViewById(R.id.v_dot2);
-		      View dot3 =(View)viewHead.findViewById(R.id.v_dot3);
-		      View dot4 =(View)viewHead.findViewById(R.id.v_dot4);
 		      dots.add(dot0);
 		      dots.add(dot1);
-		      dots.add(dot2);
-		      dots.add(dot3);
-		      dots.add(dot4);
+		      dots.add(dot2);		   
       
 		        loadEntry();
 		        loadBannerAd();
@@ -249,10 +244,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
   @Override
 	public void onResume() {
 		super.onResume();
-		final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
-		if(null != Me.instance){
-      		btnSignin.setVisibility(View.VISIBLE);
-		}
+		final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);	
 		if(null != Logic.regionName) {
 			regionButton.setText(fetchRegionName());
 		}
@@ -507,6 +499,25 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		animLeft = new RotateAnimation(30f, -30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
 		animLeft.setDuration(1000);
 		animLeft.setAnimationListener(listener);	
+		//		
+		Button btnSignin=(Button)viewHead.findViewById(R.id.home_button_signin);
+		if(null == Me.instance){
+      		btnSignin.setVisibility(View.INVISIBLE);
+		}
+	  /**
+	   * 处理签到
+	   */
+        btnSignin.getBackground().setAlpha(200);
+		btnSignin.setOnClickListener(new View.OnClickListener(){
+							@Override
+					public void onClick(View v) {	
+								String token = "";
+			    				if(null != Me.instance) {
+			    					token = Me.instance.token;
+			    				}
+			    				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("activity3", token));		    				
+							}				
+			});		
 		//
 		ImageView childImg =(ImageView)viewHead.findViewById(R.id.home_img_child);
 		ImageView womanImg =(ImageView)viewHead.findViewById(R.id.home_img_woman);
@@ -591,29 +602,29 @@ public class HomeActivity extends FragmentEx implements IMeListener {
             { 
             	switch (position){
             	case 0:
-            		if(null == Me.instance) {
+            		if(null != Me.instance) {
+            			Intent intent0 = new Intent(HomeActivity.this.getActivity(), SelectDoctorActivity.class);
+                		HomeActivity.this.startActivity(intent0);
+                		return;
+    				}            		
+            		Intent intent0 = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
+					HomeActivity.this.startActivity(intent0);
+				break;
+            	case 1:            		
+    				if(null == Me.instance) {
     					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
     					HomeActivity.this.startActivity(intent);
-    					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
     					return;
     				}
-            		Intent intent0 = new Intent(HomeActivity.this.getActivity(), SelectDoctorActivity.class);
-            		HomeActivity.this.startActivity(intent0);
-				break;
-            	case 1:
-            		if(null == Profile.instance().region) {
+    				if(null == Profile.instance().region) {
     					Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
     					HomeActivity.this.startActivityForResult(intent, MESSAGE_REGION);
     					Toast.makeText(HomeActivity.this.getActivity(), "请设置所在小区", Toast.LENGTH_LONG).show();
     					return;
     				}
-    				if(null == Me.instance) {
-    					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
-    					HomeActivity.this.startActivity(intent);
-    					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
-    					return;
-    				}
-    				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("yuyuetijian", Profile.instance().region.id, Me.instance.token));
+    				if(null != Me.instance&& null != Profile.instance().region){
+    						Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("yuyuetijian", Profile.instance().region.id, Me.instance.token));	
+    					}    				 				
                     break;
             	case 2:
             		if(null == Profile.instance().region) {
@@ -625,10 +636,12 @@ public class HomeActivity extends FragmentEx implements IMeListener {
     				if(null == Me.instance) {
     					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
     					HomeActivity.this.startActivity(intent);
-    					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
     					return;
     				}
-    				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("yuyueliliao", Profile.instance().region.id, Me.instance.token));
+    				if(null != Me.instance&& null != Profile.instance().region){
+    					Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("yuyueliliao", Profile.instance().region.id, Me.instance.token));
+					} 
+    				
     			    break;
             	case 3:
             		if(null == Profile.instance().region) {
@@ -640,21 +653,21 @@ public class HomeActivity extends FragmentEx implements IMeListener {
     				if(null == Me.instance) {
     					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
     					HomeActivity.this.startActivity(intent);
-    					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
     					return;
     				}
+    				if(null != Me.instance&& null != Profile.instance().region){
     				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("yuyueguahao", Profile.instance().region.id, Me.instance.token));
-    			    break;
-            	case 4:
-            		if(null == Me.instance) {
-    					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
-    					HomeActivity.this.startActivity(intent);
-    					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
-    					return;
     				}
+    				break;
+            	case 4:
+                    if(null != Me.instance){		
             		Intent intent = new Intent(HomeActivity.this.getActivity(), ArchiveActivity.class);
 					intent.putExtra("password", 0);
 					HomeActivity.this.startActivity(intent);
+					return;
+                    }                  
+    					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
+    					HomeActivity.this.startActivity(intent);    					
             		break;
             	case 5:
             		Intent intent5 = new Intent(HomeActivity.this.getActivity(), SelfDiagnosticActivity.class);
@@ -685,21 +698,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
             	}
             		
             } 
-        }); 
-        /**
-		 * 处理签到
-		 */	    
-		btnSignin.setOnClickListener(new View.OnClickListener(){
-						@Override
-				public void onClick(View v) {	
-							String token = "";
-		    				if(null != Me.instance) {
-		    					token = Me.instance.token;
-		    				}
-		    				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("activity3", token));		    				
-						}				
-		});				 
-        btnSignin.getBackground().setAlpha(200);	
+        });      		 	
 		btnRegion.getBackground().setAlpha(200);
 		btnSearch.getBackground().setAlpha(200);
 		btnBell.setImageAlpha(200);

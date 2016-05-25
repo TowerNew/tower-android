@@ -40,7 +40,7 @@ user/appv2/sites/v-2/index.html#!/SignIn?token=[1]
 		<mock></mock>
 	</protocol>
 	<protocol name="collectionStatus">
-		<path host="cdn">
+		<path>
 		<![CDATA[
 user-platform-web/rest//user/isDoctorCollect?doctorId=[1]&token=[2]
 
@@ -49,9 +49,9 @@ user-platform-web/rest//user/isDoctorCollect?doctorId=[1]&token=[2]
 		<mock></mock>
 	</protocol>
 	<protocol name="doctorCollect">
-		<path host="cdn">
+		<path>
 		<![CDATA[
-user-platform-web/rest/user/doctorCollect#doctorId=[1]&function=[2]
+user-platform-web/rest/user/doctorCollect#doctorId=[1]&token=[2]&function=[3]
 
 		]]>
 		</path>

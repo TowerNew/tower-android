@@ -1,5 +1,6 @@
 package com.qcast.tower.view.form;
 
+import android.R.integer;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,6 +27,7 @@ import com.qcast.tower.business.Logic;
 import com.qcast.tower.business.Me;
 import com.qcast.tower.business.structure.DoctorCommentsModel;
 import com.qcast.tower.framework.Storage;
+import com.qcast.tower.view.form.InquiryDoctorDetailActivity.CommentsAdapter;
 import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
@@ -48,17 +50,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
+ * @param <adapter>
  * 
  */
 @ResourceView(id = R.layout.activity_doctor_detail)
-public class DoctorDetailActivity  extends ActivityEx{
+public class DoctorDetailActivity<adapter>  extends ActivityEx{
 	private TextView docdetail_title_bar;
     private TextView doctor_name_tv;
     private TextView doctor_department_tv;
     private TextView doctor_title_tv;
     //
    
-	@ResourceView(id = R.id.doctor_icon_collection)
 	private ImageView viewCollection;
     private TextView doctor_skill_tv;
     private TextView doctor_des_tv;
@@ -76,7 +78,7 @@ public class DoctorDetailActivity  extends ActivityEx{
      * 当前页面索引
      */
     protected int page = 1;
-    protected int function = 1;
+    boolean isCollected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +95,8 @@ public class DoctorDetailActivity  extends ActivityEx{
         doctor_skill_tv = (TextView) this.findViewById(R.id.doctor_skill_tv);
         doctor_photo_image = (ImageView) this.findViewById(R.id.doctor_photo_image);       
         doctor_des_tv = (TextView) this.findViewById(R.id.doctor_des_tv);
-        /*doctor_des_tv.setMovementMethod(new ScrollingMovementMethod());*/ 
+        viewCollection = (ImageView) this.findViewById(R.id.doctor_icon_collection);
+
         //
         user_comments_num_tv = (TextView) this.findViewById(R.id.user_comments_num_tv);              
         Button button = (Button) this.findViewById(R.id.doctordetail_return_btn);
@@ -111,7 +114,7 @@ public class DoctorDetailActivity  extends ActivityEx{
             public void onClick(View v) {  
             	if(null == Me.instance) {
         			return;
-        		}	            
+        		}	           
         				new AlertDialog.Builder(DoctorDetailActivity.this).setTitle("你要设为私人医生吗？")  
         				.setIcon(android.R.drawable.ic_dialog_info)  
         				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -159,35 +162,67 @@ public class DoctorDetailActivity  extends ActivityEx{
                 lastItemIndex = firstVisibleItem + visibleItemCount - 1;
             }
         });
-   
-
-    //处理私人医生收藏
+        //处理私人医生收藏
+        loadCollection();
+        
         doctorCollection_layout = (LinearLayout) this.findViewById(R.id.doctorCollection_layout);
         doctorCollection_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {  
             	if(null==Me.instance){
             		return ;
-            	}
-			Networking.doCommand("doctorCollect", new JSONResponse(DoctorDetailActivity.this,null){
+            	}   
+            int function =  isCollected ? 1 : 2 ;
+/*          Log.e("sss", "zhenglihao. doctorid=" + doctorId);
+            Log.e("sss", "zhenglihao. token=" + Me.instance.token);
+            Log.e("sss", "zhenglihao. function=" + String.valueOf((isCollected ? 1 : 2)));*/
+			Networking.doCommand("doctorCollect", new JSONResponse(DoctorDetailActivity.this,function){
 				@Override
-				public void onFinished(JSONVisitor content) {
-					if(null == content || content.getInteger("code", -1) < 0) {
+				public void onFinished(JSONVisitor content) {	
+					
+					if (null == content) {
 						return;
 					}
-					if(viewCollection.getId()==R.drawable.favorite_selected){
-						viewCollection.setBackgroundResource(R.drawable.favorite_normal);
-						function=2;
-					}else{
-						viewCollection.setBackgroundResource(R.drawable.selected);
-						function=1;
-					}
+					if (content.getInteger("code", -1) == 1) {
+						switch ((Integer)tag) {
+						case 1:							
+							viewCollection.setBackgroundResource(R.drawable.favorite_normal);
+							isCollected = false;
+							break;
+						case 2:							
+							viewCollection.setBackgroundResource(R.drawable.favorite_selected);
+							isCollected = true;
+							break;
+						default:
+							viewCollection.setBackgroundResource(R.drawable.favorite_normal);
+						}
+					}				
 				}       	   
-	           }, doctorId,function);        	
+	           }, doctorId, Me.instance.token, String.valueOf((isCollected ? 1 : 2)));        	
             }
         });
     }
-    @Override
+    private void loadCollection() {
+    	 //加载收藏状态
+    	Networking.doCommand("collectionStatus", new JSONResponse(DoctorDetailActivity.this,null) {			
+			@Override
+			public void onFinished(JSONVisitor content) {			
+				if (null == content || content.getInteger("code") < 0) {
+					Toast.makeText(DoctorDetailActivity.this, "网络问题", Toast.LENGTH_LONG).show();
+                    return;
+				}
+				boolean data = content.getBoolean("data");
+				if(!data){
+					viewCollection.setBackgroundResource(R.drawable.favorite_normal);					
+				}else{
+					 viewCollection.setBackgroundResource(R.drawable.favorite_selected);
+				}
+				isCollected = data;
+			}
+		}, this.getIntent().getStringExtra("doctorId"), Me.instance.token);
+    	
+	}
+	@Override
 	protected void onResume() {
 		super.onResume();
 		loadData();
@@ -223,7 +258,7 @@ public class DoctorDetailActivity  extends ActivityEx{
 		            docdetail_title_bar.setText(name);
 		        }
 				if(!TextUtils.isEmpty(title)){
-				 doctor_title_tv.setText("title");
+				 doctor_title_tv.setText(title);
 				}
 		        if(!TextUtils.isEmpty(department)){
 		            doctor_department_tv.setText(department);
@@ -278,8 +313,8 @@ public class DoctorDetailActivity  extends ActivityEx{
                         String photoName = "";
                         if(null==((JSONString) newJSONObject.get("username")).getValue()){
                         	return;
-                        }
-                        if (newJSONObject.get("portrait") != null) {
+                        }                      
+                        if(newJSONObject.get("portrait")!=null) {
                             imageUrl = ((JSONString) newJSONObject.get("portrait")).getValue();
                             photoName = Storage.getImageName(imageUrl);
                             doctorCommentsModel.imageUrl = photoName;
@@ -291,45 +326,27 @@ public class DoctorDetailActivity  extends ActivityEx{
                         doctorCommentsModel.content = ((JSONString) newJSONObject.get("content")).getValue();
                         doctorCommentsModel.score = ((JSONNumber) newJSONObject.get("score")).intValue();
                         dataList.add(doctorCommentsModel);
-                        if (!TextUtils.isEmpty(imageUrl) && Text.isBlank(imageUrl)) {
+                        if (!TextUtils.isEmpty(imageUrl)&&Text.isBlank(imageUrl)) {
                             continue;
                         }
                         // 加载图片
-                        if (!TextUtils.isEmpty(photoName)) {
+                        if(!TextUtils.isEmpty(photoName)) {
                             Networking.doImage("image", new ImageResponse(photoName, dataList.size() - 1) {
                                 @Override
                                 public void onFinished(Bitmap content) {
+                                    // DoctorModel doctorModel = dataList.get((Integer) tag);
+                                    // doctorModel.docImage = content;
                                     adapter.notifyDataSetChanged();
                                 }
                             }, imageUrl);
                         }
-                    }                
-                adapter.notifyDataSetChanged();
-                page = thisPage + 1;
+                    }
+                    adapter.notifyDataSetChanged();
+                    page = thisPage + 1;
                 }
             }
-        }, page,10,this.getIntent().getStringExtra("doctorId"),3);
-        //加载收藏状态
-    	Networking.doCommand("collectionStatus", new JSONResponse(DoctorDetailActivity.this, null) {			
-			@Override
-			public void onFinished(JSONVisitor content) {
-				if(null == content){
-					return;
-				}
-				if (null == content || content.getInteger("code") < 0) {
-					Toast.makeText(DoctorDetailActivity.this, "网络问题", Toast.LENGTH_LONG).show();
-                    return;
-				}
-				boolean data = content.getBoolean("data");
-				if(!data){
-					viewCollection.setBackgroundResource(R.drawable.favorite_selected);					
-				}else{
-					 viewCollection.setBackgroundResource(R.drawable.favorite_normal);
-				}
-			}
-		}, this.getIntent().getStringExtra("doctorId"), Me.instance.token);
+            },page,10,this.getIntent().getStringExtra("doctorId"),3);       
     }
-
     public class CommentsAdapter extends BaseAdapter{
 
         private Context context;
@@ -381,8 +398,8 @@ public class DoctorDetailActivity  extends ActivityEx{
             viewHolder.user_name_tv.setText(data.userName);
             viewHolder.user_comments_date_tv.setText(data.date);
             viewHolder.user_comments_tv.setText(data.content);
-            if(data.getPhoto() instanceof Bitmap) {
-                viewHolder.user_photo_iv.setImageBitmap(data.getPhoto());
+            if(data.getPhoto()instanceof Bitmap){
+            viewHolder.user_photo_iv.setImageBitmap(data.getPhoto());
             }
             return convertView;
         }

@@ -13,7 +13,7 @@ public class DoctorCommentsModel {
     public String date;
     public String content;
     public int score;
-    public String photoName =null;
+    public String photoName;
     public String imageUrl;
     public Bitmap getPhoto() {
         return Storage.getImage(photoName);

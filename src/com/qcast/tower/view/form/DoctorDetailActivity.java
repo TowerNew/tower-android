@@ -34,6 +34,7 @@ import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.pluto.communication.response.core.IResponse;
+import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
 import com.slfuture.carrie.base.json.JSONArray;
@@ -318,13 +319,14 @@ public class DoctorDetailActivity<adapter>  extends ActivityEx{
                             imageUrl = ((JSONString) newJSONObject.get("portrait")).getValue();
                             photoName = Storage.getImageName(imageUrl);
                             doctorCommentsModel.imageUrl = photoName;
-                        }
+                        }                 
                         doctorCommentsModel.userName = ((JSONString) newJSONObject.get("username")).getValue();
                         SimpleDateFormat sdf= new SimpleDateFormat("MM/dd/yyyy HH:mm");
                         long time = ((JSONNumber) newJSONObject.get("date")).longValue();
                         doctorCommentsModel.date = sdf.format(time);
                         doctorCommentsModel.content = ((JSONString) newJSONObject.get("content")).getValue();
                         doctorCommentsModel.score = ((JSONNumber) newJSONObject.get("score")).intValue();
+                        doctorCommentsModel.photoName = photoName;
                         dataList.add(doctorCommentsModel);
                         if (!TextUtils.isEmpty(imageUrl)&&Text.isBlank(imageUrl)) {
                             continue;
@@ -334,18 +336,17 @@ public class DoctorDetailActivity<adapter>  extends ActivityEx{
                             Networking.doImage("image", new ImageResponse(photoName, dataList.size() - 1) {
                                 @Override
                                 public void onFinished(Bitmap content) {
-                                    // DoctorModel doctorModel = dataList.get((Integer) tag);
-                                    // doctorModel.docImage = content;
+                                	
                                     adapter.notifyDataSetChanged();
                                 }
                             }, imageUrl);
                         }
                     }
                     adapter.notifyDataSetChanged();
-                    page = thisPage + 1;
+                    /*page = thisPage + 1;*/
                 }
             }
-            },page,10,this.getIntent().getStringExtra("doctorId"),3);       
+            },1,10,this.getIntent().getStringExtra("doctorId"),3);       
     }
     public class CommentsAdapter extends BaseAdapter{
 

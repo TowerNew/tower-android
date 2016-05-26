@@ -1,8 +1,13 @@
 package com.qcast.tower.business.structure;
 
+import java.io.Serializable;
+
+import com.qcast.tower.Program;
+import com.qcast.tower.R;
 import com.qcast.tower.framework.Storage;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 /**
  * Created by zhengningchuan on 15/9/4.
@@ -16,6 +21,6 @@ public class DoctorCommentsModel {
     public String photoName;
     public String imageUrl;
     public Bitmap getPhoto() {
-        return Storage.getImage(photoName);
+        return Storage.getImage(photoName);       
 }
 }

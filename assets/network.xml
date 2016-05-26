@@ -48,6 +48,14 @@ user-platform-web/rest//user/isDoctorCollect?doctorId=[1]&token=[2]
 		</path>
 		<mock></mock>
 	</protocol>
+	<protocol name="signinStatus">
+		<path>
+		<![CDATA[
+user-platform-web/rest/user/signinStatus?token=[1]
+		]]>
+		</path>
+		<mock></mock>
+	</protocol>
 	<protocol name="doctorCollect">
 		<path>
 		<![CDATA[
@@ -1210,7 +1218,6 @@ user-platform-web/rest/commentList?page=[1]&pageSize=[2]&id=[3]&type=[4]
         "recordCount": 1,
         "pageSize": 10,
         "page": 1,
-        "records": [
             "records": [
       {
 			        "username": "姓名2002",

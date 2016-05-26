@@ -44,6 +44,7 @@ import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.type.core.ICollection;
 import com.slfuture.carrie.base.type.core.ILink;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
@@ -100,7 +101,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 
 	private List<View> dots; // 图片标题正文的那些点
 	private List<View> dotList;
-
+	private  Boolean hasSignIn = false;
 
 	private int currentItem = 0; // 当前图片的索引号
 
@@ -204,6 +205,8 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		//加载签到状态
+		
 		initImageLoader();
 		// 获取图片加载实例
 		mImageLoader = ImageLoader.getInstance();
@@ -214,7 +217,8 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				.cacheInMemory(true).cacheOnDisc(true)
 				.bitmapConfig(Bitmap.Config.RGB_565)
 				.imageScaleType(ImageScaleType.EXACTLY).build();
-		viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_home_head, null);
+		viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_home_head, null);		
+		loadSignStatus();	
 		
 	   /**
        * 广告数据
@@ -230,7 +234,6 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		      dots.add(dot0);
 		      dots.add(dot1);
 		      dots.add(dot2);		   
-      
 		        loadEntry();
 		        loadBannerAd();
 				startAd();		
@@ -239,11 +242,51 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				dealSearch();		
 				//
 				loadVersion();
+				
 	}	
 
-  @Override
+  private void loadSignStatus() {
+	  final Button btnSignin=(Button)viewHead.findViewById(R.id.home_button_signin);
+	  if(null !=Me.instance){
+	  Networking.doCommand("signinStatus", new JSONResponse(HomeActivity.this.getActivity()) {			
+			@Override
+			public void onFinished(JSONVisitor content) {			
+				if (null == content || content.getInteger("code") < 0) {
+					Toast.makeText(HomeActivity.this.getActivity(), "网络问题", Toast.LENGTH_LONG).show();
+                return;
+				}
+				boolean data = content.getBoolean("data");					
+				hasSignIn= data;
+				  //
+				if(null==Me.instance){
+					btnSignin.setVisibility(View.GONE);
+				}else if(!hasSignIn){			
+						btnSignin.getBackground().setAlpha(200);
+						btnSignin.setVisibility(View.VISIBLE);					
+				}else{
+						btnSignin.setVisibility(View.GONE);
+					}	
+			}			
+		}, Me.instance.token);
+	  }
+	 /**
+	  * 处理签到
+	  */
+		btnSignin.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {	
+						String token = "";
+	    				if(null != Me.instance) {
+	    					token = Me.instance.token;
+	    				}
+	    				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("activity3", token));		    				
+					}				
+			});	
+	  }
+
+@Override
 	public void onResume() {
-		super.onResume();
+		super.onResume();		
 		final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);	
 		if(null != Logic.regionName) {
 			regionButton.setText(fetchRegionName());
@@ -259,11 +302,14 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		else {
 			stopBell();
 		}
-		prepare();
+		loadSignStatus();
+		prepare();		
 		loadEntry();
 		loadNews();
+		
 	}
 
+	
 	@Override
 	public void onPause() {
 		super.onPause();
@@ -491,33 +537,15 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	/**
 	 * 界面预设
 	 */
-	private void prepare() {		
-	
+	private void prepare() {
+		
 		animRight = new RotateAnimation(-30, 30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
 		animRight.setDuration(1000);
         animRight.setAnimationListener(listener);
 		animLeft = new RotateAnimation(30f, -30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
 		animLeft.setDuration(1000);
-		animLeft.setAnimationListener(listener);	
-		//		
-		Button btnSignin=(Button)viewHead.findViewById(R.id.home_button_signin);
-		if(null == Me.instance){
-      		btnSignin.setVisibility(View.INVISIBLE);
-		}
-	  /**
-	   * 处理签到
-	   */
-        btnSignin.getBackground().setAlpha(200);
-		btnSignin.setOnClickListener(new View.OnClickListener(){
-							@Override
-					public void onClick(View v) {	
-								String token = "";
-			    				if(null != Me.instance) {
-			    					token = Me.instance.token;
-			    				}
-			    				Helper.openBrowser(HomeActivity.this.getActivity(), Networking.fetchURL("activity3", token));		    				
-							}				
-			});		
+		animLeft.setAnimationListener(listener);			
+		
 		//
 		ImageView childImg =(ImageView)viewHead.findViewById(R.id.home_img_child);
 		ImageView womanImg =(ImageView)viewHead.findViewById(R.id.home_img_woman);
@@ -575,8 +603,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				}
 			}
 		}, currentRegionId);
-		
-	
+				
 		/**
 		 * 8大功能按钮	
 		 */

@@ -40,13 +40,14 @@
         <Button
             android:id="@+id/home_button_signin"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_gravity="right|bottom"
             android:background="@drawable/button_region"
 	        android:drawableLeft="@drawable/icon_signin"
 	        android:layout_marginBottom="5dp"
-	        android:paddingRight="3dp"
+	        android:layout_marginRight="5dp"
 	        android:visibility="visible"
+	        android:padding="2dp"
 	        android:text="签到"
 	        android:textColor="@color/white"
 	        android:textSize="15sp" /> 

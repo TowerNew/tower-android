@@ -145,7 +145,6 @@ public class MyReserveHistoryActivity extends Activity{
                         }, imageUrl);
                     }
                 }
-
                 adapter.notifyDataSetChanged();
             }
         }, Logic.token);

@@ -164,6 +164,8 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 */
 	protected int page = 1;
 	protected int regionId = 1;
+	private int NewPrice ;
+	private int OldPrice ;
 	/**
 	 * 当前信息
 	 */
@@ -388,11 +390,10 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					JSONVisitor value = link.destination();
 					HashMap<String, Object> newsMap = new HashMap<String, Object>();
 					String photoURL = "";
+				if(key.equals("physicalExam")||key.equals("physiotherapy")){
 					if(!TextUtils.isEmpty(value.getString("image"))) {
 						photoURL = value.getString("image");
-					} else {
-						//XXX default image
-					}
+					} 
 					String photoName = Storage.getImageName(photoURL);
 					newsMap.put("image", photoName);
 					newsMap.put("name",  value.getString("name"));
@@ -416,8 +417,34 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 							}
 						}, photoURL);
 		            }
+				}else if(key.equals("doctor")){
+					//医生类型
+					if(!TextUtils.isEmpty(value.getString("imgUrl"))) {
+						photoURL = value.getString("imgUrl");
+					}
+					String photoName = Storage.getImageName(photoURL);
+					newsMap.put("imgUrl", photoName);
+					newsMap.put("name",  value.getString("name"));
+					newsMap.put("score", value.getInteger("score"));
+					newsMap.put("url", value.getString("url"));
+					newsMap.put("pop", value.getInteger("totalNumber"));
+					newsList.add(newsMap);
+					if(!Text.isBlank(photoURL)) {
+						// 加载图片
+						Networking.doImage("image", new ImageResponse(photoName, newsList.size() - 1) {
+							@Override
+							public void onFinished(Bitmap content) {
+								HashMap<String, Object> map = newsList.get((Integer) tag);
+								map.put("image", content);
+								ListView listview = (ListView) HomeActivity.this.getActivity().findViewById(R.id.home_list_news);
+								SimpleAdapter adapter = (SimpleAdapter) ((HeaderViewListAdapter) listview.getAdapter()).getWrappedAdapter();
+								adapter.notifyDataSetChanged();
+							}
+						}, photoURL);
+		            }
+					
 				}
-				
+			}
 				adapter.notifyDataSetChanged();
 				page = thisPage + 1;
 			}
@@ -913,11 +940,12 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	/**
 	 * 处理资讯
 	 */
-	private void dealNews() {
+	private void dealNews() {		
 		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), newsList, R.layout.listitem_hot_news,
 			new String[]{"image", "name", "price", "originalPrice","score","pop"}, 
 	        new int[]{R.id.reserve_image_photo, R.id.reserve_lable_title, R.id.reserve_lable_newprice, R.id.reserve_lable_oldprice,R.id.reaserve_lable_docLevel,R.id.reserve_lable_number});
 		listItemAdapter.setViewBinder(new ViewBinder() {
+			@SuppressWarnings("unused")
 			public boolean setViewValue(View view, Object data, String textRepresentation) {
                 if(view instanceof ImageView && data instanceof Bitmap) {
                     ImageView imageView = (ImageView)view;
@@ -950,29 +978,23 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	                return true;
                 }
                 else if(view instanceof TextView && data instanceof Integer) {
-                	TextView textView = (TextView)view;
-                	if(null == data || 0 == (Integer) data) {
-                		textView.setText("");
-			    	}else {
-			    		
-			    		if("old".equals(textView.getTag())) {
-			    			textView.setText("￥"+String.valueOf(data));
-	                		textView.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); //中间横线   	                	
-                		}
-			    		if("new".equals(textView.getTag())){
-                			textView.setText("￥"+String.valueOf(data));
-                		}			    		
-			    		if("people".equals(textView.getTag())){
-                			textView.setText(String.valueOf(data)+"人");
-                		}
-			    		
-			    			/*btnDiscount.setVisibility(View.INVISIBLE);		    		
-			    			btnDiscount.setBackgroundResource(R.drawable.button_circle_blue)*/;
-			    		
-			    		
-			    		return true;
-			    	}
-                }                
+	                	TextView textView = (TextView)view;	 	                	
+	                	if(null == data && 0 == (Integer) data) {
+	                		textView.setText("");	
+			    	}else {			    		
+				    		if("old".equals(textView.getTag())) {
+				    			textView.setText("￥"+String.valueOf(data));
+				    			OldPrice = (Integer)data;
+		                		textView.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); //中间横线   	                	
+	                		}else if("new".equals(textView.getTag())){
+	                			textView.setText("￥"+String.valueOf(data));
+	                			NewPrice = (Integer)data;
+	                		}else if("people".equals(textView.getTag())){
+	                			textView.setText(String.valueOf(data)+"人");	                		
+	                		}				    	
+				    		return true;
+				    	}	
+                }  
                 return false;
 			}});
 		listNews.setAdapter(listItemAdapter);

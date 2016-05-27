@@ -20,7 +20,9 @@ public class DoctorCommentsModel {
     public int score;
     public String photoName;
     public String imageUrl;
-    public Bitmap getPhoto() {
-        return Storage.getImage(photoName);       
-}
+	public Bitmap docImage;
+//    public Bitmap getPhoto() {
+//        return Storage.getImage(photoName);       
+//}
+	public Bitmap portrait;
 }

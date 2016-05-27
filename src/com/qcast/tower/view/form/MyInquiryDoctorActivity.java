@@ -132,6 +132,7 @@ public class MyInquiryDoctorActivity extends Activity{
                         Networking.doImage("image", new ImageResponse(photoName, dataList.size() - 1) {
                             @Override
                             public void onFinished(Bitmap content) {
+                            	
                                 adapter.notifyDataSetChanged();
                             }
                         }, imageUrl);

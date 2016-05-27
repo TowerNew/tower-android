@@ -147,9 +147,8 @@ public class DoctorDetailActivity<adapter>  extends ActivityEx{
         dataList = new ArrayList<DoctorCommentsModel>();
         adapter = new CommentsAdapter(this,dataList);
         doctor_comments_list.setAdapter(adapter);
-        doctor_comments_list.setOnScrollListener(new AbsListView.OnScrollListener() {
+       /* doctor_comments_list.setOnScrollListener(new AbsListView.OnScrollListener() {
             private int lastItemIndex;//当前ListView中最后一个Item的索引
-
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
@@ -162,7 +161,7 @@ public class DoctorDetailActivity<adapter>  extends ActivityEx{
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 lastItemIndex = firstVisibleItem + visibleItemCount - 1;
             }
-        });
+        });*/
         //处理私人医生收藏
         loadCollection();
         
@@ -174,13 +173,9 @@ public class DoctorDetailActivity<adapter>  extends ActivityEx{
             		return ;
             	}   
             int function =  isCollected ? 1 : 2 ;
-/*          Log.e("sss", "zhenglihao. doctorid=" + doctorId);
-            Log.e("sss", "zhenglihao. token=" + Me.instance.token);
-            Log.e("sss", "zhenglihao. function=" + String.valueOf((isCollected ? 1 : 2)));*/
 			Networking.doCommand("doctorCollect", new JSONResponse(DoctorDetailActivity.this,function){
 				@Override
-				public void onFinished(JSONVisitor content) {	
-					
+				public void onFinished(JSONVisitor content) {						
 					if (null == content) {
 						return;
 					}
@@ -285,7 +280,7 @@ public class DoctorDetailActivity<adapter>  extends ActivityEx{
 	//
     private void loadData() {
         Networking.doCommand("commentlist", new CommonResponse<String>(page) {
-            @Override
+            @Override                                                                                                                                                                       
             public void onFinished(String content) {
                 if (Response.CODE_SUCCESS != code()) {
                     Toast.makeText(DoctorDetailActivity.this, "网络问题", Toast.LENGTH_LONG).show();
@@ -336,17 +331,20 @@ public class DoctorDetailActivity<adapter>  extends ActivityEx{
                             Networking.doImage("image", new ImageResponse(photoName, dataList.size() - 1) {
                                 @Override
                                 public void onFinished(Bitmap content) {
-                                	
+                                	DoctorCommentsModel model = dataList.get((Integer)tag);
+                                	model.portrait = content;                              	
                                     adapter.notifyDataSetChanged();
                                 }
-                            }, imageUrl);
+                            }, imageUrl );
                         }
+                         
                     }
-                    adapter.notifyDataSetChanged();
-                    /*page = thisPage + 1;*/
+                  
+                    page = thisPage + 1;
                 }
+                adapter.notifyDataSetChanged(); 
             }
-            },1,10,this.getIntent().getStringExtra("doctorId"),3);       
+            },1,5,this.getIntent().getStringExtra("doctorId"),3);       
     }
     public class CommentsAdapter extends BaseAdapter{
 
@@ -360,7 +358,7 @@ public class DoctorDetailActivity<adapter>  extends ActivityEx{
 
         @Override
         public int getCount() {
-            if(dataList!=null){
+            if(dataList!=null && dataList.size()>0){
                 return dataList.size();
             }else {
                 return 0;
@@ -380,7 +378,6 @@ public class DoctorDetailActivity<adapter>  extends ActivityEx{
         public long getItemId(int position) {
             return position;
         }
-
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             DoctorCommentsModel data = dataList.get(position);
@@ -394,14 +391,12 @@ public class DoctorDetailActivity<adapter>  extends ActivityEx{
                 viewHolder.user_photo_iv = (ImageView)convertView.findViewById(R.id.user_photo_iv);
                 convertView.setTag(viewHolder);
             }else{
-                viewHolder = (ViewHolder) convertView.getTag();
+                viewHolder = (ViewHolder)convertView.getTag();
             }
             viewHolder.user_name_tv.setText(data.userName);
             viewHolder.user_comments_date_tv.setText(data.date);
             viewHolder.user_comments_tv.setText(data.content);
-            if(data.getPhoto()instanceof Bitmap){
-            viewHolder.user_photo_iv.setImageBitmap(data.getPhoto());
-            }
+            viewHolder.user_photo_iv.setImageBitmap(data.portrait);
             return convertView;
         }
 
